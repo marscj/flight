@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'phonenumber_field',
+    'versatileimagefield',
+
+    'apply',
+    'reservation',
+    'ticket',
+    'upload',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -66,6 +76,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'user.User'
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
@@ -105,11 +117,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dubai'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
@@ -118,3 +130,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'media')
+
+# 图片处理
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    'image_size': [
+        ('medium', 'crop__854x480'),
+    ],
+    'image_size': [
+        ('full_size', 'url'),
+        ('thumbnail', 'thumbnail__400x400'),
+        ('samll', 'crop__640x360'),
+        ('medium', 'crop__854x480'),
+        ('large', 'crop__1280x720'),
+    ],
+    'app_size': [
+        ('full', 'url'),
+        ('advertising', 'crop__1080x1920'),
+        ('banner', 'crop__854x480'),
+    ]
+}
