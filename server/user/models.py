@@ -39,6 +39,9 @@ class Passport(models.Model):
     image_ppoi = PPOIField()
     user = models.ForeignKey(User, related_name='passports', on_delete=models.CASCADE)
 
+    class Meta:
+        db_table = 'passport'
+
 class Id(models.Model):
     name = models.CharField(max_length=32)
     gender = models.IntegerField()
@@ -54,7 +57,13 @@ class Id(models.Model):
     image_ppoi = PPOIField()
     user = models.ForeignKey(User, related_name='ids', on_delete=models.CASCADE)
 
+    class Meta:
+        db_table = 'id'
+
 class Department(models.Model):
     name = models.CharField(max_length=32)
     user = models.ManyToManyField(User, related_name='department_users', blank=True)
     admin = models.ManyToManyField(User, related_name='departments_admins', blank=True)
+
+    class Meta:
+        db_table = 'department'
