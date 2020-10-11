@@ -28,15 +28,32 @@ class Booking(models.Model):
         db_table = 'booking'
 
 class Reservation(models.Model):
+    is_confirm = models.NullBooleanField(blank=True, null=True)
+    is_cancel = models.NullBooleanField(blank=True, null=True)
+    is_booking = models.NullBooleanField(blank=True, null=True)
+    is_ticketing = models.NullBooleanField(blank=True, null=True)
+    is_lock = models.BooleanField(default=False)
+
     remark = models.CharField(blank=True, null=True, max_length=256)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
 
-    reservation = models.ForeignKey(Booking, related_name='reservations', on_delete=models.SET_NULL, blank=True, null=True)
+    booking = models.ForeignKey(Booking, related_name='reservations', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='reservations', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'reservation'
+
+class Comment(models.Model):
+    comment = models.CharField(blank=True, null=True, max_length=256)
+    read = models.BooleanField(blank=True, null=True, default=False)
+    create_at = models.DateTimeField(auto_now_add=True)
+    
+    booking = models.ForeignKey(Booking, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
+
+    class Meta:
+        db_table = 'comment'
 
 class UpLoad(models.Model):
     remark = models.CharField(blank=True, null=True, max_length=128)
@@ -45,7 +62,7 @@ class UpLoad(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-    
+
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
 
@@ -57,5 +74,5 @@ class UpLoad(models.Model):
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
     
-    if instance.uploads is not None: 
-        instance.uploads.delete()
+    if instance.file is not None: 
+        instance.file.delete()
