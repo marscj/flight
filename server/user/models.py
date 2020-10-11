@@ -11,7 +11,7 @@ class User(AbstractUser):
         Admin = 1
         SupserAdmin = 2
 
-    role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Customer)
+    role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Staff)
     name = models.CharField(blank=True, null=True, max_length=16)
     phone = PhoneNumberField(unique=True, blank=True, null=True)
     avatar = VersatileImageField(upload_to='user/avatar/', ppoi_field='image_ppoi', null=True, blank=True)
@@ -56,5 +56,5 @@ class Id(models.Model):
 
 class Department(models.Model):
     name = models.CharField(max_length=32)
-    user = models.ManyToManyField(User, related_name='department_users', blank=True, null=True)
-    admin = models.ManyToManyField(User, related_name='departments_admins', blank=True, null=True)
+    user = models.ManyToManyField(User, related_name='department_users', blank=True)
+    admin = models.ManyToManyField(User, related_name='departments_admins', blank=True)

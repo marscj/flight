@@ -42,10 +42,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'versatileimagefield',
 
-    'apply',
     'reservation',
-    'ticket',
-    'upload',
     'user'
 ]
 
