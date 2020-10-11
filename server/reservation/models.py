@@ -16,27 +16,27 @@ class Apply(models.Model):
     class Meta:
         db_table = 'apply'
 
+class Booking(models.Model):
+    remark = models.CharField(blank=True, null=True, max_length=256)
+    create_at = models.DateTimeField(auto_now_add=True)
+    change_at = models.DateTimeField(auto_now=True)
+
+    apply = models.ForeignKey(Apply, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        db_table = 'booking'
+
 class Reservation(models.Model):
     remark = models.CharField(blank=True, null=True, max_length=256)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
 
-    apply = models.ForeignKey(Apply, related_name='reservations', on_delete=models.SET_NULL, blank=True, null=True)
+    reservation = models.ForeignKey(Booking, related_name='reservations', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='reservations', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'reservation'
-
-class Ticket(models.Model):
-    remark = models.CharField(blank=True, null=True, max_length=256)
-    create_at = models.DateTimeField(auto_now_add=True)
-    change_at = models.DateTimeField(auto_now=True)
-
-    reservation = models.ForeignKey(Reservation, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
-    author = models.ForeignKey(User, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
-
-    class Meta:
-        db_table = 'ticket'
 
 class UpLoad(models.Model):
     remark = models.CharField(blank=True, null=True, max_length=128)
