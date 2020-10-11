@@ -38,7 +38,6 @@ class Passport(models.Model):
     image_ppoi = PPOIField()
     user = models.ForeignKey(User, related_name='passport', on_delete=models.CASCADE)
 
-
 class Id(models.Model):
     name = models.CharField(max_length=32)
     gender = models.IntegerField()
