@@ -11,6 +11,7 @@ class User(AbstractUser):
         Admin = 1
         SupserAdmin = 2
 
+    role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Customer)
     name = models.CharField(blank=True, null=True, max_length=16)
     phone = PhoneNumberField(unique=True, blank=True, null=True)
     avatar = VersatileImageField(upload_to='user/avatar/', ppoi_field='image_ppoi', null=True, blank=True)
@@ -33,10 +34,10 @@ class Passport(models.Model):
     expiry_date = models.DateField()
     authority = models.CharField(max_length=64)
 
-    front_photo = VersatileImageField(upload_to='user/passport/', ppoi_field='image_ppoi', null=True, blank=True)
-    back_photo = VersatileImageField(upload_to='user/passport/', ppoi_field='image_ppoi', null=True, blank=True)
+    front_photo = VersatileImageField(upload_to='user/passport/', ppoi_field='image_ppoi', blank=True, null=True)
+    back_photo = VersatileImageField(upload_to='user/passport/', ppoi_field='image_ppoi', blank=True, null=True)
     image_ppoi = PPOIField()
-    user = models.ForeignKey(User, related_name='passport', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='passports', on_delete=models.CASCADE)
 
 class Id(models.Model):
     name = models.CharField(max_length=32)
@@ -48,8 +49,12 @@ class Id(models.Model):
     authority = models.CharField(max_length=64)
     number = models.CharField(unique=True, max_length=16)
 
-    front_photo = VersatileImageField(upload_to='user/id/', ppoi_field='image_ppoi', null=True, blank=True)
-    back_photo = VersatileImageField(upload_to='user/id/', ppoi_field='image_ppoi', null=True, blank=True)
+    front_photo = VersatileImageField(upload_to='user/id/', ppoi_field='image_ppoi', blank=True, null=True)
+    back_photo = VersatileImageField(upload_to='user/id/', ppoi_field='image_ppoi', blank=True, null=True)
     image_ppoi = PPOIField()
-    user = models.ForeignKey(User, related_name='Id', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='ids', on_delete=models.CASCADE)
 
+class Department(models.Model):
+    name = models.CharField(max_length=32)
+    user = models.ManyToManyField(User, related_name='department_users', blank=True, null=True)
+    admin = models.ManyToManyField(User, related_name='departments_admins', blank=True, null=True)
