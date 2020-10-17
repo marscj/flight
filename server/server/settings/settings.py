@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
     'versatileimagefield',
 
-    'reservation',
+    'ticket',
     'user'
 ]
 
