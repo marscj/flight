@@ -27,22 +27,22 @@ class Booking(models.Model):
     class Meta:
         db_table = 'booking'
 
-class Reservation(models.Model):
-    is_confirm = models.NullBooleanField(blank=True, null=True)
-    is_cancel = models.NullBooleanField(blank=True, null=True)
-    is_booking = models.NullBooleanField(blank=True, null=True)
-    is_ticketing = models.NullBooleanField(blank=True, null=True)
+class Ticket(models.Model):
+    is_confirm = models.BooleanField(blank=True, null=True)
+    is_cancel = models.BooleanField(blank=True, null=True)
+    is_booking = models.BooleanField(blank=True, null=True)
+    is_ticketing = models.BooleanField(blank=True, null=True)
     is_lock = models.BooleanField(default=False)
 
     remark = models.CharField(blank=True, null=True, max_length=256)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
 
-    booking = models.ForeignKey(Booking, related_name='reservations', on_delete=models.SET_NULL, blank=True, null=True)
-    author = models.ForeignKey(User, related_name='reservations', on_delete=models.SET_NULL, blank=True, null=True)
+    booking = models.ForeignKey(Booking, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(User, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
-        db_table = 'reservation'
+        db_table = 'ticket'
 
 class Comment(models.Model):
     comment = models.CharField(blank=True, null=True, max_length=256)

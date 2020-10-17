@@ -2,8 +2,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 
 from versatileimagefield.fields import VersatileImageField, PPOIField
-from phonenumber_field.modelfields import PhoneNumberField
 
+class Department(models.Model):
+    name = models.CharField(max_length=32)
+
+    class Meta:
+        db_table = 'department'
+        
 class User(AbstractUser):
 
     class Role(models.IntegerChoices):
@@ -12,58 +17,11 @@ class User(AbstractUser):
         SupserAdmin = 2
 
     role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Staff)
-    name = models.CharField(blank=True, null=True, max_length=16)
-    phone = PhoneNumberField(unique=True, blank=True, null=True)
+
+
     avatar = VersatileImageField(upload_to='user/avatar/', ppoi_field='image_ppoi', null=True, blank=True)
     image_ppoi = PPOIField()
 
     class Meta:
         db_table = 'user'
 
-class Passport(models.Model):
-    model = models.CharField(max_length=8)
-    code = models.CharField(max_length=8)
-    number = models.CharField(unique=True, max_length=16)
-    name = models.CharField(max_length=32)
-    gender = models.IntegerField()
-    nationality = models.CharField(max_length=64)
-    birth_date = models.DateField()
-    birth_place = models.CharField(max_length=64)
-    issue_date = models.DateField()
-    issue_place = models.CharField(max_length=64)
-    expiry_date = models.DateField()
-    authority = models.CharField(max_length=64)
-
-    front_photo = VersatileImageField(upload_to='user/passport/', ppoi_field='image_ppoi', blank=True, null=True)
-    back_photo = VersatileImageField(upload_to='user/passport/', ppoi_field='image_ppoi', blank=True, null=True)
-    image_ppoi = PPOIField()
-    user = models.ForeignKey(User, related_name='passports', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'passport'
-
-class Id(models.Model):
-    name = models.CharField(max_length=32)
-    gender = models.IntegerField()
-    clan = models.CharField(max_length=8)
-    birth_date = models.DateField()
-    address = models.CharField(max_length=128)
-    expiry_date = models.DateField()
-    authority = models.CharField(max_length=64)
-    number = models.CharField(unique=True, max_length=16)
-
-    front_photo = VersatileImageField(upload_to='user/id/', ppoi_field='image_ppoi', blank=True, null=True)
-    back_photo = VersatileImageField(upload_to='user/id/', ppoi_field='image_ppoi', blank=True, null=True)
-    image_ppoi = PPOIField()
-    user = models.ForeignKey(User, related_name='ids', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'id'
-
-class Department(models.Model):
-    name = models.CharField(max_length=32)
-    user = models.ManyToManyField(User, related_name='department_users', blank=True)
-    admin = models.ManyToManyField(User, related_name='departments_admins', blank=True)
-
-    class Meta:
-        db_table = 'department'
