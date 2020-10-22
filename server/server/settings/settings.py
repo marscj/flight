@@ -55,9 +55,9 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'django_filters',
     'versatileimagefield',
-
-    'ticket',
-    'user'
+    
+    'user',
+    'ticket'
 ]
 
 MIDDLEWARE = [

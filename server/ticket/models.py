@@ -23,7 +23,7 @@ class Itinerary(models.Model):
     email = models.CharField(blank=True, null=True, max_length=64)
     passport_no = models.CharField(blank=True, null=True, max_length=16)
     entry = models.CharField(blank=True, null=True, max_length=256)
-    exit = models.CharField(blank=True, null=True, max_length=256)
+    aexit = models.CharField(blank=True, null=True, max_length=256)
     ticket1 = models.CharField(blank=True, null=True, max_length=256)
     ticket2 = models.CharField(blank=True, null=True, max_length=256)
     hotel = models.CharField(blank=True, null=True, max_length=256)
@@ -39,7 +39,7 @@ class Itinerary(models.Model):
     class Meta:
         db_table = 'itinerary'
         permissions = (
-            ('lock_itinerary', 'can lock itinerary')
+            ('lock_itinerary', 'can lock itinerary'),
         )
 
 class Ticket(models.Model):
