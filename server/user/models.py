@@ -3,8 +3,6 @@ from django.contrib.auth.models import AbstractUser, UserManager
 
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
-# from rest_auth.serializers import LoginSerializer
-
 class Department(models.Model):
     name = models.CharField(max_length=32)
 
@@ -14,9 +12,8 @@ class Department(models.Model):
 class User(AbstractUser):
 
     class Role(models.IntegerChoices):
-        Staff = 0
+        User = 0
         Admin = 1
-        SupserAdmin = 2
 
     # 护照类型
     possport_type = models.CharField(blank=True, null=True, max_length=4)

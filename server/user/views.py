@@ -14,6 +14,7 @@ UserModel = get_user_model()
 
 class CustomLoginView(LoginView):
     throttle_classes = [throttling.AnonRateThrottle]
+    
 
 class CustomRegisterView(RegisterView):
     queryset = UserModel.objects.all()
