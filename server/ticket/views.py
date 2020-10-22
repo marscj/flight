@@ -8,7 +8,7 @@ from . import serializers
 from . import models
 
 class ApplyFilter(django_filters.FilterSet):
-    role = django_filters.NumberFilter('role')
+    pass
 
 class ApplyView(viewsets.ModelViewSet):
     serializer_class = serializers.ApplySerializer

@@ -11,7 +11,8 @@ class Apply(models.Model):
     remark = models.CharField(blank=True, null=True, max_length=1024)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
-    
+    is_delete = models.BooleanField(default=False)
+
     author = models.ForeignKey(User, related_name='applys', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
@@ -31,6 +32,7 @@ class Itinerary(models.Model):
     remark = models.CharField(blank=True, null=True, max_length=256)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
+    is_delete = models.BooleanField(default=False)
 
     user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
     apply = models.ForeignKey(Apply, related_name='itinerarys', on_delete=models.SET_NULL, blank=True, null=True)
@@ -58,6 +60,7 @@ class Ticket(models.Model):
     is_ticketing = models.BooleanField(default=False)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
+    is_delete = models.BooleanField(default=False)
 
     itinerary = models.ForeignKey(Itinerary, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
@@ -68,6 +71,7 @@ class Ticket(models.Model):
 class Comment(models.Model):
     comment = models.CharField(blank=True, null=True, max_length=256)
     create_at = models.DateTimeField(auto_now_add=True)
+    is_delete = models.BooleanField(default=False)
 
     itinerary = models.ForeignKey(Itinerary, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
