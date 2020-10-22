@@ -88,6 +88,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.BasicAuthentication',
     ),
+    
     'DEFAULT_THROTTLE_RATES': {   
         'anon': '3/m',
         'user': '100/m'
