@@ -21,4 +21,11 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         exclude = ('password',)
-        read_only_fields = ('email', )
+        read_only_fields = ('email',)
+
+class UserSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = UserModel
+        exclude = ('password',)
+        read_only_fields = ('email',)

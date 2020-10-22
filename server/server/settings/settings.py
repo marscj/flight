@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
+    'django_filters',
     'versatileimagefield',
 
     'ticket',
@@ -87,6 +88,10 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.BasicAuthentication',
     ),
+    'DEFAULT_THROTTLE_RATES': {   
+        'anon': '3/m',
+        'user': '100/m'
+    },
 }
 
 TEMPLATES = [
@@ -163,6 +168,14 @@ REST_AUTH_SERIALIZERS = {
     'LOGIN_SERIALIZER': 'user.serializers.CustomLoginSerializer',
     'USER_DETAILS_SERIALIZER': 'user.serializers.UserDetailsSerializer',
 }
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REST_AUTH_REGISTER_PERMISSION_CLASSES': 'rest_framework.permissions.DjangoModelPermissions'
+}
+
+REST_AUTH_REGISTER_PERMISSION_CLASSES = [
+    'rest_framework.permissions.DjangoModelPermissions'
+]
 
 # 图片处理
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
