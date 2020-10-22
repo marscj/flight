@@ -16,10 +16,12 @@ class User(AbstractUser):
         Admin = 1
         SupserAdmin = 2
 
+    # 角色
     role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Staff)
 
-
+    # 头像
     avatar = VersatileImageField(upload_to='user/avatar/', ppoi_field='image_ppoi', null=True, blank=True)
+    
     image_ppoi = PPOIField()
 
     class Meta:
