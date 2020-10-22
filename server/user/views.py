@@ -14,7 +14,7 @@ UserModel = get_user_model()
 
 class CustomLoginView(LoginView):
     throttle_classes = [throttling.AnonRateThrottle]
-    
+
 
 class CustomRegisterView(RegisterView):
     queryset = UserModel.objects.all()
@@ -22,20 +22,10 @@ class CustomRegisterView(RegisterView):
 class UserFilter(django_filters.FilterSet):
     role = django_filters.NumberFilter('role')
 
-    @property
-    def qs(self):
-        parent = super().qs
-        user = getattr(self.request, 'user', None)
-
-        if user.is_superuser:
-            return parent
-        else:
-            return parent.filter(id=user.id)
-
 class UserView(ModelViewSet):
     serializer_class = serializers.UserSerializer
     permission_classes = [DjangoModelPermissions]
-    queryset = UserModel.objects.all()
+    queryset = UserModel.objects.filter(is_delete=False)
  
     filter_class = UserFilter
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']

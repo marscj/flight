@@ -49,12 +49,15 @@ class User(AbstractUser):
     department = models.ForeignKey(Department, related_name='users', on_delete=models.SET_NULL, blank=True, null=True)
 
     # 角色
-    role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Staff)
+    role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.User)
 
     # 头像
     avatar = VersatileImageField(upload_to='user/avatar/', ppoi_field='image_ppoi', null=True, blank=True)
     
     image_ppoi = PPOIField()
+
+    # 逻辑删除
+    is_delete = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'user'
