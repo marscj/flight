@@ -154,14 +154,15 @@ REST_USE_JWT = True
 OLD_PASSWORD_FIELD_ENABLED = False
 
 JWT_AUTH = { 
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_AUTH_HEADER_PREFIX': 'ACCESS_TOKEN',
+    'JWT_AUTH_COOKIE' : 'ACCESS_TOKEN',
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300)
 }
 
-# REST_AUTH_SERIALIZERS = {
-#     'LOGIN_SERIALIZER': 'path.to.custom.LoginSerializer',
-#     'TOKEN_SERIALIZER': 'path.to.custom.TokenSerializer',
-# }
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'user.serializers.CustomLoginSerializer',
+    'USER_DETAILS_SERIALIZER': 'user.serializers.UserDetailsSerializer',
+}
 
 # 图片处理
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
