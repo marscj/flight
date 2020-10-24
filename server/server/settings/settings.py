@@ -27,7 +27,7 @@ SECRET_KEY = 'v+3qy6@buz#!50p16@m$c1)87daf7&%nom!*vzj0b#=cip&qk_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 ROOT_URLCONF = 'server.urls'
 
@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'corsheaders',
+    'drf_recaptcha',
     'allauth',
     'allauth.account',
     'rest_framework',
@@ -63,6 +65,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -133,6 +136,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# 跨域
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = ('*',)
+CORS_ALLOW_METHODS = ('*',)
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Dubai'
@@ -177,6 +186,10 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 REST_AUTH_REGISTER_PERMISSION_CLASSES = [
     'rest_framework.permissions.DjangoModelPermissions'
 ]
+
+DRF_RECAPTCHA_SECRET_KEY =  '6LfV6doZAAAAALz6rm0Zlbj1ShlXiJ0eSQYPzA-2'
+DRF_RECAPTCHA_DOMAIN = 'www.recaptcha.net'  #'www.google.com'
+# DRF_RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', 'https': 'https://127.0.0.1:8000'}
 
 # 图片处理
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
