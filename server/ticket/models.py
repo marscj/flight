@@ -72,7 +72,6 @@ class Comment(models.Model):
     comment = models.CharField(blank=True, null=True, max_length=256)
     create_at = models.DateTimeField(auto_now_add=True)
     is_delete = models.BooleanField(default=False)
-
     itinerary = models.ForeignKey(Itinerary, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
 

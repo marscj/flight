@@ -6,19 +6,19 @@ class ApplySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Apply
-        fiels = '__all__'
+        fields = '__all__'
 
 class ItinerarySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Itinerary
-        fiels = '__all__'
+        fields = '__all__'
 
 class TicketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ticket
-        fiels = '__all__'
+        fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
 
@@ -30,4 +30,4 @@ class UpLoadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UpLoad
-        fiels = '__all__'
+        fields = '__all__'
