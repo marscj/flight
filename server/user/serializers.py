@@ -11,7 +11,7 @@ class CustomLoginSerializer(LoginSerializer):
     
     backend = serializers.BooleanField(default=False)
     remember = serializers.BooleanField(default=True)
-    # recaptcha = ReCaptchaV2Field(required=False)
+    recaptcha = ReCaptchaV2Field(required=False)
 
     def validate(self, attrs):
         attrs = super().validate(attrs) 

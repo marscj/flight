@@ -22,7 +22,7 @@ const errorHandler = (error) => {
     if (error.response.status === 403) {
       notification.error({
         message: 'Forbidden',
-        description: data.detail
+        description: 'You don\'t have permission to access'
       })
     }
     if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
