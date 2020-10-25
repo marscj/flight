@@ -170,7 +170,7 @@ OLD_PASSWORD_FIELD_ENABLED = False
 
 JWT_AUTH = { 
     'JWT_AUTH_HEADER_PREFIX': 'ACCESS_TOKEN',
-    'JWT_AUTH_COOKIE' : 'ACCESS_TOKEN',
+    'JWT_AUTH_COOKIE' : 'Access-Token',
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300)
 }
 
@@ -189,7 +189,7 @@ REST_AUTH_REGISTER_PERMISSION_CLASSES = [
 
 DRF_RECAPTCHA_SECRET_KEY =  '6LfV6doZAAAAALz6rm0Zlbj1ShlXiJ0eSQYPzA-2'
 DRF_RECAPTCHA_DOMAIN = 'www.recaptcha.net'  #'www.google.com'
-# DRF_RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', 'https': 'https://127.0.0.1:8000'}
+DRF_RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', 'https': 'https://127.0.0.1:8000'}
 
 # 图片处理
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {

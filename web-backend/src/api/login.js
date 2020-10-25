@@ -6,8 +6,8 @@ const userApi = {
   ForgePassword: '/auth/forge-password',
   Register: '/auth/register',
   // get my info
-  UserInfo: '/user/info',
-  UserMenu: '/user/nav'
+  UserInfo: '/user/info/',
+  UserMenu: '/user/nav/'
 }
 
 /**

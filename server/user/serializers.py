@@ -14,11 +14,11 @@ class CustomLoginSerializer(LoginSerializer):
     # recaptcha = ReCaptchaV2Field(required=False)
 
     def validate(self, attrs):
-        attrs = super().validate(attrs)
+        attrs = super().validate(attrs) 
         user = attrs['user']
 
         if attrs['backend'] and not user.is_staff:
-            raise PermissionDenied('You don\'t have permission to access.')
+            raise PermissionDenied({'non_field_errors': ['You don\'t have permission to access.']})
 
         return attrs
 

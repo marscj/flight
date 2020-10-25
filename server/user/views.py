@@ -20,7 +20,7 @@ class CustomLoginView(LoginView):
 
     def get_response(self):
         serializer_class = self.get_response_serializer()
-
+ 
         if getattr(settings, 'REST_USE_JWT', False):
             data = {
                 'user': self.user,
@@ -33,7 +33,6 @@ class CustomLoginView(LoginView):
                                           context={'request': self.request})
 
         response = Response(serializer.data, status=status.HTTP_200_OK)
-        print(self.serializer.data.get('remember', False))
         if getattr(settings, 'REST_USE_JWT', False) and self.serializer.data.get('remember', False):
             from rest_framework_jwt.settings import api_settings as jwt_settings
             if jwt_settings.JWT_AUTH_COOKIE:
@@ -42,7 +41,7 @@ class CustomLoginView(LoginView):
                 response.set_cookie(jwt_settings.JWT_AUTH_COOKIE,
                                     self.token,
                                     expires=expiration,
-                                    httponly=True)
+                                    httponly=False)
         return response
 
 class CustomRegisterView(RegisterView):

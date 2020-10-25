@@ -36,15 +36,9 @@ const user = {
     // 登录
     Login ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        console.log(userInfo)
         login(userInfo).then(response => {
-          console.log(response)
-          // const result = response.result
-          // storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
-          // commit('SET_TOKEN', result.token)
           resolve()
         }).catch(error => {
-          console.log(error)
           reject(error)
         })
       })
@@ -88,7 +82,6 @@ const user = {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
-          storage.remove(ACCESS_TOKEN)
           resolve()
         }).catch(() => {
           resolve()

@@ -29,10 +29,10 @@
           </a-input-password>
         </a-form-item>
         <a-form-item>
-          <a-checkbox>Remember Me</a-checkbox>
+          <a-checkbox v-model="form.remember">Remember Me</a-checkbox>
         </a-form-item>
         <a-form-item>
-          <div id="grecaptcha"></div>
+          <div id="grecaptcha" align='center'></div>
         </a-form-item>
         <a-form-item style="margin-top:24px">
           <a-button
@@ -45,7 +45,6 @@
             :disabled="loginBtn.disabled"
           >Login</a-button>
         </a-form-item>
-
       </div>
     </a-form>
   </div>
@@ -54,11 +53,9 @@
 <script>
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
-import VueRecaptcha from 'vue-recaptcha'
 
 export default {
   components: {
-    VueRecaptcha
   },
   data () {
     return {
@@ -72,7 +69,8 @@ export default {
         email: '',
         password: '',
         backend: true,
-        recaptcha: ''
+        recaptcha: '',
+        remember: true
       }
     }
   },
@@ -85,7 +83,7 @@ export default {
           'callback': this.onVerify,
           'expired-callback': this.onExpired
         })
-      }, 200)
+      }, 100)
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
@@ -116,9 +114,9 @@ export default {
         password: this.form.password,
         backend: true,
         recaptcha: this.response,
-        remember: false
+        remember: this.form.remember
       }).then(res => {
-        console.log(res)
+        this.loginSuccess(res)
       }).catch(
         error => {
           console.log(error)
@@ -132,7 +130,7 @@ export default {
           message: 'Welcome',
           description: `${timeFix()}，Welcome Back`
         })
-      }, 1000)
+      }, 500)
       this.isLoginError = false
     }
   }
@@ -143,6 +141,11 @@ export default {
 .user-layout-login {
   label {
     font-size: 14px;
+  }
+
+  .grecaptcha {
+    transform:scale(1);
+    transform-origin:0 0;
   }
 
   button.login-button {
