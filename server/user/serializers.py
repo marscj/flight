@@ -7,13 +7,11 @@ from drf_recaptcha.fields import ReCaptchaV2Field, ReCaptchaV3Field
 
 UserModel = get_user_model()
 
-# class V3Serializer(Serializer):
-    
-
 class CustomLoginSerializer(LoginSerializer):
     
     backend = serializers.BooleanField(default=False)
-    recaptcha = ReCaptchaV2Field()
+    remember = serializers.BooleanField(default=True)
+    # recaptcha = ReCaptchaV2Field(required=False)
 
     def validate(self, attrs):
         attrs = super().validate(attrs)

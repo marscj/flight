@@ -32,12 +32,7 @@
           <a-checkbox>Remember Me</a-checkbox>
         </a-form-item>
         <a-form-item>
-          <vue-recaptcha
-            ref="recaptcha"
-            @verify="onVerify"
-            @expired="onExpired"
-            :sitekey="sitekey">
-          </vue-recaptcha>
+          <div id="grecaptcha"></div>
         </a-form-item>
         <a-form-item style="margin-top:24px">
           <a-button
@@ -45,6 +40,7 @@
             type="primary"
             htmlType="submit"
             class="login-button"
+            @click="handleSubmit"
             :loading="loginBtn.loading"
             :disabled="loginBtn.disabled"
           >Login</a-button>
@@ -82,6 +78,15 @@ export default {
   },
   created () {
   },
+  mounted() {
+    setTimeout(() => {
+        window.grecaptcha.render('grecaptcha', {
+          'sitekey': this.sitekey,
+          'callback': this.onVerify,
+          'expired-callback': this.onExpired
+        })
+      }, 200)
+  },
   methods: {
     ...mapActions(['Login', 'Logout']),
     onVerify: function (response) {
@@ -94,7 +99,7 @@ export default {
       this.loginBtn.disabled = true
     },
     handleSubmit (e) {
-
+      e.preventDefault()
       const {
         Login
       } = this
@@ -110,7 +115,8 @@ export default {
         email: this.form.email,
         password: this.form.password,
         backend: true,
-        recaptcha: this.response
+        recaptcha: this.response,
+        remember: false
       }).then(res => {
         console.log(res)
       }).catch(

@@ -17,6 +17,7 @@ module.exports = {
   ],
   rules: {
     'no-console': 'off',
+    "no-unused-vars": "off",
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'generator-star-spacing': 'off',
     'no-mixed-operators': 0,

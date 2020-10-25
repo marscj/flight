@@ -101,7 +101,6 @@ const vueConfig = {
   },
 
   devServer: {
-    // development server port 8000
     port: 8001,
     open: true,
     overlay: {
@@ -109,10 +108,9 @@ const vueConfig = {
       errors: true
     },
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8000/',
+      "/api": {
+        target: "http://127.0.0.1:8000",
         ws: false,
-        secure: false,
         changeOrigin: true
       }
     }

@@ -29,7 +29,7 @@
     <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.js) { %>
     <script type="text/javascript" src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
     <% } %>
-    <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer>
+    <script src="https://www.recaptcha.net/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer>
     </script>
     <script src="https://unpkg.com/vue-recaptcha@latest/dist/vue-recaptcha.js"></script>
     <!-- built files will be auto injected -->
