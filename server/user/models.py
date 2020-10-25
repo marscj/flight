@@ -62,3 +62,7 @@ class User(AbstractUser):
     class Meta:
         db_table = 'user'
 
+    @property
+    def full_name(self):
+        return self.get_full_name()
+

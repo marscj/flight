@@ -88,10 +88,11 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
     ),
-    
+    # 自定义返回结果
+    'DEFAULT_RENDERER_CLASSES': [
+        'middleware.response.CustomJSONRenderer',
+    ],
     'DEFAULT_THROTTLE_RATES': {   
         'anon': '3/m',
         'user': '100/m'
@@ -189,7 +190,7 @@ REST_AUTH_REGISTER_PERMISSION_CLASSES = [
 
 DRF_RECAPTCHA_SECRET_KEY =  '6LfV6doZAAAAALz6rm0Zlbj1ShlXiJ0eSQYPzA-2'
 DRF_RECAPTCHA_DOMAIN = 'www.recaptcha.net'  #'www.google.com'
-DRF_RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', 'https': 'https://127.0.0.1:8000'}
+# DRF_RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', 'https': 'https://127.0.0.1:8000'}
 
 # 图片处理
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
