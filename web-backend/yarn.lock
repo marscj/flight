@@ -4542,6 +4542,13 @@
   optionalDependencies:
     "source-map" "~0.6.1"
 
+"eslint-config-prettier@^6.14.0":
+  "integrity" "sha512-DbVwh0qZhAC7CNDWcq8cBdK6FcVHiMTKmCypOPWeZkp9hJ8xYwTaWSa6bb6cjfi8KOeJy0e9a8Izxyx+O4+gCQ=="
+  "resolved" "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-6.14.0.tgz"
+  "version" "6.14.0"
+  dependencies:
+    "get-stdin" "^6.0.0"
+
 "eslint-config-standard@^12.0.0":
   "integrity" "sha1-Y4tMZdsL1aQTGflruh8V3a0hB9k= sha512-COUz8FnXhqFitYj4DTqHzidjIL/t4mumGZto5c7DrBpvWoie+Sn3P4sLEzUGeYhRElWuFEf8K1S1EfvD1vixCQ=="
   "resolved" "https://registry.npm.taobao.org/eslint-config-standard/download/eslint-config-standard-12.0.0.tgz"
@@ -4656,7 +4663,7 @@
   "resolved" "https://registry.npm.taobao.org/eslint-visitor-keys/download/eslint-visitor-keys-1.1.0.tgz"
   "version" "1.1.0"
 
-"eslint@^5.0.0", "eslint@^5.16.0", "eslint@>= 1.6.0", "eslint@>= 4.12.1", "eslint@>=1.6.0 <7.0.0", "eslint@>=4.19.1", "eslint@>=5.0.0", "eslint@2.x - 6.x":
+"eslint@^5.0.0", "eslint@^5.16.0", "eslint@>= 1.6.0", "eslint@>= 4.12.1", "eslint@>=1.6.0 <7.0.0", "eslint@>=3.14.1", "eslint@>=4.19.1", "eslint@>=5.0.0", "eslint@2.x - 6.x":
   "integrity" "sha1-oeOsGq5KP72Clvz496tzFMu2q+o= sha512-S3Rz11i7c8AA5JPv7xAH+dOyq/Cu/VXHiHXBPOU1k/JAM5dXqQPt3qcrhpHSorXmrpu2g0gkIBVXAqCpzfoZIg=="
   "resolved" "https://registry.npm.taobao.org/eslint/download/eslint-5.16.0.tgz"
   "version" "5.16.0"
@@ -5368,6 +5375,11 @@
   "integrity" "sha1-T5RBKoLbMvNuOwuXQfipf+sDH34= sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg=="
   "resolved" "https://registry.npm.taobao.org/get-caller-file/download/get-caller-file-2.0.5.tgz"
   "version" "2.0.5"
+
+"get-stdin@^6.0.0":
+  "integrity" "sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g=="
+  "resolved" "https://registry.npmjs.org/get-stdin/-/get-stdin-6.0.0.tgz"
+  "version" "6.0.0"
 
 "get-stream@^3.0.0":
   "integrity" "sha1-jpQ9E1jcN1VQVOy+LtsFqhdO3hQ="

@@ -5,7 +5,15 @@ module.exports = {
   },
   'extends': [
     'plugin:vue/strongly-recommended',
-    '@vue/standard'
+    '@vue/standard',
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/babel",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard",
+    "prettier/unicorn",
+    "prettier/vue"
   ],
   rules: {
     'no-console': 'off',
@@ -71,5 +79,5 @@ module.exports = {
         jest: true
       }
     }
-  ]
+  ],
 }

@@ -10,6 +10,7 @@
       <div>
         <a-form-item>
           <a-input
+            v-model="form.email"
             size="large"
             type="text"
             placeholder="Email"
@@ -20,6 +21,7 @@
 
         <a-form-item>
           <a-input-password
+            v-model="form.password"
             size="large"
             placeholder="Password"
           >
@@ -43,8 +45,8 @@
             type="primary"
             htmlType="submit"
             class="login-button"
-            :loading="state.loginBtn"
-            :disabled="state.loginBtn"
+            :loading="loginBtn.loading"
+            :disabled="loginBtn.disabled"
           >Login</a-button>
         </a-form-item>
 
@@ -59,15 +61,23 @@ import { timeFix } from '@/utils/util'
 import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-  el: '#root',
   components: {
     VueRecaptcha
   },
   data () {
     return {
       sitekey: '6LfV6doZAAAAAHlHV67QLRkMAFOT9GWpyBIM7TcO',
-      loginBtn: false,
-      form: this.$form.createForm(this)
+      response: undefined,
+      loginBtn: {
+        loading: false,
+        disabled: true
+      },
+      form: {
+        email: '',
+        password: '',
+        backend: true,
+        recaptcha: ''
+      }
     }
   },
   created () {
@@ -75,12 +85,39 @@ export default {
   methods: {
     ...mapActions(['Login', 'Logout']),
     onVerify: function (response) {
-      this.loginBtn = true
+      console.log(response)
+      this.response = response
+      this.loginBtn.disabled = false
     },
     onExpired: function () {
-      this.loginBtn = false
+      this.response = null
+      this.loginBtn.disabled = true
     },
     handleSubmit (e) {
+
+      const {
+        Login
+      } = this
+
+      console.log({
+        email: this.form.email,
+        password: this.form.password,
+        backend: true,
+        recaptcha: this.response
+      })
+
+      Login({
+        email: this.form.email,
+        password: this.form.password,
+        backend: true,
+        recaptcha: this.response
+      }).then(res => {
+        console.log(res)
+      }).catch(
+        error => {
+          console.log(error)
+        }
+      )
     },
     loginSuccess (res) {
       this.$router.push({ path: '/' })
@@ -91,14 +128,6 @@ export default {
         })
       }, 1000)
       this.isLoginError = false
-    },
-    requestFailed (err) {
-      this.isLoginError = true
-      this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4
-      })
     }
   }
 }
