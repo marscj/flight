@@ -11362,6 +11362,11 @@
   "resolved" "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz"
   "version" "1.1.2"
 
+"vee-validate@^3.4.5":
+  "integrity" "sha512-ZEcLqOAZzSkMhDvPcTx0xcwVOijFnMW9J+BA20j+rDmo24T8RCCqVQyRwwrDrcWJZV2dRYl/yYNa2GB6UCoBvg=="
+  "resolved" "https://registry.npmjs.org/vee-validate/-/vee-validate-3.4.5.tgz"
+  "version" "3.4.5"
+
 "vendors@^1.0.0":
   "integrity" "sha1-4rgApT56Kbk1BsPPQRANFsTErY4= sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w=="
   "resolved" "https://registry.npm.taobao.org/vendors/download/vendors-1.0.4.tgz?cache=0&sync_timestamp=1579857147055&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvendors%2Fdownload%2Fvendors-1.0.4.tgz"
@@ -11556,7 +11561,7 @@
   "resolved" "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2.0.0", "vue@^2.5.17", "vue@^2.5.3", "vue@^2.6.10", "vue@^2.x", "vue@>= 2.0", "vue@>= 2.5.0", "vue@>=2.5.0", "vue@>=2.6.0", "vue@2.x":
+"vue@^2.0.0", "vue@^2.5.17", "vue@^2.5.18", "vue@^2.5.3", "vue@^2.6.10", "vue@^2.x", "vue@>= 2.0", "vue@>= 2.5.0", "vue@>=2.5.0", "vue@>=2.6.0", "vue@2.x":
   "integrity" "sha1-dllNh31LEiNEBuhONSdcbVFBJcU= sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ=="
   "resolved" "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz"
   "version" "2.6.11"
