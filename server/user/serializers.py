@@ -1,20 +1,46 @@
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Group, Permission
 
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from rest_auth.serializers import LoginSerializer
-from drf_recaptcha.fields import ReCaptchaV2Field, ReCaptchaV3Field
+# from drf_recaptcha.fields import ReCaptchaV2Field, ReCaptchaV3Field
 
 UserModel = get_user_model()
 
-class CustomLoginSerializer(LoginSerializer):
+class ContentTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ContentType
+        fields = '__all__'
+
+class PermissionSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeSerializer(many=False)
+
+    class Meta:
+        model = Permission
+        fields = '__all__'
+
+class GroupSerializer(serializers.ModelSerializer):
+    
+    permissions = PermissionSerializer(read_only=True, many=True)
+
+    name = serializers.CharField(required=False, max_length=150)
+    
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+class LoginSerializer(LoginSerializer):
     
     backend = serializers.BooleanField(default=False)
     remember = serializers.BooleanField(default=True)
 
-    if not settings.DEBUG:
-        recaptcha = ReCaptchaV2Field(required=True)
+    # if not settings.DEBUG:
+    #     recaptcha = ReCaptchaV2Field(required=True)
 
     def validate(self, attrs):
         attrs = super().validate(attrs) 
