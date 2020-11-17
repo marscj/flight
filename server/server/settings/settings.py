@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'corsheaders',
-    # 'drf_recaptcha',
     'allauth',
     'allauth.account',
     'rest_framework',
@@ -187,10 +186,6 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 REST_AUTH_REGISTER_PERMISSION_CLASSES = [
     'rest_framework.permissions.DjangoModelPermissions'
 ]
-
-# DRF_RECAPTCHA_SECRET_KEY =  '6LfV6doZAAAAALz6rm0Zlbj1ShlXiJ0eSQYPzA-2'
-# DRF_RECAPTCHA_DOMAIN = 'www.recaptcha.net'  #'www.google.com'
-# DRF_RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', 'https': 'https://127.0.0.1:8000'}
 
 # 图片处理
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {

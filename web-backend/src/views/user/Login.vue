@@ -1,36 +1,34 @@
 <template>
   <div class="main">
-    <validation-observer ref="observer">
-      <a-form-valite class="user-layout-login" :form="form" @submit="handleSubmit">
-        <div>
-          <a-form-item>
-            <a-input v-model="form.email" size="large" type="text" placeholder="Email">
-              <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }" />
-            </a-input>
-          </a-form-item>
+    <form-validate class="user-layout-login" :form="form" @submit="handleSubmit">
+      <div>
+        <form-item-validate vid="email">
+          <a-input v-model="form.email" size="large" type="text" placeholder="Email">
+            <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }" />
+          </a-input>
+        </form-item-validate>
 
-          <a-form-item>
-            <a-input-password v-model="form.password" size="large" placeholder="Password">
-              <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
-            </a-input-password>
-          </a-form-item>
-          <a-form-item>
-            <a-checkbox v-model="form.remember">Remember Me</a-checkbox>
-          </a-form-item>
-          <a-form-item style="margin-top:24px">
-            <a-button
-              size="large"
-              type="primary"
-              htmlType="submit"
-              class="login-button"
-              @click="handleSubmit"
-              :loading="loginBtn.loading"
-              >Login</a-button
-            >
-          </a-form-item>
-        </div>
-      </a-form>
-    </validation-observer>
+        <a-form-item>
+          <a-input-password v-model="form.password" size="large" placeholder="Password">
+            <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
+          </a-input-password>
+        </a-form-item>
+        <a-form-item>
+          <a-checkbox v-model="form.remember">Remember Me</a-checkbox>
+        </a-form-item>
+        <a-form-item style="margin-top:24px">
+          <a-button
+            size="large"
+            type="primary"
+            htmlType="submit"
+            class="login-button"
+            @click="handleSubmit"
+            :loading="loginBtn.loading"
+            >Login</a-button
+          >
+        </a-form-item>
+      </div>
+    </form-validate>
   </div>
 </template>
 
@@ -78,6 +76,9 @@ export default {
         })
         .catch(error => {
           console.log(error)
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result)
+          }
         })
     },
     loginSuccess(res) {

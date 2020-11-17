@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'FormValidate',
   props: {
     form: {
       type: Object,
@@ -18,5 +19,3 @@ export default {
   }
 }
 </script>
-
-<style></style>

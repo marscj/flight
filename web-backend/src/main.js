@@ -25,9 +25,6 @@ Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
 
-var VueCookie = require('vue-cookie')
-Vue.use(VueCookie)
-
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 
 new Vue({

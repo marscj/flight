@@ -6,7 +6,6 @@ from django.contrib.auth.models import Group, Permission
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from rest_auth.serializers import LoginSerializer
-# from drf_recaptcha.fields import ReCaptchaV2Field, ReCaptchaV3Field
 
 UserModel = get_user_model()
 
@@ -38,9 +37,6 @@ class LoginSerializer(LoginSerializer):
     
     backend = serializers.BooleanField(default=False)
     remember = serializers.BooleanField(default=True)
-
-    # if not settings.DEBUG:
-    #     recaptcha = ReCaptchaV2Field(required=True)
 
     def validate(self, attrs):
         attrs = super().validate(attrs) 
