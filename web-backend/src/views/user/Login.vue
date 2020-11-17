@@ -31,9 +31,6 @@
         <a-form-item>
           <a-checkbox v-model="form.remember">Remember Me</a-checkbox>
         </a-form-item>
-        <a-form-item>
-          <div id="grecaptcha" align='center'></div>
-        </a-form-item>
         <a-form-item style="margin-top:24px">
           <a-button
             size="large"
@@ -77,13 +74,6 @@ export default {
   created () {
   },
   mounted() {
-    setTimeout(() => {
-        window.grecaptcha.render('grecaptcha', {
-          'sitekey': this.sitekey,
-          'callback': this.onVerify,
-          'expired-callback': this.onExpired
-        })
-      }, 100)
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
@@ -141,11 +131,6 @@ export default {
 .user-layout-login {
   label {
     font-size: 14px;
-  }
-
-  .grecaptcha {
-    transform:scale(1);
-    transform-origin:0 0;
   }
 
   button.login-button {
