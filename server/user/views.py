@@ -6,8 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
-from rest_auth.views import LoginView as AuthLoginView
-from rest_auth.registration.views import RegisterView as AuthRegisterView
 import django_filters 
 
 from . import serializers
