@@ -1,13 +1,10 @@
 import request from '@/utils/request'
 
 const userApi = {
-  Login: '/user/login/',
-  Logout: '/user/logout/',
-  ForgePassword: '/auth/forge-password',
+  Login: '/auth/login/',
+  Logout: '/auth/logout/',
   Register: '/auth/register',
-  // get my info
-  UserInfo: '/user/info/',
-  UserMenu: '/user/nav/'
+  UserInfo: '/auth/info/'
 }
 
 /**
