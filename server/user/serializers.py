@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group, Permission
 
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
-from rest_auth.serializers import LoginSerializer
+from rest_auth.serializers import LoginSerializer as AuthLoginSerializer
 
 UserModel = get_user_model()
 
@@ -33,7 +33,7 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = '__all__'
 
-class LoginSerializer(LoginSerializer):
+class LoginSerializer(AuthLoginSerializer):
     
     backend = serializers.BooleanField(default=False)
     remember = serializers.BooleanField(default=True)
