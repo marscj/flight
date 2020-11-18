@@ -35,9 +35,14 @@
 <script>
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
+import FormValidate from '@/components/FormValidate'
+import FormItemValidate from '@/components/FormItemValidate'
 
 export default {
-  components: {},
+  components: {
+    FormValidate,
+    FormItemValidate
+  },
   data() {
     return {
       sitekey: '6LfV6doZAAAAAHlHV67QLRkMAFOT9GWpyBIM7TcO',
@@ -76,9 +81,9 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result)
-          }
+          // if (error.response) {
+          //   this.$refs.observer.setErrors(error.response.data.result)
+          // }
         })
     },
     loginSuccess(res) {

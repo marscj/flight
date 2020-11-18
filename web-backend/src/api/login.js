@@ -21,23 +21,15 @@ const userApi = {
  * @param parameter
  * @returns {*}
  */
-export function login (parameter) {
+export function login(data) {
   return request({
     url: userApi.Login,
     method: 'post',
-    data: parameter
+    data: data
   })
 }
 
-export function getSmsCaptcha (parameter) {
-  return request({
-    url: userApi.SendSms,
-    method: 'post',
-    data: parameter
-  })
-}
-
-export function getInfo () {
+export function getInfo() {
   return request({
     url: userApi.UserInfo,
     method: 'get',
@@ -47,14 +39,14 @@ export function getInfo () {
   })
 }
 
-export function getCurrentUserNav () {
+export function getCurrentUserNav() {
   return request({
     url: userApi.UserMenu,
     method: 'get'
   })
 }
 
-export function logout () {
+export function logout() {
   return request({
     url: userApi.Logout,
     method: 'post',

@@ -1,6 +1,8 @@
 <template>
   <validation-observer ref="observer">
-    <a-form :form="form" @submit="submit"> </a-form>
+    <a-form :form="form" :submit="submit">
+      <slot> </slot>
+    </a-form>
   </validation-observer>
 </template>
 

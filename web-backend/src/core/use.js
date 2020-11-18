@@ -14,9 +14,6 @@ import PermissionHelper from '@/core/permission/permission'
 // import '@/components/use'
 import './directives/action'
 
-import FormValidate from '@/components/FormValidate'
-import FormItemValidate from '@/components/FormItemValidate'
-
 VueClipboard.config.autoSetContainer = true
 
 Vue.use(Antd)
@@ -26,8 +23,5 @@ Vue.use(PageLoading)
 Vue.use(VueClipboard)
 Vue.use(PermissionHelper)
 Vue.use(VueCropper)
-
-Vue.use(FormValidate)
-Vue.use(FormItemValidate)
 
 process.env.NODE_ENV !== 'production' && console.warn('[antd-pro] WARNING: Antd now use fulled imported.')
