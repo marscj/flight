@@ -16,7 +16,7 @@
         <a-form-item>
           <a-checkbox v-model="form.remember">Remember Me</a-checkbox>
         </a-form-item>
-        <a-form-item style="margin-top:24px">
+        <a-form-item style="margin-top: 24px">
           <a-button
             size="large"
             type="primary"
@@ -24,8 +24,8 @@
             class="login-button"
             @click="handleSubmit"
             :loading="loginBtn.loading"
-            >Login</a-button
-          >
+            >Login
+          </a-button>
         </a-form-item>
       </div>
     </form-validate>
@@ -41,20 +41,20 @@ import FormItemValidate from '@/components/FormItemValidate'
 export default {
   components: {
     FormValidate,
-    FormItemValidate
+    FormItemValidate,
   },
   data() {
     return {
       sitekey: '6LfV6doZAAAAAHlHV67QLRkMAFOT9GWpyBIM7TcO',
       response: undefined,
       loginBtn: {
-        loading: false
+        loading: false,
       },
       form: {
         email: '',
         password: '',
-        backend: true
-      }
+        backend: true,
+      },
     }
   },
   created() {},
@@ -68,18 +68,18 @@ export default {
       console.log({
         email: this.form.email,
         password: this.form.password,
-        backend: true
+        backend: true,
       })
 
       Login({
         email: this.form.email,
         password: this.form.password,
-        backend: true
+        backend: true,
       })
-        .then(res => {
+        .then((res) => {
           this.loginSuccess(res)
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error)
           // if (error.response) {
           //   this.$refs.observer.setErrors(error.response.data.result)
@@ -91,12 +91,12 @@ export default {
       setTimeout(() => {
         this.$notification.success({
           message: 'Welcome',
-          description: `${timeFix()}，Welcome Back`
+          description: `${timeFix()}，Welcome Back`,
         })
       }, 500)
       this.isLoginError = false
-    }
-  }
+    },
+  },
 }
 </script>
 
