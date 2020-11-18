@@ -3,11 +3,19 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['plugin:vue/strongly-recommended', '@vue/standard'],
+  extends: [
+    'plugin:vue/strongly-recommended',
+    '@vue/standard',
+    'prettier',
+    'prettier/@typescript-eslint',
+    'prettier/babel',
+    'prettier/vue',
+  ],
   rules: {
     'comma-dangle': 'off',
     'space-before-function-paren': 'off',
     'no-console': 'off',
+    'no-unused-vars': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'generator-star-spacing': 'off',
     'no-mixed-operators': 0,
