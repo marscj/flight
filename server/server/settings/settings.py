@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'django_filters',
     'versatileimagefield',
     
-    'auth',
+    'authorization',
     'user',
     'ticket'
 ]
