@@ -10345,11 +10345,6 @@
   "resolved" "https://registry.npm.taobao.org/stealthy-require/download/stealthy-require-1.1.1.tgz"
   "version" "1.1.1"
 
-"store@^2.0.12":
-  "integrity" "sha1-jFNOKguDH3K3X8XxEZhXxE711ZM="
-  "resolved" "https://registry.npm.taobao.org/store/download/store-2.0.12.tgz"
-  "version" "2.0.12"
-
 "stream-browserify@^2.0.1":
   "integrity" "sha1-h1IdOKRKp+6RzhzSpH3wy0ndZgs="
   "resolved" "https://registry.npm.taobao.org/stream-browserify/download/stream-browserify-2.0.2.tgz?cache=0&sync_timestamp=1587041194718&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fstream-browserify%2Fdownload%2Fstream-browserify-2.0.2.tgz"
@@ -11356,6 +11351,11 @@
     "loader-utils" "^1.1.0"
     "vue-hot-reload-api" "^2.3.0"
     "vue-style-loader" "^4.1.0"
+
+"vue-ls@^3.2.1":
+  "integrity" "sha512-JoZDpSu0qV5AM50vspEzOut2lcm8R0tr5WG99jMHh14qFXkUes3ZdmDMG/p8iSQVQpg0pd/svGwM9Nd7OI2oaw=="
+  "resolved" "https://registry.npmjs.org/vue-ls/-/vue-ls-3.2.1.tgz"
+  "version" "3.2.1"
 
 "vue-quill-editor@^3.0.6":
   "integrity" "sha1-H4VkYhHWijGoCnLLf0W7LxGbyPs="

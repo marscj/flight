@@ -13,9 +13,6 @@
             <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
           </a-input-password>
         </form-item-validate>
-        <a-form-item>
-          <a-checkbox v-model="form.remember">Remember Me</a-checkbox>
-        </a-form-item>
         <a-form-item style="margin-top: 24px">
           <a-button
             size="large"
@@ -64,12 +61,6 @@ export default {
     handleSubmit(e) {
       e.preventDefault()
       const { Login } = this
-
-      console.log({
-        email: this.form.email,
-        password: this.form.password,
-        backend: true,
-      })
 
       Login({
         email: this.form.email,
