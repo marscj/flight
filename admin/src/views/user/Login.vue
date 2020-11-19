@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <form-validate class="user-layout-login" :form="form" @submit="handleSubmit">
+    <form-validate ref="observer" :submit="handleSubmit" :form="form" observer="observer" class="user-layout-login">
       <div>
         <form-item-validate vid="email">
           <a-input v-model="form.email" size="large" type="text" placeholder="Email">
@@ -8,11 +8,11 @@
           </a-input>
         </form-item-validate>
 
-        <a-form-item>
+        <form-item-validate vid="password">
           <a-input-password v-model="form.password" size="large" placeholder="Password">
             <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
           </a-input-password>
-        </a-form-item>
+        </form-item-validate>
         <a-form-item>
           <a-checkbox v-model="form.remember">Remember Me</a-checkbox>
         </a-form-item>
@@ -81,9 +81,9 @@ export default {
         })
         .catch((error) => {
           console.log(error)
-          // if (error.response) {
-          //   this.$refs.observer.setErrors(error.response.data.result)
-          // }
+          if (error.response) {
+            this.$refs.observer.checkError(error.response.data.result)
+          }
         })
     },
     loginSuccess(res) {

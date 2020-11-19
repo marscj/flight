@@ -1,7 +1,11 @@
 <template>
   <validation-observer ref="observer">
-    <a-form :form="form" :submit="submit">
+    <a-form :form="form" @submit="submit">
       <slot> </slot>
+
+      <validation-provider name="non_field_errors" v-slot="{ errors }">
+        <span class="errorText">{{ errors[0] }}</span>
+      </validation-provider>
     </a-form>
   </validation-observer>
 </template>
@@ -12,12 +16,21 @@ export default {
   props: {
     form: {
       type: Object,
-      default: undefined
+      default: undefined,
     },
     submit: {
       type: Function,
-      default: undefined
-    }
-  }
+      default: () => {},
+    },
+    error: {
+      type: Object,
+      default: undefined,
+    },
+  },
+  methods: {
+    checkError(errors) {
+      this.$refs.observer.setErrors(errors)
+    },
+  },
 }
 </script>
