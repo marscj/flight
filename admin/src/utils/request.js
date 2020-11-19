@@ -24,7 +24,7 @@ const errorHandler = (error) => {
         description: data.message,
       })
     }
-    if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
+    if (error.response.status === 401 && data.result) {
       notification.error({
         message: 'Unauthorized',
         description: 'Authorization verification failed',
@@ -42,16 +42,15 @@ const errorHandler = (error) => {
 }
 
 // request interceptor
-request.interceptors.request.use((config) => {
-  const token = Vue.ls.get(ACCESS_TOKEN)
-  console.log(token)
-  // 如果 token 存在
-  // 让每个请求携带自定义 token 请根据实际情况自行修改
-  if (token) {
-    config.headers['Access-Token'] = token
-  }
-  return config
-}, errorHandler)
+// request.interceptors.request.use((config) => {
+//   const token = Vue.ls.get(ACCESS_TOKEN)
+//   // 如果 token 存在
+//   // 让每个请求携带自定义 token 请根据实际情况自行修改
+//   if (token) {
+//     config.headers['Access-Token'] = token
+//   }
+//   return config
+// }, errorHandler)
 
 // response interceptor
 request.interceptors.response.use((response) => {

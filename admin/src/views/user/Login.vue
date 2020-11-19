@@ -71,10 +71,7 @@ export default {
           this.loginSuccess(res)
         })
         .catch((error) => {
-          console.log(error)
-          if (error.response) {
-            this.$refs.observer.checkError(error.response.data.result)
-          }
+          this.$refs.observer.checkError(error)
         })
     },
     loginSuccess(res) {
@@ -82,10 +79,9 @@ export default {
       setTimeout(() => {
         this.$notification.success({
           message: 'Welcome',
-          description: `${timeFix()}，Welcome Back`,
+          description: `${timeFix()}, Welcome Back`,
         })
       }, 500)
-      this.isLoginError = false
     },
   },
 }

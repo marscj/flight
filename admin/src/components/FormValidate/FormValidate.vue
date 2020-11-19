@@ -28,8 +28,24 @@ export default {
     },
   },
   methods: {
-    checkError(errors) {
-      this.$refs.observer.setErrors(errors)
+    checkError(error) {
+      setTimeout(() => {
+        this.$notification.success({
+          message: 'Error: ' + error.response.status,
+          description: error.response.statusText,
+        })
+      }, 500)
+
+      if (
+        error != null &&
+        error.response != null &&
+        error.response.data != null &&
+        error.response.data.result != null
+      ) {
+        this.$refs.observer.setErrors(error.response.data.result)
+      } else {
+        this.$refs.observer.setErrors({ non_field_errors: error.response.data })
+      }
     },
   },
 }

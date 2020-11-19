@@ -52,7 +52,9 @@ const user = {
     // 获取用户信息
     GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
-        getInfo().then((response) => {})
+        getInfo().then((response) => {
+          const result = response.result
+        })
         // getInfo().then(response => {
         //   const result = response.result
         //   if (result.role && result.role.permissions.length > 0) {
