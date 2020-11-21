@@ -11,10 +11,6 @@ class Department(models.Model):
         
 class User(AbstractUser):
 
-    class Role(models.IntegerChoices):
-        User = 0
-        Admin = 1
-
     # 护照类型
     possport_type = models.CharField(blank=True, null=True, max_length=4)
 
@@ -47,9 +43,6 @@ class User(AbstractUser):
 
     # 部门
     department = models.ForeignKey(Department, related_name='users', on_delete=models.SET_NULL, blank=True, null=True)
-
-    # 角色
-    role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.User)
 
     # 头像
     avatar = VersatileImageField(upload_to='user/avatar/', ppoi_field='image_ppoi', null=True, blank=True)

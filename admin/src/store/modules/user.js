@@ -56,9 +56,8 @@ const user = {
           const result = response.result
           console.log(result)
           if (result.is_staff) {
-            reject(new Error('getInfo: roles must be a non-null array !'))
           } else {
-            reject(new Error('getInfo: roles must be a non-null array !'))
+            reject(new Error("You don't have permission to access."))
           }
         })
         // getInfo().then(response => {
