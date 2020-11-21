@@ -36,7 +36,6 @@ class GroupSerializer(serializers.ModelSerializer):
 class LoginSerializer(AuthLoginSerializer):
     
     backend = serializers.BooleanField(default=False)
-    remember = serializers.BooleanField(default=True)
 
     def validate(self, attrs):
         attrs = super().validate(attrs) 
