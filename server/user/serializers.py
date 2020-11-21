@@ -17,6 +17,10 @@ class ContentTypeSerializer(serializers.ModelSerializer):
 
 class PermissionSerializer(serializers.ModelSerializer):
 
+    name = serializers.CharField(max_length=255)
+
+    codename = serializers.CharField(max_length=100)
+
     content_type = ContentTypeSerializer(many=False)
 
     class Meta:

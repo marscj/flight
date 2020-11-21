@@ -54,8 +54,18 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo().then((response) => {
           const result = response.result
-          console.log(result)
-          if (result.is_staff) {
+          var roles = result.roles
+
+          if (roles && roles.length > 0) {
+            var total = roles.map((f) => f.permissions.length).reduce((total, e) => total + e)
+
+            if (total > 0) {
+              commit('SET_ROLES', result.roles)
+              commit('SET_INFO', result)
+              resolve(response)
+            } else {
+              reject(new Error("You don't have permission to access."))
+            }
           } else {
             reject(new Error("You don't have permission to access."))
           }

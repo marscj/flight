@@ -12,6 +12,7 @@ module.exports = {
     'prettier/vue',
   ],
   rules: {
+    camelcase: ['error', { properties: 'never' }],
     'comma-dangle': 'off',
     'space-before-function-paren': 'off',
     'no-console': 'off',

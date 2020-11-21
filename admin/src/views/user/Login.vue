@@ -76,12 +76,6 @@ export default {
     },
     loginSuccess(res) {
       this.$router.push({ path: '/' })
-      setTimeout(() => {
-        this.$notification.success({
-          message: 'Welcome',
-          description: `${timeFix()}, Welcome Back`,
-        })
-      }, 500)
     },
   },
 }
