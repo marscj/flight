@@ -54,6 +54,12 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo().then((response) => {
           const result = response.result
+          console.log(result)
+          if (result.is_staff) {
+            reject(new Error('getInfo: roles must be a non-null array !'))
+          } else {
+            reject(new Error('getInfo: roles must be a non-null array !'))
+          }
         })
         // getInfo().then(response => {
         //   const result = response.result
