@@ -31,7 +31,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       expand: false,
       localCheckAll: false,
@@ -40,8 +40,8 @@ export default {
     }
   },
   methods: {
-    onChange (checked) {
-      const key = Object.keys(this.items).filter(key => key === checked.value)
+    onChange(checked) {
+      const key = Object.keys(this.items).filter((key) => key === checked.value)
       this.items[key] = checked.checked
       const bool = Object.values(this.items).lastIndexOf(false)
       if (bool === -1) {
@@ -50,21 +50,21 @@ export default {
         this.localCheckAll = false
       }
     },
-    onCheckAll (checked) {
-      Object.keys(this.items).forEach(v => {
+    onCheckAll(checked) {
+      Object.keys(this.items).forEach((v) => {
         this.items[v] = checked.checked
       })
       this.localCheckAll = checked.checked
     },
-    getItemsKey (items) {
+    getItemsKey(items) {
       const totalItem = {}
-      items.forEach(item => {
+      items.forEach((item) => {
         totalItem[item.componentOptions.propsData && item.componentOptions.propsData.value] = false
       })
       return totalItem
     },
     // CheckAll Button
-    renderCheckAll () {
+    renderCheckAll() {
       const props = {
         on: {
           change: (checked) => {
@@ -74,15 +74,17 @@ export default {
           }
         }
       }
-      const checkAllElement = <Option key={'total'} checked={this.localCheckAll} {...props}>All</Option>
-      return !this.hideCheckAll && checkAllElement || null
+      const checkAllElement = (
+        <Option key={'total'} checked={this.localCheckAll} {...props}>
+          All
+        </Option>
+      )
+      return (!this.hideCheckAll && checkAllElement) || null
     },
     // expandable
-    renderExpandable () {
-
-    },
+    renderExpandable() {},
     // render option
-    renderTags (items) {
+    renderTags(items) {
       const listeners = {
         change: (checked) => {
           this.onChange(checked)
@@ -90,15 +92,17 @@ export default {
         }
       }
 
-      return items.map(vnode => {
+      return items.map((vnode) => {
         const options = vnode.componentOptions
         options.listeners = listeners
         return vnode
       })
     }
   },
-  render () {
-    const { $props: { prefixCls } } = this
+  render() {
+    const {
+      $props: { prefixCls }
+    } = this
     const classString = {
       [`${prefixCls}`]: true
     }

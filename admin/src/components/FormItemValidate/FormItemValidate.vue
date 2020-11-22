@@ -12,13 +12,13 @@ export default {
   props: {
     vid: {
       type: String,
-      default: undefined,
+      default: undefined
     },
     name: {
       type: String,
-      default: undefined,
-    },
-  },
+      default: undefined
+    }
+  }
 }
 </script>
 

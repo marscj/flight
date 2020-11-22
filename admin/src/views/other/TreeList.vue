@@ -8,7 +8,8 @@
           :search="true"
           @click="handleClick"
           @add="handleAdd"
-          @titleClick="handleTitleClick"></s-tree>
+          @titleClick="handleTitleClick"
+        ></s-tree>
       </a-col>
       <a-col :span="19">
         <s-table
@@ -17,7 +18,10 @@
           :columns="columns"
           :data="loadData"
           :alert="false"
-          :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+          :rowSelection="{
+            selectedRowKeys: selectedRowKeys,
+            onChange: onSelectChange
+          }"
         >
           <span slot="action" slot-scope="text, record">
             <template v-if="$auth('table.update')">
@@ -25,9 +29,7 @@
               <a-divider type="vertical" />
             </template>
             <a-dropdown>
-              <a class="ant-dropdown-link">
-                更多 <a-icon type="down" />
-              </a>
+              <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
               <a-menu slot="overlay">
                 <a-menu-item>
                   <a href="javascript:;">详情</a>
@@ -62,7 +64,7 @@ export default {
     STree,
     OrgModal
   },
-  data () {
+  data() {
     return {
       openKeys: ['key-01'],
 
@@ -103,49 +105,44 @@ export default {
         }
       ],
       // 加载数据方法 必须为 Promise 对象
-      loadData: parameter => {
-        return getServiceList(Object.assign(parameter, this.queryParam))
-          .then(res => {
-            return res.result
-          })
+      loadData: (parameter) => {
+        return getServiceList(Object.assign(parameter, this.queryParam)).then((res) => {
+          return res.result
+        })
       },
       orgTree: [],
       selectedRowKeys: [],
       selectedRows: []
     }
   },
-  created () {
-    getOrgTree().then(res => {
+  created() {
+    getOrgTree().then((res) => {
       this.orgTree = res.result
     })
   },
   methods: {
-    handleClick (e) {
+    handleClick(e) {
       console.log('handleClick', e)
       this.queryParam = {
         key: e.key
       }
       this.$refs.table.refresh(true)
     },
-    handleAdd (item) {
+    handleAdd(item) {
       console.log('add button, item', item)
       this.$message.info(`提示：你点了 ${item.key} - ${item.title} `)
       this.$refs.modal.add(item.key)
     },
-    handleTitleClick (item) {
+    handleTitleClick(item) {
       console.log('handleTitleClick', item)
     },
-    titleClick (e) {
+    titleClick(e) {
       console.log('titleClick', e)
     },
-    handleSaveOk () {
+    handleSaveOk() {},
+    handleSaveClose() {},
 
-    },
-    handleSaveClose () {
-
-    },
-
-    onSelectChange (selectedRowKeys, selectedRows) {
+    onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
     }
@@ -154,39 +151,38 @@ export default {
 </script>
 
 <style lang="less">
-  .custom-tree {
-
-    /deep/ .ant-menu-item-group-title {
-      position: relative;
-      &:hover {
-        .btn {
-          display: block;
-        }
-      }
-    }
-
-    /deep/ .ant-menu-item {
-      &:hover {
-        .btn {
-          display: block;
-        }
-      }
-    }
-
-    /deep/ .btn {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 10px;
-      width: 20px;
-      height: 40px;
-      line-height: 40px;
-      z-index: 1050;
-
-      &:hover {
-        transform: scale(1.2);
-        transition: 0.5s all;
+.custom-tree {
+  /deep/ .ant-menu-item-group-title {
+    position: relative;
+    &:hover {
+      .btn {
+        display: block;
       }
     }
   }
+
+  /deep/ .ant-menu-item {
+    &:hover {
+      .btn {
+        display: block;
+      }
+    }
+  }
+
+  /deep/ .btn {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    width: 20px;
+    height: 40px;
+    line-height: 40px;
+    z-index: 1050;
+
+    &:hover {
+      transform: scale(1.2);
+      transition: 0.5s all;
+    }
+  }
+}
 </style>

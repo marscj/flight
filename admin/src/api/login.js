@@ -4,7 +4,7 @@ const userApi = {
   Login: '/auth/login/',
   Logout: '/auth/logout/',
   Register: '/auth/register',
-  UserInfo: '/auth/info/',
+  UserInfo: '/auth/info/'
 }
 
 /**
@@ -22,7 +22,7 @@ export function login(data) {
   return request({
     url: userApi.Login,
     method: 'post',
-    data: data,
+    data: data
   })
 }
 
@@ -31,15 +31,15 @@ export function getInfo() {
     url: userApi.UserInfo,
     method: 'get',
     headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }
 
 export function getCurrentUserNav() {
   return request({
     url: userApi.UserMenu,
-    method: 'get',
+    method: 'get'
   })
 }
 
@@ -48,7 +48,7 @@ export function logout() {
     url: userApi.Logout,
     method: 'post',
     headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }

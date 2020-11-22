@@ -38,20 +38,20 @@ import FormItemValidate from '@/components/FormItemValidate'
 export default {
   components: {
     FormValidate,
-    FormItemValidate,
+    FormItemValidate
   },
   data() {
     return {
       sitekey: '6LfV6doZAAAAAHlHV67QLRkMAFOT9GWpyBIM7TcO',
       response: undefined,
       loginBtn: {
-        loading: false,
+        loading: false
       },
       form: {
         email: 'admin@admin.com',
         password: 'admin123',
-        backend: true,
-      },
+        backend: true
+      }
     }
   },
   created() {},
@@ -65,7 +65,7 @@ export default {
       Login({
         email: this.form.email,
         password: this.form.password,
-        backend: true,
+        backend: true
       })
         .then((res) => {
           this.loginSuccess(res)
@@ -76,8 +76,8 @@ export default {
     },
     loginSuccess(res) {
       this.$router.push({ path: '/' })
-    },
-  },
+    }
+  }
 }
 </script>
 

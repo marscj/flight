@@ -11,8 +11,8 @@
             'email',
             {
               rules: [{ required: true, type: 'email', message: '请输入邮箱地址' }],
-              validateTrigger: ['change', 'blur'],
-            },
+              validateTrigger: ['change', 'blur']
+            }
           ]"
         ></a-input>
       </a-form-item>
@@ -44,10 +44,10 @@
               {
                 rules: [
                   { required: true, message: '至少6位密码，区分大小写' },
-                  { validator: this.handlePasswordLevel },
+                  { validator: this.handlePasswordLevel }
                 ],
-                validateTrigger: ['change', 'blur'],
-              },
+                validateTrigger: ['change', 'blur']
+              }
             ]"
           ></a-input-password>
         </a-form-item>
@@ -61,8 +61,8 @@
             'password2',
             {
               rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordCheck }],
-              validateTrigger: ['change', 'blur'],
-            },
+              validateTrigger: ['change', 'blur']
+            }
           ]"
         ></a-input-password>
       </a-form-item>
@@ -75,11 +75,15 @@
             'mobile',
             {
               rules: [
-                { required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ },
-                { validator: this.handlePhoneCheck },
+                {
+                  required: true,
+                  message: '请输入正确的手机号',
+                  pattern: /^1[3456789]\d{9}$/
+                },
+                { validator: this.handlePhoneCheck }
               ],
-              validateTrigger: ['change', 'blur'],
-            },
+              validateTrigger: ['change', 'blur']
+            }
           ]"
         >
           <a-select slot="addonBefore" size="large" defaultValue="+86">
@@ -105,7 +109,10 @@
               placeholder="验证码"
               v-decorator="[
                 'captcha',
-                { rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur' },
+                {
+                  rules: [{ required: true, message: '请输入验证码' }],
+                  validateTrigger: 'blur'
+                }
               ]"
             >
               <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }" />
@@ -148,19 +155,19 @@ const levelNames = {
   0: '低',
   1: '低',
   2: '中',
-  3: '强',
+  3: '强'
 }
 const levelClass = {
   0: 'error',
   1: 'error',
   2: 'warning',
-  3: 'success',
+  3: 'success'
 }
 const levelColor = {
   0: '#ff0000',
   1: '#ff0000',
   2: '#ff7e05',
-  3: '#52c41a',
+  3: '#52c41a'
 }
 export default {
   name: 'Register',
@@ -176,9 +183,9 @@ export default {
         passwordLevel: 0,
         passwordLevelChecked: false,
         percent: 10,
-        progressColor: '#FF0000',
+        progressColor: '#FF0000'
       },
-      registerBtn: false,
+      registerBtn: false
     }
   },
   computed: {
@@ -190,7 +197,7 @@ export default {
     },
     passwordLevelColor() {
       return levelColor[this.state.passwordLevel]
-    },
+    }
   },
   methods: {
     handlePasswordLevel(rule, value, callback) {
@@ -255,7 +262,7 @@ export default {
       const {
         form: { validateFields },
         state,
-        $router,
+        $router
       } = this
       validateFields({ force: true }, (err, values) => {
         if (!err) {
@@ -271,7 +278,7 @@ export default {
         form: { validateFields },
         state,
         $message,
-        $notification,
+        $notification
       } = this
 
       validateFields(['mobile'], { force: true }, (err, values) => {
@@ -309,16 +316,16 @@ export default {
       this.$notification['error']({
         message: '错误',
         description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4,
+        duration: 4
       })
       this.registerBtn = false
-    },
+    }
   },
   watch: {
     'state.passwordLevel'(val) {
       console.log(val)
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less">

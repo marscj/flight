@@ -8,17 +8,13 @@
             <span class="title">SAADIYAT WAY TRAVEL & TOURISM</span>
           </a>
         </div>
-        <div class="desc">
-          Employee Ticket Booking System
-        </div>
+        <div class="desc">Employee Ticket Booking System</div>
       </div>
 
       <router-view />
 
       <div class="footer">
-        <div class="copyright">
-          Copyright © 2019 by SAADIYAT WAY TRAVEL&TOURISM L.L.C
-        </div>
+        <div class="copyright">Copyright © 2019 by SAADIYAT WAY TRAVEL&TOURISM L.L.C</div>
       </div>
     </div>
   </div>

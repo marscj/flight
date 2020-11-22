@@ -11,7 +11,14 @@
           <div>
             <a-form :form="form" layout="inline">
               <a-form-item label="自定义名称">
-                <a-input v-decorator="['tabName', { rules: [{ required: true, message: '请输入新的 Tab 名称' }] }]" />
+                <a-input
+                  v-decorator="[
+                    'tabName',
+                    {
+                      rules: [{ required: true, message: '请输入新的 Tab 名称' }]
+                    }
+                  ]"
+                />
               </a-form-item>
             </a-form>
           </div>
@@ -36,7 +43,14 @@
                 <a-input v-decorator="['tabKey', { initialValue: '/dashboard/home' }]" />
               </a-form-item>
               <a-form-item label="自定义名称">
-                <a-input v-decorator="['tabName', { rules: [{ required: true, message: '请输入新的 Tab 名称' }] }]" />
+                <a-input
+                  v-decorator="[
+                    'tabName',
+                    {
+                      rules: [{ required: true, message: '请输入新的 Tab 名称' }]
+                    }
+                  ]"
+                />
               </a-form-item>
             </a-form>
           </div>
@@ -59,7 +73,7 @@ export default {
   data() {
     return {
       visible: false,
-      visible2: false,
+      visible2: false
     }
   },
   created() {
@@ -113,8 +127,8 @@ export default {
           this.visible2 = false
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

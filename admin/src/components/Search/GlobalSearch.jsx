@@ -3,12 +3,12 @@ import './index.less'
 
 const GlobalSearch = {
   name: 'GlobalSearch',
-  data () {
+  data() {
     return {
       visible: false
     }
   },
-  mounted () {
+  mounted() {
     const keyboardHandle = (e) => {
       e.preventDefault()
       e.stopPropagation()
@@ -21,7 +21,7 @@ const GlobalSearch = {
     }
     document.addEventListener('keydown', keyboardHandle)
   },
-  render () {
+  render() {
     const { visible } = this
     const handleSearch = (e) => {
       this.$emit('search', e)
@@ -47,8 +47,7 @@ const GlobalSearch = {
             onSearch={handleSearch}
             onChange={handleChange}
             notFoundContent={null}
-          >
-          </Select>
+          ></Select>
           <div class={'global-search-tips'}>Open with Ctrl/⌘ + K</div>
         </div>
       </div>

@@ -21,7 +21,7 @@ export default {
   fixedHeader: true,
   fixSiderbar: true,
   hideHintAlert: false,
-  hideCopyButton: false,
+  hideCopyButton: false
 }
 // {
 //   navTheme: 'dark', // theme for nav menu

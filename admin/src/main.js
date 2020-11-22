@@ -24,7 +24,7 @@ Vue.config.productionTip = false
 Vue.use(Storage, {
   namespace: 'vuejs__', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
-  storage: 'local', // storage name session, local, memory
+  storage: 'local' // storage name session, local, memory
 })
 
 // mount axios to `Vue.$http` and `this.$http`
@@ -42,5 +42,5 @@ new Vue({
   i18n,
   // init localstorage, vuex
   created: bootstrap,
-  render: (h) => h(App),
+  render: (h) => h(App)
 }).$mount('#app')

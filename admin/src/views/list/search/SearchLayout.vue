@@ -31,10 +31,10 @@ export default {
       tabList: [
         { key: '1', tab: '文章' },
         { key: '2', tab: '项目' },
-        { key: '3', tab: '应用' },
+        { key: '3', tab: '应用' }
       ],
       tabActiveKey: '1',
-      search: true,
+      search: true
     }
   },
   created() {
@@ -60,8 +60,8 @@ export default {
         default:
           this.$router.push('/home')
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -96,7 +96,7 @@ export default {
     PageView,
     AppPage,
     ArticlePage,
-    ProjectPage,
+    ProjectPage
   },
   data() {
     return {
@@ -111,22 +111,22 @@ export default {
       tabListNoTitle: [
         {
           key: 'article',
-          tab: '文章(8)',
+          tab: '文章(8)'
         },
         {
           key: 'app',
-          tab: '应用(8)',
+          tab: '应用(8)'
         },
         {
           key: 'project',
-          tab: '项目(8)',
-        },
+          tab: '项目(8)'
+        }
       ],
-      noTitleKey: 'app',
+      noTitleKey: 'app'
     }
   },
   computed: {
-    ...mapGetters(['nickname', 'avatar']),
+    ...mapGetters(['nickname', 'avatar'])
   },
   mounted() {
     this.getTeams()
@@ -169,10 +169,10 @@ export default {
       Object.assign(this, {
         tags,
         tagInputVisible: false,
-        tagInputValue: '',
+        tagInputValue: ''
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

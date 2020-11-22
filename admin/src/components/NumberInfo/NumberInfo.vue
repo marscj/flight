@@ -1,7 +1,9 @@
 <template>
   <div :class="[prefixCls]">
     <slot name="subtitle">
-      <div :class="[`${prefixCls}-subtitle`]">{{ typeof subTitle === 'string' ? subTitle : subTitle() }}</div>
+      <div :class="[`${prefixCls}-subtitle`]">
+        {{ typeof subTitle === 'string' ? subTitle : subTitle() }}
+      </div>
     </slot>
     <div class="number-info-value">
       <span>{{ total }}</span>
@@ -43,12 +45,12 @@ export default {
   components: {
     Icon
   },
-  data () {
+  data() {
     return {}
   }
 }
 </script>
 
 <style lang="less" scoped>
-  @import "index";
+@import 'index';
 </style>

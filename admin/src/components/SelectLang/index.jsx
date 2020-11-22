@@ -28,14 +28,14 @@ const SelectLang = {
   },
   name: 'SelectLang',
   mixins: [i18nMixin],
-  render () {
+  render() {
     const { prefixCls } = this
     const changeLang = ({ key }) => {
       this.setLang(key)
     }
     const langMenu = (
       <Menu class={['menu', 'ant-pro-header-menu']} selectedKeys={[this.currentLang]} onClick={changeLang}>
-        {locales.map(locale => (
+        {locales.map((locale) => (
           <Menu.Item key={locale}>
             <span role="img" aria-label={languageLabels[locale]}>
               {languageIcons[locale]}

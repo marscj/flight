@@ -90,13 +90,13 @@ function filterAsyncRouter(routerMap, roles) {
 export const permission = {
   state: {
     routers: constantRouterMap,
-    addRouters: [],
+    addRouters: []
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
       state.routers = constantRouterMap.concat(routers)
-    },
+    }
   },
   actions: {
     GenerateRoutes({ commit }, data) {
@@ -112,8 +112,8 @@ export const permission = {
         }
         resolve()
       })
-    },
-  },
+    }
+  }
 }
 
 export default permission

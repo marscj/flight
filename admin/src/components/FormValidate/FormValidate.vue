@@ -16,23 +16,23 @@ export default {
   props: {
     form: {
       type: Object,
-      default: undefined,
+      default: undefined
     },
     submit: {
       type: Function,
-      default: () => {},
+      default: () => {}
     },
     error: {
       type: Object,
-      default: undefined,
-    },
+      default: undefined
+    }
   },
   methods: {
     checkError(error) {
       setTimeout(() => {
         this.$notification.success({
           message: 'Error: ' + error.response.status,
-          description: error.response.statusText,
+          description: error.response.statusText
         })
       }, 500)
 
@@ -46,7 +46,7 @@ export default {
       } else {
         this.$refs.observer.setErrors({ non_field_errors: error.response.data })
       }
-    },
-  },
+    }
+  }
 }
 </script>

@@ -13,7 +13,7 @@ import { filterEmpty } from '@/components/_util/util'
 const AvatarListProps = {
   prefixCls: PropTypes.string.def('ant-pro-avatar-list'),
   size: {
-    validator: val => {
+    validator: (val) => {
       return typeof val === 'number' || ['small', 'large', 'default'].includes(val)
     },
     default: 'default'
@@ -30,7 +30,7 @@ const AvatarList = {
   Item,
   name: 'AvatarList',
   props: AvatarListProps,
-  render (h) {
+  render(h) {
     const { prefixCls, size } = this.$props
     const className = {
       [`${prefixCls}`]: true,
@@ -39,14 +39,10 @@ const AvatarList = {
     const items = filterEmpty(this.$slots.default)
     const itemsDom = items && items.length ? <ul class={`${prefixCls}-items`}>{this.getItems(items)}</ul> : null
 
-    return (
-      <div class={className}>
-        {itemsDom}
-      </div>
-    )
+    return <div class={className}>{itemsDom}</div>
   },
   methods: {
-    getItems (items) {
+    getItems(items) {
       const className = {
         [`${this.prefixCls}-item`]: true,
         [`${this.size}`]: true
@@ -55,11 +51,9 @@ const AvatarList = {
 
       if (this.maxLength > 0) {
         items = items.slice(0, this.maxLength)
-        items.push((<Avatar size={this.size} style={this.excessItemsStyle}>{`+${totalSize - this.maxLength}`}</Avatar>))
+        items.push(<Avatar size={this.size} style={this.excessItemsStyle}>{`+${totalSize - this.maxLength}`}</Avatar>)
       }
-      return items.map((item) => (
-        <li class={className}>{item}</li>
-      ))
+      return items.map((item) => <li class={className}>{item}</li>)
     }
   }
 }

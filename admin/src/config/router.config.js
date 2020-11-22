@@ -4,7 +4,7 @@ import { bxAnaalyse } from '@/core/icons'
 
 const RouteView = {
   name: 'RouteView',
-  render: (h) => h('router-view'),
+  render: (h) => h('router-view')
 }
 
 // export const asyncRouterMap = [
@@ -346,23 +346,32 @@ export const asyncRouterMap = [
         name: 'dashboard',
         redirect: '/dashboard/home',
         component: RouteView,
-        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['user'] },
+        meta: {
+          title: 'menu.dashboard',
+          keepAlive: true,
+          icon: bxAnaalyse,
+          permission: ['user']
+        },
         children: [
           {
             path: '/dashboard/home',
             name: 'Home',
             component: () => import('@/views/dashboard/Home'),
-            meta: { title: 'menu.dashboard.home', keepAlive: true, permission: ['user'] },
-          },
-        ],
-      },
-    ],
+            meta: {
+              title: 'menu.dashboard.home',
+              keepAlive: true,
+              permission: ['user']
+            }
+          }
+        ]
+      }
+    ]
   },
   {
     path: '*',
     redirect: '/404',
-    hidden: true,
-  },
+    hidden: true
+  }
 ]
 
 /**
@@ -379,28 +388,28 @@ export const constantRouterMap = [
       {
         path: 'login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login'),
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
       },
       {
         path: 'register',
         name: 'register',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Register'),
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Register')
       },
       {
         path: 'register-result',
         name: 'registerResult',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult'),
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
       },
       {
         path: 'recover',
         name: 'recover',
-        component: undefined,
-      },
-    ],
+        component: undefined
+      }
+    ]
   },
 
   {
     path: '/404',
-    component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
-  },
+    component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
+  }
 ]

@@ -3,11 +3,11 @@ import { mapState } from 'vuex'
 const i18nMixin = {
   computed: {
     ...mapState({
-      currentLang: state => state.app.lang
+      currentLang: (state) => state.app.lang
     })
   },
   methods: {
-    setLang (lang) {
+    setLang(lang) {
       this.$store.dispatch('setLang', lang)
     }
   }

@@ -11,15 +11,15 @@ export const defaultLang = 'en-US'
 
 const messages = {
   'en-US': {
-    ...enUS,
-  },
+    ...enUS
+  }
 }
 
 const i18n = new VueI18n({
   silentTranslationWarn: true,
   locale: defaultLang,
   fallbackLocale: defaultLang,
-  messages,
+  messages
 })
 
 const loadedLanguages = [defaultLang]
