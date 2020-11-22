@@ -18,12 +18,24 @@
       <a-divider style="margin-bottom: 32px" />
 
       <div class="title">退货商品</div>
-      <s-table style="margin-bottom: 24px" row-key="id" :columns="goodsColumns" :data="loadGoodsData"> </s-table>
+      <s-table
+        style="margin-bottom: 24px"
+        row-key="id"
+        :columns="goodsColumns"
+        :data="loadGoodsData"> </s-table>
 
       <div class="title">退货进度</div>
-      <s-table style="margin-bottom: 24px" row-key="key" :columns="scheduleColumns" :data="loadScheduleData">
-        <template slot="status" slot-scope="status">
-          <a-badge :status="status" :text="status | statusFilter" />
+      <s-table
+        style="margin-bottom: 24px"
+        row-key="key"
+        :columns="scheduleColumns"
+        :data="loadScheduleData">
+        <template
+          slot="status"
+          slot-scope="status">
+          <a-badge
+            :status="status"
+            :text="status | statusFilter" />
         </template>
       </s-table>
     </a-card>

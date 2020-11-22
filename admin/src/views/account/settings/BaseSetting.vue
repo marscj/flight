@@ -1,29 +1,41 @@
 <template>
   <div class="account-settings-info-view">
     <a-row :gutter="16">
-      <a-col :md="24" :lg="16">
+      <a-col
+        :md="24"
+        :lg="16">
         <a-form layout="vertical">
           <a-form-item label="昵称">
             <a-input placeholder="给自己起个名字" />
           </a-form-item>
           <a-form-item label="Bio">
-            <a-textarea rows="4" placeholder="You are not alone." />
+            <a-textarea
+              rows="4"
+              placeholder="You are not alone." />
           </a-form-item>
 
-          <a-form-item label="电子邮件" :required="false">
+          <a-form-item
+            label="电子邮件"
+            :required="false">
             <a-input placeholder="exp@admin.com" />
           </a-form-item>
-          <a-form-item label="加密方式" :required="false">
+          <a-form-item
+            label="加密方式"
+            :required="false">
             <a-select defaultValue="aes-256-cfb">
               <a-select-option value="aes-256-cfb">aes-256-cfb</a-select-option>
               <a-select-option value="aes-128-cfb">aes-128-cfb</a-select-option>
               <a-select-option value="chacha20">chacha20</a-select-option>
             </a-select>
           </a-form-item>
-          <a-form-item label="连接密码" :required="false">
+          <a-form-item
+            label="连接密码"
+            :required="false">
             <a-input placeholder="h3gSbecd" />
           </a-form-item>
-          <a-form-item label="登录密码" :required="false">
+          <a-form-item
+            label="登录密码"
+            :required="false">
             <a-input placeholder="密码" />
           </a-form-item>
 
@@ -33,9 +45,16 @@
           </a-form-item>
         </a-form>
       </a-col>
-      <a-col :md="24" :lg="8" :style="{ minHeight: '180px' }">
-        <div class="ant-upload-preview" @click="$refs.modal.edit(1)">
-          <a-icon type="cloud-upload-o" class="upload-icon" />
+      <a-col
+        :md="24"
+        :lg="8"
+        :style="{ minHeight: '180px' }">
+        <div
+          class="ant-upload-preview"
+          @click="$refs.modal.edit(1)">
+          <a-icon
+            type="cloud-upload-o"
+            class="upload-icon" />
           <div class="mask">
             <a-icon type="plus" />
           </div>
@@ -44,7 +63,9 @@
       </a-col>
     </a-row>
 
-    <avatar-modal ref="modal" @ok="setavatar" />
+    <avatar-modal
+      ref="modal"
+      @ok="setavatar" />
   </div>
 </template>
 

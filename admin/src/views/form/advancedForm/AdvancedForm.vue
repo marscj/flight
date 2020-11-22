@@ -1,16 +1,33 @@
 <template>
   <page-header-wrapper content="高级表单常见于一次性输入和提交大批量数据的场景">
-    <a-card class="card" title="仓库管理" :bordered="false">
-      <repository-form ref="repository" :showSubmit="false" />
+    <a-card
+      class="card"
+      title="仓库管理"
+      :bordered="false">
+      <repository-form
+        ref="repository"
+        :showSubmit="false" />
     </a-card>
-    <a-card class="card" title="任务管理" :bordered="false">
-      <task-form ref="task" :showSubmit="false" />
+    <a-card
+      class="card"
+      title="任务管理"
+      :bordered="false">
+      <task-form
+        ref="task"
+        :showSubmit="false" />
     </a-card>
 
     <!-- table -->
     <a-card>
-      <a-table :columns="columns" :dataSource="data" :pagination="false" :loading="memberLoading">
-        <template v-for="(col, i) in ['name', 'workId', 'department']" :slot="col" slot-scope="text, record">
+      <a-table
+        :columns="columns"
+        :dataSource="data"
+        :pagination="false"
+        :loading="memberLoading">
+        <template
+          v-for="(col, i) in ['name', 'workId', 'department']"
+          :slot="col"
+          slot-scope="text, record">
           <a-input
             :key="col"
             v-if="record.editable"
@@ -21,12 +38,16 @@
           />
           <template v-else>{{ text }}</template>
         </template>
-        <template slot="operation" slot-scope="text, record">
+        <template
+          slot="operation"
+          slot-scope="text, record">
           <template v-if="record.editable">
             <span v-if="record.isNew">
               <a @click="saveRow(record)">添加</a>
               <a-divider type="vertical" />
-              <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
+              <a-popconfirm
+                title="是否要删除此行？"
+                @confirm="remove(record.key)">
                 <a>删除</a>
               </a-popconfirm>
             </span>
@@ -39,19 +60,27 @@
           <span v-else>
             <a @click="toggle(record.key)">编辑</a>
             <a-divider type="vertical" />
-            <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
+            <a-popconfirm
+              title="是否要删除此行？"
+              @confirm="remove(record.key)">
               <a>删除</a>
             </a-popconfirm>
           </span>
         </template>
       </a-table>
-      <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember"
-        >新增成员</a-button
+      <a-button
+        style="width: 100%; margin-top: 16px; margin-bottom: 8px"
+        type="dashed"
+        icon="plus"
+        @click="newMember"
+      >新增成员</a-button
       >
     </a-card>
 
     <!-- fixed footer toolbar -->
-    <footer-tool-bar :is-mobile="isMobile" :collapsed="sideCollapsed">
+    <footer-tool-bar
+      :is-mobile="isMobile"
+      :collapsed="sideCollapsed">
       <span class="popover-wrapper">
         <a-popover
           title="表单校验信息"
@@ -66,19 +95,26 @@
               @click="scrollToField(item.key)"
               class="antd-pro-pages-forms-style-errorListItem"
             >
-              <a-icon type="cross-circle-o" class="antd-pro-pages-forms-style-errorIcon" />
+              <a-icon
+                type="cross-circle-o"
+                class="antd-pro-pages-forms-style-errorIcon" />
               <div class="">{{ item.message }}</div>
               <div class="antd-pro-pages-forms-style-errorField">
                 {{ item.fieldLabel }}
               </div>
             </li>
           </template>
-          <span class="antd-pro-pages-forms-style-errorIcon" v-if="errors.length > 0">
+          <span
+            class="antd-pro-pages-forms-style-errorIcon"
+            v-if="errors.length > 0">
             <a-icon type="exclamation-circle" />{{ errors.length }}
           </span>
         </a-popover>
       </span>
-      <a-button type="primary" @click="validate" :loading="loading">提交</a-button>
+      <a-button
+        type="primary"
+        @click="validate"
+        :loading="loading">提交</a-button>
     </footer-tool-bar>
   </page-header-wrapper>
 </template>

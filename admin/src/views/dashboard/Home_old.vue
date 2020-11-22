@@ -3,7 +3,9 @@
     <template v-slot:content>
       <div class="page-header-content">
         <div class="avatar">
-          <a-avatar size="large" :src="currentUser.avatar" />
+          <a-avatar
+            size="large"
+            :src="currentUser.avatar" />
         </div>
         <div class="content">
           <div class="content-title">
@@ -16,13 +18,20 @@
     <template v-slot:extraContent>
       <div class="extra-content">
         <div class="stat-item">
-          <a-statistic title="项目数" :value="56" />
+          <a-statistic
+            title="项目数"
+            :value="56" />
         </div>
         <div class="stat-item">
-          <a-statistic title="团队内排名" :value="8" suffix="/ 24" />
+          <a-statistic
+            title="团队内排名"
+            :value="8"
+            suffix="/ 24" />
         </div>
         <div class="stat-item">
-          <a-statistic title="项目访问" :value="2223" />
+          <a-statistic
+            title="项目访问"
+            :value="2223" />
         </div>
       </div>
     </template>

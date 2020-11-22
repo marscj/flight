@@ -3,14 +3,20 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="48">
-          <a-col :md="8" :sm="24">
+          <a-col
+            :md="8"
+            :sm="24">
             <a-form-item label="规则编号">
               <a-input placeholder="" />
             </a-form-item>
           </a-col>
-          <a-col :md="8" :sm="24">
+          <a-col
+            :md="8"
+            :sm="24">
             <a-form-item label="使用状态">
-              <a-select placeholder="请选择" default-value="0">
+              <a-select
+                placeholder="请选择"
+                default-value="0">
                 <a-select-option value="0">全部</a-select-option>
                 <a-select-option value="1">关闭</a-select-option>
                 <a-select-option value="2">运行中</a-select-option>
@@ -18,28 +24,42 @@
             </a-form-item>
           </a-col>
           <template v-if="advanced">
-            <a-col :md="8" :sm="24">
+            <a-col
+              :md="8"
+              :sm="24">
               <a-form-item label="调用次数">
                 <a-input-number style="width: 100%" />
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col
+              :md="8"
+              :sm="24">
               <a-form-item label="更新日期">
-                <a-date-picker style="width: 100%" placeholder="请输入更新日期" />
+                <a-date-picker
+                  style="width: 100%"
+                  placeholder="请输入更新日期" />
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col
+              :md="8"
+              :sm="24">
               <a-form-item label="使用状态">
-                <a-select placeholder="请选择" default-value="0">
+                <a-select
+                  placeholder="请选择"
+                  default-value="0">
                   <a-select-option value="0">全部</a-select-option>
                   <a-select-option value="1">关闭</a-select-option>
                   <a-select-option value="2">运行中</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col
+              :md="8"
+              :sm="24">
               <a-form-item label="使用状态">
-                <a-select placeholder="请选择" default-value="0">
+                <a-select
+                  placeholder="请选择"
+                  default-value="0">
                   <a-select-option value="0">全部</a-select-option>
                   <a-select-option value="1">关闭</a-select-option>
                   <a-select-option value="2">运行中</a-select-option>
@@ -47,14 +67,18 @@
               </a-form-item>
             </a-col>
           </template>
-          <a-col :md="(!advanced && 8) || 24" :sm="24">
+          <a-col
+            :md="(!advanced && 8) || 24"
+            :sm="24">
             <span
               class="table-page-search-submitButtons"
               :style="(advanced && { float: 'right', overflow: 'hidden' }) || {}"
             >
               <a-button type="primary">查询</a-button>
               <a-button style="margin-left: 8px">重置</a-button>
-              <a @click="toggleAdvanced" style="margin-left: 8px">
+              <a
+                @click="toggleAdvanced"
+                style="margin-left: 8px">
                 {{ advanced ? '收起' : '展开' }}
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
@@ -65,7 +89,9 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" icon="plus">新建</a-button>
+      <a-button
+        type="primary"
+        icon="plus">新建</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
@@ -87,7 +113,11 @@
         onChange: this.onSelectChange
       }"
     >
-      <template v-for="(col, index) in columns" v-if="col.scopedSlots" :slot="col.dataIndex" slot-scope="text, record">
+      <template
+        v-for="(col, index) in columns"
+        v-if="col.scopedSlots"
+        :slot="col.dataIndex"
+        slot-scope="text, record">
         <div :key="index">
           <a-input
             v-if="record.editable"
@@ -98,19 +128,27 @@
           <template v-else>{{ text }}</template>
         </div>
       </template>
-      <template slot="action" slot-scope="text, record">
+      <template
+        slot="action"
+        slot-scope="text, record">
         <div class="editable-row-operations">
           <span v-if="record.editable">
             <a @click="() => save(record)">保存</a>
             <a-divider type="vertical" />
-            <a-popconfirm title="真的放弃编辑吗?" @confirm="() => cancel(record)">
+            <a-popconfirm
+              title="真的放弃编辑吗?"
+              @confirm="() => cancel(record)">
               <a>取消</a>
             </a-popconfirm>
           </span>
           <span v-else>
-            <a class="edit" @click="() => edit(record)">修改</a>
+            <a
+              class="edit"
+              @click="() => edit(record)">修改</a>
             <a-divider type="vertical" />
-            <a class="delete" @click="() => del(record)">删除</a>
+            <a
+              class="delete"
+              @click="() => del(record)">删除</a>
           </span>
         </div>
       </template>

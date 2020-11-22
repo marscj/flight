@@ -3,21 +3,29 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="48">
-          <a-col :md="8" :sm="24">
+          <a-col
+            :md="8"
+            :sm="24">
             <a-form-item label="角色ID">
               <a-input placeholder="请输入" />
             </a-form-item>
           </a-col>
-          <a-col :md="8" :sm="24">
+          <a-col
+            :md="8"
+            :sm="24">
             <a-form-item label="状态">
-              <a-select placeholder="请选择" default-value="0">
+              <a-select
+                placeholder="请选择"
+                default-value="0">
                 <a-select-option value="0">全部</a-select-option>
                 <a-select-option value="1">关闭</a-select-option>
                 <a-select-option value="2">运行中</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="8" :sm="24">
+          <a-col
+            :md="8"
+            :sm="24">
             <span class="table-page-search-submitButtons">
               <a-button type="primary">查询</a-button>
               <a-button style="margin-left: 8px">重置</a-button>
@@ -27,16 +35,26 @@
       </a-form>
     </div>
 
-    <s-table :columns="columns" :data="loadData">
-      <span slot="actions" slot-scope="text, record">
-        <a-tag v-for="(action, index) in record.actionList" :key="index">{{ action.describe }}</a-tag>
+    <s-table
+      :columns="columns"
+      :data="loadData">
+      <span
+        slot="actions"
+        slot-scope="text, record">
+        <a-tag
+          v-for="(action, index) in record.actionList"
+          :key="index">{{ action.describe }}</a-tag>
       </span>
 
-      <span slot="status" slot-scope="text">
+      <span
+        slot="status"
+        slot-scope="text">
         {{ text | statusFilter }}
       </span>
 
-      <span slot="action" slot-scope="text, record">
+      <span
+        slot="action"
+        slot-scope="text, record">
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical" />
         <a-dropdown>
@@ -56,7 +74,11 @@
       </span>
     </s-table>
 
-    <a-modal title="操作" :width="800" v-model="visible" @ok="handleOk">
+    <a-modal
+      title="操作"
+      :width="800"
+      v-model="visible"
+      @ok="handleOk">
       <a-form
         :autoFormCreate="
           (form) => {
@@ -71,7 +93,11 @@
           hasFeedback
           validateStatus="success"
         >
-          <a-input placeholder="唯一识别码" v-model="mdl.id" id="no" disabled="disabled" />
+          <a-input
+            placeholder="唯一识别码"
+            v-model="mdl.id"
+            id="no"
+            disabled="disabled" />
         </a-form-item>
 
         <a-form-item
@@ -81,27 +107,54 @@
           hasFeedback
           validateStatus="success"
         >
-          <a-input placeholder="起一个名字" v-model="mdl.name" id="permission_name" />
+          <a-input
+            placeholder="起一个名字"
+            v-model="mdl.name"
+            id="permission_name" />
         </a-form-item>
 
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态" hasFeedback validateStatus="warning">
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="状态"
+          hasFeedback
+          validateStatus="warning">
           <a-select v-model="mdl.status">
             <a-select-option value="1">正常</a-select-option>
             <a-select-option value="2">禁用</a-select-option>
           </a-select>
         </a-form-item>
 
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述" hasFeedback>
-          <a-textarea :rows="5" v-model="mdl.describe" placeholder="..." id="describe" />
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="描述"
+          hasFeedback>
+          <a-textarea
+            :rows="5"
+            v-model="mdl.describe"
+            placeholder="..."
+            id="describe" />
         </a-form-item>
 
         <a-divider />
 
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="赋予权限" hasFeedback>
-          <a-select style="width: 100%" mode="multiple" v-model="mdl.actions" :allowClear="true">
-            <a-select-option v-for="(action, index) in permissionList" :key="index" :value="action.value">{{
-              action.label
-            }}</a-select-option>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="赋予权限"
+          hasFeedback>
+          <a-select
+            style="width: 100%"
+            mode="multiple"
+            v-model="mdl.actions"
+            :allowClear="true">
+            <a-select-option
+              v-for="(action, index) in permissionList"
+              :key="index"
+              :value="action.value">{{
+                action.label
+              }}</a-select-option>
           </a-select>
         </a-form-item>
       </a-form>

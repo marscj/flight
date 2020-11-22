@@ -3,21 +3,29 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="48">
-          <a-col :md="8" :sm="24">
+          <a-col
+            :md="8"
+            :sm="24">
             <a-form-item label="角色ID">
               <a-input placeholder="请输入" />
             </a-form-item>
           </a-col>
-          <a-col :md="8" :sm="24">
+          <a-col
+            :md="8"
+            :sm="24">
             <a-form-item label="状态">
-              <a-select placeholder="请选择" default-value="0">
+              <a-select
+                placeholder="请选择"
+                default-value="0">
                 <a-select-option value="0">全部</a-select-option>
                 <a-select-option value="1">关闭</a-select-option>
                 <a-select-option value="2">运行中</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="8" :sm="24">
+          <a-col
+            :md="8"
+            :sm="24">
             <span class="table-page-search-submitButtons">
               <a-button type="primary">查询</a-button>
               <a-button style="margin-left: 8px">重置</a-button>
@@ -35,29 +43,51 @@
       :expandedRowKeys="expandedRowKeys"
       @expand="handleExpand"
     >
-      <div slot="expandedRowRender" slot-scope="record" style="margin: 0">
-        <a-row :gutter="24" :style="{ marginBottom: '12px' }">
+      <div
+        slot="expandedRowRender"
+        slot-scope="record"
+        style="margin: 0">
+        <a-row
+          :gutter="24"
+          :style="{ marginBottom: '12px' }">
           <a-col
             :span="12"
             v-for="(role, index) in record.permissions"
             :key="index"
             :style="{ marginBottom: '12px', height: '23px' }"
           >
-            <a-col :lg="4" :md="24">
+            <a-col
+              :lg="4"
+              :md="24">
               <span>{{ role.permissionName }}：</span>
             </a-col>
-            <a-col :lg="20" :md="24" v-if="role.actionList && role.actionList.length > 0">
-              <a-tag color="cyan" v-for="action in role.actionList" :key="action">{{
-                action | permissionFilter
-              }}</a-tag>
+            <a-col
+              :lg="20"
+              :md="24"
+              v-if="role.actionList && role.actionList.length > 0">
+              <a-tag
+                color="cyan"
+                v-for="action in role.actionList"
+                :key="action">{{
+                  action | permissionFilter
+                }}</a-tag>
             </a-col>
-            <a-col :span="20" v-else>-</a-col>
+            <a-col
+              :span="20"
+              v-else>-</a-col>
           </a-col>
         </a-row>
       </div>
-      <a-tag color="blue" slot="status" slot-scope="text">{{ text | statusFilter }}</a-tag>
-      <span slot="createTime" slot-scope="text">{{ text | moment }}</span>
-      <span slot="action" slot-scope="text, record">
+      <a-tag
+        color="blue"
+        slot="status"
+        slot-scope="text">{{ text | statusFilter }}</a-tag>
+      <span
+        slot="createTime"
+        slot-scope="text">{{ text | moment }}</span>
+      <span
+        slot="action"
+        slot-scope="text, record">
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical" />
         <a-dropdown>
@@ -77,8 +107,15 @@
       </span>
     </s-table>
 
-    <a-modal title="操作" style="top: 20px" :width="800" v-model="visible" @ok="handleOk">
-      <a-form class="permission-form" :form="form">
+    <a-modal
+      title="操作"
+      style="top: 20px"
+      :width="800"
+      v-model="visible"
+      @ok="handleOk">
+      <a-form
+        class="permission-form"
+        :form="form">
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -86,7 +123,10 @@
           hasFeedback
           validateStatus="success"
         >
-          <a-input placeholder="唯一识别码" disabled="disabled" v-decorator="['id']" />
+          <a-input
+            placeholder="唯一识别码"
+            disabled="disabled"
+            v-decorator="['id']" />
         </a-form-item>
 
         <a-form-item
@@ -96,18 +136,33 @@
           hasFeedback
           validateStatus="success"
         >
-          <a-input placeholder="起一个名字" v-decorator="['name']" />
+          <a-input
+            placeholder="起一个名字"
+            v-decorator="['name']" />
         </a-form-item>
 
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态" hasFeedback validateStatus="warning">
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="状态"
+          hasFeedback
+          validateStatus="warning">
           <a-select v-decorator="['status', { initialValue: 1 }]">
             <a-select-option :value="1">正常</a-select-option>
             <a-select-option :value="2">禁用</a-select-option>
           </a-select>
         </a-form-item>
 
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述" hasFeedback>
-          <a-textarea :rows="5" placeholder="..." id="describe" v-decorator="['describe']" />
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="描述"
+          hasFeedback>
+          <a-textarea
+            :rows="5"
+            placeholder="..."
+            id="describe"
+            v-decorator="['describe']" />
         </a-form-item>
 
         <a-divider>拥有权限</a-divider>

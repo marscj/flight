@@ -2,19 +2,36 @@
   <page-header-wrapper>
     <a-card :bordered="false">
       <a-row>
-        <a-col :sm="8" :xs="24">
-          <info title="我的待办" value="8个任务" :bordered="true" />
+        <a-col
+          :sm="8"
+          :xs="24">
+          <info
+            title="我的待办"
+            value="8个任务"
+            :bordered="true" />
         </a-col>
-        <a-col :sm="8" :xs="24">
-          <info title="本周任务平均处理时间" value="32分钟" :bordered="true" />
+        <a-col
+          :sm="8"
+          :xs="24">
+          <info
+            title="本周任务平均处理时间"
+            value="32分钟"
+            :bordered="true" />
         </a-col>
-        <a-col :sm="8" :xs="24">
-          <info title="本周完成任务数" value="24个" />
+        <a-col
+          :sm="8"
+          :xs="24">
+          <info
+            title="本周完成任务数"
+            value="24个" />
         </a-col>
       </a-row>
     </a-card>
 
-    <a-card style="margin-top: 24px" :bordered="false" title="标准列表">
+    <a-card
+      style="margin-top: 24px"
+      :bordered="false"
+      title="标准列表">
       <div slot="extra">
         <a-radio-group v-model="status">
           <a-radio-button value="all">全部</a-radio-button>
@@ -25,7 +42,11 @@
       </div>
 
       <div class="operate">
-        <a-button type="dashed" style="width: 100%" icon="plus" @click="add">添加</a-button>
+        <a-button
+          type="dashed"
+          style="width: 100%"
+          icon="plus"
+          @click="add">添加</a-button>
       </div>
 
       <a-list
@@ -37,9 +58,15 @@
           total: 50
         }"
       >
-        <a-list-item :key="index" v-for="(item, index) in data">
+        <a-list-item
+          :key="index"
+          v-for="(item, index) in data">
           <a-list-item-meta :description="item.description">
-            <a-avatar slot="avatar" size="large" shape="square" :src="item.avatar" />
+            <a-avatar
+              slot="avatar"
+              size="large"
+              shape="square"
+              :src="item.avatar" />
             <a slot="title">{{ item.title }}</a>
           </a-list-item-meta>
           <div slot="actions">

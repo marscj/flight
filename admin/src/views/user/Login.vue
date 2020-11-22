@@ -1,16 +1,34 @@
 <template>
   <div class="main">
-    <form-validate ref="observer" :submit="handleSubmit" :form="form" observer="observer" class="user-layout-login">
+    <form-validate
+      ref="observer"
+      :submit="handleSubmit"
+      :form="form"
+      observer="observer"
+      class="user-layout-login">
       <div>
         <form-item-validate vid="email">
-          <a-input v-model="form.email" size="large" type="text" placeholder="Email">
-            <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }" />
+          <a-input
+            v-model="form.email"
+            size="large"
+            type="text"
+            placeholder="Email">
+            <a-icon
+              slot="prefix"
+              type="mail"
+              :style="{ color: 'rgba(0,0,0,.25)' }" />
           </a-input>
         </form-item-validate>
 
         <form-item-validate vid="password">
-          <a-input-password v-model="form.password" size="large" placeholder="Password">
-            <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
+          <a-input-password
+            v-model="form.password"
+            size="large"
+            placeholder="Password">
+            <a-icon
+              slot="prefix"
+              type="lock"
+              :style="{ color: 'rgba(0,0,0,.25)' }" />
           </a-input-password>
         </form-item-validate>
         <a-form-item style="margin-top: 24px">
@@ -21,7 +39,7 @@
             class="login-button"
             @click="handleSubmit"
             :loading="loginBtn.loading"
-            >Login
+          >Login
           </a-button>
         </a-form-item>
       </div>

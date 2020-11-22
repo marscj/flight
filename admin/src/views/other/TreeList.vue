@@ -23,7 +23,9 @@
             onChange: onSelectChange
           }"
         >
-          <span slot="action" slot-scope="text, record">
+          <span
+            slot="action"
+            slot-scope="text, record">
             <template v-if="$auth('table.update')">
               <a @click="handleEdit(record)">编辑</a>
               <a-divider type="vertical" />
@@ -47,7 +49,10 @@
       </a-col>
     </a-row>
 
-    <org-modal ref="modal" @ok="handleSaveOk" @close="handleSaveClose" />
+    <org-modal
+      ref="modal"
+      @ok="handleSaveOk"
+      @close="handleSaveClose" />
   </a-card>
 </template>
 

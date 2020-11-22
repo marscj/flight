@@ -1,13 +1,29 @@
 <template>
-  <a-list size="large" rowKey="id" :loading="loading" itemLayout="vertical" :dataSource="data">
-    <a-list-item :key="item.id" slot="renderItem" slot-scope="item">
+  <a-list
+    size="large"
+    rowKey="id"
+    :loading="loading"
+    itemLayout="vertical"
+    :dataSource="data">
+    <a-list-item
+      :key="item.id"
+      slot="renderItem"
+      slot-scope="item">
       <template slot="actions">
-        <icon-text type="star-o" :text="item.star" />
-        <icon-text type="like-o" :text="item.like" />
-        <icon-text type="message" :text="item.message" />
+        <icon-text
+          type="star-o"
+          :text="item.star" />
+        <icon-text
+          type="like-o"
+          :text="item.like" />
+        <icon-text
+          type="message"
+          :text="item.message" />
       </template>
       <a-list-item-meta>
-        <a slot="title" href="https://vue.ant.design/">{{ item.title }}</a>
+        <a
+          slot="title"
+          href="https://vue.ant.design/">{{ item.title }}</a>
         <template slot="description">
           <span>
             <a-tag>Ant Design</a-tag>
@@ -24,8 +40,13 @@
         :updateAt="item.updatedAt"
       />
     </a-list-item>
-    <div slot="footer" v-if="data.length > 0" style="text-align: center; margin-top: 16px">
-      <a-button @click="loadMore" :loading="loadingMore">加载更多</a-button>
+    <div
+      slot="footer"
+      v-if="data.length > 0"
+      style="text-align: center; margin-top: 16px">
+      <a-button
+        @click="loadMore"
+        :loading="loadingMore">加载更多</a-button>
     </div>
   </a-list>
 </template>

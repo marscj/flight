@@ -1,6 +1,9 @@
 <template>
   <a-form-item>
-    <validation-provider :vid="vid" :name="name" v-slot="{ errors }">
+    <validation-provider
+      :vid="vid"
+      :name="name"
+      v-slot="{ errors }">
       <slot> </slot>
       <span class="errorText">{{ errors[0] }}</span>
     </validation-provider>

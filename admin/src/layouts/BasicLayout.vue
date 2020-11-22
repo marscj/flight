@@ -26,9 +26,14 @@
       </div>
     </template>
 
-    <setting-drawer :settings="settings" @change="handleSettingChange" />
+    <setting-drawer
+      :settings="settings"
+      @change="handleSettingChange" />
     <template v-slot:rightContentRender>
-      <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
+      <right-content
+        :top-menu="settings.layout === 'topmenu'"
+        :is-mobile="isMobile"
+        :theme="settings.theme" />
     </template>
     <template v-slot:footerRender>
       <global-footer />

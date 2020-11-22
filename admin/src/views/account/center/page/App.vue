@@ -1,12 +1,24 @@
 <template>
   <div class="app-list">
-    <a-list :grid="{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }" :dataSource="dataSource">
-      <a-list-item slot="renderItem" slot-scope="item">
+    <a-list
+      :grid="{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }"
+      :dataSource="dataSource">
+      <a-list-item
+        slot="renderItem"
+        slot-scope="item">
         <a-card :hoverable="true">
           <a-card-meta>
-            <div style="margin-bottom: 3px" slot="title">{{ item.title }}</div>
-            <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="small" />
-            <div class="meta-cardInfo" slot="description">
+            <div
+              style="margin-bottom: 3px"
+              slot="title">{{ item.title }}</div>
+            <a-avatar
+              class="card-avatar"
+              slot="avatar"
+              :src="item.avatar"
+              size="small" />
+            <div
+              class="meta-cardInfo"
+              slot="description">
               <div>
                 <p>活跃用户</p>
                 <p>
@@ -19,7 +31,9 @@
               </div>
             </div>
           </a-card-meta>
-          <template class="ant-card-actions" slot="actions">
+          <template
+            class="ant-card-actions"
+            slot="actions">
             <a>
               <a-icon type="download" />
             </a>
@@ -31,7 +45,9 @@
             </a>
             <a>
               <a-dropdown>
-                <a class="ant-dropdown-link" href="javascript:;">
+                <a
+                  class="ant-dropdown-link"
+                  href="javascript:;">
                   <a-icon type="ellipsis" />
                 </a>
                 <a-menu slot="overlay">

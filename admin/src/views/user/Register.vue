@@ -1,7 +1,10 @@
 <template>
   <div class="main user-layout-register">
     <h3><span>注册</span></h3>
-    <a-form ref="formRegister" :form="form" id="formRegister">
+    <a-form
+      ref="formRegister"
+      :form="form"
+      id="formRegister">
       <a-form-item>
         <a-input
           size="large"
@@ -28,7 +31,10 @@
             <div :class="['user-register', passwordLevelClass]">
               强度：<span>{{ passwordLevelName }}</span>
             </div>
-            <a-progress :percent="state.percent" :showInfo="false" :strokeColor="passwordLevelColor" />
+            <a-progress
+              :percent="state.percent"
+              :showInfo="false"
+              :strokeColor="passwordLevelColor" />
             <div style="margin-top: 10px">
               <span>请至少输入 6 个字符。请不要使用容易被猜到的密码。</span>
             </div>
@@ -86,7 +92,10 @@
             }
           ]"
         >
-          <a-select slot="addonBefore" size="large" defaultValue="+86">
+          <a-select
+            slot="addonBefore"
+            size="large"
+            defaultValue="+86">
             <a-select-option value="+86">+86</a-select-option>
             <a-select-option value="+87">+87</a-select-option>
           </a-select>
@@ -101,7 +110,9 @@
           </a-input-group>-->
 
       <a-row :gutter="16">
-        <a-col class="gutter-row" :span="16">
+        <a-col
+          class="gutter-row"
+          :span="16">
           <a-form-item>
             <a-input
               size="large"
@@ -115,11 +126,16 @@
                 }
               ]"
             >
-              <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }" />
+              <a-icon
+                slot="prefix"
+                type="mail"
+                :style="{ color: 'rgba(0,0,0,.25)' }" />
             </a-input>
           </a-form-item>
         </a-col>
-        <a-col class="gutter-row" :span="8">
+        <a-col
+          class="gutter-row"
+          :span="8">
           <a-button
             class="getCaptcha"
             size="large"
@@ -139,9 +155,11 @@
           :loading="registerBtn"
           @click.stop.prevent="handleSubmit"
           :disabled="registerBtn"
-          >注册
+        >注册
         </a-button>
-        <router-link class="login" :to="{ name: 'login' }">使用已有账户登录</router-link>
+        <router-link
+          class="login"
+          :to="{ name: 'login' }">使用已有账户登录</router-link>
       </a-form-item>
     </a-form>
   </div>

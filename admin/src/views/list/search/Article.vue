@@ -1,8 +1,15 @@
 <template>
   <div>
-    <a-card :bordered="false" class="ant-pro-components-tag-select">
-      <a-form :form="form" layout="inline">
-        <standard-form-row title="所属类目" block style="padding-bottom: 11px">
+    <a-card
+      :bordered="false"
+      class="ant-pro-components-tag-select">
+      <a-form
+        :form="form"
+        layout="inline">
+        <standard-form-row
+          title="所属类目"
+          block
+          style="padding-bottom: 11px">
           <a-form-item>
             <tag-select>
               <tag-select-option value="Category1">类目一</tag-select-option>
@@ -19,7 +26,9 @@
           </a-form-item>
         </standard-form-row>
 
-        <standard-form-row title="owner" grid>
+        <standard-form-row
+          title="owner"
+          grid>
           <a-row>
             <a-col :md="24">
               <a-form-item :wrapper-col="{ span: 24 }">
@@ -30,26 +39,51 @@
                   v-decorator="['owner']"
                   @change="handleChange"
                 >
-                  <a-select-option v-for="item in owners" :key="item.id">{{ item.name }}</a-select-option>
+                  <a-select-option
+                    v-for="item in owners"
+                    :key="item.id">{{ item.name }}</a-select-option>
                 </a-select>
-                <a class="list-articles-trigger" @click="setOwner">只看自己的</a>
+                <a
+                  class="list-articles-trigger"
+                  @click="setOwner">只看自己的</a>
               </a-form-item>
             </a-col>
           </a-row>
         </standard-form-row>
 
-        <standard-form-row title="其它选项" grid last>
+        <standard-form-row
+          title="其它选项"
+          grid
+          last>
           <a-row :gutter="16">
-            <a-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8">
-              <a-form-item label="活跃用户" :wrapper-col="{ xs: 24, sm: 24, md: 12 }">
-                <a-select placeholder="不限" style="max-width: 200px; width: 100%">
+            <a-col
+              :xs="24"
+              :sm="24"
+              :md="12"
+              :lg="10"
+              :xl="8">
+              <a-form-item
+                label="活跃用户"
+                :wrapper-col="{ xs: 24, sm: 24, md: 12 }">
+                <a-select
+                  placeholder="不限"
+                  style="max-width: 200px; width: 100%">
                   <a-select-option value="李三">李三</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :xs="24" :sm="24" :md="12" :lg="10" :xl="8">
-              <a-form-item label="好评度" :wrapper-col="{ xs: 24, sm: 24, md: 12 }">
-                <a-select placeholder="不限" style="max-width: 200px; width: 100%">
+            <a-col
+              :xs="24"
+              :sm="24"
+              :md="12"
+              :lg="10"
+              :xl="8">
+              <a-form-item
+                label="好评度"
+                :wrapper-col="{ xs: 24, sm: 24, md: 12 }">
+                <a-select
+                  placeholder="不限"
+                  style="max-width: 200px; width: 100%">
                   <a-select-option value="优秀">优秀</a-select-option>
                 </a-select>
               </a-form-item>
@@ -59,16 +93,34 @@
       </a-form>
     </a-card>
 
-    <a-card style="margin-top: 24px" :bordered="false">
-      <a-list size="large" rowKey="id" :loading="loading" itemLayout="vertical" :dataSource="data">
-        <a-list-item :key="item.id" slot="renderItem" slot-scope="item">
+    <a-card
+      style="margin-top: 24px"
+      :bordered="false">
+      <a-list
+        size="large"
+        rowKey="id"
+        :loading="loading"
+        itemLayout="vertical"
+        :dataSource="data">
+        <a-list-item
+          :key="item.id"
+          slot="renderItem"
+          slot-scope="item">
           <template slot="actions">
-            <icon-text type="star-o" :text="item.star" />
-            <icon-text type="like-o" :text="item.like" />
-            <icon-text type="message" :text="item.message" />
+            <icon-text
+              type="star-o"
+              :text="item.star" />
+            <icon-text
+              type="like-o"
+              :text="item.like" />
+            <icon-text
+              type="message"
+              :text="item.message" />
           </template>
           <a-list-item-meta>
-            <a slot="title" href="https://vue.ant.design/">{{ item.title }}</a>
+            <a
+              slot="title"
+              href="https://vue.ant.design/">{{ item.title }}</a>
             <template slot="description">
               <span>
                 <a-tag>Ant Design</a-tag>
@@ -85,8 +137,13 @@
             :updateAt="item.updatedAt"
           />
         </a-list-item>
-        <div slot="footer" v-if="data.length > 0" style="text-align: center; margin-top: 16px">
-          <a-button @click="loadMore" :loading="loadingMore">加载更多</a-button>
+        <div
+          slot="footer"
+          v-if="data.length > 0"
+          style="text-align: center; margin-top: 16px">
+          <a-button
+            @click="loadMore"
+            :loading="loadingMore">加载更多</a-button>
         </div>
       </a-list>
     </a-card>

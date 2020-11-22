@@ -6,7 +6,9 @@
     @tabChange="handleTabChange"
   >
     <template v-slot:content>
-      <a-descriptions size="small" :column="isMobile ? 1 : 2">
+      <a-descriptions
+        size="small"
+        :column="isMobile ? 1 : 2">
         <a-descriptions-item label="创建人">曲丽丽</a-descriptions-item>
         <a-descriptions-item label="订购产品">XX 服务</a-descriptions-item>
         <a-descriptions-item label="创建时间">2017-07-07</a-descriptions-item>
@@ -30,26 +32,37 @@
 
     <template v-slot:extraContent>
       <a-row class="status-list">
-        <a-col :xs="12" :sm="12">
+        <a-col
+          :xs="12"
+          :sm="12">
           <div class="text">状态</div>
           <div class="heading">待审批</div>
         </a-col>
-        <a-col :xs="12" :sm="12">
+        <a-col
+          :xs="12"
+          :sm="12">
           <div class="text">订单金额</div>
           <div class="heading">¥ 568.08</div>
         </a-col>
       </a-row>
     </template>
 
-    <a-card :bordered="false" title="流程进度">
-      <a-steps :direction="(isMobile && 'vertical') || 'horizontal'" :current="1" progressDot>
+    <a-card
+      :bordered="false"
+      title="流程进度">
+      <a-steps
+        :direction="(isMobile && 'vertical') || 'horizontal'"
+        :current="1"
+        progressDot>
         <a-step>
           <template v-slot:title>
             <span>创建项目</span>
           </template>
           <template v-slot:description>
             <div class="antd-pro-pages-profile-advanced-style-stepDescription">
-              曲丽丽<a-icon type="dingding" style="margin-left: 8px" />
+              曲丽丽<a-icon
+                type="dingding"
+                style="margin-left: 8px" />
               <div>2016-12-12 12:32</div>
             </div>
           </template>
@@ -60,7 +73,9 @@
           </template>
           <template v-slot:description>
             <div class="antd-pro-pages-profile-advanced-style-stepDescription">
-              周毛毛<a-icon type="dingding" style="color: rgb(0, 160, 233); margin-left: 8px" />
+              周毛毛<a-icon
+                type="dingding"
+                style="color: rgb(0, 160, 233); margin-left: 8px" />
               <div><a>催一下</a></div>
             </div>
           </template>
@@ -70,7 +85,10 @@
       </a-steps>
     </a-card>
 
-    <a-card style="margin-top: 24px" :bordered="false" title="用户信息">
+    <a-card
+      style="margin-top: 24px"
+      :bordered="false"
+      title="用户信息">
       <a-descriptions>
         <a-descriptions-item label="用户姓名">付晓晓</a-descriptions-item>
         <a-descriptions-item label="会员卡号">32943898021309809423</a-descriptions-item>
@@ -86,32 +104,46 @@
         <a-descriptions-item label="该数据更新时间">2018-08-08</a-descriptions-item>
         <a-descriptions-item></a-descriptions-item>
       </a-descriptions>
-      <a-card type="inner" title="多层信息组">
-        <a-descriptions title="组名称" size="small">
+      <a-card
+        type="inner"
+        title="多层信息组">
+        <a-descriptions
+          title="组名称"
+          size="small">
           <a-descriptions-item label="负责人">林东东</a-descriptions-item>
           <a-descriptions-item label="角色码">1234567</a-descriptions-item>
           <a-descriptions-item label="所属部门">XX公司-YY部</a-descriptions-item>
           <a-descriptions-item label="过期时间">2018-08-08</a-descriptions-item>
-          <a-descriptions-item label="描述"
-            >这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...</a-descriptions-item
+          <a-descriptions-item
+            label="描述"
+          >这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...</a-descriptions-item
           >
         </a-descriptions>
         <a-divider style="margin: 16px 0" />
-        <a-descriptions title="组名称" size="small" :col="1">
+        <a-descriptions
+          title="组名称"
+          size="small"
+          :col="1">
           <a-descriptions-item label="学名">
             Citrullus lanatus (Thunb.) Matsum. et
             Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗..</a-descriptions-item
           >
         </a-descriptions>
         <a-divider style="margin: 16px 0" />
-        <a-descriptions title="组名称" size="small" :col="2">
+        <a-descriptions
+          title="组名称"
+          size="small"
+          :col="2">
           <a-descriptions-item label="负责人">付小小</a-descriptions-item>
           <a-descriptions-item label="角色码">1234567</a-descriptions-item>
         </a-descriptions>
       </a-card>
     </a-card>
 
-    <a-card style="margin-top: 24px" :bordered="false" title="用户近半年来电记录">
+    <a-card
+      style="margin-top: 24px"
+      :bordered="false"
+      title="用户近半年来电记录">
       <div class="no-data"><a-icon type="frown-o" />暂无数据</div>
     </a-card>
 
@@ -133,8 +165,12 @@
         :dataSource="operation1"
         :pagination="false"
       >
-        <template slot="status" slot-scope="status">
-          <a-badge :status="status | statusTypeFilter" :text="status | statusFilter" />
+        <template
+          slot="status"
+          slot-scope="status">
+          <a-badge
+            :status="status | statusTypeFilter"
+            :text="status | statusFilter" />
         </template>
       </a-table>
       <a-table
@@ -143,8 +179,12 @@
         :dataSource="operation2"
         :pagination="false"
       >
-        <template slot="status" slot-scope="status">
-          <a-badge :status="status | statusTypeFilter" :text="status | statusFilter" />
+        <template
+          slot="status"
+          slot-scope="status">
+          <a-badge
+            :status="status | statusTypeFilter"
+            :text="status | statusFilter" />
         </template>
       </a-table>
       <a-table
@@ -153,8 +193,12 @@
         :dataSource="operation3"
         :pagination="false"
       >
-        <template slot="status" slot-scope="status">
-          <a-badge :status="status | statusTypeFilter" :text="status | statusFilter" />
+        <template
+          slot="status"
+          slot-scope="status">
+          <a-badge
+            :status="status | statusTypeFilter"
+            :text="status | statusFilter" />
         </template>
       </a-table>
     </a-card>

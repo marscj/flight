@@ -16,9 +16,15 @@
           <div class="setting-drawer-index-blockChecbox">
             <a-tooltip>
               <template slot="title"> 暗色菜单风格 </template>
-              <div class="setting-drawer-index-item" @click="handleMenuTheme('dark')">
-                <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="dark" />
-                <div class="setting-drawer-index-selectIcon" v-if="navTheme === 'dark'">
+              <div
+                class="setting-drawer-index-item"
+                @click="handleMenuTheme('dark')">
+                <img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg"
+                  alt="dark" />
+                <div
+                  class="setting-drawer-index-selectIcon"
+                  v-if="navTheme === 'dark'">
                   <a-icon type="check" />
                 </div>
               </div>
@@ -26,9 +32,15 @@
 
             <a-tooltip>
               <template slot="title"> 亮色菜单风格 </template>
-              <div class="setting-drawer-index-item" @click="handleMenuTheme('light')">
-                <img src="https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg" alt="light" />
-                <div class="setting-drawer-index-selectIcon" v-if="navTheme !== 'dark'">
+              <div
+                class="setting-drawer-index-item"
+                @click="handleMenuTheme('light')">
+                <img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg"
+                  alt="light" />
+                <div
+                  class="setting-drawer-index-selectIcon"
+                  v-if="navTheme !== 'dark'">
                   <a-icon type="check" />
                 </div>
               </div>
@@ -40,12 +52,19 @@
           <h3 class="setting-drawer-index-title">主题色</h3>
 
           <div style="height: 20px">
-            <a-tooltip class="setting-drawer-theme-color-colorBlock" v-for="(item, index) in colorList" :key="index">
+            <a-tooltip
+              class="setting-drawer-theme-color-colorBlock"
+              v-for="(item, index) in colorList"
+              :key="index">
               <template slot="title">
                 {{ item.key }}
               </template>
-              <a-tag :color="item.color" @click="changeColor(item.color)">
-                <a-icon type="check" v-if="item.color === primaryColor"></a-icon>
+              <a-tag
+                :color="item.color"
+                @click="changeColor(item.color)">
+                <a-icon
+                  type="check"
+                  v-if="item.color === primaryColor"></a-icon>
               </a-tag>
             </a-tooltip>
           </div>
@@ -58,9 +77,15 @@
           <div class="setting-drawer-index-blockChecbox">
             <a-tooltip>
               <template slot="title"> 侧边栏导航 </template>
-              <div class="setting-drawer-index-item" @click="handleLayout('sidemenu')">
-                <img src="https://gw.alipayobjects.com/zos/rmsportal/JopDzEhOqwOjeNTXkoje.svg" alt="sidemenu" />
-                <div class="setting-drawer-index-selectIcon" v-if="layoutMode === 'sidemenu'">
+              <div
+                class="setting-drawer-index-item"
+                @click="handleLayout('sidemenu')">
+                <img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/JopDzEhOqwOjeNTXkoje.svg"
+                  alt="sidemenu" />
+                <div
+                  class="setting-drawer-index-selectIcon"
+                  v-if="layoutMode === 'sidemenu'">
                   <a-icon type="check" />
                 </div>
               </div>
@@ -68,9 +93,15 @@
 
             <a-tooltip>
               <template slot="title"> 顶部栏导航 </template>
-              <div class="setting-drawer-index-item" @click="handleLayout('topmenu')">
-                <img src="https://gw.alipayobjects.com/zos/rmsportal/KDNDBbriJhLwuqMoxcAr.svg" alt="topmenu" />
-                <div class="setting-drawer-index-selectIcon" v-if="layoutMode !== 'sidemenu'">
+              <div
+                class="setting-drawer-index-item"
+                @click="handleLayout('topmenu')">
+                <img
+                  src="https://gw.alipayobjects.com/zos/rmsportal/KDNDBbriJhLwuqMoxcAr.svg"
+                  alt="topmenu" />
+                <div
+                  class="setting-drawer-index-selectIcon"
+                  v-if="layoutMode !== 'sidemenu'">
                   <a-icon type="check" />
                 </div>
               </div>
@@ -88,7 +119,9 @@
                     @change="handleContentWidthChange"
                   >
                     <a-select-option value="Fixed">固定</a-select-option>
-                    <a-select-option value="Fluid" v-if="layoutMode !== 'sidemenu'">流式</a-select-option>
+                    <a-select-option
+                      value="Fluid"
+                      v-if="layoutMode !== 'sidemenu'">流式</a-select-option>
                   </a-select>
                 </a-tooltip>
                 <a-list-item-meta>
@@ -96,7 +129,11 @@
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item>
-                <a-switch slot="actions" size="small" :defaultChecked="fixedHeader" @change="handleFixedHeader" />
+                <a-switch
+                  slot="actions"
+                  size="small"
+                  :defaultChecked="fixedHeader"
+                  @change="handleFixedHeader" />
                 <a-list-item-meta>
                   <div slot="title">固定 Header</div>
                 </a-list-item-meta>
@@ -110,7 +147,9 @@
                   @change="handleFixedHeaderHidden"
                 />
                 <a-list-item-meta>
-                  <a-tooltip slot="title" placement="left">
+                  <a-tooltip
+                    slot="title"
+                    placement="left">
                     <template slot="title">固定 Header 时可配置</template>
                     <div :style="{ opacity: !fixedHeader ? '0.5' : '1' }">下滑时隐藏 Header</div>
                   </a-tooltip>
@@ -125,7 +164,9 @@
                   @change="handleFixSiderbar"
                 />
                 <a-list-item-meta>
-                  <div slot="title" :style="{ textDecoration: layoutMode === 'topmenu' ? 'line-through' : 'unset' }">
+                  <div
+                    slot="title"
+                    :style="{ textDecoration: layoutMode === 'topmenu' ? 'line-through' : 'unset' }">
                     固定侧边菜单
                   </div>
                 </a-list-item-meta>
@@ -140,13 +181,21 @@
           <div>
             <a-list :split="false">
               <a-list-item>
-                <a-switch slot="actions" size="small" :defaultChecked="colorWeak" @change="onColorWeak" />
+                <a-switch
+                  slot="actions"
+                  size="small"
+                  :defaultChecked="colorWeak"
+                  @change="onColorWeak" />
                 <a-list-item-meta>
                   <div slot="title">色弱模式</div>
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item>
-                <a-switch slot="actions" size="small" :defaultChecked="multiTab" @change="onMultiTab" />
+                <a-switch
+                  slot="actions"
+                  size="small"
+                  :defaultChecked="multiTab"
+                  @change="onMultiTab" />
                 <a-list-item-meta>
                   <div slot="title">多页签模式</div>
                 </a-list-item-meta>
@@ -156,22 +205,34 @@
         </div>
         <a-divider />
         <div :style="{ marginBottom: '24px' }">
-          <a-button @click="doCopy" icon="copy" block>拷贝设置</a-button>
-          <a-alert type="warning" :style="{ marginTop: '24px' }">
+          <a-button
+            @click="doCopy"
+            icon="copy"
+            block>拷贝设置</a-button>
+          <a-alert
+            type="warning"
+            :style="{ marginTop: '24px' }">
             <span slot="message">
               配置栏只在开发环境用于预览，生产环境不会展现，请手动修改配置文件。修改配置文件后，需要清空本地缓存和LocalStorage
               <a
                 href="https://github.com/sendya/ant-design-pro-vue/blob/master/src/config/defaultSettings.js"
                 target="_blank"
-                >src/config/defaultSettings.js</a
+              >src/config/defaultSettings.js</a
               >
             </span>
           </a-alert>
         </div>
       </div>
-      <div class="setting-drawer-index-handle" @click="toggle" slot="handle">
-        <a-icon type="setting" v-if="!visible" />
-        <a-icon type="close" v-else />
+      <div
+        class="setting-drawer-index-handle"
+        @click="toggle"
+        slot="handle">
+        <a-icon
+          type="setting"
+          v-if="!visible" />
+        <a-icon
+          type="close"
+          v-else />
       </div>
     </a-drawer>
   </div>

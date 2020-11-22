@@ -10,7 +10,9 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="父级ID">
-          <a-input v-decorator="['parentId', {}]" disabled />
+          <a-input
+            v-decorator="['parentId', {}]"
+            disabled />
         </a-form-item>
 
         <a-form-item label="机构名称">

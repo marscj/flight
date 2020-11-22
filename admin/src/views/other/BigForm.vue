@@ -1,8 +1,16 @@
 <template>
   <a-card :bordered="false">
-    <a-form :form="form1" :self-update="true" @submit="handleForm1Submit">
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+    <a-form
+      :form="form1"
+      :self-update="true"
+      @submit="handleForm1Submit">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="仓库名">
             <a-input
               placeholder="请输入仓库名称"
@@ -21,7 +29,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="仓库域名">
             <a-input
               addonBefore="http://"
@@ -42,7 +54,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库管理员">
             <a-select
               placeholder="请选择管理员"
@@ -55,8 +71,13 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="审批人">
             <a-select
               placeholder="请选择审批员"
@@ -67,7 +88,11 @@
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="生效日期">
             <a-range-picker
               style="width: 100%"
@@ -75,7 +100,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库类型">
             <a-select
               placeholder="请选择仓库类型"
@@ -92,9 +121,17 @@
       </a-form-item>
     </a-form>
 
-    <a-form :form="form2" :self-update="true" @submit="handleForm2Submit">
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+    <a-form
+      :form="form2"
+      :self-update="true"
+      @submit="handleForm2Submit">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="仓库名">
             <a-input
               placeholder="请输入仓库名称"
@@ -113,7 +150,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="仓库域名">
             <a-input
               addonBefore="http://"
@@ -134,7 +175,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库管理员">
             <a-select
               placeholder="请选择管理员"
@@ -147,8 +192,13 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="审批人">
             <a-select
               placeholder="请选择审批员"
@@ -159,7 +209,11 @@
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="生效日期">
             <a-range-picker
               style="width: 100%"
@@ -167,7 +221,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库类型">
             <a-select
               placeholder="请选择仓库类型"
@@ -184,9 +242,17 @@
       </a-form-item>
     </a-form>
 
-    <a-form :form="form3" :self-update="true" @submit="handleForm2Submit">
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+    <a-form
+      :form="form3"
+      :self-update="true"
+      @submit="handleForm2Submit">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="仓库名">
             <a-input
               placeholder="请输入仓库名称"
@@ -205,7 +271,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="仓库域名">
             <a-input
               addonBefore="http://"
@@ -226,7 +296,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库管理员">
             <a-select
               placeholder="请选择管理员"
@@ -239,8 +313,13 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="审批人">
             <a-select
               placeholder="请选择审批员"
@@ -251,7 +330,11 @@
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="生效日期">
             <a-range-picker
               style="width: 100%"
@@ -259,7 +342,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库类型">
             <a-select
               placeholder="请选择仓库类型"
@@ -276,9 +363,17 @@
       </a-form-item>
     </a-form>
 
-    <a-form :form="form4" :self-update="true" @submit="handleForm2Submit">
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+    <a-form
+      :form="form4"
+      :self-update="true"
+      @submit="handleForm2Submit">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="仓库名">
             <a-input
               placeholder="请输入仓库名称"
@@ -297,7 +392,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="仓库域名">
             <a-input
               addonBefore="http://"
@@ -318,7 +417,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库管理员">
             <a-select
               placeholder="请选择管理员"
@@ -331,8 +434,13 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="审批人">
             <a-select
               placeholder="请选择审批员"
@@ -343,7 +451,11 @@
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="生效日期">
             <a-range-picker
               style="width: 100%"
@@ -351,7 +463,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库类型">
             <a-select
               placeholder="请选择仓库类型"
@@ -368,9 +484,17 @@
       </a-form-item>
     </a-form>
 
-    <a-form :form="form5" :self-update="true" @submit="handleForm2Submit">
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+    <a-form
+      :form="form5"
+      :self-update="true"
+      @submit="handleForm2Submit">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="仓库名">
             <a-input
               placeholder="请输入仓库名称"
@@ -389,7 +513,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="仓库域名">
             <a-input
               addonBefore="http://"
@@ -410,7 +538,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库管理员">
             <a-select
               placeholder="请选择管理员"
@@ -423,8 +555,13 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row class="form-row" :gutter="16">
-        <a-col :lg="6" :md="12" :sm="24">
+      <a-row
+        class="form-row"
+        :gutter="16">
+        <a-col
+          :lg="6"
+          :md="12"
+          :sm="24">
           <a-form-item label="审批人">
             <a-select
               placeholder="请选择审批员"
@@ -435,7 +572,11 @@
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+        <a-col
+          :xl="{ span: 7, offset: 1 }"
+          :lg="{ span: 8 }"
+          :md="{ span: 12 }"
+          :sm="24">
           <a-form-item label="生效日期">
             <a-range-picker
               style="width: 100%"
@@ -443,7 +584,11 @@
             />
           </a-form-item>
         </a-col>
-        <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+        <a-col
+          :xl="{ span: 9, offset: 1 }"
+          :lg="{ span: 10 }"
+          :md="{ span: 24 }"
+          :sm="24">
           <a-form-item label="仓库类型">
             <a-select
               placeholder="请选择仓库类型"
@@ -462,8 +607,15 @@
 
     <a-divider />
 
-    <a-table :columns="columns" :dataSource="data" :pagination="false" :loading="tableLoading">
-      <template v-for="(col, i) in ['name', 'workId', 'department']" :slot="col" slot-scope="text, record">
+    <a-table
+      :columns="columns"
+      :dataSource="data"
+      :pagination="false"
+      :loading="tableLoading">
+      <template
+        v-for="(col, i) in ['name', 'workId', 'department']"
+        :slot="col"
+        slot-scope="text, record">
         <a-input
           :key="col"
           v-if="record.editable"
@@ -474,12 +626,16 @@
         />
         <template v-else>{{ text }}</template>
       </template>
-      <template slot="operation" slot-scope="text, record">
+      <template
+        slot="operation"
+        slot-scope="text, record">
         <template v-if="record.editable">
           <span v-if="record.isNew">
             <a @click="saveRow(record)">添加</a>
             <a-divider type="vertical" />
-            <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
+            <a-popconfirm
+              title="是否要删除此行？"
+              @confirm="remove(record.key)">
               <a>删除</a>
             </a-popconfirm>
           </span>
@@ -492,14 +648,20 @@
         <span v-else>
           <a @click="toggle(record.key)">编辑</a>
           <a-divider type="vertical" />
-          <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
+          <a-popconfirm
+            title="是否要删除此行？"
+            @confirm="remove(record.key)">
             <a>删除</a>
           </a-popconfirm>
         </span>
       </template>
     </a-table>
-    <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember"
-      >新增成员</a-button
+    <a-button
+      style="width: 100%; margin-top: 16px; margin-bottom: 8px"
+      type="dashed"
+      icon="plus"
+      @click="newMember"
+    >新增成员</a-button
     >
   </a-card>
 </template>

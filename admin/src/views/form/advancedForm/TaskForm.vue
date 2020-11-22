@@ -1,7 +1,15 @@
 <template>
-  <a-form @submit="handleSubmit" :form="form" class="form">
-    <a-row class="form-row" :gutter="16">
-      <a-col :lg="6" :md="12" :sm="24">
+  <a-form
+    @submit="handleSubmit"
+    :form="form"
+    class="form">
+    <a-row
+      class="form-row"
+      :gutter="16">
+      <a-col
+        :lg="6"
+        :md="12"
+        :sm="24">
         <a-form-item label="任务名">
           <a-input
             placeholder="请输入任务名称"
@@ -20,7 +28,11 @@
           />
         </a-form-item>
       </a-col>
-      <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+      <a-col
+        :xl="{ span: 7, offset: 1 }"
+        :lg="{ span: 8 }"
+        :md="{ span: 12 }"
+        :sm="24">
         <a-form-item label="任务描述">
           <a-input
             placeholder="请输入任务描述"
@@ -39,7 +51,11 @@
           />
         </a-form-item>
       </a-col>
-      <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+      <a-col
+        :xl="{ span: 9, offset: 1 }"
+        :lg="{ span: 10 }"
+        :md="{ span: 24 }"
+        :sm="24">
         <a-form-item label="执行人">
           <a-select
             placeholder="请选择执行人"
@@ -51,8 +67,13 @@
         </a-form-item>
       </a-col>
     </a-row>
-    <a-row class="form-row" :gutter="16">
-      <a-col :lg="6" :md="12" :sm="24">
+    <a-row
+      class="form-row"
+      :gutter="16">
+      <a-col
+        :lg="6"
+        :md="12"
+        :sm="24">
         <a-form-item label="责任人">
           <a-select
             placeholder="请选择责任人"
@@ -63,7 +84,11 @@
           </a-select>
         </a-form-item>
       </a-col>
-      <a-col :xl="{ span: 7, offset: 1 }" :lg="{ span: 8 }" :md="{ span: 12 }" :sm="24">
+      <a-col
+        :xl="{ span: 7, offset: 1 }"
+        :lg="{ span: 8 }"
+        :md="{ span: 12 }"
+        :sm="24">
         <a-form-item label="提醒时间">
           <a-time-picker
             style="width: 100%"
@@ -71,7 +96,11 @@
           />
         </a-form-item>
       </a-col>
-      <a-col :xl="{ span: 9, offset: 1 }" :lg="{ span: 10 }" :md="{ span: 24 }" :sm="24">
+      <a-col
+        :xl="{ span: 9, offset: 1 }"
+        :lg="{ span: 10 }"
+        :md="{ span: 24 }"
+        :sm="24">
         <a-form-item label="任务类型">
           <a-select
             placeholder="请选择任务类型"

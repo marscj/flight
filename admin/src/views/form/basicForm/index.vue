@@ -1,8 +1,14 @@
 <template>
   <!-- hidden PageHeaderWrapper title demo -->
-  <page-header-wrapper :title="false" content="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。">
-    <a-card :body-style="{ padding: '24px 32px' }" :bordered="false">
-      <a-form @submit="handleSubmit" :form="form">
+  <page-header-wrapper
+    :title="false"
+    content="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。">
+    <a-card
+      :body-style="{ padding: '24px 32px' }"
+      :bordered="false">
+      <a-form
+        @submit="handleSubmit"
+        :form="form">
         <a-form-item
           label="标题"
           :labelCol="{ lg: { span: 7 }, sm: { span: 7 } }"
@@ -71,7 +77,9 @@
           :wrapperCol="{ lg: { span: 10 }, sm: { span: 17 } }"
           :required="false"
         >
-          <a-input-number :min="0" :max="100" />
+          <a-input-number
+            :min="0"
+            :max="100" />
           <span> %</span>
         </a-form-item>
         <a-form-item
@@ -94,8 +102,12 @@
             </a-select>
           </a-form-item>
         </a-form-item>
-        <a-form-item :wrapperCol="{ span: 24 }" style="text-align: center">
-          <a-button htmlType="submit" type="primary">提交</a-button>
+        <a-form-item
+          :wrapperCol="{ span: 24 }"
+          style="text-align: center">
+          <a-button
+            htmlType="submit"
+            type="primary">提交</a-button>
           <a-button style="margin-left: 8px">保存</a-button>
         </a-form-item>
       </a-form>
