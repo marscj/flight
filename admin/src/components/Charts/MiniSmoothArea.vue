@@ -36,7 +36,7 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       height: 100
     }

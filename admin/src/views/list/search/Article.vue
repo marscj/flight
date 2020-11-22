@@ -186,7 +186,7 @@ export default {
     ArticleListContent,
     IconText
   },
-  data() {
+  data () {
     return {
       owners,
       loading: true,
@@ -195,21 +195,21 @@ export default {
       form: this.$form.createForm(this)
     }
   },
-  mounted() {
+  mounted () {
     this.getList()
   },
   methods: {
-    handleChange(value) {
+    handleChange (value) {
       console.log(`selected ${value}`)
     },
-    getList() {
+    getList () {
       this.$http.get('/list/article').then((res) => {
         console.log('res', res)
         this.data = res.result
         this.loading = false
       })
     },
-    loadMore() {
+    loadMore () {
       this.loadingMore = true
       this.$http
         .get('/list/article')
@@ -220,7 +220,7 @@ export default {
           this.loadingMore = false
         })
     },
-    setOwner() {
+    setOwner () {
       const {
         form: { setFieldsValue }
       } = this

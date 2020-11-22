@@ -52,9 +52,9 @@ export default {
   name: 'Home',
   components: {
     PageHeaderWrapper,
-    Radar,
+    Radar
   },
-  data() {
+  data () {
     return {
       timeFix: timeFix(),
       avatar: '',
@@ -73,10 +73,10 @@ export default {
         tickLine: null,
         grid: {
           lineStyle: {
-            lineDash: null,
+            lineDash: null
           },
-          hideFirstLine: false,
-        },
+          hideFirstLine: false
+        }
       },
       axis2Opts: {
         dataKey: 'score',
@@ -85,16 +85,16 @@ export default {
         grid: {
           type: 'polygon',
           lineStyle: {
-            lineDash: null,
-          },
-        },
+            lineDash: null
+          }
+        }
       },
       scale: [
         {
           dataKey: 'score',
           min: 0,
-          max: 80,
-        },
+          max: 80
+        }
       ],
       axisData: [
         { item: '引用', a: 70, b: 30, c: 40 },
@@ -102,28 +102,28 @@ export default {
         { item: '产量', a: 50, b: 60, c: 40 },
         { item: '贡献', a: 40, b: 50, c: 40 },
         { item: '热度', a: 60, b: 70, c: 40 },
-        { item: '引用', a: 70, b: 50, c: 40 },
+        { item: '引用', a: 70, b: 50, c: 40 }
       ],
-      radarData: [],
+      radarData: []
     }
   },
   computed: {
     ...mapState({
       nickname: (state) => state.user.nickname,
-      welcome: (state) => state.user.welcome,
+      welcome: (state) => state.user.welcome
     }),
-    currentUser() {
+    currentUser () {
       return {
         name: 'Serati Ma',
-        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
       }
     },
-    userInfo() {
+    userInfo () {
       console.log(this.$store.getters.userInfo)
       return this.$store.getters.userInfo
-    },
+    }
   },
-  created() {
+  created () {
     this.user = this.userInfo
     this.avatar = this.userInfo.avatar
 
@@ -135,9 +135,9 @@ export default {
     //   // console.log('workplace -> call getServiceList()', res)
     // })
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    initRadar() {
+    initRadar () {
       this.radarLoading = true
 
       // this.$http.get('/home/radar').then((res) => {
@@ -152,8 +152,8 @@ export default {
       //   this.radarData = dv.rows
       //   this.radarLoading = false
       // })
-    },
-  },
+    }
+  }
 }
 </script>
 

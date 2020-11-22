@@ -14,7 +14,7 @@ export const PERMISSION_ENUM = {
  * <a-button v-if="$auth('form.edit')">Button</a-button>
  * @param Vue
  */
-function plugin(Vue) {
+function plugin (Vue) {
   if (plugin.installed) {
     return
   }
@@ -22,7 +22,7 @@ function plugin(Vue) {
   !Vue.prototype.$auth &&
     Object.defineProperties(Vue.prototype, {
       $auth: {
-        get() {
+        get () {
           const _this = this
           return (permissions) => {
             const [model, action] = permissions.split('.')

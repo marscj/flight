@@ -191,7 +191,7 @@ export default {
   name: 'Register',
   components: {},
   mixins: [deviceMixin],
-  data() {
+  data () {
     return {
       form: this.$form.createForm(this),
 
@@ -207,18 +207,18 @@ export default {
     }
   },
   computed: {
-    passwordLevelClass() {
+    passwordLevelClass () {
       return levelClass[this.state.passwordLevel]
     },
-    passwordLevelName() {
+    passwordLevelName () {
       return levelNames[this.state.passwordLevel]
     },
-    passwordLevelColor() {
+    passwordLevelColor () {
       return levelColor[this.state.passwordLevel]
     }
   },
   methods: {
-    handlePasswordLevel(rule, value, callback) {
+    handlePasswordLevel (rule, value, callback) {
       let level = 0
 
       // 判断这个字符串中有没有数字
@@ -248,7 +248,7 @@ export default {
       }
     },
 
-    handlePasswordCheck(rule, value, callback) {
+    handlePasswordCheck (rule, value, callback) {
       const password = this.form.getFieldValue('password')
       console.log('value', value)
       if (value === undefined) {
@@ -260,7 +260,7 @@ export default {
       callback()
     },
 
-    handlePhoneCheck(rule, value, callback) {
+    handlePhoneCheck (rule, value, callback) {
       console.log('handlePhoneCheck, rule:', rule)
       console.log('handlePhoneCheck, value', value)
       console.log('handlePhoneCheck, callback', callback)
@@ -268,7 +268,7 @@ export default {
       callback()
     },
 
-    handlePasswordInputClick() {
+    handlePasswordInputClick () {
       if (!this.isMobile) {
         this.state.passwordLevelChecked = true
         return
@@ -276,7 +276,7 @@ export default {
       this.state.passwordLevelChecked = false
     },
 
-    handleSubmit() {
+    handleSubmit () {
       const {
         form: { validateFields },
         state,
@@ -290,7 +290,7 @@ export default {
       })
     },
 
-    getCaptcha(e) {
+    getCaptcha (e) {
       e.preventDefault()
       const {
         form: { validateFields },
@@ -330,7 +330,7 @@ export default {
         }
       })
     },
-    requestFailed(err) {
+    requestFailed (err) {
       this.$notification['error']({
         message: '错误',
         description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
@@ -340,7 +340,7 @@ export default {
     }
   },
   watch: {
-    'state.passwordLevel'(val) {
+    'state.passwordLevel' (val) {
       console.log(val)
     }
   }

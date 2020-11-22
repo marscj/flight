@@ -49,7 +49,7 @@ export default {
   components: {
     STable
   },
-  data() {
+  data () {
     return {
       goodsColumns: [
         {
@@ -219,7 +219,7 @@ export default {
     }
   },
   filters: {
-    statusFilter(status) {
+    statusFilter (status) {
       const statusMap = {
         processing: '进行中',
         success: '完成',
@@ -229,7 +229,7 @@ export default {
     }
   },
   computed: {
-    title() {
+    title () {
       return this.$route.meta.title
     }
   }

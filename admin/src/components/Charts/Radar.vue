@@ -79,7 +79,7 @@ export default {
       default: null
     }
   },
-  data() {
+  data () {
     return {
       axis1Opts,
       axis2Opts,

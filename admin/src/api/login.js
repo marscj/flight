@@ -18,7 +18,7 @@ const userApi = {
  * @param parameter
  * @returns {*}
  */
-export function login(data) {
+export function login (data) {
   return request({
     url: userApi.Login,
     method: 'post',
@@ -26,7 +26,7 @@ export function login(data) {
   })
 }
 
-export function getInfo() {
+export function getInfo () {
   return request({
     url: userApi.UserInfo,
     method: 'get',
@@ -36,14 +36,14 @@ export function getInfo() {
   })
 }
 
-export function getCurrentUserNav() {
+export function getCurrentUserNav () {
   return request({
     url: userApi.UserMenu,
     method: 'get'
   })
 }
 
-export function logout() {
+export function logout () {
   return request({
     url: userApi.Logout,
     method: 'post',

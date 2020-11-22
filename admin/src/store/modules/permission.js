@@ -20,7 +20,7 @@ import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
 //   }
 //   return true
 // }
-function hasPermission(permission, route) {
+function hasPermission (permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
@@ -50,7 +50,7 @@ function hasRole(roles, route) {
   }
 }
 
-export function filterGroup(roles) {
+export function filterGroup (roles) {
   if (roles) {
     return roles
       .reduce((f1, f2) => f1.concat(f2.permissions), [])
@@ -61,7 +61,7 @@ export function filterGroup(roles) {
   return []
 }
 
-function filterAsyncRouter(routerMap, roles) {
+function filterAsyncRouter (routerMap, roles) {
   const accessedRouters = routerMap.filter((route) => {
     if (hasPermission(roles, route)) {
       if (route.children && route.children.length) {
@@ -99,7 +99,7 @@ export const permission = {
     }
   },
   actions: {
-    GenerateRoutes({ commit }, data) {
+    GenerateRoutes ({ commit }, data) {
       return new Promise((resolve, reject) => {
         var superuser = data.is_superuser
         if (superuser) {

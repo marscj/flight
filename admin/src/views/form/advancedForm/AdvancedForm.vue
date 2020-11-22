@@ -148,7 +148,7 @@ export default {
     RepositoryForm,
     TaskForm
   },
-  data() {
+  data () {
     return {
       loading: false,
       memberLoading: false,
@@ -210,10 +210,10 @@ export default {
     }
   },
   methods: {
-    handleSubmit(e) {
+    handleSubmit (e) {
       e.preventDefault()
     },
-    newMember() {
+    newMember () {
       const length = this.data.length
       this.data.push({
         key: length === 0 ? '1' : (parseInt(this.data[length - 1].key) + 1).toString(),
@@ -224,11 +224,11 @@ export default {
         isNew: true
       })
     },
-    remove(key) {
+    remove (key) {
       const newData = this.data.filter((item) => item.key !== key)
       this.data = newData
     },
-    saveRow(record) {
+    saveRow (record) {
       this.memberLoading = true
       const { key, name, workId, department } = record
       if (!name || !workId || !department) {
@@ -248,23 +248,23 @@ export default {
         this.memberLoading = false
       })
     },
-    toggle(key) {
+    toggle (key) {
       const target = this.data.find((item) => item.key === key)
       target._originalData = { ...target }
       target.editable = !target.editable
     },
-    getRowByKey(key, newData) {
+    getRowByKey (key, newData) {
       const data = this.data
       return (newData || data).find((item) => item.key === key)
     },
-    cancel(key) {
+    cancel (key) {
       const target = this.data.find((item) => item.key === key)
       Object.keys(target).forEach((key) => {
         target[key] = target._originalData[key]
       })
       target._originalData = undefined
     },
-    handleChange(value, key, column) {
+    handleChange (value, key, column) {
       const newData = [...this.data]
       const target = newData.find((item) => key === item.key)
       if (target) {
@@ -274,7 +274,7 @@ export default {
     },
 
     // 最终全页面提交
-    validate() {
+    validate () {
       const {
         $refs: { repository, task },
         $notification
@@ -313,7 +313,7 @@ export default {
           this.errorList(tmp)
         })
     },
-    errorList(errors) {
+    errorList (errors) {
       if (!errors || errors.length === 0) {
         return
       }
@@ -325,7 +325,7 @@ export default {
           fieldLabel: fieldLabels[key]
         }))
     },
-    scrollToField(fieldKey) {
+    scrollToField (fieldKey) {
       const labelNode = document.querySelector(`label[for="${fieldKey}"]`)
       if (labelNode) {
         labelNode.scrollIntoView(true)

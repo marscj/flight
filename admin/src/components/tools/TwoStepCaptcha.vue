@@ -76,7 +76,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       stepLoading: false,
 
@@ -84,7 +84,7 @@ export default {
     }
   },
   methods: {
-    handleStepOk() {
+    handleStepOk () {
       const vm = this
       this.stepLoading = true
       this.form.validateFields((err, values) => {
@@ -100,11 +100,11 @@ export default {
         this.$emit('error', { err })
       })
     },
-    handleCancel() {
+    handleCancel () {
       this.visible = false
       this.$emit('cancel')
     },
-    onForgeStepCode() {}
+    onForgeStepCode () {}
   }
 }
 </script>

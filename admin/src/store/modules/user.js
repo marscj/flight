@@ -10,7 +10,7 @@ const user = {
     welcome: '',
     avatar: '',
     roles: [],
-    info: {},
+    info: {}
   },
 
   mutations: {
@@ -29,12 +29,12 @@ const user = {
     },
     SET_INFO: (state, info) => {
       state.info = info
-    },
+    }
   },
 
   actions: {
     // 登录
-    Login({ commit }, userInfo) {
+    Login ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         login(userInfo)
           .then((response) => {
@@ -50,7 +50,7 @@ const user = {
     },
 
     // 获取用户信息
-    GetInfo({ commit }) {
+    GetInfo ({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo()
           .then((response) => {
@@ -77,7 +77,7 @@ const user = {
     },
 
     // 登出
-    Logout({ commit, state }) {
+    Logout ({ commit, state }) {
       return new Promise((resolve) => {
         logout(state.token)
           .then(() => {
@@ -91,8 +91,8 @@ const user = {
           })
           .finally(() => {})
       })
-    },
-  },
+    }
+  }
 }
 
 export default user

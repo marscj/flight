@@ -3,7 +3,7 @@ import events from './events'
 
 export default {
   name: 'MultiTab',
-  data() {
+  data () {
     return {
       fullPathList: [],
       pages: [],
@@ -11,7 +11,7 @@ export default {
       newTabIndex: 0
     }
   },
-  created() {
+  created () {
     // bind event
     events
       .$on('open', (val) => {
@@ -41,10 +41,10 @@ export default {
     this.selectedLastPath()
   },
   methods: {
-    onEdit(targetKey, action) {
+    onEdit (targetKey, action) {
       this[action](targetKey)
     },
-    remove(targetKey) {
+    remove (targetKey) {
       this.pages = this.pages.filter((page) => page.fullPath !== targetKey)
       this.fullPathList = this.fullPathList.filter((path) => path !== targetKey)
       // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
@@ -52,12 +52,12 @@ export default {
         this.selectedLastPath()
       }
     },
-    selectedLastPath() {
+    selectedLastPath () {
       this.activeKey = this.fullPathList[this.fullPathList.length - 1]
     },
 
     // content menu
-    closeThat(e) {
+    closeThat (e) {
       // 判断是否为最后一个标签页，如果是最后一个，则无法被关闭
       if (this.fullPathList.length > 1) {
         this.remove(e)
@@ -65,7 +65,7 @@ export default {
         this.$message.info('这是最后一个标签了, 无法被关闭')
       }
     },
-    closeLeft(e) {
+    closeLeft (e) {
       const currentIndex = this.fullPathList.indexOf(e)
       if (currentIndex > 0) {
         this.fullPathList.forEach((item, index) => {
@@ -77,7 +77,7 @@ export default {
         this.$message.info('左侧没有标签')
       }
     },
-    closeRight(e) {
+    closeRight (e) {
       const currentIndex = this.fullPathList.indexOf(e)
       if (currentIndex < this.fullPathList.length - 1) {
         this.fullPathList.forEach((item, index) => {
@@ -89,7 +89,7 @@ export default {
         this.$message.info('右侧没有标签')
       }
     },
-    closeAll(e) {
+    closeAll (e) {
       const currentIndex = this.fullPathList.indexOf(e)
       this.fullPathList.forEach((item, index) => {
         if (index !== currentIndex) {
@@ -97,10 +97,10 @@ export default {
         }
       })
     },
-    closeMenuClick(key, route) {
+    closeMenuClick (key, route) {
       this[key](route)
     },
-    renderTabPaneMenu(e) {
+    renderTabPaneMenu (e) {
       return (
         <a-menu
           {...{
@@ -119,7 +119,7 @@ export default {
       )
     },
     // render
-    renderTabPane(title, keyPath) {
+    renderTabPane (title, keyPath) {
       const menu = this.renderTabPaneMenu(keyPath)
 
       return (
@@ -141,7 +141,7 @@ export default {
       this.$router.push({ path: newPathKey })
     }
   },
-  render() {
+  render () {
     const {
       onEdit,
       $data: { pages }

@@ -77,14 +77,14 @@
 <script>
 export default {
   name: 'HeaderNotice',
-  data() {
+  data () {
     return {
       loading: false,
       visible: false
     }
   },
   methods: {
-    fetchNotice() {
+    fetchNotice () {
       if (!this.visible) {
         this.loading = true
         setTimeout(() => {

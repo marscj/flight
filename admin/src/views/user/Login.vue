@@ -58,7 +58,7 @@ export default {
     FormValidate,
     FormItemValidate
   },
-  data() {
+  data () {
     return {
       sitekey: '6LfV6doZAAAAAHlHV67QLRkMAFOT9GWpyBIM7TcO',
       response: undefined,
@@ -72,11 +72,11 @@ export default {
       }
     }
   },
-  created() {},
-  mounted() {},
+  created () {},
+  mounted () {},
   methods: {
     ...mapActions(['Login', 'Logout']),
-    handleSubmit(e) {
+    handleSubmit (e) {
       e.preventDefault()
       const { Login } = this
 
@@ -92,7 +92,7 @@ export default {
           this.$refs.observer.checkError(error)
         })
     },
-    loginSuccess(res) {
+    loginSuccess (res) {
       this.$router.push({ path: '/' })
     }
   }

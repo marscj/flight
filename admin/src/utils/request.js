@@ -59,7 +59,7 @@ request.interceptors.response.use((response) => {
 
 const installer = {
   vm: {},
-  install(Vue) {
+  install (Vue) {
     Vue.use(VueAxios, request)
   }
 }

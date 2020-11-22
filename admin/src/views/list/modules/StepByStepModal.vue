@@ -138,7 +138,7 @@ const stepForms = [
 
 export default {
   name: 'StepByStepModal',
-  data() {
+  data () {
     return {
       labelCol: {
         xs: { span: 24 },
@@ -157,7 +157,7 @@ export default {
     }
   },
   methods: {
-    edit(record) {
+    edit (record) {
       this.visible = true
       const {
         form: { setFieldsValue }
@@ -166,7 +166,7 @@ export default {
         setFieldsValue(pick(record, []))
       })
     },
-    handleNext(step) {
+    handleNext (step) {
       const {
         form: { validateFields }
       } = this
@@ -195,10 +195,10 @@ export default {
         }
       })
     },
-    backward() {
+    backward () {
       this.currentStep--
     },
-    handleCancel() {
+    handleCancel () {
       // clear form & currentStep
       this.visible = false
       this.currentStep = 0

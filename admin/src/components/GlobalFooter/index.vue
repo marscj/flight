@@ -16,7 +16,7 @@
 // import { GlobalFooter } from '@ant-design-vue/pro-layout'
 
 export default {
-  name: 'ProGlobalFooter',
+  name: 'ProGlobalFooter'
   // components: {
   //   GlobalFooter,
   // },

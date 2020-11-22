@@ -211,7 +211,7 @@ import { baseMixin } from '@/store/app-mixin'
 export default {
   name: 'Advanced',
   mixins: [baseMixin],
-  data() {
+  data () {
     return {
       tabList: [
         { key: 'detail', tab: '详情' },
@@ -352,14 +352,14 @@ export default {
     }
   },
   filters: {
-    statusFilter(status) {
+    statusFilter (status) {
       const statusMap = {
         agree: '成功',
         reject: '驳回'
       }
       return statusMap[status]
     },
-    statusTypeFilter(type) {
+    statusTypeFilter (type) {
       const statusTypeMap = {
         agree: 'success',
         reject: 'error'
@@ -368,7 +368,7 @@ export default {
     }
   },
   methods: {
-    handleTabChange(key) {
+    handleTabChange (key) {
       console.log('')
       this.tabActiveKey = key
     }

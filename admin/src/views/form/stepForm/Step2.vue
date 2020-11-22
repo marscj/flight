@@ -69,7 +69,7 @@
 <script>
 export default {
   name: 'Step2',
-  data() {
+  data () {
     return {
       labelCol: { lg: { span: 5 }, sm: { span: 5 } },
       wrapperCol: { lg: { span: 19 }, sm: { span: 19 } },
@@ -79,7 +79,7 @@ export default {
     }
   },
   methods: {
-    nextStep() {
+    nextStep () {
       const that = this
       const {
         form: { validateFields }
@@ -97,11 +97,11 @@ export default {
         }
       })
     },
-    prevStep() {
+    prevStep () {
       this.$emit('prevStep')
     }
   },
-  beforeDestroy() {
+  beforeDestroy () {
     clearTimeout(this.timer)
   }
 }

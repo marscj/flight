@@ -231,7 +231,7 @@ export default {
   components: {
     STable
   },
-  data() {
+  data () {
     return {
       description:
         '列表使用场景：后台管理中的权限管理以及角色管理，可用于基于 RBAC 设计的角色权限控制，颗粒度细到每一个操作类型。',
@@ -270,15 +270,15 @@ export default {
     }
   },
   filters: {
-    statusFilter(key) {
+    statusFilter (key) {
       return STATUS[key]
     },
-    permissionFilter(key) {
+    permissionFilter (key) {
       const permission = PERMISSION_ENUM[key]
       return permission && permission.label
     }
   },
-  created() {
+  created () {
     getServiceList().then((res) => {
       console.log('getServiceList.call()', res)
     })
@@ -288,7 +288,7 @@ export default {
     })
   },
   methods: {
-    handleEdit(record) {
+    handleEdit (record) {
       this.visible = true
       console.log('record', record)
 
@@ -317,17 +317,17 @@ export default {
         this.form.setFieldsValue(checkboxGroup)
       })
     },
-    handleOk(e) {
+    handleOk (e) {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         console.log(err, values)
       })
     },
-    onChange(selectedRowKeys, selectedRows) {
+    onChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
     },
-    handleExpand(expanded, record) {
+    handleExpand (expanded, record) {
       console.log('expanded', expanded, record)
       if (expanded) {
         this.expandedRowKeys.push(record.id)
@@ -335,7 +335,7 @@ export default {
         this.expandedRowKeys = this.expandedRowKeys.filter((item) => record.id !== item)
       }
     },
-    toggleAdvanced() {
+    toggleAdvanced () {
       this.advanced = !this.advanced
     }
   },

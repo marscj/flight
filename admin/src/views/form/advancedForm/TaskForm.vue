@@ -127,13 +127,13 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       form: this.$form.createForm(this)
     }
   },
   methods: {
-    handleSubmit(e) {
+    handleSubmit (e) {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {

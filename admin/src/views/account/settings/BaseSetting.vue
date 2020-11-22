@@ -76,7 +76,7 @@ export default {
   components: {
     AvatarModal
   },
-  data() {
+  data () {
     return {
       // cropper
       preview: {},
@@ -98,7 +98,7 @@ export default {
     }
   },
   methods: {
-    setavatar(url) {
+    setavatar (url) {
       this.option.img = url
     }
   }

@@ -32,7 +32,7 @@ export default {
     }
   },
   methods: {
-    checkError(error) {
+    checkError (error) {
       setTimeout(() => {
         this.$notification.success({
           message: 'Error: ' + error.response.status,

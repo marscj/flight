@@ -168,27 +168,27 @@ export default {
     TaskForm,
     Info
   },
-  data() {
+  data () {
     return {
       data,
       status: 'all'
     }
   },
   methods: {
-    add() {
+    add () {
       this.$dialog(
         TaskForm,
         // component props
         {
           record: {},
           on: {
-            ok() {
+            ok () {
               console.log('ok 回调')
             },
-            cancel() {
+            cancel () {
               console.log('cancel 回调')
             },
-            close() {
+            close () {
               console.log('modal close 回调')
             }
           }
@@ -202,7 +202,7 @@ export default {
         }
       )
     },
-    edit(record) {
+    edit (record) {
       console.log('record', record)
       this.$dialog(
         TaskForm,
@@ -210,13 +210,13 @@ export default {
         {
           record,
           on: {
-            ok() {
+            ok () {
               console.log('ok 回调')
             },
-            cancel() {
+            cancel () {
               console.log('cancel 回调')
             },
-            close() {
+            close () {
               console.log('modal close 回调')
             }
           }

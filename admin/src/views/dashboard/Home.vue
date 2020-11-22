@@ -7,8 +7,8 @@ import { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 
 export default {
   components: {
-    PageHeaderWrapper,
-  },
+    PageHeaderWrapper
+  }
 }
 </script>
 

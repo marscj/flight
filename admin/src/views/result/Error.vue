@@ -33,7 +33,7 @@
 <script>
 export default {
   name: 'Error',
-  data() {
+  data () {
     return {
       title: '提交失败',
       description: '请核对并修改以下信息后，再重新提交。'

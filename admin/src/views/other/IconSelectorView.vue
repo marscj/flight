@@ -22,13 +22,13 @@ export default {
   components: {
     IconSelector
   },
-  data() {
+  data () {
     return {
       currentSelectedIcon: 'pause-circle'
     }
   },
   methods: {
-    handleIconChange(icon) {
+    handleIconChange (icon) {
       console.log('change Icon', icon)
       this.$message.info(
         <span>
@@ -36,7 +36,7 @@ export default {
         </span>
       )
     },
-    changeIcon(type) {
+    changeIcon (type) {
       this.currentSelectedIcon = type
     }
   }

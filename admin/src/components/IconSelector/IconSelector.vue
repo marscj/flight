@@ -39,7 +39,7 @@ export default {
       type: String
     }
   },
-  data() {
+  data () {
     return {
       selectedIcon: this.value || '',
       currentTab: 'directional',
@@ -47,25 +47,25 @@ export default {
     }
   },
   watch: {
-    value(val) {
+    value (val) {
       this.selectedIcon = val
       this.autoSwitchTab()
     }
   },
-  created() {
+  created () {
     if (this.value) {
       this.autoSwitchTab()
     }
   },
   methods: {
-    handleSelectedIcon(icon) {
+    handleSelectedIcon (icon) {
       this.selectedIcon = icon
       this.$emit('change', icon)
     },
-    handleTabChange(activeKey) {
+    handleTabChange (activeKey) {
       this.currentTab = activeKey
     },
-    autoSwitchTab() {
+    autoSwitchTab () {
       icons.some((item) => item.icons.some((icon) => icon === this.value) && (this.currentTab = item.key))
     }
   }

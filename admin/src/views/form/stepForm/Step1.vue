@@ -92,7 +92,7 @@
 <script>
 export default {
   name: 'Step1',
-  data() {
+  data () {
     return {
       labelCol: { lg: { span: 5 }, sm: { span: 5 } },
       wrapperCol: { lg: { span: 19 }, sm: { span: 19 } },
@@ -100,7 +100,7 @@ export default {
     }
   },
   methods: {
-    nextStep() {
+    nextStep () {
       const {
         form: { validateFields }
       } = this

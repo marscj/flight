@@ -109,7 +109,7 @@ const directionType = {
 export default {
   name: 'Success',
   mixins: [baseMixin],
-  data() {
+  data () {
     this.directionType = directionType
     return {
       title: '提交成功',
