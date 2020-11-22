@@ -53,16 +53,23 @@ class LoginSerializer(AuthLoginSerializer):
 class UserDetailsSerializer(serializers.ModelSerializer):
 
     roles = GroupSerializer(many=True, source='groups')
+
+    name = serializers.SerializerMethodField()
     
     class Meta:
         model = UserModel
         fields = (
-            'id', 'last_login', 'is_superuser', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'date_joined',
+            'id', 'last_login', 'is_superuser', 'username', 'first_name', 'last_name', 'name', 'email', 'is_staff', 'is_active', 'date_joined',
             'possport_type', 'passport_code', 'passport_no', 'passport_sex', 'passport_nationality', 'passport_date_birth',
             'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
             'avatar', 'is_delete', 'department', 'roles'
         )
-        read_only_fields = ('username','email', 'full_name', 'department', 'roles', 'last_login', 'is_superuser', 'date_joined')
+        read_only_fields = ('username','email', 'name', 'department', 'roles', 'last_login', 'is_superuser', 'date_joined')
+
+    def get_name(self, obj):
+        if obj.full_name:
+            return obj.full_name
+        return obj.username
 
 class UserSerializer(serializers.ModelSerializer):
     

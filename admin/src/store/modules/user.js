@@ -10,7 +10,7 @@ const user = {
     welcome: '',
     avatar: '',
     roles: [],
-    info: {}
+    info: {},
   },
 
   mutations: {
@@ -29,7 +29,7 @@ const user = {
     },
     SET_INFO: (state, info) => {
       state.info = info
-    }
+    },
   },
 
   actions: {
@@ -91,8 +91,8 @@ const user = {
           })
           .finally(() => {})
       })
-    }
-  }
+    },
+  },
 }
 
 export default user

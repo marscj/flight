@@ -1,15 +1,15 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   extends: [
     'plugin:vue/strongly-recommended',
     '@vue/standard',
-    'prettier',
-    'prettier/@typescript-eslint',
-    'prettier/babel',
-    'prettier/vue'
+    // 'prettier',
+    // 'prettier/@typescript-eslint',
+    // 'prettier/babel',
+    // 'prettier/vue'
   ],
   rules: {
     camelcase: ['error', { properties: 'never' }],
@@ -37,35 +37,35 @@ module.exports = {
       'single',
       {
         avoidEscape: true,
-        allowTemplateLiterals: true
-      }
+        allowTemplateLiterals: true,
+      },
     ],
     semi: [
       2,
       'never',
       {
-        beforeStatementContinuationChars: 'never'
-      }
+        beforeStatementContinuationChars: 'never',
+      },
     ],
     'no-delete-var': 2,
     'prefer-const': [
       2,
       {
-        ignoreReadBeforeAssign: false
-      }
+        ignoreReadBeforeAssign: false,
+      },
     ],
     'template-curly-spacing': 'off',
-    indent: 'off'
+    indent: 'off',
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
   },
   overrides: [
     {
       files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
       env: {
-        jest: true
-      }
-    }
-  ]
+        jest: true,
+      },
+    },
+  ],
 }
