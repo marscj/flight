@@ -50,9 +50,9 @@ function hasRole(roles, route) {
   }
 }
 
-function filterGroup(groups) {
-  if (groups) {
-    return groups
+export function filterGroup(roles) {
+  if (roles) {
+    return roles
       .reduce((f1, f2) => f1.concat(f2.permissions), [])
       .filter((f) => {
         return f.codename.includes('view_')
@@ -87,7 +87,7 @@ function filterAsyncRouter(routerMap, roles) {
 //   return accessedRouters
 // }
 
-const permission = {
+export const permission = {
   state: {
     routers: constantRouterMap,
     addRouters: [],
@@ -100,7 +100,7 @@ const permission = {
   },
   actions: {
     GenerateRoutes({ commit }, data) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         var superuser = data.is_superuser
         if (superuser) {
           commit('SET_ROUTERS', asyncRouterMap)

@@ -53,7 +53,11 @@ router.beforeEach((to, from, next) => {
             })
             // 失败时，获取用户信息失败时，调用登出，来清空历史保留信息
             store.dispatch('Logout').then(() => {
-              next({ path: loginRoutePath, query: { redirect: to.fullPath } })
+              if (from.path !== loginRoutePath) {
+                next({ path: loginRoutePath, query: { redirect: to.fullPath } })
+              } else {
+                NProgress.done()
+              }
             })
           })
       } else {
