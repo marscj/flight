@@ -1,15 +1,9 @@
 <template>
-  <page-header-wrapper
-    :tab-list="tabList"
-    :tab-active-key="tabActiveKey"
-    :tab-change="handleTabChange"
-  >
+  <page-header-wrapper :tab-list="tabList" :tab-active-key="tabActiveKey" :tab-change="handleTabChange">
     <template v-slot:content>
       <div class="ant-pro-page-header-search">
-        <a-input-search size="large" style="width: 80%; max-width: 522px;">
-          <template v-slot:enterButton>
-            搜索
-          </template>
+        <a-input-search size="large" style="width: 80%; max-width: 522px">
+          <template v-slot:enterButton> 搜索 </template>
         </a-input-search>
       </div>
     </template>
@@ -32,18 +26,18 @@ const getActiveKey = (path) => {
 }
 export default {
   name: 'SearchLayout',
-  data () {
+  data() {
     return {
       tabList: [
         { key: '1', tab: '文章' },
         { key: '2', tab: '项目' },
-        { key: '3', tab: '应用' }
+        { key: '3', tab: '应用' },
       ],
       tabActiveKey: '1',
-      search: true
+      search: true,
     }
   },
-  created () {
+  created() {
     this.tabActiveKey = getActiveKey(this.$route.path)
 
     this.$watch('$route', (val) => {
@@ -51,7 +45,7 @@ export default {
     })
   },
   methods: {
-    handleTabChange (key) {
+    handleTabChange(key) {
       this.tabActiveKey = key
       switch (key) {
         case '1':
@@ -64,10 +58,10 @@ export default {
           this.$router.push('/list/search/application')
           break
         default:
-          this.$router.push('/workplace')
+          this.$router.push('/home')
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
