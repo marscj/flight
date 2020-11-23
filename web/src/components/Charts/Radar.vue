@@ -39,7 +39,8 @@ const scale = [
     dataKey: 'score',
     min: 0,
     max: 80
-  }, {
+  },
+  {
     dataKey: 'user',
     alias: '类型'
   }
@@ -53,7 +54,7 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     return {
       axis1Opts,
       axis2Opts,
@@ -63,6 +64,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

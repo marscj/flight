@@ -8,7 +8,7 @@ const components = {
 }
 
 const locale = {
-  'message': '-',
+  message: '-',
   'menu.home': 'Home',
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.analysis': 'Analysis',
