@@ -1,11 +1,5 @@
-import request from '@/utils/request'
-
-const userApi = {
-  Login: '/auth/login/',
-  Logout: '/auth/logout/',
-  Register: '/auth/register',
-  UserInfo: '/auth/info/'
-}
+import { API } from './index'
+import { axios } from '@/utils/request'
 
 /**
  * login func
@@ -19,16 +13,16 @@ const userApi = {
  * @returns {*}
  */
 export function login(data) {
-  return request({
-    url: userApi.Login,
+  return axios({
+    url: API.Login,
     method: 'post',
     data: data
   })
 }
 
 export function getInfo() {
-  return request({
-    url: userApi.UserInfo,
+  return axios({
+    url: API.UserInfo,
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -37,15 +31,15 @@ export function getInfo() {
 }
 
 export function getCurrentUserNav() {
-  return request({
-    url: userApi.UserMenu,
+  return axios({
+    url: API.UserMenu,
     method: 'get'
   })
 }
 
 export function logout() {
-  return request({
-    url: userApi.Logout,
+  return axios({
+    url: API.Logout,
     method: 'post',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'

@@ -394,7 +394,7 @@ export const asyncRouterMap = [
             path: '/users/list/:pageNo([1-9]\\d*)?',
             name: 'AllUser',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/list/TableList'),
+            component: () => import('@/views/user/List'),
             meta: { title: 'All Users', keepAlive: true, permission: ['view_user'] }
           },
           {
