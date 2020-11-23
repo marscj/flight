@@ -17,6 +17,8 @@ import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style
 
+import './mock'
+
 import Storage from 'vue-ls'
 
 Vue.config.productionTip = false
