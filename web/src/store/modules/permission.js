@@ -24,10 +24,17 @@ function hasPermission(permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
-      flag = route.meta.permission.includes(permission[i].content_type.model)
+      console.log(permission[i], route.meta.permission)
+
+      flag = route.meta.permission.includes(permission[i].codename)
       if (flag) {
         return true
       }
+
+      // flag = route.meta.permission.includes(permission[i].content_type.model)
+      // if (flag) {
+      //   return true
+      // }
     }
     return false
   }
@@ -55,7 +62,7 @@ export function filterGroup(roles) {
     return roles
       .reduce((f1, f2) => f1.concat(f2.permissions), [])
       .filter(f => {
-        return f.codename.includes('view_')
+        return f
       })
   }
   return []

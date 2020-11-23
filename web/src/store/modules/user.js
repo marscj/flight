@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { login, getInfo, logout } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
-import { filterGroup } from './permission'
 
 const user = {
   state: {
@@ -58,15 +57,8 @@ const user = {
             var roles = result.roles
 
             if (roles && roles.length > 0) {
-              var total = roles.map(f => f.permissions.length).reduce((total, e) => total + e)
-              var _roles = filterGroup(roles)
-
-              if (total > 0 && _roles.length > 0) {
-                commit('SET_ROLES', result.roles)
-                commit('SET_INFO', result)
-              } else {
-                reject(new Error("You don't have permission to access."))
-              }
+              commit('SET_ROLES', result.roles)
+              commit('SET_INFO', result)
             } else {
               reject(new Error("You don't have permission to access."))
             }

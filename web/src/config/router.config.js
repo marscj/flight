@@ -346,13 +346,13 @@ export const asyncRouterMap = [
         name: 'dashboard',
         redirect: '/dashboard/welcome',
         component: RouteView,
-        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['user'] },
+        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse },
         children: [
           {
             path: '/dashboard/welcome',
             name: 'Welcome',
             component: () => import('@/views/dashboard/Welcome'),
-            meta: { title: 'Welcome', keepAlive: true, permission: ['user'] }
+            meta: { title: 'Welcome', keepAlive: true }
           }
         ]
       },
@@ -360,7 +360,7 @@ export const asyncRouterMap = [
         path: '/form',
         redirect: '/form/base-form',
         component: RouteView,
-        meta: { title: '表单页', icon: 'form', permission: ['user'] },
+        meta: { title: '表单页', icon: 'form', permission: ['view_user'] },
         children: [
           {
             path: '/form/base-form',
@@ -384,57 +384,25 @@ export const asyncRouterMap = [
       },
       // list
       {
-        path: '/list',
-        name: 'list',
+        path: '/users',
+        name: 'Users',
         component: RouteView,
-        redirect: '/list/table-list',
-        meta: { title: '列表页', icon: 'table' },
+        redirect: '/users/list',
+        meta: { title: 'Users', icon: 'team', permission: ['view_user', 'add_user'] },
         children: [
           {
-            path: '/list/table-list/:pageNo([1-9]\\d*)?',
-            name: 'TableListWrapper',
+            path: '/users/list/:pageNo([1-9]\\d*)?',
+            name: 'AllUser',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/list/TableList'),
-            meta: { title: '查询表格', keepAlive: true }
+            meta: { title: 'All Users', keepAlive: true, permission: ['view_user'] }
           },
           {
-            path: '/list/basic-list',
-            name: 'BasicList',
-            component: () => import('@/views/list/BasicList'),
-            meta: { title: '标准列表', keepAlive: true }
-          },
-          {
-            path: '/list/card',
-            name: 'CardList',
-            component: () => import('@/views/list/CardList'),
-            meta: { title: '卡片列表', keepAlive: true }
-          },
-          {
-            path: '/list/search',
-            name: 'SearchList',
-            component: () => import('@/views/list/search/SearchLayout'),
-            redirect: '/list/search/article',
-            meta: { title: '搜索列表', keepAlive: true, permission: ['table'] },
-            children: [
-              {
-                path: '/list/search/article',
-                name: 'SearchArticles',
-                component: () => import('../views/list/search/Article'),
-                meta: { title: '搜索列表（文章）' }
-              },
-              {
-                path: '/list/search/project',
-                name: 'SearchProjects',
-                component: () => import('../views/list/search/Projects'),
-                meta: { title: '搜索列表（项目）' }
-              },
-              {
-                path: '/list/search/application',
-                name: 'SearchApplications',
-                component: () => import('../views/list/search/Applications'),
-                meta: { title: '搜索列表（应用）' }
-              }
-            ]
+            path: '/users/add',
+            name: 'AddUser',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/list/TableList'),
+            meta: { title: 'Add User', keepAlive: true, permission: ['add_user'] }
           }
         ]
       }
