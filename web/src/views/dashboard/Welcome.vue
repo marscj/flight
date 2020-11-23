@@ -136,7 +136,7 @@ import { getRoleList, getServiceList } from '@/api/manage'
 const DataSet = require('@antv/data-set')
 
 export default {
-  name: 'Home',
+  name: 'Welcome',
   components: {
     PageHeaderWrapper,
     Radar
@@ -263,7 +263,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import './Workplace.less';
+@import './Welcome.less';
 
 .project-list {
   .card-title {
