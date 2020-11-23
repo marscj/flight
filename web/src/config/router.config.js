@@ -337,7 +337,7 @@ export const asyncRouterMap = [
     path: '/',
     name: 'index',
     component: BasicLayout,
-    meta: { title: 'menu.home' },
+    // meta: { title: 'menu.home' },
     redirect: '/dashboard/home',
     children: [
       // dashboard
@@ -352,14 +352,14 @@ export const asyncRouterMap = [
             path: '/dashboard/home',
             name: 'Home',
             component: () => import('@/views/dashboard/Home'),
-            meta: { title: 'menu.dashboard.home', keepAlive: true, permission: ['user'] }
-          },
-          {
-            path: '/dashboard/workplace',
-            name: 'Workplace',
-            component: () => import('@/views/dashboard/Workplace'),
-            meta: { title: 'menu.dashboard.home', keepAlive: true, permission: ['user'] }
+            meta: { title: 'menu.home', keepAlive: true, permission: ['user'] }
           }
+          // {
+          //   path: '/dashboard/workplace',
+          //   name: 'Workplace',
+          //   component: () => import('@/views/dashboard/Workplace'),
+          //   meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: ['user'] }
+          // }
         ]
       },
       {

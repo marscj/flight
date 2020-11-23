@@ -18,10 +18,18 @@ export default {
   theme: 'light',
   navTheme: 'light',
   primaryColor: '#1890ff',
+  colorWeak: false,
   fixedHeader: true,
   fixSiderbar: true,
   hideHintAlert: false,
-  hideCopyButton: false
+  hideCopyButton: false,
+  menu: {
+    locale: false
+  },
+  iconfontUrl: '',
+  pwa: false,
+  title: 'SAADIYAT WAY',
+  production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
 }
 // {
 //   navTheme: 'dark', // theme for nav menu
