@@ -11252,6 +11252,11 @@
   "resolved" "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz"
   "version" "1.1.2"
 
+"vee-validate@^3.4.5":
+  "integrity" "sha512-ZEcLqOAZzSkMhDvPcTx0xcwVOijFnMW9J+BA20j+rDmo24T8RCCqVQyRwwrDrcWJZV2dRYl/yYNa2GB6UCoBvg=="
+  "resolved" "https://registry.npmjs.org/vee-validate/-/vee-validate-3.4.5.tgz"
+  "version" "3.4.5"
+
 "vendors@^1.0.0":
   "integrity" "sha1-4rgApT56Kbk1BsPPQRANFsTErY4="
   "resolved" "https://registry.npm.taobao.org/vendors/download/vendors-1.0.4.tgz?cache=0&sync_timestamp=1579857147055&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvendors%2Fdownload%2Fvendors-1.0.4.tgz"
@@ -11380,6 +11385,11 @@
     "vue-hot-reload-api" "^2.3.0"
     "vue-style-loader" "^4.1.0"
 
+"vue-ls@^3.2.1":
+  "integrity" "sha512-JoZDpSu0qV5AM50vspEzOut2lcm8R0tr5WG99jMHh14qFXkUes3ZdmDMG/p8iSQVQpg0pd/svGwM9Nd7OI2oaw=="
+  "resolved" "https://registry.npmjs.org/vue-ls/-/vue-ls-3.2.1.tgz"
+  "version" "3.2.1"
+
 "vue-quill-editor@^3.0.6":
   "integrity" "sha1-H4VkYhHWijGoCnLLf0W7LxGbyPs="
   "resolved" "https://registry.npm.taobao.org/vue-quill-editor/download/vue-quill-editor-3.0.6.tgz"
@@ -11439,7 +11449,7 @@
   "resolved" "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2.0.0", "vue@^2.5.17", "vue@^2.5.3", "vue@^2.6.10", "vue@^2.x", "vue@>= 2.0", "vue@>= 2.5.0", "vue@>=2.5.0", "vue@>=2.6.0", "vue@2.x":
+"vue@^2.0.0", "vue@^2.5.17", "vue@^2.5.18", "vue@^2.5.3", "vue@^2.6.10", "vue@^2.x", "vue@>= 2.0", "vue@>= 2.5.0", "vue@>=2.5.0", "vue@>=2.6.0", "vue@2.x":
   "integrity" "sha1-dllNh31LEiNEBuhONSdcbVFBJcU="
   "resolved" "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz"
   "version" "2.6.11"
