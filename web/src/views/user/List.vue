@@ -20,10 +20,6 @@
         </a-form>
       </div>
 
-      <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="openModal">New</a-button>
-      </div>
-
       <s-table
         ref="table"
         size="default"
@@ -34,6 +30,43 @@
         showPagination="auto"
         bordered
       >
+        <div
+          slot="filterDropdown"
+          slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
+          style="padding: 8px"
+        >
+          <a-input
+            v-ant-ref="c => (searchInput = c)"
+            :placeholder="`Search ${column.dataIndex}`"
+            :value="selectedKeys[0]"
+            style="width: 188px; margin-bottom: 8px; display: block;"
+            @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+            @pressEnter="() => handleSearch(selectedKeys, confirm, column.dataIndex)"
+          />
+          <a-button
+            type="primary"
+            icon="search"
+            size="small"
+            style="width: 90px; margin-right: 8px"
+            @click="() => handleSearch(selectedKeys, confirm, column.dataIndex)"
+          >
+            Search
+          </a-button>
+          <a-button size="small" style="width: 90px" @click="() => handleReset(clearFilters)">
+            Reset
+          </a-button>
+        </div>
+        <a-icon
+          slot="filterIcon"
+          slot-scope="filtered"
+          type="search"
+          :style="{ color: filtered ? '#108ee9' : undefined }"
+        />
+
+        <template slot="roles" slot-scope="data">
+          <span v-for="index in data.join(',')" :key="index">{{ index }}</span>
+        </template>
+
         <template slot="active" slot-scope="data">
           <a-checkbox :checked="data" disabled />
         </template>
@@ -77,13 +110,11 @@
 </template>
 
 <script>
-import { PageView, RouteView } from '@/layouts'
 import { STable, Ellipsis } from '@/components'
 import { getUsers, createUser } from '@/api/user'
 
 export default {
   components: {
-    PageView,
     STable
   },
   data() {
@@ -103,18 +134,14 @@ export default {
           align: 'center'
         },
         {
-          title: 'PHONE',
-          dataIndex: 'phone_number',
-          align: 'center'
-        },
-        {
           title: 'EMAIL',
-          dataIndex: 'email.email',
+          dataIndex: 'email',
           align: 'center'
         },
         {
           title: 'ROLE',
-          dataIndex: 'role',
+          dataIndex: 'roles',
+          scopedSlots: { filterDropdown: 'filterDropdown', filterIcon: 'filterIcon', customRender: 'roles' },
           align: 'center'
         },
         {
@@ -135,11 +162,13 @@ export default {
           title: 'ACTION',
           width: '80px',
           scopedSlots: { customRender: 'action' },
+
           align: 'center'
         }
       ],
       loadData: parameter => {
         return getUsers(Object.assign(parameter, this.queryParam)).then(res => {
+          console.log(res)
           return res.result
         })
       },

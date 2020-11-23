@@ -13,13 +13,25 @@ from . import serializers
 UserModel = get_user_model()
 
 class UserFilter(django_filters.FilterSet):
-    role = django_filters.NumberFilter('role')
+    id = django_filters.NumberFilter('id')
 
 class UserView(ModelViewSet):
     serializer_class = serializers.UserSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = UserModel.objects.filter(is_delete=False)
- 
+    queryset = UserModel.objects.all().order_by('id')
+
     filter_class = UserFilter
+    ordering = ['-id']
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
  
+class GroupFilter(django_filters.FilterSet):
+    id = django_filters.NumberFilter('id')
+
+class GroupView(ModelViewSet):
+    serializer_class = serializers.GroupSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    queryset = UserModel.objects.all().order_by('id')
+ 
+    filter_class = GroupFilter
+    ordering = ['-id']
+    search_fields = ['name']

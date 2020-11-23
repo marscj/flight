@@ -11,24 +11,24 @@ import {
 } from './index'
 import { axios } from '@/utils/request'
 
-export function getUsers(parameter) {
+export function getRoles(parameter) {
   return axios({
-    url: API.Users,
+    url: API.Roles,
     method: 'get',
     params: parameter
   })
 }
 
-export function getUser(pk) {
+export function getRole(pk) {
   return axios({
-    url: API.Users + `${pk}/`,
+    url: API.Roles + `${pk}/`,
     method: 'get'
   })
 }
 
-export function createUser(data) {
+export function createRole(data) {
   return axios({
-    url: API.Users,
+    url: API.Roles,
     method: 'post',
     data: data
   })
@@ -36,9 +36,9 @@ export function createUser(data) {
     .catch(createFailed)
 }
 
-export function updateUser(pk, data) {
+export function updateRole(pk, data) {
   return axios({
-    url: API.Users + `${pk}/`,
+    url: API.Roles + `${pk}/`,
     method: 'put',
     data: data
   })

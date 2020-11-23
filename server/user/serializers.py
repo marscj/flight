@@ -73,7 +73,16 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     
+    name = serializers.SerializerMethodField()
+
+    roles = serializers.StringRelatedField(many=True, source='groups')
+
     class Meta:
         model = UserModel
         exclude = ('password',)
-        read_only_fields = ('email',)
+        read_only_fields = ('username','email', 'name', 'department', 'roles', 'last_login', 'is_superuser', 'date_joined')
+
+    def get_name(self, obj):
+        if obj.full_name:
+            return obj.full_name
+        return obj.username
