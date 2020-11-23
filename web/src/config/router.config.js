@@ -27,21 +27,21 @@ const RouteView = {
 //             path: '/dashboard/analysis/:pageNo([1-9]\\d*)?',
 //             name: 'Analysis',
 //             component: () => import('@/views/dashboard/Analysis'),
-//             meta: { title: 'menu.dashboard.analysis', keepAlive: false, permission: ['user'] },
+//             meta: { title: 'menu.dashboard.analysis', keepAlive: false, permission: ['user'] }
 //           },
 //           // 外部链接
 //           {
 //             path: 'https://www.baidu.com/',
 //             name: 'Monitor',
-//             meta: { title: 'menu.dashboard.monitor', target: '_blank' },
+//             meta: { title: 'menu.dashboard.monitor', target: '_blank' }
 //           },
 //           {
 //             path: '/dashboard/workplace',
 //             name: 'Workplace',
 //             component: () => import('@/views/dashboard/Workplace'),
-//             meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: ['user'] },
-//           },
-//         ],
+//             meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: ['user'] }
+//           }
+//         ]
 //       },
 
 //       // forms
@@ -55,21 +55,21 @@ const RouteView = {
 //             path: '/form/base-form',
 //             name: 'BaseForm',
 //             component: () => import('@/views/form/basicForm'),
-//             meta: { title: '基础表单', keepAlive: true, permission: [] },
+//             meta: { title: '基础表单', keepAlive: true, permission: [] }
 //           },
 //           {
 //             path: '/form/step-form',
 //             name: 'StepForm',
 //             component: () => import('@/views/form/stepForm/StepForm'),
-//             meta: { title: '分步表单', keepAlive: true, permission: [] },
+//             meta: { title: '分步表单', keepAlive: true, permission: [] }
 //           },
 //           {
 //             path: '/form/advanced-form',
 //             name: 'AdvanceForm',
 //             component: () => import('@/views/form/advancedForm/AdvancedForm'),
-//             meta: { title: '高级表单', keepAlive: true, permission: [] },
-//           },
-//         ],
+//             meta: { title: '高级表单', keepAlive: true, permission: [] }
+//           }
+//         ]
 //       },
 
 //       // list
@@ -85,19 +85,19 @@ const RouteView = {
 //             name: 'TableListWrapper',
 //             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
 //             component: () => import('@/views/list/TableList'),
-//             meta: { title: '查询表格', keepAlive: true, permission: [] },
+//             meta: { title: '查询表格', keepAlive: true, permission: [] }
 //           },
 //           {
 //             path: '/list/basic-list',
 //             name: 'BasicList',
 //             component: () => import('@/views/list/BasicList'),
-//             meta: { title: '标准列表', keepAlive: true, permission: [] },
+//             meta: { title: '标准列表', keepAlive: true, permission: [] }
 //           },
 //           {
 //             path: '/list/card',
 //             name: 'CardList',
 //             component: () => import('@/views/list/CardList'),
-//             meta: { title: '卡片列表', keepAlive: true, permission: [] },
+//             meta: { title: '卡片列表', keepAlive: true, permission: [] }
 //           },
 //           {
 //             path: '/list/search',
@@ -110,23 +110,23 @@ const RouteView = {
 //                 path: '/list/search/article',
 //                 name: 'SearchArticles',
 //                 component: () => import('../views/list/search/Article'),
-//                 meta: { title: '搜索列表（文章）', permission: [] },
+//                 meta: { title: '搜索列表（文章）', permission: [] }
 //               },
 //               {
 //                 path: '/list/search/project',
 //                 name: 'SearchProjects',
 //                 component: () => import('../views/list/search/Projects'),
-//                 meta: { title: '搜索列表（项目）', permission: [] },
+//                 meta: { title: '搜索列表（项目）', permission: [] }
 //               },
 //               {
 //                 path: '/list/search/application',
 //                 name: 'SearchApplications',
 //                 component: () => import('../views/list/search/Applications'),
-//                 meta: { title: '搜索列表（应用）', permission: [] },
-//               },
-//             ],
-//           },
-//         ],
+//                 meta: { title: '搜索列表（应用）', permission: [] }
+//               }
+//             ]
+//           }
+//         ]
 //       },
 
 //       // profile
@@ -141,15 +141,15 @@ const RouteView = {
 //             path: '/profile/basic',
 //             name: 'ProfileBasic',
 //             component: () => import('@/views/profile/basic'),
-//             meta: { title: '基础详情页', permission: [] },
+//             meta: { title: '基础详情页', permission: [] }
 //           },
 //           {
 //             path: '/profile/advanced',
 //             name: 'ProfileAdvanced',
 //             component: () => import('@/views/profile/advanced/Advanced'),
-//             meta: { title: '高级详情页', permission: [] },
-//           },
-//         ],
+//             meta: { title: '高级详情页', permission: [] }
+//           }
+//         ]
 //       },
 
 //       // result
@@ -164,15 +164,15 @@ const RouteView = {
 //             path: '/result/success',
 //             name: 'ResultSuccess',
 //             component: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
-//             meta: { title: '成功', keepAlive: false, hiddenHeaderContent: true, permission: [] },
+//             meta: { title: '成功', keepAlive: false, hiddenHeaderContent: true, permission: [] }
 //           },
 //           {
 //             path: '/result/fail',
 //             name: 'ResultFail',
 //             component: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
-//             meta: { title: '失败', keepAlive: false, hiddenHeaderContent: true, permission: [] },
-//           },
-//         ],
+//             meta: { title: '失败', keepAlive: false, hiddenHeaderContent: true, permission: [] }
+//           }
+//         ]
 //       },
 
 //       // Exception
@@ -187,21 +187,21 @@ const RouteView = {
 //             path: '/exception/403',
 //             name: 'Exception403',
 //             component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
-//             meta: { title: '403', permission: [] },
+//             meta: { title: '403', permission: [] }
 //           },
 //           {
 //             path: '/exception/404',
 //             name: 'Exception404',
 //             component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
-//             meta: { title: '404', permission: [] },
+//             meta: { title: '404', permission: [] }
 //           },
 //           {
 //             path: '/exception/500',
 //             name: 'Exception500',
 //             component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
-//             meta: { title: '500', permission: [] },
-//           },
-//         ],
+//             meta: { title: '500', permission: [] }
+//           }
+//         ]
 //       },
 
 //       // account
@@ -216,7 +216,7 @@ const RouteView = {
 //             path: '/account/center',
 //             name: 'center',
 //             component: () => import('@/views/account/center'),
-//             meta: { title: '个人中心', keepAlive: true, permission: [] },
+//             meta: { title: '个人中心', keepAlive: true, permission: [] }
 //           },
 //           {
 //             path: '/account/settings',
@@ -230,36 +230,36 @@ const RouteView = {
 //                 path: '/account/settings/base',
 //                 name: 'BaseSettings',
 //                 component: () => import('@/views/account/settings/BaseSetting'),
-//                 meta: { title: '基本设置', hidden: true, permission: [] },
+//                 meta: { title: '基本设置', hidden: true, permission: [] }
 //               },
 //               {
 //                 path: '/account/settings/security',
 //                 name: 'SecuritySettings',
 //                 component: () => import('@/views/account/settings/Security'),
-//                 meta: { title: '安全设置', hidden: true, keepAlive: true, permission: [] },
+//                 meta: { title: '安全设置', hidden: true, keepAlive: true, permission: [] }
 //               },
 //               {
 //                 path: '/account/settings/custom',
 //                 name: 'CustomSettings',
 //                 component: () => import('@/views/account/settings/Custom'),
-//                 meta: { title: '个性化设置', hidden: true, keepAlive: true, permission: [] },
+//                 meta: { title: '个性化设置', hidden: true, keepAlive: true, permission: [] }
 //               },
 //               {
 //                 path: '/account/settings/binding',
 //                 name: 'BindingSettings',
 //                 component: () => import('@/views/account/settings/Binding'),
-//                 meta: { title: '账户绑定', hidden: true, keepAlive: true, permission: [] },
+//                 meta: { title: '账户绑定', hidden: true, keepAlive: true, permission: [] }
 //               },
 //               {
 //                 path: '/account/settings/notification',
 //                 name: 'NotificationSettings',
 //                 component: () => import('@/views/account/settings/Notification'),
-//                 meta: { title: '新消息通知', hidden: true, keepAlive: true, permission: [] },
-//               },
-//             ],
-//           },
-//         ],
-//       },
+//                 meta: { title: '新消息通知', hidden: true, keepAlive: true, permission: [] }
+//               }
+//             ]
+//           }
+//         ]
+//       }
 
 //       // other
 //       /*
@@ -323,13 +323,13 @@ const RouteView = {
 //         ]
 //       }
 //       */
-//     ],
+//     ]
 //   },
 //   {
 //     path: '*',
 //     redirect: '/404',
-//     hidden: true,
-//   },
+//     hidden: true
+//   }
 // ]
 
 export const asyncRouterMap = [
@@ -346,22 +346,45 @@ export const asyncRouterMap = [
         name: 'dashboard',
         redirect: '/dashboard/home',
         component: RouteView,
-        meta: {
-          title: 'menu.dashboard',
-          keepAlive: true,
-          icon: bxAnaalyse,
-          permission: ['user']
-        },
+        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['user'] },
         children: [
           {
             path: '/dashboard/home',
             name: 'Home',
             component: () => import('@/views/dashboard/Home'),
-            meta: {
-              title: 'menu.dashboard.home',
-              keepAlive: true,
-              permission: ['user']
-            }
+            meta: { title: 'menu.dashboard.home', keepAlive: true, permission: ['user'] }
+          },
+          {
+            path: '/dashboard/workplace',
+            name: 'Workplace',
+            component: () => import('@/views/dashboard/Workplace'),
+            meta: { title: 'menu.dashboard.home', keepAlive: true, permission: ['user'] }
+          }
+        ]
+      },
+      {
+        path: '/form',
+        redirect: '/form/base-form',
+        component: RouteView,
+        meta: { title: '表单页', icon: 'form', permission: ['user'] },
+        children: [
+          {
+            path: '/form/base-form',
+            name: 'BaseForm',
+            component: () => import('@/views/form/basicForm'),
+            meta: { title: '基础表单', keepAlive: true }
+          },
+          {
+            path: '/form/step-form',
+            name: 'StepForm',
+            component: () => import('@/views/form/stepForm/StepForm'),
+            meta: { title: '分步表单', keepAlive: true }
+          },
+          {
+            path: '/form/advanced-form',
+            name: 'AdvanceForm',
+            component: () => import('@/views/form/advancedForm/AdvancedForm'),
+            meta: { title: '高级表单', keepAlive: true }
           }
         ]
       }
