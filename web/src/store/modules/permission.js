@@ -24,13 +24,10 @@ function hasPermission(permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
-      console.log(permission[i], route.meta.permission)
-
       flag = route.meta.permission.includes(permission[i].codename)
       if (flag) {
         return true
       }
-
       // flag = route.meta.permission.includes(permission[i].content_type.model)
       // if (flag) {
       //   return true

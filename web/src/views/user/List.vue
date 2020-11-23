@@ -1,5 +1,5 @@
 <template>
-  <page-view>
+  <page-header-wrapper>
     <a-card>
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
@@ -73,7 +73,7 @@
         </validation-observer>
       </a-modal>
     </a-card>
-  </page-view>
+  </page-header-wrapper>
 </template>
 
 <script>

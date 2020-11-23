@@ -97,6 +97,7 @@ REST_FRAMEWORK = {
         'anon': '3/m',
         'user': '100/m'
     },
+    'DEFAULT_PAGINATION_CLASS': 'middleware.pagination.CustomPagination',
 }
 
 TEMPLATES = [
