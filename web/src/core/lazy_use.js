@@ -54,6 +54,9 @@ import Dialog from '@/components/Dialog'
 import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/core/permission/permission'
+import FormValidate from '@/components/FormValidate'
+import FormItemValidate from '@/components/FormItemValidate'
+import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full'
 import './directives/action'
 
 Vue.use(ConfigProvider)
@@ -112,5 +115,9 @@ Vue.use(MultiTab)
 Vue.use(PageLoading)
 Vue.use(PermissionHelper)
 Vue.use(VueCropper)
+Vue.use(FormValidate)
+Vue.use(FormItemValidate)
+Vue.component('ValidationProvider', ValidationProvider)
+Vue.component('ValidationObserver', ValidationObserver)
 
 process.env.NODE_ENV !== 'production' && console.warn('[antd-pro] NOTICE: Antd use lazy-load.')

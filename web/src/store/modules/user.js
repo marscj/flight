@@ -1,7 +1,7 @@
-import storage from 'store'
+import Vue from 'vue'
 import { login, getInfo, logout } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
-import { welcome } from '@/utils/util'
+import { filterGroup } from './permission'
 
 const user = {
   state: {
@@ -39,7 +39,7 @@ const user = {
         login(userInfo)
           .then(response => {
             const result = response.result
-            storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
+            Vue.ls.set(ACCESS_TOKEN, result.token)
             commit('SET_TOKEN', result.token)
             resolve()
           })
@@ -55,35 +55,24 @@ const user = {
         getInfo()
           .then(response => {
             const result = response.result
+            var roles = result.roles
 
-            if (result.role && result.role.permissions.length > 0) {
-              const role = result.role
-              role.permissions = result.role.permissions
-              role.permissions.map(per => {
-                if (per.actionEntitySet != null && per.actionEntitySet.length > 0) {
-                  const action = per.actionEntitySet.map(action => {
-                    return action.action
-                  })
-                  per.actionList = action
-                }
-              })
-              role.permissionList = role.permissions.map(permission => {
-                return permission.permissionId
-              })
-              commit('SET_ROLES', result.role)
-              commit('SET_INFO', result)
+            if (roles && roles.length > 0) {
+              var total = roles.map(f => f.permissions.length).reduce((total, e) => total + e)
+              var _roles = filterGroup(roles)
+
+              if (total > 0 && _roles.length > 0) {
+                commit('SET_ROLES', result.roles)
+                commit('SET_INFO', result)
+              } else {
+                reject(new Error("You don't have permission to access."))
+              }
             } else {
-              reject(new Error('getInfo: roles must be a non-null array !'))
+              reject(new Error("You don't have permission to access."))
             }
-
-            commit('SET_NAME', { name: result.name, welcome: welcome() })
-            commit('SET_AVATAR', result.avatar)
-
             resolve(response)
           })
-          .catch(error => {
-            reject(error)
-          })
+          .catch(error => reject(error))
       })
     },
 
@@ -94,7 +83,7 @@ const user = {
           .then(() => {
             commit('SET_TOKEN', '')
             commit('SET_ROLES', [])
-            storage.remove(ACCESS_TOKEN)
+            Vue.ls.remove(ACCESS_TOKEN)
             resolve()
           })
           .catch(() => {

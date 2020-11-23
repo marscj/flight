@@ -27,6 +27,9 @@ import ArticleListContent from '@/components/ArticleListContent'
 
 import Dialog from '@/components/Dialog'
 
+import FormValidate from '@/components/FormValidate'
+import FormItemValidate from '@/components/FormItemValidate'
+
 export {
   AvatarList,
   Bar,
@@ -51,5 +54,7 @@ export {
   TagSelect,
   StandardFormRow,
   ArticleListContent,
-  Dialog
+  Dialog,
+  FormValidate,
+  FormItemValidate
 }

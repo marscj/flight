@@ -7,11 +7,24 @@ import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
  * @param route
  * @returns {boolean}
  */
+// function hasPermission(permission, route) {
+//   if (route.meta && route.meta.permission) {
+//     let flag = false
+//     for (let i = 0, len = permission.length; i < len; i++) {
+//       flag = route.meta.permission.includes(permission[i])
+//       if (flag) {
+//         return true
+//       }
+//     }
+//     return false
+//   }
+//   return true
+// }
 function hasPermission(permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
-      flag = route.meta.permission.includes(permission[i])
+      flag = route.meta.permission.includes(permission[i].content_type.model)
       if (flag) {
         return true
       }
@@ -37,9 +50,20 @@ function hasRole(roles, route) {
   }
 }
 
+export function filterGroup(roles) {
+  if (roles) {
+    return roles
+      .reduce((f1, f2) => f1.concat(f2.permissions), [])
+      .filter(f => {
+        return f.codename.includes('view_')
+      })
+  }
+  return []
+}
+
 function filterAsyncRouter(routerMap, roles) {
   const accessedRouters = routerMap.filter(route => {
-    if (hasPermission(roles.permissionList, route)) {
+    if (hasPermission(roles, route)) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, roles)
       }
@@ -50,7 +74,20 @@ function filterAsyncRouter(routerMap, roles) {
   return accessedRouters
 }
 
-const permission = {
+// function filterAsyncRouter(routerMap, roles) {
+//   const accessedRouters = routerMap.filter((route) => {
+//     if (hasPermission(roles.permissionList, route)) {
+//       if (route.children && route.children.length) {
+//         route.children = filterAsyncRouter(route.children, roles)
+//       }
+//       return true
+//     }
+//     return false
+//   })
+//   return accessedRouters
+// }
+
+export const permission = {
   state: {
     routers: constantRouterMap,
     addRouters: []
@@ -63,10 +100,16 @@ const permission = {
   },
   actions: {
     GenerateRoutes({ commit }, data) {
-      return new Promise(resolve => {
-        const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        commit('SET_ROUTERS', accessedRouters)
+      return new Promise((resolve, reject) => {
+        var superuser = data.is_superuser
+        if (superuser) {
+          commit('SET_ROUTERS', asyncRouterMap)
+        } else {
+          var roles = data.roles
+          const _roles = filterGroup(roles)
+          const accessedRouters = filterAsyncRouter(asyncRouterMap, _roles)
+          commit('SET_ROUTERS', accessedRouters)
+        }
         resolve()
       })
     }
