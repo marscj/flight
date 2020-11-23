@@ -1,13 +1,9 @@
 <template>
   <validation-observer ref="observer">
-    <a-form
-      :form="form"
-      @submit="submit">
+    <a-form :form="form" @submit="submit">
       <slot> </slot>
 
-      <validation-provider
-        name="non_field_errors"
-        v-slot="{ errors }">
+      <validation-provider name="non_field_errors" v-slot="{ errors }">
         <span class="errorText">{{ errors[0] }}</span>
       </validation-provider>
     </a-form>
@@ -32,7 +28,7 @@ export default {
     }
   },
   methods: {
-    checkError (error) {
+    checkError(error) {
       setTimeout(() => {
         this.$notification.success({
           message: 'Error: ' + error.response.status,
