@@ -151,17 +151,12 @@ export default {
           pageSize:
             (pagination && pagination.pageSize) ||
             (this.showPagination && this.localPagination.pageSize) ||
-            this.pageSize,
-          sorter: '-id'
+            this.pageSize
         },
         (sorter &&
-          sorter.field && {
-            sortField: sorter.field
-          }) ||
-          {},
-        (sorter &&
+          sorter.field &&
           sorter.order && {
-            sortOrder: sorter.order
+            sorter: sorter.order === 'ascend' ? '-' : '' + sorter.field
           }) ||
           {},
         {

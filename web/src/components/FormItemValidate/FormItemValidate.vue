@@ -1,5 +1,5 @@
 <template>
-  <a-form-item>
+  <a-form-item :label="label">
     <validation-provider :vid="vid" :name="name" v-slot="{ errors }">
       <slot> </slot>
       <span class="errorText">{{ errors[0] }}</span>
@@ -15,6 +15,10 @@ export default {
       default: undefined
     },
     name: {
+      type: String,
+      default: undefined
+    },
+    label: {
       type: String,
       default: undefined
     }

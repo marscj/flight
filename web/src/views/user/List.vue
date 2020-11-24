@@ -1,7 +1,7 @@
 <template>
   <page-header-wrapper>
     <a-card>
-      <div class="table-page-search-wrapper">
+      <!-- <div class="table-page-search-wrapper">
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
@@ -18,7 +18,7 @@
             </a-col>
           </a-row>
         </a-form>
-      </div>
+      </div> -->
 
       <s-table
         ref="table"
@@ -83,28 +83,6 @@
           </template>
         </template>
       </s-table>
-
-      <a-modal v-model="modal" title="Create User" @ok="submit">
-        <validation-observer ref="observer">
-          <validation-provider name="non_field_errors" v-slot="{ errors }">
-            <span class="errorText">{{ errors[0] }}</span>
-          </validation-provider>
-
-          <a-form :form="form" :submit="submit" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }">
-            <a-form-item label="Phone Number">
-              <validation-provider vid="phone_number" name="phone number" v-slot="{ errors }">
-                <a-input v-model="form.phone_number">
-                  <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }" />
-                  <a-select slot="addonBefore" defaultValue="+971" style="width:80px">
-                    <a-select-option value="+971">+971</a-select-option>
-                  </a-select>
-                </a-input>
-                <span class="errorText">{{ errors[0] }}</span>
-              </validation-provider>
-            </a-form-item>
-          </a-form>
-        </validation-observer>
-      </a-modal>
     </a-card>
   </page-header-wrapper>
 </template>
@@ -127,6 +105,7 @@ export default {
           title: 'ID',
           dataIndex: 'id',
           align: 'center',
+          width: '80px',
           sorter: true
         },
         {
@@ -156,13 +135,13 @@ export default {
         {
           title: 'ACTIVE',
           dataIndex: 'is_active',
-          width: '80px',
+          width: '100px',
           scopedSlots: { customRender: 'active' },
           align: 'center'
         },
         {
           title: 'ACTION',
-          width: '80px',
+          width: '100px',
           scopedSlots: { customRender: 'action' },
           align: 'center'
         }
