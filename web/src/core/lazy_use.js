@@ -56,7 +56,7 @@ import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/core/permission/permission'
 import FormValidate from '@/components/FormValidate'
 import FormItemValidate from '@/components/FormItemValidate'
-import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import './directives/action'
 
 Vue.use(ConfigProvider)

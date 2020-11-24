@@ -1,4 +1,4 @@
-import { API } from './index'
+import { API, LoginFailed, LoginSuccess } from './index'
 import { axios } from '@/utils/request'
 
 export function login(data) {
@@ -7,6 +7,8 @@ export function login(data) {
     method: 'post',
     data: data
   })
+    .then(LoginSuccess)
+    .catch(LoginFailed)
 }
 
 export function getInfo() {

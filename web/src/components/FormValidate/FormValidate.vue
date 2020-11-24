@@ -28,13 +28,17 @@ export default {
     }
   },
   methods: {
+    render(h) {
+      console.log('1111')
+      return null
+    },
     checkError(error) {
-      setTimeout(() => {
-        this.$notification.success({
-          message: 'Error: ' + error.response.status,
-          description: error.response.statusText
-        })
-      }, 500)
+      // setTimeout(() => {
+      //   this.$notification.success({
+      //     message: 'Error: ' + error.response.status,
+      //     description: error.response.statusText
+      //   })
+      // }, 500)
 
       if (
         error != null &&

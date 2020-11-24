@@ -383,30 +383,30 @@ export const asyncRouterMap = [
             name: 'User',
             hidden: true,
             hideChildrenInMenu: true,
-            component: () => import('@/views/user/Detail'),
-            redirect: '/admin/users/:id/profile',
+            component: () => import('@/views/user/Index'),
+            // redirect: '/admin/users/:id/profile',
             meta: {
               title: 'User',
               permission: ['view_user']
-            },
-            children: [
-              {
-                path: '/admin/users/:id/profile',
-                name: 'Profile',
-                component: () => import('@/views/user/Profile'),
-                meta: {
-                  title: 'User Profile'
-                }
-              },
-              {
-                path: '/admin/users/:id/passport',
-                name: 'Passport',
-                component: () => import('@/views/user/Passport'),
-                meta: {
-                  title: 'User Passport'
-                }
-              }
-            ]
+            }
+            // children: [
+            //   {
+            //     path: '/admin/users/:id/profile',
+            //     name: 'Profile',
+            //     component: () => import('@/views/user/Profile'),
+            //     meta: {
+            //       title: 'User Profile'
+            //     }
+            //   },
+            //   {
+            //     path: '/admin/users/:id/passport',
+            //     name: 'Passport',
+            //     component: () => import('@/views/user/Passport'),
+            //     meta: {
+            //       title: 'User Passport'
+            //     }
+            //   }
+            // ]
           }
         ]
       },

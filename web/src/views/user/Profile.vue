@@ -5,8 +5,8 @@
         <span class="errorText">{{ errors[0] }}</span>
       </validation-provider>
 
-      <a-form :form="form" :submit="submit" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }">
-        <a-form-item label="Photo" required>
+      <form-validate :form="form" :submit="submit">
+        <form-item-validate label="Photo" required>
           <a-upload
             name="Photo"
             :multiple="false"
@@ -24,69 +24,63 @@
               </div>
             </div>
           </a-upload>
-        </a-form-item>
+        </form-item-validate>
 
-        <a-form-item label="Username" required>
-          <a-input v-model="form.username" disabled> </a-input>
-        </a-form-item>
-
-        <a-form-item label="Email">
+        <form-item-validate label="Email">
           <validation-provider vid="email" v-slot="{ errors }">
-            <a-input v-if="form.email" v-model="form.email.email" disabled> </a-input>
-            <a-input v-else disabled> </a-input>
+            <a-input v-model="form.email" disabled> </a-input>
             <span class="errorText">{{ errors[0] }}</span>
           </validation-provider>
-        </a-form-item>
+        </form-item-validate>
 
-        <a-form-item label="Phone Number" required>
-          <validation-provider vid="phone_number" name="phone number" v-slot="{ errors }">
-            <a-input v-model="form.phone_number" disabled> </a-input>
-            <span class="errorText">{{ errors[0] }}</span>
-          </validation-provider>
-        </a-form-item>
-
-        <a-form-item label="First Name">
+        <form-item-validate label="First Name">
           <validation-provider vid="first_name" name="first name" v-slot="{ errors }">
             <a-input v-model="form.first_name"> </a-input>
             <span class="errorText">{{ errors[0] }}</span>
           </validation-provider>
-        </a-form-item>
+        </form-item-validate>
 
-        <a-form-item label="Last Name">
+        <form-item-validate label="Last Name">
           <validation-provider vid="last_name" name="last name" v-slot="{ errors }">
             <a-input v-model="form.last_name"> </a-input>
             <span class="errorText">{{ errors[0] }}</span>
           </validation-provider>
-        </a-form-item>
+        </form-item-validate>
 
-        <a-form-item label="Role">
+        <form-item-validate label="Role">
           <!-- <a-select v-model="form.role">
             <a-select-option v-for="data in RoleOptions" :key="data.value" :value="data.value">{{
               data.label
             }}</a-select-option>
           </a-select> -->
-        </a-form-item>
+        </form-item-validate>
 
-        <a-form-item label="Active" help="Whether the account is available">
+        <form-item-validate label="Active" help="Whether the account is available">
           <a-checkbox v-model="form.is_active" />
-        </a-form-item>
+        </form-item-validate>
 
-        <a-form-item label="Admin" help="Used to log in to the back-end website">
+        <form-item-validate label="Admin" help="Used to log in to the back-end website">
           <a-checkbox v-model="form.is_superuser" />
-        </a-form-item>
+        </form-item-validate>
 
         <a-button type="primary" html-type="submit" @click="submit" :loading="updateing">
           Submit
         </a-button>
-      </a-form>
+      </form-validate>
     </validation-observer>
   </a-spin>
 </template>
 
 <script>
 import { getUser, updateUser } from '@/api/user'
+import FormValidate from '@/components/FormValidate'
+import FormItemValidate from '@/components/FormItemValidate'
 
 export default {
+  components: {
+    FormValidate,
+    FormItemValidate
+  },
   data() {
     return {
       loading: false,

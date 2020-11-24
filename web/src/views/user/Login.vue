@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <form-validate ref="observer" :submit="handleSubmit" :form="form" observer="observer" class="user-layout-login">
+    <form-validate ref="observer" :submit="handleSubmit" :form="form" class="user-layout-login">
       <div>
         <form-item-validate vid="email">
           <a-input v-model="form.email" size="large" type="text" placeholder="Email">
@@ -32,8 +32,8 @@
 <script>
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
+import { FormItemValidate } from '@/components/'
 import FormValidate from '@/components/FormValidate'
-import FormItemValidate from '@/components/FormItemValidate'
 
 export default {
   components: {
@@ -51,7 +51,8 @@ export default {
         email: 'admin@admin.com',
         password: 'admin123',
         backend: true
-      }
+      },
+      error: undefined
     }
   },
   created() {},
@@ -71,6 +72,7 @@ export default {
           this.loginSuccess(res)
         })
         .catch(error => {
+          console.log(error.response.data)
           this.$refs.observer.checkError(error)
         })
     },

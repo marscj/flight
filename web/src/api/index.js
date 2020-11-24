@@ -57,3 +57,15 @@ export function deleteFailed(error) {
   message.error('Delete Failed!')
   throw error
 }
+
+export function LoginSuccess(res) {
+  notification.success({
+    message: 'Login Success'
+  })
+  return res
+}
+
+export function LoginFailed(error) {
+  message.error('Login Failed!')
+  throw error
+}
