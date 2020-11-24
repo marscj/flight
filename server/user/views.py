@@ -18,10 +18,9 @@ class UserFilter(django_filters.FilterSet):
 class UserView(ModelViewSet):
     serializer_class = serializers.UserSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = UserModel.objects.all().order_by('id')
+    queryset = UserModel.objects.all()
 
     filter_class = UserFilter
-    ordering = ['-id']
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
  
 class GroupFilter(django_filters.FilterSet):
@@ -33,5 +32,4 @@ class GroupView(ModelViewSet):
     queryset = UserModel.objects.all().order_by('id')
  
     filter_class = GroupFilter
-    ordering = ['-id']
     search_fields = ['name']

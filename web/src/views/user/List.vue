@@ -64,7 +64,7 @@
         />
 
         <template slot="roles" slot-scope="data">
-          <span v-for="index in data.join(',')" :key="index">{{ index }}</span>
+          <span>{{ data.join(',') }}</span>
         </template>
 
         <template slot="active" slot-scope="data">
@@ -126,12 +126,14 @@ export default {
         {
           title: 'ID',
           dataIndex: 'id',
-          align: 'center'
+          align: 'center',
+          sorter: true
         },
         {
           title: 'NAME',
           dataIndex: 'name',
-          align: 'center'
+          align: 'center',
+          sorter: true
         },
         {
           title: 'EMAIL',
@@ -162,13 +164,11 @@ export default {
           title: 'ACTION',
           width: '80px',
           scopedSlots: { customRender: 'action' },
-
           align: 'center'
         }
       ],
       loadData: parameter => {
         return getUsers(Object.assign(parameter, this.queryParam)).then(res => {
-          console.log(res)
           return res.result
         })
       },
