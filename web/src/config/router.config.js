@@ -380,33 +380,15 @@ export const asyncRouterMap = [
           },
           {
             path: '/admin/users/:id',
-            name: 'User',
+            name: 'UserDetail',
             hidden: true,
             hideChildrenInMenu: true,
             component: () => import('@/views/user/Index'),
             // redirect: '/admin/users/:id/profile',
             meta: {
-              title: 'User',
-              permission: ['view_user']
+              title: 'User Detail',
+              permission: ['view_user', 'change_user']
             }
-            // children: [
-            //   {
-            //     path: '/admin/users/:id/profile',
-            //     name: 'Profile',
-            //     component: () => import('@/views/user/Profile'),
-            //     meta: {
-            //       title: 'User Profile'
-            //     }
-            //   },
-            //   {
-            //     path: '/admin/users/:id/passport',
-            //     name: 'Passport',
-            //     component: () => import('@/views/user/Passport'),
-            //     meta: {
-            //       title: 'User Passport'
-            //     }
-            //   }
-            // ]
           }
         ]
       },
@@ -415,7 +397,7 @@ export const asyncRouterMap = [
         path: '/form',
         redirect: '/form/base-form',
         component: RouteView,
-        meta: { title: '表单页', icon: 'form' },
+        meta: { title: '表单页', icon: 'form', permission: ['view_fom'] },
         children: [
           {
             path: '/form/base-form',

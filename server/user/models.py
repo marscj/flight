@@ -21,7 +21,7 @@ class User(AbstractUser):
     passport_no = models.CharField(blank=True, null=True, max_length=64)
 
     # 性别
-    passport_sex = models.BooleanField(blank=True, null=True)
+    passport_sex = models.CharField(blank=True, null=True, max_length=16)
 
     # 国籍
     passport_nationality = models.CharField(blank=True, null=True, max_length=64)

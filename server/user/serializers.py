@@ -64,7 +64,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
             'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
             'avatar', 'is_delete', 'department', 'roles'
         )
-        read_only_fields = ('username','email', 'name', 'department', 'roles', 'last_login', 'is_superuser', 'date_joined')
+        read_only_fields = ('username', 'password', 'email', 'name', 'department', 'roles', 'last_login', 'is_superuser', 'date_joined')
 
     def get_name(self, obj):
         if obj.full_name:
@@ -79,10 +79,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserModel
-        exclude = ('password',)
-        read_only_fields = ('username','email', 'name', 'department', 'roles', 'last_login', 'is_superuser', 'date_joined')
+        fields = '__all__'
+        # exclude = ('password',)
+        read_only_fields = ('username', 'password', 'email', 'name', 'department', 'roles', 'last_login', 'is_superuser', 'date_joined')
 
     def get_name(self, obj):
-        if obj.full_name:
-            return obj.full_name
-        return obj.username
+        return obj.full_name

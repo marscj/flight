@@ -77,7 +77,7 @@
 
         <template slot="action" slot-scope="data">
           <template>
-            <router-link :to="{ name: 'User', params: { id: data.id } }">
+            <router-link :to="{ name: 'UserDetail', params: { id: data.id } }">
               <span>Detail</span>
             </router-link>
           </template>
