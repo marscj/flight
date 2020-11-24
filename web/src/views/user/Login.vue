@@ -55,8 +55,6 @@ export default {
       error: undefined
     }
   },
-  created() {},
-  mounted() {},
   methods: {
     ...mapActions(['Login', 'Logout']),
     handleSubmit(e) {

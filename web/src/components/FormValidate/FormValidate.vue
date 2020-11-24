@@ -1,6 +1,18 @@
 <template>
   <validation-observer ref="observer">
-    <a-form :form="form" @submit="submit">
+    <a-form
+      :form="form"
+      :layout="layout"
+      :labelCol="labelCol"
+      :wrapperCol="wrapperCol"
+      :colon="colon"
+      :labelAlign="labelAlign"
+      :prefixCls="prefixCls"
+      :hideRequiredMark="hideRequiredMark"
+      :autoFormCreate="autoFormCreate"
+      :options="options"
+      :selfUpdate="selfUpdate"
+    >
       <slot> </slot>
 
       <validation-provider name="non_field_errors" v-slot="{ errors }">
@@ -11,27 +23,11 @@
 </template>
 
 <script>
+import F from 'ant-design-vue/es/form/Form'
 export default {
   name: 'FormValidate',
-  props: {
-    form: {
-      type: Object,
-      default: undefined
-    },
-    submit: {
-      type: Function,
-      default: () => {}
-    },
-    error: {
-      type: Object,
-      default: undefined
-    }
-  },
+  props: Object.assign({}, F.props, {}),
   methods: {
-    render(h) {
-      console.log('1111')
-      return null
-    },
     checkError(error) {
       // setTimeout(() => {
       //   this.$notification.success({

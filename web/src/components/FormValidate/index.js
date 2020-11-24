@@ -2,7 +2,7 @@ import FormValidate from './FormValidate'
 
 export default FormValidate
 
-// import F from 'ant-design-vue/es/form/FormItem'
+// import F from 'ant-design-vue/es/form/Form'
 
 // export default {
 //   props: Object.assign({}, F.props, {

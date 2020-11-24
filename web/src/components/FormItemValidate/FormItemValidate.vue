@@ -1,5 +1,22 @@
 <template>
-  <a-form-item :label="label">
+  <a-form-item
+    :id="id"
+    :htmlFor="htmlFor"
+    :prefixCls="prefixCls"
+    :label="label"
+    :labelCol="labelCol"
+    :wrapperCol="wrapperCol"
+    :help="help"
+    :extra="extra"
+    :validateStatus="validateStatus"
+    :hasFeedback="hasFeedback"
+    :required="required"
+    :colon="colon"
+    :fieldDecoratorId="fieldDecoratorId"
+    :fieldDecoratorOptions="fieldDecoratorOptions"
+    :selfUpdate="selfUpdate"
+    :labelAlign="labelAlign"
+  >
     <validation-provider :vid="vid" :name="name" v-slot="{ errors }">
       <slot> </slot>
       <span class="errorText">{{ errors[0] }}</span>
@@ -8,8 +25,10 @@
 </template>
 
 <script>
+import F from 'ant-design-vue/es/form/FormItem'
+
 export default {
-  props: {
+  props: Object.assign({}, F.props, {
     vid: {
       type: String,
       default: undefined
@@ -17,10 +36,16 @@ export default {
     name: {
       type: String,
       default: undefined
-    },
-    label: {
-      type: String,
-      default: undefined
+    }
+  }),
+  mounted() {
+    console.log()
+  },
+  data() {
+    return {
+      nidaye: {
+        label: 'caonima'
+      }
     }
   }
 }
