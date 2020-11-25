@@ -3,6 +3,10 @@ const getters = {
   lang: state => state.app.lang,
   theme: state => state.app.theme,
   color: state => state.app.color,
+
+  permission: state => state.permission,
+
+  user: state => state.user,
   token: state => state.user.token,
   avatar: state => state.user.avatar,
   nickname: state => state.user.name,

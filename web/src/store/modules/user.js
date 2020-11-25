@@ -60,7 +60,8 @@ const user = {
               commit('SET_ROLES', result.roles)
               commit('SET_INFO', result)
             } else {
-              reject(new Error("You don't have permission to access."))
+              commit('SET_ROLES', [])
+              commit('SET_INFO', result)
             }
             resolve(response)
           })
@@ -81,7 +82,11 @@ const user = {
           .catch(() => {
             resolve()
           })
-          .finally(() => {})
+          .finally(() => {
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', [])
+            Vue.ls.remove(ACCESS_TOKEN)
+          })
       })
     }
   }

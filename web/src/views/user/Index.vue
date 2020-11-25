@@ -1,5 +1,5 @@
 <template>
-  <form-validate>
+  <form-validate ref="observer">
     <page-header-wrapper>
       <template slot="extra">
         <a-button v-action:change_user type="primary" @click="submit" :loading="updateing" html-type="submit">
@@ -82,7 +82,7 @@
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Sex" vid="passport_sex">
-              <a-input-number v-model="form.passport_sex" />
+              <a-input v-model="form.passport_sex" />
             </form-item-validate>
           </a-col>
 
@@ -94,19 +94,19 @@
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Date of birth" vid="passport_date_birth">
-              <a-date-picker v-model="form.passport_date_birth" format="YYYY-MM-DD" class="w-full" />
+              <a-date-picker v-model="form.passport_date_birth" class="w-full" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Date of issue" vid="passport_date_issue">
-              <a-date-picker v-model="form.passport_date_issue" format="YYYY-MM-DD" class="w-full" />
+              <a-date-picker v-model="form.passport_date_issue" class="w-full" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Date of expiry" vid="passport_date_expiry">
-              <a-date-picker v-model="form.passport_date_expiry" format="YYYY-MM-DD" class="w-full" />
+              <a-date-picker v-model="form.passport_date_expiry" class="w-full" />
             </form-item-validate>
           </a-col>
 
@@ -131,6 +131,7 @@
 import { FormValidate, FormItemValidate } from '@/components'
 import { getUser, updateUser } from '@/api/user'
 import '@/assets/css/tailwind.css'
+import moment from 'moment'
 
 export default {
   components: { FormValidate, FormItemValidate },
@@ -139,7 +140,11 @@ export default {
     return {
       loading: false,
       updateing: false,
-      form: {},
+      form: {
+        passport_date_birth: moment(new Date()),
+        passport_date_issue: moment(new Date()),
+        passport_date_expiry: moment(new Date())
+      },
       fileList: []
     }
   },
@@ -160,7 +165,13 @@ export default {
       getUser(this.$route.params.id)
         .then(res => {
           const { result } = res
-          this.form = result
+
+          this.form = Object.assign(result, {
+            passport_date_birth: moment(result.passport_date_birth, 'YYYY-MM-DD'),
+            passport_date_issue: moment(result.passport_date_issue, 'YYYY-MM-DD'),
+            passport_date_expiry: moment(result.passport_date_expiry, 'YYYY-MM-DD')
+          })
+
           this.fileList = []
         })
         .finally(() => {
@@ -199,9 +210,18 @@ export default {
 
       formData.append('first_name', this.form.first_name)
       formData.append('last_name', this.form.last_name)
-      // formData.append('role', this.form.role)
       formData.append('is_active', this.form.is_active)
       formData.append('is_staff', this.form.is_staff)
+      formData.append('possport_type', this.form.possport_type)
+      formData.append('passport_code', this.form.passport_code)
+      formData.append('passport_no', this.form.passport_no)
+      formData.append('passport_sex', this.form.passport_sex)
+      formData.append('passport_nationality', this.form.passport_nationality)
+      formData.append('passport_date_birth', moment(this.form.passport_date_birth).format('YYYY-MM-DD'))
+      formData.append('passport_date_issue', moment(this.form.passport_date_issue).format('YYYY-MM-DD'))
+      formData.append('passport_date_expiry', moment(this.form.passport_date_expiry).format('YYYY-MM-DD'))
+      formData.append('passport_place_birth', this.form.passport_place_birth)
+      formData.append('passport_issuing_authority', this.form.passport_issuing_authority)
 
       updateUser(this.$route.params.id, formData)
         .then(res => {
@@ -209,7 +229,7 @@ export default {
         })
         .catch(error => {
           if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result)
+            this.$refs.observer.checkError(error)
           }
         })
         .finally(() => {
