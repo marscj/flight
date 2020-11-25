@@ -79,7 +79,9 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserModel
-        fields = '__all__'
+        exclude = (
+            'groups', 'user_permissions'
+        )
         read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined')
 
     def get_name(self, obj):
@@ -94,14 +96,16 @@ class UserSerializer(serializers.ModelSerializer):
     
     name = serializers.SerializerMethodField()
 
-    roles = serializers.StringRelatedField(read_only=True, many=True, source='groups')
+    roles = ListGroupSerializer(read_only=True, many=True, source='groups')
+
+    department = DepartmentSerializer(read_only=True)
 
     class Meta:
         model = UserModel
         fields = (
-            'id', 'name', 'email', 'roles', 'is_staff', 'is_active', 'department_id'
+            'id', 'name', 'email', 'roles', 'is_staff', 'is_active', 'department'
         )
-        read_only_fields = ('id', 'email', 'roles', 'is_staff', 'is_active')
+        read_only_fields = ('id', 'email', 'is_staff', 'is_active')
 
     def get_name(self, obj):
         return obj.full_name

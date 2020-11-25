@@ -2,8 +2,13 @@
   width: 100%;
 }
 
-.ant-table-tbody > tr > td,
+/* .ant-table-tbody > tr > td,
 .ant-table-thead > tr > th {
+  padding: 14px 4px;
+  font-size: 12px;
+} */
+
+.ant-table-tbody > tr > td {
   padding: 14px 4px;
   font-size: 12px;
 }

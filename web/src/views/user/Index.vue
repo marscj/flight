@@ -53,7 +53,7 @@
           </a-col>
 
           <a-col :lg="12" :md="12" :sm="24">
-            <form-item-validate label="Admin" vid="is_staff" help="Used to log in to the back-end website">
+            <form-item-validate label="Staff" vid="is_staff" help="Used to log in to the back-end website">
               <a-checkbox v-model="form.is_staff" />
             </form-item-validate>
           </a-col>

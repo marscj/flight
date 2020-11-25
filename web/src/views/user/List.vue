@@ -1,24 +1,47 @@
 <template>
   <page-header-wrapper>
     <a-card>
-      <!-- <div class="table-page-search-wrapper">
-        <a-form layout="inline">
-          <a-row :gutter="48">
-            <a-col :md="8" :sm="24">
-              <a-form-item label="Search">
-                <a-input v-model="queryParam.search"></a-input>
-              </a-form-item>
+      <div class="table-page-search-wrapper">
+        <form-validate layout="inline" :form="queryParam">
+          <a-row :gutter="24">
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="Role">
+                <a-select v-model="queryParam.role" @change="() => $refs.table.refresh()">
+                  <a-select-option :key="0" :value="0">All</a-select-option>
+                  <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">
+                    {{ index.name }}</a-select-option
+                  >
+                </a-select>
+              </form-item-validate>
             </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item>
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="Department"> </form-item-validate>
+            </a-col>
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="Staff"> </form-item-validate>
+            </a-col>
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="Active"> </form-item-validate>
+            </a-col>
+
+            <a-col :md="20" :sm="24">
+              <form-item-validate label="Search">
+                <a-input v-model="queryParam.search"></a-input>
+              </form-item-validate>
+            </a-col>
+            <a-col :md="4" :sm="24">
+              <form-item-validate>
                 <a-button type="primary" html-type="submit" icon="search" @click="() => $refs.table.refresh()">
                   Search
                 </a-button>
-              </a-form-item>
+              </form-item-validate>
             </a-col>
           </a-row>
-        </a-form>
-      </div> -->
+        </form-validate>
+      </div>
 
       <s-table
         ref="table"
@@ -64,14 +87,20 @@
         />
 
         <template slot="roles" slot-scope="data">
-          <span>{{ data.join(',') }}</span>
+          <div v-for="index in data" :key="index.id">
+            <span>{{ index.name }}</span>
+          </div>
+        </template>
+
+        <template slot="department" slot-scope="data">
+          <span v-if="data">{{ data.name }}</span>
         </template>
 
         <template slot="active" slot-scope="data">
           <a-checkbox :checked="data" disabled />
         </template>
 
-        <template slot="admin" slot-scope="data">
+        <template slot="staff" slot-scope="data">
           <a-checkbox :checked="data" disabled />
         </template>
 
@@ -90,15 +119,19 @@
 <script>
 import { STable, Ellipsis } from '@/components'
 import { getUsers, createUser } from '@/api/user'
+import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
   components: {
-    STable
+    STable,
+    FormValidate,
+    FormItemValidate
   },
   data() {
     return {
+      extra: {},
       queryParam: {
-        role: null
+        role: 0
       },
       columns: [
         {
@@ -109,38 +142,44 @@ export default {
           sorter: true
         },
         {
-          title: 'NAME',
+          title: 'Name',
           dataIndex: 'name',
           align: 'center',
           sorter: true
         },
         {
-          title: 'EMAIL',
+          title: 'Email',
           dataIndex: 'email',
           align: 'center'
         },
         {
-          title: 'ROLE',
+          title: 'Role',
           dataIndex: 'roles',
           scopedSlots: { filterDropdown: 'filterDropdown', filterIcon: 'filterIcon', customRender: 'roles' },
           align: 'center'
         },
         {
-          title: 'ADMIN',
-          dataIndex: 'is_superuser',
-          width: '80px',
-          scopedSlots: { customRender: 'admin' },
+          title: 'Department',
+          dataIndex: 'department',
+          scopedSlots: { filterDropdown: 'filterDropdown', filterIcon: 'filterIcon', customRender: 'department' },
           align: 'center'
         },
         {
-          title: 'ACTIVE',
+          title: 'Staff',
+          dataIndex: 'is_staff',
+          width: '80px',
+          scopedSlots: { customRender: 'staff' },
+          align: 'center'
+        },
+        {
+          title: 'Active',
           dataIndex: 'is_active',
           width: '100px',
           scopedSlots: { customRender: 'active' },
           align: 'center'
         },
         {
-          title: 'ACTION',
+          title: 'Action',
           width: '100px',
           scopedSlots: { customRender: 'action' },
           align: 'center'
@@ -148,35 +187,13 @@ export default {
       ],
       loadData: parameter => {
         return getUsers(Object.assign(parameter, this.queryParam)).then(res => {
-          console.log(res.result)
+          this.extra = res.result.extra
           return res.result
         })
-      },
-      modal: false,
-      form: {}
+      }
     }
   },
-  methods: {
-    openModal() {
-      this.modal = true
-      this.form = {}
-    },
-    submit() {
-      createUser({
-        username: '+971' + this.form.phone_number,
-        phone_number: '+971' + this.form.phone_number
-      })
-        .then(res => {
-          this.modal = false
-          this.$refs.table.refresh()
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result)
-          }
-        })
-    }
-  }
+  methods: {}
 }
 </script>
 

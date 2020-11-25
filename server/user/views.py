@@ -16,6 +16,10 @@ UserModel = get_user_model()
 
 class UserFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
+    role = django_filters.NumberFilter('groups__id')
+    department = django_filters.NumberFilter('department_id')
+    is_staff = django_filters.BooleanFilter('is_staff')
+    is_active = django_filters.BooleanFilter('is_active')
 
 class UserView(viewset.ExtraModelViewSet):
     serializer_class = serializers.UserDetailsSerializer
