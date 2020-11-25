@@ -15,3 +15,11 @@ class CustomPagination(PageNumberPagination):
             ('pageNo', self.page.number),
             ('data', data),
         ]))
+
+    def get_extra_paginated_response(self, data, extra):
+        return Response(OrderedDict([
+            ('totalCount', self.page.paginator.count),
+            ('pageNo', self.page.number),
+            ('data', data),
+            ('extra', extra)
+        ]))

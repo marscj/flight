@@ -8,39 +8,27 @@ from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 import django_filters 
 
-from . import serializers
+from . import serializers, models
+from middleware import viewset 
 
 UserModel = get_user_model()
 
 class UserFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
 
-class UserView(ModelViewSet):
-    serializer_class = serializers.UserSerializer
+class UserView(viewset.ExtraModelViewSet):
+    serializer_class = serializers.UserDetailsSerializer
+    list_serializer_class = serializers.UserSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = UserModel.objects.all().order_by('id')
 
     filter_class = UserFilter
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
 
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return serializers.UserSerializer
-        elif self.action == 'retrieve':
-            return serializers.UserDetailsSerializer
-
-        return serializers.UserSerializer
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+    def get_extra_data(self, request):
+        queryset = models.Department.objects.all()
+        serializer = serializers.DepartmentSerializer(queryset, many=True, context={'request': request})
+        return serializer.data
  
 class GroupFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
