@@ -5,7 +5,7 @@ class ExtraModelViewSet(ModelViewSet):
     list_serializer_class = None
     
     def get_extra_data(self, request):
-        return []
+        return {}
 
     def get_serializer_class(self):
         if self.action == 'list' and self.list_serializer_class is not None:
@@ -19,7 +19,6 @@ class ExtraModelViewSet(ModelViewSet):
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
-
             return self.paginator.get_extra_paginated_response(serializer.data, self.get_extra_data(request))
 
         serializer = self.get_serializer(queryset, many=True)

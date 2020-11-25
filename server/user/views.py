@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.conf import settings
 
 from rest_framework.response import Response
@@ -26,9 +27,10 @@ class UserView(viewset.ExtraModelViewSet):
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
 
     def get_extra_data(self, request):
-        queryset = models.Department.objects.all()
-        serializer = serializers.DepartmentSerializer(queryset, many=True, context={'request': request})
-        return serializer.data
+        return {
+            'role': serializers.ListGroupSerializer(Group.objects.all(), many=True, context={'request': request}).data,
+            'department': serializers.DepartmentSerializer(models.Department.objects.all(), many=True, context={'request': request}).data
+        }
  
 class GroupFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')

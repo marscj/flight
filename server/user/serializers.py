@@ -30,7 +30,7 @@ class PermissionSerializer(serializers.ModelSerializer):
 
     codename = serializers.CharField(max_length=100)
 
-    content_type = ContentTypeSerializer(many=False)
+    content_type = ContentTypeSerializer()
 
     class Meta:
         model = Permission
@@ -40,11 +40,19 @@ class GroupSerializer(serializers.ModelSerializer):
     
     permissions = PermissionSerializer(read_only=True, many=True)
 
-    name = serializers.CharField(required=False, max_length=150)
+    name = serializers.CharField(max_length=150)
     
     class Meta:
         model = Group
         fields = '__all__'
+
+class ListGroupSerializer(serializers.ModelSerializer):
+
+    name = serializers.CharField(required=True)
+    
+    class Meta:
+        model = Group
+        fields = ('id', 'name')
 
 class LoginSerializer(AuthLoginSerializer):
     
@@ -78,12 +86,9 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         return obj.full_name
 
     def get_department(self, obj):
-        try:
-            department = Department.objects.all()
-            serializers = DepartmentSerializer(instance=department, many=True, context=self.context)
-            return serializers.data
-        except Department.DoesNotExist:
-            return []
+        department = Department.objects.all()
+        serializers = DepartmentSerializer(instance=department, many=True, context=self.context)
+        return serializers.data
 
 class UserSerializer(serializers.ModelSerializer):
     
