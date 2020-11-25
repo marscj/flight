@@ -148,6 +148,7 @@ export default {
       ],
       loadData: parameter => {
         return getUsers(Object.assign(parameter, this.queryParam)).then(res => {
+          console.log(res.result)
           return res.result
         })
       },

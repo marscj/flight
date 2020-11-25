@@ -22,6 +22,25 @@ class UserView(ModelViewSet):
 
     filter_class = UserFilter
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return serializers.UserSerializer
+        elif self.action == 'retrieve':
+            return serializers.UserDetailsSerializer
+
+        return serializers.UserSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
  
 class GroupFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
