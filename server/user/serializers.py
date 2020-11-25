@@ -6,8 +6,17 @@ from django.contrib.auth.models import Group, Permission
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from rest_auth.serializers import LoginSerializer as AuthLoginSerializer
+from .models import Department
 
 UserModel = get_user_model()
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    
+    name = serializers.CharField(max_length=32)
+
+    class Meta:
+        model = Department
+        fields = '__all__'
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -75,13 +84,31 @@ class UserSerializer(serializers.ModelSerializer):
     
     name = serializers.SerializerMethodField()
 
-    roles = serializers.StringRelatedField(many=True, source='groups')
+    roles = serializers.StringRelatedField(read_only=True, many=True, source='groups')
+
+    department = serializers.SerializerMethodField()
+
+    department_id = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, queryset=Department.objects.all())
 
     class Meta:
         model = UserModel
         fields = '__all__'
-        # exclude = ('password',)
-        read_only_fields = ('username', 'password', 'email', 'name', 'department', 'roles', 'last_login', 'is_superuser', 'date_joined')
+        read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined')
 
     def get_name(self, obj):
         return obj.full_name
+
+    def get_department(self, obj):
+        try:
+            department = Department.objects.all()
+            serializers = DepartmentSerializer(instance=department, many=True, context=self.context)
+            return serializers.data
+        except Department.DoesNotExist:
+            return []
+
+    def update(self, instance, validated_data):
+        print(validated_data)
+        validated_data.pop('groups', None)
+        print('------------')
+        print(validated_data)
+        return super().update(instance, validated_data)

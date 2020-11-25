@@ -44,7 +44,7 @@ export default {
       ) {
         this.$refs.observer.setErrors(error.response.data.result)
       } else {
-        this.$refs.observer.setErrors({ non_field_errors: error.response.data })
+        // this.$refs.observer.setErrors({ non_field_errors: error.response.data })
       }
     }
   }

@@ -64,7 +64,7 @@
         <a-row class="form-row" :gutter="16">
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Type" vid="possport_type">
-              <a-input v-model="form.possport_type" />
+              <a-input v-model="form.possport_type" :maxLength="4" />
             </form-item-validate>
           </a-col>
 
@@ -130,7 +130,6 @@
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getUser, updateUser } from '@/api/user'
-import '@/assets/css/tailwind.css'
 import moment from 'moment'
 
 export default {
@@ -157,9 +156,6 @@ export default {
     }
   },
   methods: {
-    console() {
-      console.log('aaaaaa')
-    },
     getUserData() {
       this.loading = true
       getUser(this.$route.params.id)
@@ -171,6 +167,8 @@ export default {
             passport_date_issue: moment(result.passport_date_issue, 'YYYY-MM-DD'),
             passport_date_expiry: moment(result.passport_date_expiry, 'YYYY-MM-DD')
           })
+
+          console.log(this.form)
 
           this.fileList = []
         })
@@ -212,6 +210,8 @@ export default {
       formData.append('last_name', this.form.last_name)
       formData.append('is_active', this.form.is_active)
       formData.append('is_staff', this.form.is_staff)
+      formData.append('name', 'asdfsd')
+      // formData.append('department_id', this.form.department_id)
       formData.append('possport_type', this.form.possport_type)
       formData.append('passport_code', this.form.passport_code)
       formData.append('passport_no', this.form.passport_no)
@@ -225,7 +225,12 @@ export default {
 
       updateUser(this.$route.params.id, formData)
         .then(res => {
-          this.getUserData()
+          const { result } = res
+          this.form = Object.assign(result, {
+            passport_date_birth: moment(result.passport_date_birth, 'YYYY-MM-DD'),
+            passport_date_issue: moment(result.passport_date_issue, 'YYYY-MM-DD'),
+            passport_date_expiry: moment(result.passport_date_expiry, 'YYYY-MM-DD')
+          })
         })
         .catch(error => {
           if (error.response) {
