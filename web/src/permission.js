@@ -23,25 +23,17 @@ router.beforeEach((to, from, next) => {
       next({ path: defaultRoutePath })
       NProgress.done()
     } else {
-      // check login user.roles is null
       if (store.getters.permission.addRouters.length === 0) {
-        // request login userInfo
         store
           .dispatch('GetInfo')
           .then(res => {
             const result = res.result
-            // generate dynamic router
             store.dispatch('GenerateRoutes', result).then(() => {
-              // 根据roles权限生成可访问的路由表
-              // 动态添加可访问路由表
               router.addRoutes(store.getters.addRouters)
-              // 请求带有 redirect 重定向时，登录自动重定向到该地址
               const redirect = decodeURIComponent(from.query.redirect || to.path)
               if (to.path === redirect) {
-                // set the replace: true so the navigation will not leave a history record
                 next({ ...to, replace: true })
               } else {
-                // 跳转到目的路由
                 next({ path: redirect })
               }
             })

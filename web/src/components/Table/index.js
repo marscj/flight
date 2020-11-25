@@ -156,7 +156,7 @@ export default {
         (sorter &&
           sorter.field &&
           sorter.order && {
-            sorter: sorter.order === 'ascend' ? '-' : '' + sorter.field
+            sorter: (sorter.order === 'ascend' ? '-' : '') + sorter.field
           }) ||
           {},
         {

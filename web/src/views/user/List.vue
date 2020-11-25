@@ -7,7 +7,7 @@
             <a-col :md="6" :sm="24">
               <form-item-validate label="Role">
                 <a-select v-model="queryParam.role" @change="() => $refs.table.refresh()">
-                  <a-select-option :key="0" :value="0">All</a-select-option>
+                  <a-select-option key="0" :value="0">All</a-select-option>
                   <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">
                     {{ index.name }}</a-select-option
                   >
@@ -16,27 +16,44 @@
             </a-col>
 
             <a-col :md="6" :sm="24">
-              <form-item-validate label="Department"> </form-item-validate>
-            </a-col>
-
-            <a-col :md="6" :sm="24">
-              <form-item-validate label="Staff"> </form-item-validate>
-            </a-col>
-
-            <a-col :md="6" :sm="24">
-              <form-item-validate label="Active"> </form-item-validate>
-            </a-col>
-
-            <a-col :md="20" :sm="24">
-              <form-item-validate label="Search">
-                <a-input v-model="queryParam.search"></a-input>
+              <form-item-validate label="Department">
+                <a-select v-model="queryParam.department" @change="() => $refs.table.refresh()">
+                  <a-select-option key="0" :value="0">All</a-select-option>
+                  <a-select-option v-for="index in extra.department" :key="index.id" :value="index.id">
+                    {{ index.name }}</a-select-option
+                  >
+                </a-select>
               </form-item-validate>
             </a-col>
-            <a-col :md="4" :sm="24">
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="Staff">
+                <a-select v-model="queryParam.is_staff" @change="() => $refs.table.refresh()">
+                  <a-select-option key="0" :value="0">All</a-select-option>
+                  <a-select-option key="1" :value="1">Yes</a-select-option>
+                  <a-select-option key="2" :value="2">No</a-select-option>
+                </a-select>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="Active">
+                <a-select v-model="queryParam.is_active" @change="() => $refs.table.refresh()">
+                  <a-select-option key="0" :value="0">All</a-select-option>
+                  <a-select-option key="1" :value="1">Yes</a-select-option>
+                  <a-select-option key="2" :value="2">No</a-select-option>
+                </a-select>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="24" :sm="24">
               <form-item-validate>
-                <a-button type="primary" html-type="submit" icon="search" @click="() => $refs.table.refresh()">
-                  Search
-                </a-button>
+                <a-input-search
+                  v-model="queryParam.search"
+                  placeholder="E.g Name, Email, Passport No."
+                  enter-button="Search"
+                  @search="() => $refs.table.refresh()"
+                />
               </form-item-validate>
             </a-col>
           </a-row>
@@ -53,39 +70,6 @@
         showPagination="auto"
         bordered
       >
-        <div
-          slot="filterDropdown"
-          slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
-          style="padding: 8px"
-        >
-          <a-input
-            v-ant-ref="c => (searchInput = c)"
-            :placeholder="`Search ${column.dataIndex}`"
-            :value="selectedKeys[0]"
-            style="width: 188px; margin-bottom: 8px; display: block;"
-            @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
-            @pressEnter="() => handleSearch(selectedKeys, confirm, column.dataIndex)"
-          />
-          <a-button
-            type="primary"
-            icon="search"
-            size="small"
-            style="width: 90px; margin-right: 8px"
-            @click="() => handleSearch(selectedKeys, confirm, column.dataIndex)"
-          >
-            Search
-          </a-button>
-          <a-button size="small" style="width: 90px" @click="() => handleReset(clearFilters)">
-            Reset
-          </a-button>
-        </div>
-        <a-icon
-          slot="filterIcon"
-          slot-scope="filtered"
-          type="search"
-          :style="{ color: filtered ? '#108ee9' : undefined }"
-        />
-
         <template slot="roles" slot-scope="data">
           <div v-for="index in data" :key="index.id">
             <span>{{ index.name }}</span>
@@ -131,7 +115,10 @@ export default {
     return {
       extra: {},
       queryParam: {
-        role: 0
+        role: 0,
+        department: 0,
+        is_staff: 0,
+        is_active: 0
       },
       columns: [
         {
@@ -141,42 +128,45 @@ export default {
           width: '80px',
           sorter: true
         },
+
         {
-          title: 'Name',
-          dataIndex: 'name',
+          title: 'Email',
+          dataIndex: 'email',
           align: 'center',
           sorter: true
         },
         {
-          title: 'Email',
-          dataIndex: 'email',
+          title: 'Name',
+          dataIndex: 'name',
           align: 'center'
         },
         {
           title: 'Role',
           dataIndex: 'roles',
-          scopedSlots: { filterDropdown: 'filterDropdown', filterIcon: 'filterIcon', customRender: 'roles' },
+          scopedSlots: { customRender: 'roles' },
           align: 'center'
         },
         {
           title: 'Department',
           dataIndex: 'department',
-          scopedSlots: { filterDropdown: 'filterDropdown', filterIcon: 'filterIcon', customRender: 'department' },
+          scopedSlots: { customRender: 'department' },
           align: 'center'
         },
         {
           title: 'Staff',
           dataIndex: 'is_staff',
-          width: '80px',
+          width: '100px',
           scopedSlots: { customRender: 'staff' },
-          align: 'center'
+          align: 'center',
+          sorter: true
         },
         {
           title: 'Active',
           dataIndex: 'is_active',
           width: '100px',
           scopedSlots: { customRender: 'active' },
-          align: 'center'
+          align: 'center',
+          sorter: true
         },
         {
           title: 'Action',
@@ -186,7 +176,17 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getUsers(Object.assign(parameter, this.queryParam)).then(res => {
+        return getUsers(
+          Object.assign(
+            parameter,
+            Object.assign({}, this.queryParam, {
+              role: this.queryParam.role != 0 ? this.queryParam.role : null,
+              department: this.queryParam.department != 0 ? this.queryParam.department : null,
+              is_staff: this.queryParam.is_staff != 0 ? (this.queryParam.is_staff == 1 ? true : false) : null,
+              is_active: this.queryParam.is_active != 0 ? (this.queryParam.is_active == 1 ? true : false) : null
+            })
+          )
+        ).then(res => {
           this.extra = res.result.extra
           return res.result
         })
