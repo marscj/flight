@@ -36,13 +36,21 @@
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Department" vid="department_id">
-              <a-input v-model="form.department_id" />
+              <a-select v-model="form.department_id" :allowClear="true" @change="onDepartmentChange">
+                <a-select-option v-for="index in extra.department" :key="index.id" :value="index.id">{{
+                  index.name
+                }}</a-select-option>
+              </a-select>
             </form-item-validate>
           </a-col>
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Role" vid="role_id">
-              <a-input v-model="form.role_id" />
+              <a-select v-model="form.groups_id" :allowClear="true" @change="onRoleChange" mode="multiple">
+                <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">{{
+                  index.name
+                }}</a-select-option>
+              </a-select>
             </form-item-validate>
           </a-col>
 
@@ -144,140 +152,70 @@ export default {
         passport_date_issue: null,
         passport_date_expiry: null
       },
-      fileList: []
+      extra: {}
     }
   },
   mounted() {
     this.getUserData()
   },
-  computed: {
-    photo() {
-      return this.fileList[0]
-    }
-  },
   methods: {
+    onDepartmentChange(val) {
+      if (val) {
+        this.form.department_id = val
+      } else {
+        this.form.department_id = null
+      }
+    },
+    onRoleChange(val) {
+      if (val) {
+        this.form.groups_id = val
+      } else {
+        this.form.groups_id = null
+      }
+    },
     getUserData() {
       this.loading = true
       getUser(this.$route.params.id)
         .then(res => {
-          const { result } = res
+          const { data, extra } = res.result
 
-          this.form = Object.assign(result, {
+          this.form = Object.assign(data, {
             passport_date_birth:
-              result.passport_date_birth != null ? moment(result.passport_date_birth, 'YYYY-MM-DD') : null,
+              data.passport_date_birth != null ? moment(data.passport_date_birth, 'YYYY-MM-DD') : null,
             passport_date_issue:
-              result.passport_date_issue != null ? moment(result.passport_date_issue, 'YYYY-MM-DD') : null,
+              data.passport_date_issue != null ? moment(data.passport_date_issue, 'YYYY-MM-DD') : null,
             passport_date_expiry:
-              result.passport_date_expiry != null ? moment(result.passport_date_expiry, 'YYYY-MM-DD') : null
+              data.passport_date_expiry != null ? moment(data.passport_date_expiry, 'YYYY-MM-DD') : null
           })
 
-          this.fileList = []
+          this.extra = extra
         })
         .finally(() => {
           this.loading = false
         })
     },
-    beforeUpload(file) {
-      const isIMG = file.type === 'image/jpeg' || file.type === 'image/png'
-      if (!isIMG) {
-        this.$message.error('You can only upload JPG or PNG file!')
-      }
-
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isLt2M) {
-        this.$message.error('Image must smaller than 2MB!')
-      }
-
-      if (isIMG && isLt2M) {
-        this.fileList = [...this.fileList, file]
-      }
-      return false
-    },
-    handleRemove(file) {
-      const index = this.fileList.indexOf(file)
-      const newFileList = this.fileList.slice()
-      newFileList.splice(index, 1)
-      this.fileList = newFileList
-    },
     submit() {
       this.updateing = true
-      const formData = new FormData()
-
-      if (this.photo != null) {
-        formData.append('photo', this.photo)
-      }
-
-      if (this.form.last_name != null) {
-        formData.append('first_name', this.form.first_name)
-      }
-
-      if (this.form.last_name != null) {
-        formData.append('last_name', this.form.last_name)
-      }
-
-      if (this.form.is_active != null) {
-        formData.append('is_active', this.form.is_active)
-      }
-
-      if (this.form.is_staff != null) {
-        formData.append('is_staff', this.form.is_staff)
-      }
-
-      if (this.form.department_id != null) {
-        formData.append('department_id', this.form.department_id)
-      }
-
-      if (this.form.possport_type != null) {
-        formData.append('possport_type', this.form.possport_type)
-      }
-
-      if (this.form.passport_code != null) {
-        formData.append('passport_code', this.form.passport_code)
-      }
-
-      if (this.form.passport_no != null) {
-        formData.append('passport_no', this.form.passport_no)
-      }
-
-      if (this.form.passport_sex != null) {
-        formData.append('passport_sex', this.form.passport_sex)
-      }
-
-      if (this.form.passport_nationality != null) {
-        formData.append('passport_nationality', this.form.passport_nationality)
-      }
-
-      if (this.form.passport_date_birth != null) {
-        formData.append('passport_date_birth', moment(this.form.passport_date_birth).format('YYYY-MM-DD'))
-      }
-
-      if (this.form.passport_date_issue != null) {
-        formData.append('passport_date_issue', moment(this.form.passport_date_issue).format('YYYY-MM-DD'))
-      }
-
-      if (this.form.passport_date_expiry != null) {
-        formData.append('passport_date_expiry', moment(this.form.passport_date_expiry).format('YYYY-MM-DD'))
-      }
-
-      if (this.form.passport_place_birth != null) {
-        formData.append('passport_place_birth', this.form.passport_place_birth)
-      }
-
-      if (this.form.passport_issuing_authority != null) {
-        formData.append('passport_issuing_authority', this.form.passport_issuing_authority)
-      }
-
-      updateUser(this.$route.params.id, formData)
+      var form = Object.assign({}, this.form, {
+        passport_date_birth:
+          this.form.passport_date_birth != null ? moment(this.form.passport_date_birth).format('YYYY-MM-DD') : null,
+        passport_date_issue:
+          this.form.passport_date_issue != null ? moment(this.form.passport_date_issue).format('YYYY-MM-DD') : null,
+        passport_date_expiry:
+          this.form.passport_date_expiry != null ? moment(this.form.passport_date_expiry).format('YYYY-MM-DD') : null
+      })
+      updateUser(this.$route.params.id, form)
         .then(res => {
-          const { result } = res
-          this.form = Object.assign(result, {
+          const { data, extra } = res.result
+          this.form = Object.assign({}, data, {
             passport_date_birth:
-              result.passport_date_birth != null ? moment(result.passport_date_birth, 'YYYY-MM-DD') : null,
+              data.passport_date_birth != null ? moment(data.passport_date_birth, 'YYYY-MM-DD') : null,
             passport_date_issue:
-              result.passport_date_issue != null ? moment(result.passport_date_issue, 'YYYY-MM-DD') : null,
+              data.passport_date_issue != null ? moment(data.passport_date_issue, 'YYYY-MM-DD') : null,
             passport_date_expiry:
-              result.passport_date_expiry != null ? moment(result.passport_date_expiry, 'YYYY-MM-DD') : null
+              data.passport_date_expiry != null ? moment(data.passport_date_expiry, 'YYYY-MM-DD') : null
           })
+          this.extra = extra
         })
         .catch(error => {
           if (error.response) {

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { getPermissions } from '@/api/manage'
+// import { getPermissions } from '@/api/manage'
 import pick from 'lodash.pick'
 
 export default {
@@ -46,7 +46,7 @@ export default {
     }
   },
   created() {
-    this.loadPermissions()
+    // this.loadPermissions()
   },
   methods: {
     add() {
@@ -122,23 +122,23 @@ export default {
       })
     },
     loadPermissions() {
-      const that = this
-      getPermissions().then(res => {
-        const result = res.result
-        that.permissions = result.map(permission => {
-          const options = JSON.parse(permission.actionData) || []
-          permission.checkedAll = false
-          permission.selected = []
-          permission.indeterminate = false
-          permission.actionsOptions = options.map(option => {
-            return {
-              label: option.describe,
-              value: option.action
-            }
-          })
-          return permission
-        })
-      })
+      // const that = this
+      // getPermissions().then(res => {
+      //   const result = res.result
+      //   that.permissions = result.map(permission => {
+      //     const options = JSON.parse(permission.actionData) || []
+      //     permission.checkedAll = false
+      //     permission.selected = []
+      //     permission.indeterminate = false
+      //     permission.actionsOptions = options.map(option => {
+      //       return {
+      //         label: option.describe,
+      //         value: option.action
+      //       }
+      //     })
+      //     return permission
+      //   })
+      // })
     }
   }
 }

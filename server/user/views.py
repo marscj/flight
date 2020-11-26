@@ -31,6 +31,7 @@ class UserView(viewset.ExtraModelViewSet):
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
 
     def get_extra_data(self, request):
+
         return {
             'role': serializers.ListGroupSerializer(Group.objects.all(), many=True, context={'request': request}).data,
             'department': serializers.DepartmentSerializer(models.Department.objects.all(), many=True, context={'request': request}).data

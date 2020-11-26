@@ -39,7 +39,7 @@ export function createUser(data) {
 export function updateUser(pk, data) {
   return axios({
     url: API.Users + `${pk}/`,
-    method: 'put', //'patch',
+    method: 'patch', //'patch',
     data: data
   })
     .then(updateSuccess)

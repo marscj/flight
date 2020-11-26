@@ -73,24 +73,34 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
     roles = GroupSerializer(read_only=True, many=True, source='groups')
 
-    department = serializers.SerializerMethodField()
+    department_id = serializers.IntegerField(required=False, allow_null=True)
 
-    department_id = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, queryset=Department.objects.all())
+    groups_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Group.objects.all(), source='groups')
 
     class Meta:
         model = UserModel
-        exclude = (
-            'groups', 'user_permissions'
+        fields = (
+            'id', 'email', 'password', 'first_name', 'last_name', 'roles', 'is_active', 'is_staff', 
+            'possport_type', 'passport_code', 'passport_no', 'passport_sex', 'passport_nationality', 'passport_date_birth',
+            'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
+            'avatar', 'is_delete', 'name', 'department_id', 'groups_id'
         )
         read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined')
 
     def get_name(self, obj):
         return obj.full_name
 
-    def get_department(self, obj):
-        department = Department.objects.all()
-        serializers = DepartmentSerializer(instance=department, many=True, context=self.context)
-        return serializers.data
+    def update(self, instance, validated_data):
+        groups_id = validated_data.pop('groups_id', None)
+        print(groups_id)
+        if groups_id is not None:
+            for group in list(instance.groups.all()):
+                instance.groups.remove(group)
+                    
+            for id in groups_id:
+                instance.groups.add(id)
+
+        return super().update(instance, validated_data)
 
 class UserSerializer(serializers.ModelSerializer):
     
