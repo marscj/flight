@@ -4,13 +4,25 @@ export default {
   data() {
     return {
       needTotalList: [],
-
       selectedRows: [],
       selectedRowKeys: [],
-
       localLoading: false,
       localDataSource: [],
-      localPagination: Object.assign({}, this.pagination)
+      localPagination: Object.assign({}, this.pagination),
+      initTable: () => {
+        const { pageNo } = this.$route.query || this.$route.params
+        const localPageNum = (pageNo && parseInt(pageNo)) || this.pageNo
+        this.localPagination =
+          (['auto', true].includes(this.showPagination) &&
+            Object.assign({}, this.localPagination, {
+              current: localPageNum,
+              pageSize: this.pageSize,
+              showSizeChanger: this.showSizeChanger
+            })) ||
+          false
+        this.needTotalList = this.initTotalList(this.columns)
+        this.loadData()
+      }
     }
   },
   props: Object.assign({}, T.props, {
@@ -94,7 +106,7 @@ export default {
       const { pageNo } = this.$route.query
 
       if (pageNo && parseInt(pageNo) && parseInt(pageNo) != this.localPagination.current) {
-        this.routefresh()
+        this.initTable()
       }
     },
     pageNo(val) {
@@ -114,34 +126,9 @@ export default {
     }
   },
   created() {
-    const { pageNo } = this.$route.query || this.$route.params
-    const localPageNum = (pageNo && parseInt(pageNo)) || this.pageNo
-    this.localPagination =
-      (['auto', true].includes(this.showPagination) &&
-        Object.assign({}, this.localPagination, {
-          current: localPageNum,
-          pageSize: this.pageSize,
-          showSizeChanger: this.showSizeChanger
-        })) ||
-      false
-    this.needTotalList = this.initTotalList(this.columns)
-    this.loadData()
+    this.initTable()
   },
   methods: {
-    routefresh() {
-      const { pageNo } = this.$route.query || this.$route.params
-      const localPageNum = (pageNo && parseInt(pageNo)) || this.pageNo
-      this.localPagination =
-        (['auto', true].includes(this.showPagination) &&
-          Object.assign({}, this.localPagination, {
-            current: localPageNum,
-            pageSize: this.pageSize,
-            showSizeChanger: this.showSizeChanger
-          })) ||
-        false
-      this.needTotalList = this.initTotalList(this.columns)
-      this.loadData()
-    },
     /**
      * 表格重新加载方法
      * 如果参数为 true, 则强制刷新到第一页
