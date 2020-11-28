@@ -1,16 +1,11 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
+import { UserLayout, BasicLayout, RouteView } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
 
-const RouteView = {
-  name: 'RouteView',
-  render: h => h('router-view')
-}
-
-const PageView = {
-  name: 'PageView',
-  render: h => h('page-view')
-}
+// const RouteView = {
+//   name: 'RouteView',
+//   render: h => h('router-view')
+// }
 
 // export const asyncRouterMap = [
 //   {
@@ -398,15 +393,15 @@ export const asyncRouterMap = [
           {
             path: '/roles/list',
             name: 'AllRoles',
-            component: () => import('@/views/role/RoleList'),
-            meta: { title: 'All Roles', keepAlive: true, permission: ['view_group', 'add_group'] }
+            component: () => import('@/views/role/List'),
+            meta: { title: 'All Roles', permission: ['view_group', 'add_group'] }
           },
           {
             path: '/roles/:id',
             name: 'RoleDetail',
             hidden: true,
             hideChildrenInMenu: true,
-            component: () => import('@/views/user/Index'),
+            component: () => import('@/views/role/Index'),
             meta: {
               title: 'Role Detail',
               permission: ['view_group', 'change_group']

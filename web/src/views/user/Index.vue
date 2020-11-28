@@ -188,7 +188,7 @@ export default {
               data.passport_date_expiry != null ? moment(data.passport_date_expiry, 'YYYY-MM-DD') : null
           })
 
-          this.extra = extra
+          this.extra = Object.assign({}, extra)
         })
         .finally(() => {
           this.loading = false

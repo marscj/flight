@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.conf import settings
 
 from rest_framework.response import Response
@@ -40,10 +40,17 @@ class UserView(viewset.ExtraModelViewSet):
 class GroupFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
 
-class GroupView(ModelViewSet):
+class GroupView(viewset.ExtraModelViewSet):
     serializer_class = serializers.GroupSerializer
+    list_serializer_class = serializers.ListGroupSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = Group.objects.all().order_by('id')
  
     filter_class = GroupFilter
     search_fields = ['name']
+
+    def get_extra_data(self, request):
+
+        return {
+            'permission': serializers.PermissionSerializer(Permission.objects.all(), many=True, context={'request': request}).data,
+        }

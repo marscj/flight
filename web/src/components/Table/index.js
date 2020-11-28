@@ -22,7 +22,7 @@ export default {
       type: Function,
       required: true
     },
-    pageNum: {
+    pageNo: {
       type: Number,
       default: 1
     },
@@ -77,16 +77,27 @@ export default {
   }),
   watch: {
     'localPagination.current'(val) {
-      this.pageURI &&
+      if (this.pageURI) {
         this.$router.push({
           ...this.$route,
           name: this.$route.name,
+          params: Object.assign({}, this.$route.query, {
+            pageNo: val
+          }),
           query: Object.assign({}, this.$route.query, {
             pageNo: val
           })
         })
+      }
     },
-    pageNum(val) {
+    '$route.query'(val) {
+      const { pageNo } = this.$route.query
+
+      if (pageNo && parseInt(pageNo) && parseInt(pageNo) != this.localPagination.current) {
+        this.routefresh()
+      }
+    },
+    pageNo(val) {
       Object.assign(this.localPagination, {
         current: val
       })
@@ -103,8 +114,8 @@ export default {
     }
   },
   created() {
-    const { pageNo } = this.$route.params
-    const localPageNum = (this.pageURI && pageNo && parseInt(pageNo)) || this.pageNum
+    const { pageNo } = this.$route.query || this.$route.params
+    const localPageNum = (pageNo && parseInt(pageNo)) || this.pageNo
     this.localPagination =
       (['auto', true].includes(this.showPagination) &&
         Object.assign({}, this.localPagination, {
@@ -117,6 +128,20 @@ export default {
     this.loadData()
   },
   methods: {
+    routefresh() {
+      const { pageNo } = this.$route.query || this.$route.params
+      const localPageNum = (pageNo && parseInt(pageNo)) || this.pageNo
+      this.localPagination =
+        (['auto', true].includes(this.showPagination) &&
+          Object.assign({}, this.localPagination, {
+            current: localPageNum,
+            pageSize: this.pageSize,
+            showSizeChanger: this.showSizeChanger
+          })) ||
+        false
+      this.needTotalList = this.initTotalList(this.columns)
+      this.loadData()
+    },
     /**
      * 表格重新加载方法
      * 如果参数为 true, 则强制刷新到第一页
@@ -140,14 +165,11 @@ export default {
      * @param {Object} sorter 排序条件
      */
     loadData(pagination, filters, sorter) {
-      if (sorter) {
-        console.log(sorter)
-      }
       this.localLoading = true
       const parameter = Object.assign(
         {
           pageNo:
-            (pagination && pagination.current) || (this.showPagination && this.localPagination.current) || this.pageNum,
+            (pagination && pagination.current) || (this.showPagination && this.localPagination.current) || this.pageNo,
           pageSize:
             (pagination && pagination.pageSize) ||
             (this.showPagination && this.localPagination.pageSize) ||

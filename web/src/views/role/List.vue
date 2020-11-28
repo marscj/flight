@@ -10,8 +10,8 @@
         :rowKey="record => record.id"
         :columns="columns"
         :data="loadData"
-        :pageURI="true"
         showPagination="auto"
+        :pageURI="true"
         bordered
       >
         <template slot="action" slot-scope="data">
@@ -90,7 +90,11 @@ export default {
       createRole(this.form)
         .then(res => {
           this.modal = false
-          this.$refs.table.refresh()
+          console.log(res)
+          this.$router.push({
+            name: 'RoleDetail',
+            params: { id: res.result.id }
+          })
         })
         .catch(error => {
           if (error.response) {
