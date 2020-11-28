@@ -43,7 +43,7 @@ class GroupFilter(django_filters.FilterSet):
 class GroupView(ModelViewSet):
     serializer_class = serializers.GroupSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = UserModel.objects.all().order_by('id')
+    queryset = Group.objects.all().order_by('id')
  
     filter_class = GroupFilter
     search_fields = ['name']

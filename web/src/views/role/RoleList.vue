@@ -5,13 +5,12 @@
         <a-list itemLayout="vertical" :dataSource="roles">
           <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
             <a-list-item-meta :style="{ marginBottom: '0' }">
-              <span slot="description" style="text-align: center; display: block">{{ item.describe }}</span>
               <a slot="title" style="text-align: center; display: block" @click="edit(item)">{{ item.name }}</a>
             </a-list-item-meta>
           </a-list-item>
         </a-list>
       </a-col>
-      <a-col :md="20">
+      <!-- <a-col :md="20">
         <div style="max-width: 800px">
           <a-divider v-if="isMobile" />
           <div v-if="mdl.id">
@@ -69,15 +68,14 @@
             </a-form-item>
           </a-form>
         </div>
-      </a-col>
+      </a-col> -->
     </a-row>
   </a-card>
 </template>
 
 <script>
 import pick from 'lodash.pick'
-// import { getRoleList, getPermissions } from '@/api/manage'
-// import { actionToObject } from '@/utils/permissions'
+import { getRoles, updateRole, createRole } from '@/api/roles'
 import { baseMixin } from '@/store/app-mixin'
 
 export default {
@@ -94,6 +92,16 @@ export default {
     }
   },
   created() {
+    getRoles().then(res => {
+      const { result } = res
+      this.roles = result
+
+      this.roles.push({
+        id: '-1',
+        name: '新增角色',
+        describe: '新增一个角色'
+      })
+    })
     // getRoleList().then(res => {
     //   this.roles = res.result.data
     //   this.roles.push({
