@@ -1,5 +1,8 @@
 <template>
   <page-header-wrapper>
+    <template slot="extra">
+      <a-button v-action:add_group type="primary" icon="plus" @click="openModal">New</a-button>
+    </template>
     <a-card>
       <s-table
         ref="table"
@@ -11,39 +14,29 @@
         showPagination="auto"
         bordered
       >
-        <template slot="roles" slot-scope="data">
-          <div v-for="index in data" :key="index.id">
-            <span>{{ index.name }}</span>
-          </div>
-        </template>
-
-        <template slot="department" slot-scope="data">
-          <span v-if="data">{{ data.name }}</span>
-        </template>
-
-        <template slot="active" slot-scope="data">
-          <a-checkbox :checked="data" disabled />
-        </template>
-
-        <template slot="staff" slot-scope="data">
-          <a-checkbox :checked="data" disabled />
-        </template>
-
         <template slot="action" slot-scope="data">
           <template>
-            <router-link :to="{ name: 'UserDetail', params: { id: data.id } }">
+            <router-link :to="{ name: 'RoleDetail', params: { id: data.id } }">
               <span>Detail</span>
             </router-link>
           </template>
         </template>
       </s-table>
     </a-card>
+
+    <!-- <a-modal :visible="modal" title="Add Role" @ok="submit">
+      <form-validate :form="form" :submit="submit" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }" ref="observer">
+        <form-item-validate label="Name">
+          <a-input v-model="form.name" :maxLength="150"></a-input>
+        </form-item-validate>
+      </form-validate>
+    </a-modal> -->
   </page-header-wrapper>
 </template>
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getRoles } from '@/api/role'
+import { getRoles, createRole } from '@/api/role'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -55,6 +48,8 @@ export default {
   data() {
     return {
       extra: {},
+      modal: false,
+      form: {},
       queryParam: {
         name: undefined
       },
@@ -86,7 +81,24 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    openModal() {
+      this.modal = true
+      this.form = {}
+    },
+    submit() {
+      createRole(this.form)
+        .then(res => {
+          this.modal = false
+          this.$refs.table.refresh()
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.checkError(error)
+          }
+        })
+    }
+  }
 }
 </script>
 

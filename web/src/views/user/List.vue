@@ -1,5 +1,8 @@
 <template>
   <page-header-wrapper>
+    <template slot="extra">
+      <a-button v-action:add_user type="primary" icon="plus" @click="openModal">New</a-button>
+    </template>
     <a-card>
       <div class="table-page-search-wrapper">
         <form-validate layout="inline" :form="queryParam">
@@ -114,6 +117,8 @@ export default {
   data() {
     return {
       extra: {},
+      modal: false,
+      form: {},
       queryParam: {
         role: 0,
         department: 0,
@@ -193,7 +198,24 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    openModal() {
+      this.modal = true
+      this.form = {}
+    },
+    submit() {
+      createUser(this.form)
+        .then(res => {
+          this.modal = false
+          this.$refs.table.refresh()
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.checkError(error)
+          }
+        })
+    }
+  }
 }
 </script>
 

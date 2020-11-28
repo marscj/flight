@@ -5,6 +5,7 @@ from django.contrib.auth.models import Group, Permission
 
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.validators import UniqueValidator
 from rest_auth.serializers import LoginSerializer as AuthLoginSerializer
 from .models import Department
 
@@ -40,7 +41,7 @@ class GroupSerializer(serializers.ModelSerializer):
     
     permissions = PermissionSerializer(read_only=True, many=True)
 
-    name = serializers.CharField(max_length=150)
+    name = serializers.CharField(max_length=150, validators=[UniqueValidator(queryset=Group.objects.all())])
     
     class Meta:
         model = Group

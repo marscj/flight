@@ -367,32 +367,49 @@ export const asyncRouterMap = [
         name: 'Users',
         component: RouteView,
         redirect: '/users/list',
-        meta: { title: 'Users', icon: 'team', permission: ['view_user', 'add_user'] },
+        meta: { title: 'Users', icon: 'team', permission: ['view_user'] },
         children: [
           {
             path: '/users/list/:pageNo([1-9]\\d*)?',
             name: 'AllUser',
             hideChildrenInMenu: false, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/user/List'),
-            meta: { title: 'All Users', keepAlive: true, permission: ['view_user'] }
+            meta: { title: 'All Users', keepAlive: true, permission: ['view_user', 'add_user'] }
           },
           {
-            path: '/users/add',
-            name: 'AddUser',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/list/TableList'),
-            meta: { title: 'Add User', keepAlive: true, permission: ['add_user'] }
-          },
-          {
-            path: '/admin/users/:id',
+            path: '/users/:id',
             name: 'UserDetail',
             hidden: true,
             hideChildrenInMenu: true,
             component: () => import('@/views/user/Index'),
-            // redirect: '/admin/users/:id/profile',
             meta: {
               title: 'User Detail',
               permission: ['view_user', 'change_user']
+            }
+          }
+        ]
+      },
+      {
+        path: '/roles',
+        component: RouteView,
+        meta: { title: 'Roles', icon: 'safety', permission: ['view_group', 'add_group'] },
+        redirect: '/roles/list',
+        children: [
+          {
+            path: '/roles/list',
+            name: 'AllRoles',
+            component: () => import('@/views/role/RoleList'),
+            meta: { title: 'All Roles', keepAlive: true, permission: ['view_group', 'add_group'] }
+          },
+          {
+            path: '/roles/:id',
+            name: 'RoleDetail',
+            hidden: true,
+            hideChildrenInMenu: true,
+            component: () => import('@/views/user/Index'),
+            meta: {
+              title: 'Role Detail',
+              permission: ['view_group', 'change_group']
             }
           }
         ]
@@ -610,20 +627,6 @@ export const asyncRouterMap = [
                 meta: { title: '新消息通知', hidden: true, keepAlive: true }
               }
             ]
-          }
-        ]
-      },
-      {
-        path: '/roles',
-        component: RouteView,
-        meta: { title: 'Roles', icon: 'safety' },
-        redirect: '/roles/list',
-        children: [
-          {
-            path: '/roles/:id',
-            name: 'AllRoles',
-            component: () => import('@/views/role/RoleList'),
-            meta: { title: 'All Roles', keepAlive: true }
           }
         ]
       }
