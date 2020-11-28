@@ -616,7 +616,7 @@ export const asyncRouterMap = [
       {
         path: '/roles',
         component: RouteView,
-        meta: { title: 'Permissions', icon: 'safety' },
+        meta: { title: 'Roles', icon: 'safety' },
         redirect: '/roles/list',
         children: [
           {
