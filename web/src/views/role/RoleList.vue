@@ -24,13 +24,13 @@
       </s-table>
     </a-card>
 
-    <!-- <a-modal :visible="modal" title="Add Role" @ok="submit">
+    <a-modal v-model="modal" title="Add Role" @ok="submit">
       <form-validate :form="form" :submit="submit" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }" ref="observer">
-        <form-item-validate label="Name">
+        <form-item-validate label="Name" vid="name">
           <a-input v-model="form.name" :maxLength="150"></a-input>
         </form-item-validate>
       </form-validate>
-    </a-modal> -->
+    </a-modal>
   </page-header-wrapper>
 </template>
 
