@@ -394,7 +394,7 @@ export const asyncRouterMap = [
             path: '/roles/list',
             name: 'AllRoles',
             component: () => import('@/views/role/List'),
-            meta: { title: 'All Roles', permission: ['view_group', 'add_group'] }
+            meta: { title: 'All Roles', keepAlive: true, permission: ['view_group', 'add_group'] }
           },
           {
             path: '/roles/:id',

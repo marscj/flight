@@ -89,17 +89,32 @@ export default {
   }),
   watch: {
     'localPagination.current'(val) {
+      const { pageNo } = this.$route.query || this.$route.params
+
       if (this.pageURI) {
-        this.$router.push({
-          ...this.$route,
-          name: this.$route.name,
-          params: Object.assign({}, this.$route.query, {
-            pageNo: val
-          }),
-          query: Object.assign({}, this.$route.query, {
-            pageNo: val
+        if (pageNo && parseInt(pageNo)) {
+          this.$router.push({
+            ...this.$route,
+            name: this.$route.name,
+            params: Object.assign({}, this.$route.query, {
+              pageNo: val
+            }),
+            query: Object.assign({}, this.$route.query, {
+              pageNo: val
+            })
           })
-        })
+        } else {
+          this.$router.replace({
+            ...this.$route,
+            name: this.$route.name,
+            params: Object.assign({}, this.$route.query, {
+              pageNo: val
+            }),
+            query: Object.assign({}, this.$route.query, {
+              pageNo: val
+            })
+          })
+        }
       }
     },
     '$route.query'(val) {
