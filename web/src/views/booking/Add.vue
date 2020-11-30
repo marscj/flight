@@ -1,7 +1,12 @@
-<template> </template>
+<template>
+  <index :isEdit="false"> </index>
+</template>
 
 <script>
-export default {}
+import Index from './Index'
+export default {
+  components: { Index }
+}
 </script>
 
 <style></style>

@@ -38,8 +38,6 @@
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getDepartment, updateDepartment, deleteDepartment } from '@/api/department'
-import moment from 'moment'
-import _ from 'lodash'
 
 export default {
   components: { FormValidate, FormItemValidate },
@@ -101,21 +99,5 @@ export default {
 <style lang="less" scoped>
 .card {
   margin-bottom: 24px;
-}
-
-table {
-  border-collapse: collapse; //collapse separate;
-}
-
-tr:nth-child(2n + 1) {
-  background-color: #edf2f7;
-}
-
-tr:nth-child(2n) {
-  background-color: white;
-}
-
-tr:hover {
-  background-color: rgba(255, 254, 200, 0.77);
 }
 </style>

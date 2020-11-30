@@ -44,6 +44,12 @@ export const asyncRouterMap = [
             meta: { title: 'All Bookings', keepAlive: true }
           },
           {
+            path: '/booking/add',
+            name: 'AddBooking',
+            component: () => import('@/views/booking/Add'),
+            meta: { title: 'Add Booking' }
+          },
+          {
             path: '/bookings/:id',
             name: 'BookingDetail',
             hidden: true,
