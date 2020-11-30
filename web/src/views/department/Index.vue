@@ -48,9 +48,7 @@ export default {
     return {
       loading: false,
       updateing: false,
-      form: {},
-      permission: [],
-      permissionData: []
+      form: {}
     }
   },
   mounted() {

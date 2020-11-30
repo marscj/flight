@@ -2,13 +2,13 @@
   <form-validate ref="observer">
     <page-header-wrapper>
       <template slot="extra">
-        <a-button v-action:change_department type="primary" @click="submit" :loading="updateing" html-type="submit">
+        <a-button v-action:change_booking type="primary" @click="submit" :loading="updateing" html-type="submit">
           Submit
         </a-button>
       </template>
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Name" vid="name">
-          <a-input v-model="form.name" :disabled="!$auth('change_department')" />
+          <a-input v-model="form.name" :disabled="!$auth('change_booking')" />
         </form-item-validate>
       </a-card>
     </page-header-wrapper>
@@ -20,14 +20,14 @@
           @confirm="onDelete"
           okText="Yes"
           cancelText="No"
-          v-if="$auth('delete_department')"
+          v-if="$auth('delete_booking')"
         >
           <a-button href="javascript:;" type="danger">Delete</a-button>
         </a-popconfirm>
       </a-col>
 
       <a-col :span="12" class="text-right">
-        <a-button v-action:change_department type="primary" @click="submit" :loading="updateing" html-type="submit">
+        <a-button v-action:change_booking type="primary" @click="submit" :loading="updateing" html-type="submit">
           Submit
         </a-button>
       </a-col>
@@ -37,7 +37,7 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import { getDepartment, updateDepartment, deleteDepartment } from '@/api/department'
+import { getBooking, updateBooking, deleteBooking } from '@/api/booking'
 import moment from 'moment'
 import _ from 'lodash'
 
@@ -48,18 +48,16 @@ export default {
     return {
       loading: false,
       updateing: false,
-      form: {},
-      permission: [],
-      permissionData: []
+      form: {}
     }
   },
   mounted() {
-    this.getDepartmentData()
+    this.getBookingData()
   },
   methods: {
-    getDepartmentData() {
+    getBookingData() {
       this.loading = true
-      getDepartment(this.$route.params.id)
+      getBooking(this.$route.params.id)
         .then(res => {
           const { data, extra } = res.result
           this.form = Object.assign({}, data)
@@ -71,7 +69,7 @@ export default {
     submit() {
       this.updateing = true
       var form = Object.assign({}, this.form, {})
-      updateDepartment(this.$route.params.id, form)
+      updateBooking(this.$route.params.id, form)
         .then(res => {
           const { data, extra } = res.result
 
@@ -88,7 +86,7 @@ export default {
     },
     onDelete() {
       this.updateing = true
-      deleteDepartment(this.$route.params.id)
+      deleteBooking(this.$route.params.id)
         .then(() => {
           this.$router.go(-1)
         })

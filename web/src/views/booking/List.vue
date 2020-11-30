@@ -1,7 +1,7 @@
 <template>
   <page-header-wrapper>
     <template slot="extra">
-      <a-button v-action:add_booking type="primary" icon="plus" @click="openModal">Add</a-button>
+      <a-button v-action:add_booking type="primary" icon="plus" @click="add">Add</a-button>
     </template>
     <a-card>
       <s-table
@@ -23,14 +23,6 @@
         </template>
       </s-table>
     </a-card>
-
-    <a-modal v-model="modal" title="Add Booking" @ok="submit">
-      <form-validate :form="form" :submit="submit" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }" ref="observer">
-        <form-item-validate label="Name" vid="name">
-          <a-input v-model="form.name" :maxLength="150"></a-input>
-        </form-item-validate>
-      </form-validate>
-    </a-modal>
   </page-header-wrapper>
 </template>
 
@@ -47,9 +39,6 @@ export default {
   },
   data() {
     return {
-      extra: {},
-      modal: false,
-      form: {},
       queryParam: {
         name: undefined
       },
@@ -62,8 +51,8 @@ export default {
           sorter: true
         },
         {
-          title: 'Name',
-          dataIndex: 'name',
+          title: 'Remark',
+          dataIndex: 'remark',
           align: 'center'
         },
 
@@ -82,25 +71,7 @@ export default {
     }
   },
   methods: {
-    openModal() {
-      this.modal = true
-      this.form = {}
-    },
-    submit() {
-      createBooking(this.form)
-        .then(res => {
-          this.modal = false
-          this.$router.push({
-            name: 'BookingDetail',
-            params: { id: res.result.id }
-          })
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$refs.observer.checkError(error)
-          }
-        })
-    }
+    add() {}
   }
 }
 </script>
