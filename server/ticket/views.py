@@ -24,7 +24,13 @@ class BookingView(viewset.ExtraModelViewSet):
             return models.Booking.objects.all().order_by('id')
         else :
             return super().get_queryset().filter(itinerarys__user_id=self.request.user.id).distinct()
- 
+    
+    def get_extra_data(self, request):
+        queryset = models.Booking.history.all().order_by('id')
+        return {
+            'history': serializers.BookingHistorySerializer(queryset, many=True, context={'request': request}).data,
+        }
+
 class ItineraryFilter(django_filters.FilterSet):
     pass
 

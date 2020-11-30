@@ -6,9 +6,16 @@ class BookingSerializer(serializers.ModelSerializer):
 
     title = serializers.CharField(max_length=64)
 
-    remark = serializers.CharField(required=False, max_length=1024)
+    remark = serializers.CharField(allow_blank=True, allow_null=True, max_length=1024)
+    
     class Meta:
         model = Booking
+        fields = '__all__'
+
+class BookingHistorySerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Booking.history.model
         fields = '__all__'
 
 class ItinerarySerializer(serializers.ModelSerializer):

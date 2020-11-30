@@ -1,7 +1,10 @@
 <template>
-  <form-validate ref="observer">
+  <form-validate ref="observer" v-if="!history">
     <page-header-wrapper>
       <template slot="extra">
+        <a @click="onHistory">
+          History
+        </a>
         <a-button v-action:change_booking type="primary" @click="submit" :loading="updateing" html-type="submit">
           Submit
         </a-button>
@@ -41,14 +44,16 @@
       </a-col>
     </a-row>
   </form-validate>
+  <history v-else :data="historyData"> </history>
 </template>
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
+import History from './History'
 
 export default {
-  components: { FormValidate, FormItemValidate },
+  components: { FormValidate, FormItemValidate, History },
   props: {
     isEdit: {
       type: Boolean,
@@ -59,7 +64,9 @@ export default {
     return {
       loading: false,
       updateing: false,
-      form: {}
+      form: {},
+      history: false,
+      historyData: []
     }
   },
   mounted() {
@@ -74,6 +81,9 @@ export default {
         .then(res => {
           const { data, extra } = res.result
           this.form = Object.assign({}, data)
+          this.historyData = Object.assign([], extra.history)
+
+          console.log(res.result)
         })
         .finally(() => {
           this.loading = false
@@ -124,6 +134,9 @@ export default {
         .finally(() => {
           this.updateing = false
         })
+    },
+    onHistory() {
+      this.history = true
     }
   }
 }
