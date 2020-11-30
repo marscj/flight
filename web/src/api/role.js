@@ -39,7 +39,7 @@ export function createRole(data) {
 export function updateRole(pk, data) {
   return axios({
     url: API.Role + `${pk}/`,
-    method: 'put',
+    method: 'patch',
     data: data
   })
     .then(updateSuccess)

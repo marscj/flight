@@ -48,14 +48,19 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'corsheaders',
+
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
     'django_filters',
+
     'versatileimagefield',
+    'simple_history',
     
     'authorization',
     'user',
@@ -71,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [

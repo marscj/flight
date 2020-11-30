@@ -245,6 +245,16 @@ export default {
         .finally(() => {
           this.updateing = false
         })
+    },
+    onDelete() {
+      this.updateing = true
+      deleteUser(this.$route.params.id)
+        .then(() => {
+          this.$router.go(-1)
+        })
+        .finally(() => {
+          this.updateing = false
+        })
     }
   }
 }
