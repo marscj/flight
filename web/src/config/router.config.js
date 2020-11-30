@@ -34,29 +34,30 @@ export const asyncRouterMap = [
       {
         path: '/bookings',
         component: RouteView,
-        meta: { title: 'Bookings', icon: 'safety', permission: ['view_booking'] },
+        meta: { title: 'Bookings', icon: 'safety', permission: ['view_booking', 'add_booking'] },
         redirect: '/bookings/list',
         children: [
           {
             path: '/bookings/list',
             name: 'AllBookings',
             component: () => import('@/views/booking/List'),
-            meta: { title: 'All Bookings', keepAlive: true }
+            meta: { title: 'All Bookings', keepAlive: true, permission: ['view_booking'] }
           },
           {
             path: '/booking/add',
             name: 'AddBooking',
             component: () => import('@/views/booking/Add'),
-            meta: { title: 'Add Booking' }
+            meta: { title: 'Add Booking', permission: ['add_booking'] }
           },
           {
             path: '/bookings/:id',
             name: 'BookingDetail',
             hidden: true,
             hideChildrenInMenu: true,
-            component: () => import('@/views/booking/Index'),
+            component: () => import('@/views/booking/Edit'),
             meta: {
-              title: 'Booking Detail'
+              title: 'Booking Detail',
+              permission: ['view_booking']
             }
           }
         ]

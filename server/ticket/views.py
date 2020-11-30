@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework import viewsets
 import django_filters
 
+from middleware import viewset 
 from . import serializers
 from . import models
 from . import permissions
@@ -11,7 +12,7 @@ from . import permissions
 class BookingFilter(django_filters.FilterSet):
     pass
 
-class BookingView(viewsets.ModelViewSet):
+class BookingView(viewset.ExtraModelViewSet):
     serializer_class = serializers.BookingSerializer
     permission_classes = [permissions.ModelPermissions, permissions.IsOwnerOrReadOnly]
     queryset = models.Booking.objects.all().order_by('id')
@@ -20,8 +21,8 @@ class BookingView(viewsets.ModelViewSet):
     search_fields = ['']
 
     def get_queryset(self):
-        if self.request.user.has_perm('ticket.view_apply'):
-            return models.Apply.objects.all()
+        if self.request.user.has_perm('ticket.view_booking'):
+            return models.Booking.objects.all().order_by('id')
         else :
             return super().get_queryset().filter(itinerarys__user_id=self.request.user.id).distinct()
  

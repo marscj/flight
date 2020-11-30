@@ -7,8 +7,16 @@
         </a-button>
       </template>
       <a-card class="card" title="Base Information" :bordered="false">
-        <form-item-validate label="Name" vid="name">
-          <a-input v-model="form.name" :disabled="!$auth('change_booking')" />
+        <form-item-validate label="Title" vid="title" required>
+          <a-input v-model="form.title" :maxLength="64" :disabled="!$auth('change_booking') && isEdit" />
+        </form-item-validate>
+        <form-item-validate label="Remark" vid="remark">
+          <a-textarea
+            v-model="form.remark"
+            :maxLength="1024"
+            :rows="5"
+            :disabled="!$auth('change_booking') && isEdit"
+          />
         </form-item-validate>
       </a-card>
     </page-header-wrapper>
@@ -20,7 +28,7 @@
           @confirm="onDelete"
           okText="Yes"
           cancelText="No"
-          v-if="$auth('delete_booking')"
+          v-if="$auth('delete_booking') && isEdit"
         >
           <a-button href="javascript:;" type="danger">Delete</a-button>
         </a-popconfirm>
@@ -37,7 +45,7 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import { getBooking, updateBooking, deleteBooking } from '@/api/booking'
+import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
 
 export default {
   components: { FormValidate, FormItemValidate },
@@ -55,7 +63,9 @@ export default {
     }
   },
   mounted() {
-    this.getBookingData()
+    if (this.isEdit) {
+      this.getBookingData()
+    }
   },
   methods: {
     getBookingData() {
@@ -72,20 +82,38 @@ export default {
     submit() {
       this.updateing = true
       var form = Object.assign({}, this.form, {})
-      updateBooking(this.$route.params.id, form)
-        .then(res => {
-          const { data, extra } = res.result
+      if (this.isEdit) {
+        updateBooking(this.$route.params.id, form)
+          .then(res => {
+            const { data, extra } = res.result
 
-          this.extra = extra
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$refs.observer.checkError(error)
-          }
-        })
-        .finally(() => {
-          this.updateing = false
-        })
+            this.extra = extra
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.checkError(error)
+            }
+          })
+          .finally(() => {
+            this.updateing = false
+          })
+      } else {
+        createBooking(form)
+          .then(res => {
+            this.$router.push({
+              name: 'BookingDetail',
+              params: { id: res.result.id }
+            })
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.checkError(error)
+            }
+          })
+          .finally(() => {
+            this.updateing = false
+          })
+      }
     },
     onDelete() {
       this.updateing = true

@@ -4,6 +4,9 @@ from .models import *
 
 class BookingSerializer(serializers.ModelSerializer):
 
+    title = serializers.CharField(max_length=64)
+
+    remark = serializers.CharField(required=False, max_length=1024)
     class Meta:
         model = Booking
         fields = '__all__'

@@ -7,7 +7,7 @@
         </a-button>
       </template>
       <a-card class="card" title="Base Information" :bordered="false">
-        <form-item-validate label="Name" vid="name">
+        <form-item-validate label="Name" vid="name" required>
           <a-input v-model="form.name" :disabled="!$auth('change_group')" />
         </form-item-validate>
       </a-card>

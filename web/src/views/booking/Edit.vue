@@ -5,7 +5,7 @@
 <script>
 import Index from './Index'
 export default {
-  components: { index }
+  components: { Index }
 }
 </script>
 

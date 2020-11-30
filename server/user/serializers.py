@@ -106,7 +106,6 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         groups_id = validated_data.pop('groups_id', None)
-        print(groups_id)
         if groups_id is not None:
             for group in list(instance.groups.all()):
                 instance.groups.remove(group)
