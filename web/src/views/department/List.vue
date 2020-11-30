@@ -1,7 +1,7 @@
 <template>
   <page-header-wrapper>
     <template slot="extra">
-      <a-button v-action:add_group type="primary" icon="plus" @click="openModal">New</a-button>
+      <a-button v-action:add_department type="primary" icon="plus" @click="openModal">New</a-button>
     </template>
     <a-card>
       <s-table
@@ -16,7 +16,7 @@
       >
         <template slot="action" slot-scope="data">
           <template>
-            <router-link v-action:view_group :to="{ name: 'RoleDetail', params: { id: data.id } }">
+            <router-link v-action:view_department :to="{ name: 'DepartmentDetail', params: { id: data.id } }">
               <span>Detail</span>
             </router-link>
           </template>
@@ -24,7 +24,7 @@
       </s-table>
     </a-card>
 
-    <a-modal v-model="modal" title="Add Role" @ok="submit">
+    <a-modal v-model="modal" title="Add Department" @ok="submit">
       <form-validate :form="form" :submit="submit" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }" ref="observer">
         <form-item-validate label="Name" vid="name">
           <a-input v-model="form.name" :maxLength="150"></a-input>
@@ -36,7 +36,7 @@
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getRoles, createRole } from '@/api/role'
+import { getDepartments, createDepartment } from '@/api/department'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -75,7 +75,7 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getRoles(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+        return getDepartments(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
           return res.result
         })
       }
@@ -87,12 +87,11 @@ export default {
       this.form = {}
     },
     submit() {
-      createRole(this.form)
+      createDepartment(this.form)
         .then(res => {
           this.modal = false
-          console.log(res)
           this.$router.push({
-            name: 'RoleDetail',
+            name: 'DepartmentDetail',
             params: { id: res.result.id }
           })
         })
