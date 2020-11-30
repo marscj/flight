@@ -34,7 +34,7 @@ export const asyncRouterMap = [
       {
         path: '/bookings',
         component: RouteView,
-        meta: { title: 'Booking', icon: 'safety', permission: ['view_booking'] },
+        meta: { title: 'Bookings', icon: 'safety', permission: ['view_booking'] },
         redirect: '/bookings/list',
         children: [
           {
@@ -85,7 +85,7 @@ export const asyncRouterMap = [
       {
         path: '/departments',
         component: RouteView,
-        meta: { title: 'Department', icon: 'safety', permission: ['view_department'] },
+        meta: { title: 'Departments', icon: 'safety', permission: ['view_department'] },
         redirect: '/departments/list',
         children: [
           {

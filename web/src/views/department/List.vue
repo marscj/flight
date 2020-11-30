@@ -1,7 +1,7 @@
 <template>
   <page-header-wrapper>
     <template slot="extra">
-      <a-button v-action:add_department type="primary" icon="plus" @click="openModal">New</a-button>
+      <a-button v-action:add_department type="primary" icon="plus" @click="openModal">Add</a-button>
     </template>
     <a-card>
       <s-table

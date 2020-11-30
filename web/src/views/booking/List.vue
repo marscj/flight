@@ -1,7 +1,7 @@
 <template>
   <page-header-wrapper>
     <template slot="extra">
-      <a-button v-action:add_booking type="primary" icon="plus" @click="openModal">New</a-button>
+      <a-button v-action:add_booking type="primary" icon="plus" @click="openModal">Add</a-button>
     </template>
     <a-card>
       <s-table
@@ -16,7 +16,7 @@
       >
         <template slot="action" slot-scope="data">
           <template>
-            <router-link v-action:view_booking :to="{ name: 'bookingDetail', params: { id: data.id } }">
+            <router-link v-action:view_booking :to="{ name: 'BookingDetail', params: { id: data.id } }">
               <span>Detail</span>
             </router-link>
           </template>
@@ -24,7 +24,7 @@
       </s-table>
     </a-card>
 
-    <a-modal v-model="modal" title="Add booking" @ok="submit">
+    <a-modal v-model="modal" title="Add Booking" @ok="submit">
       <form-validate :form="form" :submit="submit" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }" ref="observer">
         <form-item-validate label="Name" vid="name">
           <a-input v-model="form.name" :maxLength="150"></a-input>
@@ -36,7 +36,7 @@
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getbookings, createbooking } from '@/api/booking'
+import { getBookings, createBooking } from '@/api/booking'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -75,7 +75,7 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getbookings(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+        return getBookings(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
           return res.result
         })
       }
@@ -87,11 +87,11 @@ export default {
       this.form = {}
     },
     submit() {
-      createbooking(this.form)
+      createBooking(this.form)
         .then(res => {
           this.modal = false
           this.$router.push({
-            name: 'bookingDetail',
+            name: 'BookingDetail',
             params: { id: res.result.id }
           })
         })
