@@ -50,7 +50,7 @@ class GroupView(viewset.ExtraModelViewSet):
     search_fields = ['name']
 
     def get_extra_data(self, request):
-
+        queryset = Permission.objects.filter(content_type__model__in=['user', 'department', 'group'])
         return {
-            'permission': serializers.PermissionSerializer(Permission.objects.all(), many=True, context={'request': request}).data,
+            'permission': serializers.PermissionSerializer(queryset, many=True, context={'request': request}).data,
         }

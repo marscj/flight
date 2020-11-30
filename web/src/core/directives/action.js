@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import store from '@/store'
+import _ from 'lodash'
 
 /**
  * Action 权限指令
@@ -19,24 +20,14 @@ const action = Vue.directive('action', {
     const actionName = binding.arg
     const roles = store.getters.roles
     const user = store.getters.user
-    const elVal = vnode.context.$route.meta.permission
-    const permissionId = (elVal instanceof String && [elVal]) || elVal
 
     if (user.info.is_superuser) {
       return
     }
 
-    let list = []
+    let permissions = _.uniq(roles.reduce((f1, f2) => f1.concat(f2.permissions), [])).map(f => f.codename)
 
-    roles
-      .reduce((f1, f2) => f1.concat(f2.permissions), [])
-      .forEach(f => {
-        if (permissionId.includes(f.codename)) {
-          list.push(f.codename)
-        }
-      })
-
-    if (!list.includes(actionName)) {
+    if (!permissions.includes(actionName)) {
       ;(el.parentNode && el.parentNode.removeChild(el)) || (el.style.display = 'none')
     }
   }

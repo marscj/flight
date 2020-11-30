@@ -16,7 +16,7 @@
       >
         <template slot="action" slot-scope="data">
           <template>
-            <router-link :to="{ name: 'RoleDetail', params: { id: data.id } }">
+            <router-link v-action:view_group :to="{ name: 'RoleDetail', params: { id: data.id } }">
               <span>Detail</span>
             </router-link>
           </template>

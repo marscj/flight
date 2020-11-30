@@ -41,11 +41,24 @@ class GroupSerializer(serializers.ModelSerializer):
     
     permissions = PermissionSerializer(read_only=True, many=True)
 
-    name = serializers.CharField(max_length=150, validators=[UniqueValidator(queryset=Group.objects.all())])
+    name = serializers.CharField(required=False, max_length=150, validators=[UniqueValidator(queryset=Group.objects.all())])
     
+    permission = serializers.IntegerField(required=False, write_only=True)
+
     class Meta:
         model = Group
         fields = '__all__'
+
+    def update(self, instance, validated_data):
+        permission = validated_data.pop('permission', None)
+        
+        if permission is not None:
+            if instance.permissions.filter(id=permission).exists():
+                instance.permissions.remove(permission)
+            else:
+                instance.permissions.add(permission)
+
+        return super().update(instance, validated_data)
 
 class ListGroupSerializer(serializers.ModelSerializer):
 
