@@ -54,3 +54,15 @@ class GroupView(viewset.ExtraModelViewSet):
         return {
             'permission': serializers.PermissionSerializer(queryset, many=True, context={'request': request}).data,
         }
+
+
+class DepartmentFilter(django_filters.FilterSet):
+    id = django_filters.NumberFilter('id')
+
+class DepartmentView(viewset.ExtraModelViewSet):
+    serializer_class = serializers.DepartmentSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    queryset = models.Department.objects.all().order_by('id')
+ 
+    filter_class = DepartmentFilter
+    search_fields = ['name']

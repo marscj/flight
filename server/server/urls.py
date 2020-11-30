@@ -20,6 +20,7 @@ from django.conf.urls import include, url
 urlpatterns = [
     url(r'^api/auth/', include('authorization.urls')),
     url(r'^api/users/', include('user.urls')),
-    url(r'^api/roles/', include('user.urls_group')),
+    url(r'^api/roles/', include('user.url_group')),
+    url(r'^api/departments/', include('user.url_department')),
     url(r'^api/tickets/', include('ticket.urls')),
 ]

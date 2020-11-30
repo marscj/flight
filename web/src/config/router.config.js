@@ -44,7 +44,7 @@ export const asyncRouterMap = [
             name: 'AllUser',
             hideChildrenInMenu: false, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/user/List'),
-            meta: { title: 'All Users', keepAlive: true, permission: ['view_user'] }
+            meta: { title: 'All Users', keepAlive: true }
           },
           {
             path: '/users/:id',
@@ -53,8 +53,7 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true,
             component: () => import('@/views/user/Index'),
             meta: {
-              title: 'User Detail',
-              permission: ['view_user', 'change_user']
+              title: 'User Detail'
             }
           }
         ]
@@ -69,7 +68,7 @@ export const asyncRouterMap = [
             path: '/roles/list',
             name: 'AllRoles',
             component: () => import('@/views/role/List'),
-            meta: { title: 'All Roles', keepAlive: true, permission: ['view_group'] }
+            meta: { title: 'All Roles', keepAlive: true }
           },
           {
             path: '/roles/:id',
@@ -78,8 +77,31 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true,
             component: () => import('@/views/role/Index'),
             meta: {
-              title: 'Role Detail',
-              permission: ['view_group', 'change_group']
+              title: 'Role Detail'
+            }
+          }
+        ]
+      },
+      {
+        path: '/departments',
+        component: RouteView,
+        meta: { title: 'Department', icon: 'safety', permission: ['view_department'] },
+        redirect: '/departments/list',
+        children: [
+          {
+            path: '/departments/list',
+            name: 'AllDepartments',
+            component: () => import('@/views/department/List'),
+            meta: { title: 'All Departments', keepAlive: true }
+          },
+          {
+            path: '/departments/:id',
+            name: 'DepartmentDetail',
+            hidden: true,
+            hideChildrenInMenu: true,
+            component: () => import('@/views/department/Index'),
+            meta: {
+              title: 'Department Detail'
             }
           }
         ]
