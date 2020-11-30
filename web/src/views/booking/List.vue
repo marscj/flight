@@ -48,9 +48,15 @@ export default {
           sorter: true
         },
         {
+          title: 'Title',
+          dataIndex: 'title',
+          align: 'center'
+        },
+        {
           title: 'Remark',
           dataIndex: 'remark',
-          align: 'center'
+          align: 'center',
+          ellipsis: true
         },
 
         {
@@ -66,9 +72,6 @@ export default {
         })
       }
     }
-  },
-  methods: {
-    add() {}
   }
 }
 </script>

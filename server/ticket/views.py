@@ -4,17 +4,16 @@ from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework import viewsets
 import django_filters
 
-from middleware import viewset 
+from middleware import viewset, permissions
 from . import serializers
 from . import models
-from . import permissions
 
 class BookingFilter(django_filters.FilterSet):
-    pass
+    id = django_filters.NumberFilter('id')
 
 class BookingView(viewset.ExtraModelViewSet):
     serializer_class = serializers.BookingSerializer
-    permission_classes = [permissions.ModelPermissions, permissions.IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, permissions.ModelPermissions]
     queryset = models.Booking.objects.all().order_by('id')
  
     filter_class = BookingFilter
@@ -31,7 +30,7 @@ class ItineraryFilter(django_filters.FilterSet):
 
 class ItineraryView(viewsets.ModelViewSet):
     serializer_class = serializers.ItinerarySerializer
-    permission_classes = [DjangoModelPermissions, permissions.IsOwnerOrReadOnly]
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
     queryset = models.Itinerary.objects.all().order_by('id')
  
     filter_class = ItineraryFilter
@@ -42,7 +41,7 @@ class TicketFilter(django_filters.FilterSet):
 
 class TicketView(viewsets.ModelViewSet):
     serializer_class = serializers.TicketSerializer
-    permission_classes = [DjangoModelPermissions, permissions.IsOwnerOrReadOnly]
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
     queryset = models.Ticket.objects.all().order_by('id')
  
     filter_class = TicketFilter
@@ -53,7 +52,7 @@ class CommentFilter(django_filters.FilterSet):
 
 class CommentView(viewsets.ModelViewSet):
     serializer_class = serializers.CommentSerializer
-    permission_classes = [DjangoModelPermissions, permissions.IsOwnerOrReadOnly]
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
     queryset = models.Comment.objects.all().order_by('id')
  
     filter_class = CommentFilter
@@ -64,7 +63,7 @@ class UpLoadFilter(django_filters.FilterSet):
 
 class UpLoadView(viewsets.ModelViewSet):
     serializer_class = serializers.UpLoadSerializer
-    permission_classes = [DjangoModelPermissions, permissions.IsOwnerOrReadOnly]
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
     queryset = models.UpLoad.objects.all().order_by('id')
  
     filter_class = UpLoadFilter
