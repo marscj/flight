@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^api/users/', include('user.urls')),
     url(r'^api/roles/', include('user.url_group')),
     url(r'^api/departments/', include('user.url_department')),
-    url(r'^api/tickets/', include('ticket.urls')),
+    url(r'^api/bookings/', include('ticket.url_booking')),
 ]

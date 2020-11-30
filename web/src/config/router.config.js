@@ -31,6 +31,30 @@ export const asyncRouterMap = [
           }
         ]
       },
+      {
+        path: '/bookings',
+        component: RouteView,
+        meta: { title: 'Booking', icon: 'safety', permission: ['view_booking'] },
+        redirect: '/bookings/list',
+        children: [
+          {
+            path: '/bookings/list',
+            name: 'AllBookings',
+            component: () => import('@/views/booking/List'),
+            meta: { title: 'All Bookings', keepAlive: true }
+          },
+          {
+            path: '/bookings/:id',
+            name: 'BookingDetail',
+            hidden: true,
+            hideChildrenInMenu: true,
+            component: () => import('@/views/booking/Index'),
+            meta: {
+              title: 'Booking Detail'
+            }
+          }
+        ]
+      },
       // user
       {
         path: '/users',
@@ -59,30 +83,6 @@ export const asyncRouterMap = [
         ]
       },
       {
-        path: '/roles',
-        component: RouteView,
-        meta: { title: 'Roles', icon: 'safety', permission: ['view_group'] },
-        redirect: '/roles/list',
-        children: [
-          {
-            path: '/roles/list',
-            name: 'AllRoles',
-            component: () => import('@/views/role/List'),
-            meta: { title: 'All Roles', keepAlive: true }
-          },
-          {
-            path: '/roles/:id',
-            name: 'RoleDetail',
-            hidden: true,
-            hideChildrenInMenu: true,
-            component: () => import('@/views/role/Index'),
-            meta: {
-              title: 'Role Detail'
-            }
-          }
-        ]
-      },
-      {
         path: '/departments',
         component: RouteView,
         meta: { title: 'Department', icon: 'safety', permission: ['view_department'] },
@@ -106,6 +106,31 @@ export const asyncRouterMap = [
           }
         ]
       },
+      {
+        path: '/roles',
+        component: RouteView,
+        meta: { title: 'Roles', icon: 'safety', permission: ['view_group'] },
+        redirect: '/roles/list',
+        children: [
+          {
+            path: '/roles/list',
+            name: 'AllRoles',
+            component: () => import('@/views/role/List'),
+            meta: { title: 'All Roles', keepAlive: true }
+          },
+          {
+            path: '/roles/:id',
+            name: 'RoleDetail',
+            hidden: true,
+            hideChildrenInMenu: true,
+            component: () => import('@/views/role/Index'),
+            meta: {
+              title: 'Role Detail'
+            }
+          }
+        ]
+      },
+
       // forms
       {
         path: '/form',

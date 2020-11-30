@@ -8,7 +8,8 @@ export const API = {
   UserInfo: '/auth/info/',
   User: '/users/',
   Role: '/roles/',
-  Department: '/departments/'
+  Department: '/departments/',
+  Booking: '/bookings/'
 }
 
 export function updateSuccess(res) {
