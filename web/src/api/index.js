@@ -6,8 +6,8 @@ export const API = {
   Logout: '/auth/logout/',
   Register: '/auth/register',
   UserInfo: '/auth/info/',
-  Users: '/users/',
-  Roles: '/roles/'
+  User: '/users/',
+  Role: '/roles/'
 }
 
 export function updateSuccess(res) {

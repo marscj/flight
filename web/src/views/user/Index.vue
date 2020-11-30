@@ -132,12 +132,32 @@
         </a-row>
       </a-card>
     </page-header-wrapper>
+
+    <a-row>
+      <a-col :span="12">
+        <a-popconfirm
+          title="Are you sure cancel?"
+          @confirm="onDelete"
+          okText="Yes"
+          cancelText="No"
+          v-if="$auth('delete_user')"
+        >
+          <a-button href="javascript:;" type="danger">Delete</a-button>
+        </a-popconfirm>
+      </a-col>
+
+      <a-col :span="12" class="text-right">
+        <a-button v-action:change_user type="primary" @click="submit" :loading="updateing" html-type="submit">
+          Submit
+        </a-button>
+      </a-col>
+    </a-row>
   </form-validate>
 </template>
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import { getUser, updateUser } from '@/api/user'
+import { getUser, updateUser, deleteUser } from '@/api/user'
 import moment from 'moment'
 
 export default {

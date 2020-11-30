@@ -13,7 +13,7 @@ import { axios } from '@/utils/request'
 
 export function getRoles(parameter) {
   return axios({
-    url: API.Roles,
+    url: API.Role,
     method: 'get',
     params: parameter
   })
@@ -21,14 +21,14 @@ export function getRoles(parameter) {
 
 export function getRole(pk) {
   return axios({
-    url: API.Roles + `${pk}/`,
+    url: API.Role + `${pk}/`,
     method: 'get'
   })
 }
 
 export function createRole(data) {
   return axios({
-    url: API.Roles,
+    url: API.Role,
     method: 'post',
     data: data
   })
@@ -38,7 +38,7 @@ export function createRole(data) {
 
 export function updateRole(pk, data) {
   return axios({
-    url: API.Roles + `${pk}/`,
+    url: API.Role + `${pk}/`,
     method: 'put',
     data: data
   })
@@ -48,7 +48,7 @@ export function updateRole(pk, data) {
 
 export function deleteRole(pk, data) {
   return axios({
-    url: API.Roles + `${pk}/`,
+    url: API.Role + `${pk}/`,
     method: 'delete'
   })
     .then(deleteSuccess)

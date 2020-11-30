@@ -13,7 +13,7 @@ import { axios } from '@/utils/request'
 
 export function getUsers(parameter) {
   return axios({
-    url: API.Users,
+    url: API.User,
     method: 'get',
     params: parameter
   })
@@ -21,14 +21,14 @@ export function getUsers(parameter) {
 
 export function getUser(pk) {
   return axios({
-    url: API.Users + `${pk}/`,
+    url: API.User + `${pk}/`,
     method: 'get'
   })
 }
 
 export function createUser(data) {
   return axios({
-    url: API.Users,
+    url: API.User,
     method: 'post',
     data: data
   })
@@ -38,10 +38,19 @@ export function createUser(data) {
 
 export function updateUser(pk, data) {
   return axios({
-    url: API.Users + `${pk}/`,
+    url: API.User + `${pk}/`,
     method: 'patch', //'patch',
     data: data
   })
     .then(updateSuccess)
     .catch(updateFailed)
+}
+
+export function deleteUser(pk, data) {
+  return axios({
+    url: API.User + `${pk}/`,
+    method: 'delete'
+  })
+    .then(deleteSuccess)
+    .catch(deleteFailed)
 }

@@ -47,13 +47,7 @@
           </validation-provider>
         </form-item-validate>
 
-        <form-item-validate label="Role">
-          <!-- <a-select v-model="form.role">
-            <a-select-option v-for="data in RoleOptions" :key="data.value" :value="data.value">{{
-              data.label
-            }}</a-select-option>
-          </a-select> -->
-        </form-item-validate>
+        <form-item-validate label="Role"> </form-item-validate>
 
         <form-item-validate label="Active" help="Whether the account is available">
           <a-checkbox v-model="form.is_active" />
@@ -142,7 +136,6 @@ export default {
 
       formData.append('username', this.form.username)
       formData.append('phone_number', this.form.phone_number)
-      // formData.append("email", this.form.email);
       formData.append('first_name', this.form.first_name)
       formData.append('last_name', this.form.last_name)
       formData.append('role', this.form.role)
