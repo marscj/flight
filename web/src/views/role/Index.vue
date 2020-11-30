@@ -17,42 +17,46 @@
           <table border="1" cellpadding="10" bordercolor="gray" bgcolor="white" width="100%">
             <tbody v-for="(permission, index) in permissionData" :key="index" class="whitespace-no-wrap bg-gray-100">
               <tr>
-                <td colspan="100" class="py-2 text-center">{{ index }}</td>
+                <td rowspan="2" class="py-4 text-center">{{ index }}</td>
               </tr>
               <tr>
                 <td v-for="data in permission" :key="data.id" class="py-4">
-                  <a-checkbox v-model="data.check" @change="onClick(data)">{{ data.name }}</a-checkbox>
+                  <a-checkbox v-model="data.check" :disabled="!$auth('change_group')" @change="onClick(data)">{{
+                    data.name
+                  }}</a-checkbox>
                 </td>
               </tr>
             </tbody>
           </table>
         </a-spin>
       </a-card>
-
-      <!-- <table border="1" width="100%">
-        <tr>
-          <th>Name</th>
-          <th>Salary</th>
-          <th>
-            Salary
-          </th>
-        </tr>
-        <tr>
-          <td>Ramesh Raman</td>
-          <td>5000</td>
-        </tr>
-        <tr>
-          <td>Shabbir Hussein</td>
-          <td>7000</td>
-        </tr>
-      </table> -->
     </page-header-wrapper>
+
+    <a-row>
+      <a-col :span="12">
+        <a-popconfirm
+          title="Are you sure cancel?"
+          @confirm="onDelete"
+          okText="Yes"
+          cancelText="No"
+          v-if="$auth('delete_group')"
+        >
+          <a-button href="javascript:;" type="danger">Delete</a-button>
+        </a-popconfirm>
+      </a-col>
+
+      <a-col :span="12" class="text-right">
+        <a-button v-action:change_group type="primary" @click="submit" :loading="updateing" html-type="submit">
+          Submit
+        </a-button>
+      </a-col>
+    </a-row>
   </form-validate>
 </template>
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import { getRole, updateRole } from '@/api/role'
+import { getRole, updateRole, deleteRole } from '@/api/role'
 import moment from 'moment'
 import _ from 'lodash'
 
@@ -145,6 +149,16 @@ export default {
     },
     onClick(permission) {
       this.updatePermission(permission)
+    },
+    onDelete() {
+      this.updateing = true
+      deleteRole(this.$route.params.id)
+        .then(() => {
+          this.$router.go(-1)
+        })
+        .finally(() => {
+          this.updateing = false
+        })
     }
   }
 }
@@ -154,66 +168,10 @@ export default {
 .card {
   margin-bottom: 24px;
 }
-.popover-wrapper {
-  /deep/ .antd-pro-pages-forms-style-errorPopover .ant-popover-inner-content {
-    min-width: 256px;
-    max-height: 290px;
-    padding: 0;
-    overflow: auto;
-  }
-}
-.antd-pro-pages-forms-style-errorIcon {
-  user-select: none;
-  margin-right: 24px;
-  color: #f5222d;
-  cursor: pointer;
-  i {
-    margin-right: 4px;
-  }
-}
-.antd-pro-pages-forms-style-errorListItem {
-  padding: 8px 16px;
-  list-style: none;
-  border-bottom: 1px solid #e8e8e8;
-  cursor: pointer;
-  transition: all 0.3s;
-
-  &:hover {
-    background: #e6f7ff;
-  }
-  .antd-pro-pages-forms-style-errorIcon {
-    float: left;
-    margin-top: 4px;
-    margin-right: 12px;
-    padding-bottom: 22px;
-    color: #f5222d;
-  }
-  .antd-pro-pages-forms-style-errorField {
-    margin-top: 2px;
-    color: rgba(0, 0, 0, 0.45);
-    font-size: 12px;
-  }
-}
 
 table {
-  width: 100%;
-  table-layout: auto;
-  border-collapse: separate;
-  border-spacing: 2px;
-  border-color: gray;
+  border-collapse: collapse; //collapse separate;
 }
-
-// th {
-//   border-right: 1px solid #999999;
-//   border-bottom: 1px solid #999999;
-//   padding: 8px 0;
-// }
-
-// td {
-//   border-right: 1px solid #999999;
-//   border-bottom: 1px solid #999999;
-//   padding: 8px 0;
-// }
 
 tr:nth-child(2n + 1) {
   background-color: #edf2f7;

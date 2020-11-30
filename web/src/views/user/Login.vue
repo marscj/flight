@@ -56,7 +56,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['Login', 'Logout']),
+    ...mapActions(['Login']),
     handleSubmit(e) {
       e.preventDefault()
       const { Login } = this

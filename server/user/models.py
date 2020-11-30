@@ -49,9 +49,6 @@ class User(AbstractUser):
     
     image_ppoi = PPOIField()
 
-    # 逻辑删除
-    is_delete = models.BooleanField(default=False)
-
     class Meta:
         db_table = 'user'
 

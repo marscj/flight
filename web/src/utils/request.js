@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import Vue from 'vue'
+import router from '@/router'
 import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
@@ -23,8 +24,7 @@ const errorHandler = error => {
         message: 'Forbidden',
         description: data.message
       })
-    }
-    if (error.response.status === 401 && data.result) {
+    } else if (error.response.status === 401 && data.result) {
       notification.error({
         message: 'Unauthorized',
         description: 'Authorization verification failed'
@@ -36,6 +36,10 @@ const errorHandler = error => {
           }, 1500)
         })
       }
+    } else if (error.response.status === 404) {
+      router.replace({ name: 404 })
+    } else if (error.response.status === 500) {
+      router.replace({ name: 500 })
     }
   }
   return Promise.reject(error)

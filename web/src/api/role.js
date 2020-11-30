@@ -45,3 +45,12 @@ export function updateRole(pk, data) {
     .then(updateSuccess)
     .catch(updateFailed)
 }
+
+export function deleteRole(pk, data) {
+  return axios({
+    url: API.Roles + `${pk}/`,
+    method: 'delete'
+  })
+    .then(deleteSuccess)
+    .catch(deleteFailed)
+}

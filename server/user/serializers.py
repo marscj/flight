@@ -97,7 +97,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
             'id', 'email', 'password', 'first_name', 'last_name', 'roles', 'is_active', 'is_staff', 
             'possport_type', 'passport_code', 'passport_no', 'passport_sex', 'passport_nationality', 'passport_date_birth',
             'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
-            'avatar', 'is_delete', 'name', 'department_id', 'groups_id'
+            'avatar', 'name', 'department_id', 'groups_id'
         )
         read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined')
 
