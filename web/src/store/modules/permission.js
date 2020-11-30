@@ -60,6 +60,7 @@ export const permission = {
     GenerateRoutes({ commit }, data) {
       return new Promise((resolve, reject) => {
         var superuser = data.is_superuser
+        console.log(data)
         if (superuser) {
           commit('SET_ROUTERS', asyncRouterMap)
         } else {

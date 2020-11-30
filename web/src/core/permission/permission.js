@@ -13,6 +13,12 @@ function plugin(Vue) {
       $auth: {
         get() {
           const _this = this
+          const user = _this.$store.getters.user
+
+          if (user.info.is_superuser) {
+            return () => true
+          }
+
           return permissions => {
             let _permissions = _.uniq(_this.$store.getters.roles.reduce((f1, f2) => f1.concat(f2.permissions), [])).map(
               f => f.codename

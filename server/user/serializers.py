@@ -94,7 +94,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = (
-            'id', 'email', 'password', 'first_name', 'last_name', 'roles', 'is_active', 'is_staff', 
+            'id', 'email', 'password', 'first_name', 'last_name', 'roles', 'is_active', 'is_staff', 'is_superuser',
             'possport_type', 'passport_code', 'passport_no', 'passport_sex', 'passport_nationality', 'passport_date_birth',
             'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
             'avatar', 'name', 'department_id', 'groups_id'
