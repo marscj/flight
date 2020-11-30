@@ -2,10 +2,10 @@ from rest_framework import serializers
 
 from .models import *
 
-class ApplySerializer(serializers.ModelSerializer):
+class BookingSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Apply
+        model = Booking
         fields = '__all__'
 
 class ItinerarySerializer(serializers.ModelSerializer):

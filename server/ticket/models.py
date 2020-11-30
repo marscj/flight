@@ -4,19 +4,23 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
+from simple_history.models import HistoricalRecords
+
 from user.models import User
 
-class Apply(models.Model):
+class Booking(models.Model):
     title = models.CharField(blank=True, null=True, max_length=64)
     remark = models.CharField(blank=True, null=True, max_length=1024)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
     is_delete = models.BooleanField(default=False)
 
-    author = models.ForeignKey(User, related_name='applys', on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
+
+    history = HistoricalRecords()
 
     class Meta:
-        db_table = 'apply'
+        db_table = 'booking'
 
 class Itinerary(models.Model):
     serial_no = models.CharField(blank=True, null=True, max_length=32)
@@ -34,9 +38,10 @@ class Itinerary(models.Model):
     change_at = models.DateTimeField(auto_now=True)
     is_delete = models.BooleanField(default=False)
 
-    user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
-    apply = models.ForeignKey(Apply, related_name='itinerarys', on_delete=models.SET_NULL, blank=True, null=True)
-    author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(User, related_name='itinerarys', on_delete=models.SET_NULL, blank=True, null=True)
+    booking = models.ForeignKey(Booking, related_name='itinerarys', on_delete=models.SET_NULL, blank=True, null=True)
+
+    history = HistoricalRecords()
 
     class Meta:
         db_table = 'itinerary'
@@ -64,6 +69,8 @@ class Ticket(models.Model):
 
     itinerary = models.ForeignKey(Itinerary, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
+
+    history = HistoricalRecords()
 
     class Meta:
         db_table = 'ticket'
