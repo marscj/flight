@@ -41,7 +41,7 @@ class Itinerary(models.Model):
     class Meta:
         db_table = 'itinerary'
         permissions = (
-            ('lock_itinerary', 'can lock itinerary'),
+            ('lock_itinerary', 'Can lock itinerary'),
         )
 
 class Ticket(models.Model):

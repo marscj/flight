@@ -14,7 +14,7 @@
 
       <a-card class="card" title="Permissions" :bordered="false">
         <a-spin :spinning="updateing">
-          <table border="1" cellpadding="15" bordercolor="gray" bgcolor="white" width="100%">
+          <table border="1" cellpadding="10" bordercolor="gray" bgcolor="white" width="100%">
             <tbody v-for="(permission, index) in permissionData" :key="index" class="whitespace-no-wrap bg-gray-100">
               <tr>
                 <td colspan="100" class="py-2 text-center">{{ index }}</td>
@@ -28,6 +28,24 @@
           </table>
         </a-spin>
       </a-card>
+
+      <!-- <table border="1" width="100%">
+        <tr>
+          <th>Name</th>
+          <th>Salary</th>
+          <th>
+            Salary
+          </th>
+        </tr>
+        <tr>
+          <td>Ramesh Raman</td>
+          <td>5000</td>
+        </tr>
+        <tr>
+          <td>Shabbir Hussein</td>
+          <td>7000</td>
+        </tr>
+      </table> -->
     </page-header-wrapper>
   </form-validate>
 </template>
@@ -177,13 +195,13 @@ export default {
   }
 }
 
-// table {
-//   border-spacing: 0;
-//   border-top: 1px solid #999999;
-//   border-left: 1px solid #999999;
-//   margin: 16px auto;
-//   width: 100%;
-// }
+table {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: gray;
+}
 
 // th {
 //   border-right: 1px solid #999999;
