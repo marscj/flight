@@ -20,8 +20,10 @@ class BookingView(viewset.ExtraModelViewSet):
     search_fields = ['']
 
     def get_history_data(self, request):
-        return serializers.BookingHistorySerializer(self.get_object().history.all(), many=True, context={'request': request}).data
-
+        if self.request.user.has_perm('ticket.view_historicalbooking'):
+            return serializers.BookingHistorySerializer(self.get_object().history.all(), many=True, context={'request': request}).data
+        return []
+        
     def get_queryset(self):
         if self.request.user.has_perm('ticket.view_booking'):
             return models.Booking.objects.all().order_by('id')
