@@ -77,7 +77,7 @@ export default {
   methods: {
     getBookingData() {
       this.loading = true
-      getBooking(this.$route.params.id)
+      getBooking(this.$route.params.id, { history: true })
         .then(res => {
           const { data, extra } = res.result
           this.form = Object.assign({}, data)

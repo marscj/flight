@@ -8,7 +8,11 @@ class ExtraModelViewSet(ModelViewSet):
     def get_extra_data(self, request):
         return {}
 
+    def get_history_data(self, request):
+        return {}
+
     def get_serializer_class(self):
+        
         if self.action == 'list' and self.list_serializer_class is not None:
             return self.list_serializer_class
 
@@ -31,7 +35,8 @@ class ExtraModelViewSet(ModelViewSet):
         
         return Response({
             'data': serializer.data,
-            'extra': self.get_extra_data(request)
+            'extra': self.get_extra_data(request),
+            'history': self.get_history_data(request)
         })
 
     def update(self, request, *args, **kwargs):
@@ -42,8 +47,6 @@ class ExtraModelViewSet(ModelViewSet):
         self.perform_update(serializer)
 
         if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
-            # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
 
         return Response({

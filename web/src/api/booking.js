@@ -19,9 +19,10 @@ export function getBookings(parameter) {
   })
 }
 
-export function getBooking(pk) {
+export function getBooking(pk, parameter) {
   return axios({
     url: API.Booking + `${pk}/`,
+    params: parameter,
     method: 'get'
   })
 }

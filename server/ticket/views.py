@@ -19,17 +19,14 @@ class BookingView(viewset.ExtraModelViewSet):
     filter_class = BookingFilter
     search_fields = ['']
 
+    def get_history_data(self, request):
+        return serializers.BookingHistorySerializer(self.get_object().history.all(), many=True, context={'request': request}).data
+
     def get_queryset(self):
         if self.request.user.has_perm('ticket.view_booking'):
             return models.Booking.objects.all().order_by('id')
         else :
             return super().get_queryset().filter(itinerarys__user_id=self.request.user.id).distinct()
-    
-    def get_extra_data(self, request):
-        queryset = models.Booking.history.all().order_by('id')
-        return {
-            'history': serializers.BookingHistorySerializer(queryset, many=True, context={'request': request}).data,
-        }
 
 class ItineraryFilter(django_filters.FilterSet):
     pass
