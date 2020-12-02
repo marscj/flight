@@ -13,11 +13,10 @@ class Booking(models.Model):
     remark = models.CharField(blank=True, null=True, max_length=1024)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
-    is_delete = models.BooleanField(default=False)
 
     author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(table_name='booking_history', custom_model_name='booking_history')
 
     class Meta:
         db_table = 'booking'
@@ -36,12 +35,11 @@ class Itinerary(models.Model):
     remark = models.CharField(blank=True, null=True, max_length=256)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
-    is_delete = models.BooleanField(default=False)
 
     user = models.ForeignKey(User, related_name='itinerarys', on_delete=models.SET_NULL, blank=True, null=True)
     booking = models.ForeignKey(Booking, related_name='itinerarys', on_delete=models.SET_NULL, blank=True, null=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(table_name='itinerary_history', custom_model_name='itinerary_history')
 
     class Meta:
         db_table = 'itinerary'
@@ -65,12 +63,11 @@ class Ticket(models.Model):
     is_ticketing = models.BooleanField(default=False)
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
-    is_delete = models.BooleanField(default=False)
 
     itinerary = models.ForeignKey(Itinerary, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
 
     class Meta:
         db_table = 'ticket'
@@ -78,7 +75,7 @@ class Ticket(models.Model):
 class Comment(models.Model):
     comment = models.CharField(blank=True, null=True, max_length=256)
     create_at = models.DateTimeField(auto_now_add=True)
-    is_delete = models.BooleanField(default=False)
+
     itinerary = models.ForeignKey(Itinerary, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
 
