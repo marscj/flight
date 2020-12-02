@@ -1,11 +1,6 @@
 <template>
   <form-validate ref="observer">
     <page-header-wrapper>
-      <template slot="extra">
-        <a-button v-action:change_department type="primary" @click="submit" :loading="updateing" html-type="submit">
-          Submit
-        </a-button>
-      </template>
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Name" vid="name" required>
           <a-input v-model="form.name" :disabled="!$auth('change_department')" />

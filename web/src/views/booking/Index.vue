@@ -5,19 +5,11 @@
         <router-link :to="{ name: 'BookingHistory', params: { id: $route.params.id } }">
           <span>History</span>
         </router-link>
-        <a-button v-action:change_booking type="primary" @click="submit" :loading="updateing" html-type="submit">
-          Submit
-        </a-button>
       </template>
       <template v-else-if="post_type == 'history'" slot="extra">
         <router-link :to="{ name: 'BookingDetail', params: { id: $route.params.id } }">
           <span>Back</span>
         </router-link>
-      </template>
-      <template v-else-if="post_type == 'add'" slot="extra">
-        <a-button v-action:add_booking type="primary" @click="submit" :loading="updateing" html-type="submit">
-          Submit
-        </a-button>
       </template>
 
       <a-card class="card" title="Base Information" :bordered="false">

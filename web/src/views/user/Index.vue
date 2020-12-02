@@ -1,11 +1,6 @@
 <template>
   <form-validate ref="observer">
     <page-header-wrapper>
-      <template slot="extra">
-        <a-button v-action:change_user type="primary" @click="submit" :loading="updateing" html-type="submit">
-          Submit
-        </a-button>
-      </template>
       <a-card class="card" title="Base Information" :bordered="false">
         <a-row class="form-row" :gutter="16">
           <a-col :lg="12" :md="12" :sm="24">
