@@ -11,15 +11,10 @@
       </template>
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Title" vid="title" required>
-          <a-input v-model="form.title" :maxLength="64" :disabled="!$auth('change_booking') && isEdit" />
+          <a-input v-model="form.title" :maxLength="64" :disabled="!$auth('change_booking') && edit" />
         </form-item-validate>
         <form-item-validate label="Remark" vid="remark">
-          <a-textarea
-            v-model="form.remark"
-            :maxLength="1024"
-            :rows="5"
-            :disabled="!$auth('change_booking') && isEdit"
-          />
+          <a-textarea v-model="form.remark" :maxLength="1024" :rows="5" :disabled="!$auth('change_booking') && edit" />
         </form-item-validate>
       </a-card>
     </page-header-wrapper>
@@ -31,7 +26,7 @@
           @confirm="onDelete"
           okText="Yes"
           cancelText="No"
-          v-if="$auth('delete_booking') && isEdit"
+          v-if="$auth('delete_booking') && edit"
         >
           <a-button href="javascript:;" type="danger">Delete</a-button>
         </a-popconfirm>
@@ -54,8 +49,9 @@ import History from './History'
 
 export default {
   components: { FormValidate, FormItemValidate, History },
+
   props: {
-    isEdit: {
+    edit: {
       type: Boolean,
       default: true
     }
@@ -70,7 +66,7 @@ export default {
     }
   },
   mounted() {
-    if (this.isEdit) {
+    if (this.edit) {
       this.getBookingData()
     }
   },
@@ -92,7 +88,7 @@ export default {
     submit() {
       this.updateing = true
       var form = Object.assign({}, this.form, {})
-      if (this.isEdit) {
+      if (this.edit) {
         updateBooking(this.$route.params.id, form)
           .then(res => {
             const { data, extra } = res.result
