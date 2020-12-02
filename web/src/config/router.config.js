@@ -54,18 +54,26 @@ export const asyncRouterMap = [
           {
             path: '/booking/add',
             name: 'AddBooking',
-            props: { post_type: 'add' },
             component: () => import('@/views/booking/Add'),
             meta: { title: 'Add Booking', permission: ['add_booking'] }
           },
           {
-            path: '/bookings/:id',
+            path: '/bookings/:id/detail',
             name: 'BookingDetail',
-            props: route => ({ post_type: route.query.post_type }),
             hidden: true,
             component: () => import('@/views/booking/Edit'),
             meta: {
               title: 'Booking Detail',
+              permission: ['view_booking']
+            }
+          },
+          {
+            path: '/bookings/:id/history',
+            name: 'BookingHistory',
+            hidden: true,
+            component: () => import('@/views/booking/History'),
+            meta: {
+              title: 'Booking History',
               permission: ['view_booking']
             }
           }

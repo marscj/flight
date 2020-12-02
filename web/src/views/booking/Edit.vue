@@ -1,12 +1,12 @@
 <template>
-  <index :isEdit="true"> </index>
+  <index post_type="edit"> </index>
 </template>
 
 <script>
 import Index from './Index'
 export default {
-  components: { Index }
+  components: {
+    Index
+  }
 }
 </script>
-
-<style></style>

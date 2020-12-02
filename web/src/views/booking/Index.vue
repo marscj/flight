@@ -1,20 +1,31 @@
 <template>
-  <form-validate ref="observer" v-if="!history">
+  <form-validate ref="observer">
     <page-header-wrapper>
-      <template slot="extra">
-        <a @click="onHistory">
-          History
-        </a>
+      <template v-if="post_type == 'edit'" slot="extra">
+        <router-link :to="{ name: 'BookingHistory', params: { id: $route.params.id } }">
+          <span>History</span>
+        </router-link>
         <a-button v-action:change_booking type="primary" @click="submit" :loading="updateing" html-type="submit">
           Submit
         </a-button>
       </template>
+      <template v-else-if="post_type == 'history'" slot="extra">
+        <router-link :to="{ name: 'BookingDetail', params: { id: $route.params.id } }">
+          <span>Back</span>
+        </router-link>
+      </template>
+      <template v-else-if="post_type == 'add'" slot="extra">
+        <a-button v-action:add_booking type="primary" @click="submit" :loading="updateing" html-type="submit">
+          Submit
+        </a-button>
+      </template>
+
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Title" vid="title" required>
-          <a-input v-model="form.title" :maxLength="64" :disabled="!$auth('change_booking') && edit" />
+          <a-input v-model="form.title" :maxLength="64" :disabled="disabled()" />
         </form-item-validate>
         <form-item-validate label="Remark" vid="remark">
-          <a-textarea v-model="form.remark" :maxLength="1024" :rows="5" :disabled="!$auth('change_booking') && edit" />
+          <a-textarea v-model="form.remark" :maxLength="1024" :rows="5" :disabled="disabled()" />
         </form-item-validate>
       </a-card>
     </page-header-wrapper>
@@ -33,21 +44,35 @@
       </a-col>
 
       <a-col :span="12" class="text-right">
-        <a-button v-action:change_booking type="primary" @click="submit" :loading="updateing" html-type="submit">
+        <a-button
+          v-if="post_type == 'edit'"
+          v-action:change_booking
+          type="primary"
+          @click="submit"
+          :loading="updateing"
+          html-type="submit"
+        >
+          Submit
+        </a-button>
+
+        <a-button
+          v-if="post_type == 'add'"
+          v-action:add_booking
+          type="primary"
+          @click="submit"
+          :loading="updateing"
+          html-type="submit"
+        >
           Submit
         </a-button>
       </a-col>
     </a-row>
   </form-validate>
-  <history v-else :data="historyData"> </history>
 </template>
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
-import { POST_TYPE } from './model'
-
-import History from './History'
 
 export default {
   components: { FormValidate, FormItemValidate, History },
@@ -55,20 +80,30 @@ export default {
   props: {
     post_type: {
       type: String,
-      default: POST_TYPE.EDIT
+      default: 'edit'
     }
   },
   data() {
     return {
       loading: false,
       updateing: false,
+      disabled: () => {
+        if (this.post_type == 'add') {
+          return false
+        }
+
+        if (this.post_type == 'edit' && this.$auth('change_booking')) {
+          return false
+        }
+
+        return true
+      },
       form: {},
-      history: false,
       historyData: []
     }
   },
   mounted() {
-    if (this.edit) {
+    if (this.$route.params.id) {
       this.getBookingData()
     }
   },
@@ -88,7 +123,8 @@ export default {
     submit() {
       this.updateing = true
       var form = Object.assign({}, this.form, {})
-      if (this.edit) {
+
+      if (this.post_type == 'edit') {
         updateBooking(this.$route.params.id, form)
           .then(res => {
             const { data, extra } = res.result
@@ -103,7 +139,7 @@ export default {
           .finally(() => {
             this.updateing = false
           })
-      } else {
+      } else if (this.post_type == 'add') {
         createBooking(form)
           .then(res => {
             this.$router.push({
@@ -132,7 +168,7 @@ export default {
         })
     },
     onHistory() {
-      this.history = true
+      this.$router.push({ name: 'BookingHistory', params: { id: this.$route.params.id } })
     }
   }
 }

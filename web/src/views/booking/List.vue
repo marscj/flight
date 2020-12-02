@@ -13,6 +13,10 @@
       >
         <template slot="action" slot-scope="data">
           <template>
+            <router-link v-action:view_booking :to="{ name: 'BookingHistory', params: { id: data.id } }">
+              <span>History</span>
+            </router-link>
+            <a-divider type="vertical" />
             <router-link v-action:view_booking :to="{ name: 'BookingDetail', params: { id: data.id } }">
               <span>Detail</span>
             </router-link>
