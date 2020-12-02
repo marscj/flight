@@ -12,6 +12,17 @@
         </router-link>
       </template>
 
+      <div v-if="post_type == 'history'" class="pb-4">
+        <a-row>
+          <a-col :span="12">
+            <a-button type="link" v-if="history_index > 0" @click="onPreviou">Previou</a-button>
+          </a-col>
+          <a-col :span="12" class="text-right">
+            <a-button type="link" v-if="history_index < history_length - 1" @click="onNext">Next</a-button>
+          </a-col>
+        </a-row>
+      </div>
+
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Title" vid="title" required>
           <a-input v-model="form.title" :maxLength="64" :disabled="disabled()" />
@@ -91,7 +102,14 @@ export default {
         return true
       },
       form: {},
-      historyData: []
+      historyData: [],
+      history_index: 0,
+      history_length: 0
+    }
+  },
+  watch: {
+    history_index(val) {
+      this.form = Object.assign({}, this.historyData[val])
     }
   },
   mounted() {
@@ -104,9 +122,14 @@ export default {
       this.loading = true
       getBooking(this.$route.params.id, { history: true })
         .then(res => {
-          const { data, extra } = res.result
-          this.form = Object.assign({}, data)
-          this.historyData = Object.assign([], extra.history)
+          const { data, history } = res.result
+          console.log(res.result)
+          this.historyData = Object.assign([], history)
+          this.history_length = history.length
+          this.history_index = history.length - 1
+          if (this.post_type == 'history') {
+            this.form = Object.assign({}, this.historyData[this.history_index])
+          }
         })
         .finally(() => {
           this.loading = false
@@ -159,8 +182,15 @@ export default {
           this.updateing = false
         })
     },
-    onHistory() {
-      this.$router.push({ name: 'BookingHistory', params: { id: this.$route.params.id } })
+    onPreviou() {
+      if (this.history_index > 0) {
+        this.history_index--
+      }
+    },
+    onNext() {
+      if (this.history_index < this.history_length - 1) {
+        this.history_index++
+      }
     }
   }
 }

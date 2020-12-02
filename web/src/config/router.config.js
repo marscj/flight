@@ -54,6 +54,7 @@ export const asyncRouterMap = [
           {
             path: '/booking/add',
             name: 'AddBooking',
+            hidden: true,
             component: () => import('@/views/booking/Add'),
             meta: { title: 'Add Booking', permission: ['add_booking'] }
           },
