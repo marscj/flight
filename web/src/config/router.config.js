@@ -52,17 +52,17 @@ export const asyncRouterMap = [
             }
           },
           {
-            path: '/booking/add/?post_type=add',
+            path: '/booking/add',
             name: 'AddBooking',
+            props: { post_type: 'add' },
             component: () => import('@/views/booking/Add'),
             meta: { title: 'Add Booking', permission: ['add_booking'] }
           },
           {
             path: '/bookings/:id',
             name: 'BookingDetail',
-            props: true,
+            props: route => ({ post_type: route.query.post_type }),
             hidden: true,
-            hideChildrenInMenu: true,
             component: () => import('@/views/booking/Edit'),
             meta: {
               title: 'Booking Detail',

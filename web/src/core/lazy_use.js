@@ -120,4 +120,4 @@ Vue.use(FormItemValidate)
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 
-process.env.NODE_ENV !== 'production' && console.warn('[antd-pro] NOTICE: Antd use lazy-load.')
+process.env.NODE_ENV !== 'production'
