@@ -13,6 +13,8 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BookingHistorySerializer(serializers.ModelSerializer):
+
+    history_user = serializers.StringRelatedField(read_only=True)
     
     class Meta:
         model = Booking.history.model

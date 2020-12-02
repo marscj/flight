@@ -1,6 +1,6 @@
 <template>
   <form-validate ref="observer">
-    <page-header-wrapper>
+    <page-header-wrapper :content="content">
       <template v-if="post_type == 'edit'" slot="extra">
         <router-link :to="{ name: 'BookingHistory', params: { id: $route.params.id } }">
           <span>History</span>
@@ -76,6 +76,7 @@
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
+import moment from 'moment'
 
 export default {
   components: { FormValidate, FormItemValidate, History },
@@ -91,7 +92,7 @@ export default {
       loading: false,
       updateing: false,
       disabled: () => {
-        if (this.post_type == 'add') {
+        if (this.post_type == 'add' && this.$auth('add_booking')) {
           return false
         }
 
@@ -101,15 +102,18 @@ export default {
 
         return true
       },
+
       form: {},
       historyData: [],
       history_index: 0,
-      history_length: 0
+      history_length: 0,
+      content: ''
     }
   },
   watch: {
     history_index(val) {
       this.form = Object.assign({}, this.historyData[val])
+      this.setContent()
     }
   },
   mounted() {
@@ -118,6 +122,13 @@ export default {
     }
   },
   methods: {
+    setContent() {
+      this.content =
+        'author: ' +
+        this.historyData[this.history_index].history_user +
+        '  change at: ' +
+        moment(this.historyData[this.history_index].history_date).format('YYYY-MM-DD HH:mm')
+    },
     getBookingData() {
       this.loading = true
       getBooking(this.$route.params.id, { history: true })
@@ -127,6 +138,7 @@ export default {
           this.historyData = Object.assign([], history)
           this.history_length = history.length
           this.history_index = history.length - 1
+
           if (this.post_type == 'history') {
             this.form = Object.assign({}, this.historyData[this.history_index])
           }
