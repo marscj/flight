@@ -38,9 +38,7 @@ export default {
       default: undefined
     }
   }),
-  mounted() {
-    console.log()
-  },
+  mounted() {},
   data() {
     return {
       nidaye: {

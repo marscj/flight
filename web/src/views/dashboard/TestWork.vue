@@ -75,10 +75,7 @@ export default {
     },
 
     handleOpenLoading() {
-      this.$nextTick(function() {
-        console.log('this', this)
-        console.log('this.$refs.tInput', this.$refs.tInput)
-      })
+      this.$nextTick(function() {})
       this.$loading.show()
       setTimeout(() => {
         this.$loading.hide()

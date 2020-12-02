@@ -140,7 +140,6 @@ export default {
         })
       })
 
-      console.log(this.mdl)
       this.visible = true
     },
     handleOk() {

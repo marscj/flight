@@ -147,15 +147,9 @@ export default {
         {
           record: {},
           on: {
-            ok() {
-              console.log('ok 回调')
-            },
-            cancel() {
-              console.log('cancel 回调')
-            },
-            close() {
-              console.log('modal close 回调')
-            }
+            ok() {},
+            cancel() {},
+            close() {}
           }
         },
         // modal props
@@ -168,22 +162,15 @@ export default {
       )
     },
     edit(record) {
-      console.log('record', record)
       this.$dialog(
         TaskForm,
         // component props
         {
           record,
           on: {
-            ok() {
-              console.log('ok 回调')
-            },
-            cancel() {
-              console.log('cancel 回调')
-            },
-            close() {
-              console.log('modal close 回调')
-            }
+            ok() {},
+            cancel() {},
+            close() {}
           }
         },
         // modal props

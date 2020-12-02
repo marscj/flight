@@ -131,12 +131,9 @@ export default {
     this.getList()
   },
   methods: {
-    handleChange(value) {
-      console.log(`selected ${value}`)
-    },
+    handleChange(value) {},
     getList() {
       this.$http.get('/list/article', { params: { count: 8 } }).then(res => {
-        console.log('res', res)
         this.data = res.result
         this.loading = false
       })

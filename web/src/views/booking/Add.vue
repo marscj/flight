@@ -5,7 +5,14 @@
 <script>
 import Index from './Index'
 export default {
-  components: { Index }
+  components: { Index },
+  props: {
+    post_type: {
+      type: String,
+      default: 'default'
+    }
+  },
+  mounted() {}
 }
 </script>
 

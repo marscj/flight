@@ -45,15 +45,17 @@
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
+import { POST_TYPE } from './model'
+
 import History from './History'
 
 export default {
   components: { FormValidate, FormItemValidate, History },
 
   props: {
-    edit: {
-      type: Boolean,
-      default: true
+    post_type: {
+      type: String,
+      default: POST_TYPE.EDIT
     }
   },
   data() {
@@ -78,8 +80,6 @@ export default {
           const { data, extra } = res.result
           this.form = Object.assign({}, data)
           this.historyData = Object.assign([], extra.history)
-
-          console.log(res.result)
         })
         .finally(() => {
           this.loading = false

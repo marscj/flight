@@ -70,7 +70,6 @@ export default {
           this.loginSuccess(res)
         })
         .catch(error => {
-          console.log(error.response)
           this.$refs.observer.checkError(error)
         })
     },

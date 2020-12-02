@@ -90,7 +90,6 @@ export default {
       createRole(this.form)
         .then(res => {
           this.modal = false
-          console.log(res)
           this.$router.push({
             name: 'RoleDetail',
             params: { id: res.result.id }
