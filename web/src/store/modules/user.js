@@ -73,6 +73,7 @@ const user = {
     Logout({ commit, state }) {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
+      commit('SET_ROUTERS', [])
       Vue.ls.remove(ACCESS_TOKEN)
 
       return new Promise(resolve => {

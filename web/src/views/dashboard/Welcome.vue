@@ -194,15 +194,9 @@ export default {
   },
   computed: {
     ...mapState({
-      nickname: state => state.user.nickname,
+      currentUser: state => state.user.info,
       welcome: state => state.user.welcome
     }),
-    currentUser() {
-      return {
-        name: 'Serati Ma',
-        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
-      }
-    },
     userInfo() {
       return this.$store.getters.userInfo
     }

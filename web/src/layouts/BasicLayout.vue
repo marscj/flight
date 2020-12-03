@@ -13,7 +13,7 @@
       广告代码 真实项目中请移除
       production remove this Ads
     -->
-    <ads v-if="isProPreviewSite && !collapsed" />
+    <!-- <ads v-if="isProPreviewSite && !collapsed" /> -->
     <!-- Ads end -->
 
     <!-- 1.0.0+ 版本 pro-layout 提供 API，
@@ -22,6 +22,7 @@
     <template v-slot:menuHeaderRender>
       <div>
         <!-- <logo-svg /> -->
+        <img src="~@/assets/logo.png" class="logo " alt="logo" />
         <h1>{{ title }}</h1>
       </div>
     </template>
@@ -46,17 +47,16 @@ import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mu
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
-import Ads from '@/components/Other/CarbonAds'
-import LogoSvg from '../assets/logo.svg?inline'
+// import LogoSvg from '../assets/logo.svg?inline'
 
 export default {
   name: 'BasicLayout',
   components: {
     SettingDrawer,
     RightContent,
-    GlobalFooter,
-    LogoSvg,
-    Ads
+    GlobalFooter
+    // LogoSvg,
+    // Ads
   },
   data() {
     return {
