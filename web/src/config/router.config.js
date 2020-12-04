@@ -209,11 +209,21 @@ export const asyncRouterMap = [
         ]
       },
       {
-        path: '/account/settings',
+        path: '/account',
         component: RouteView,
-        name: 'settings',
-        meta: { title: 'User Profile', icon: 'user', keepAlive: true },
-        hidden: true
+        redirect: '/account/settings',
+        meta: { title: 'Account', icon: 'user' },
+        hidden: true,
+        hideChildrenInMenu: true,
+        children: [
+          {
+            path: '/account/settings',
+            name: 'settings',
+            hidden: true,
+            component: () => import('@/views/user/Profile'),
+            meta: { title: 'User Profile' }
+          }
+        ]
       }
       // {
       //   path: '/account',

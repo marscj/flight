@@ -1,11 +1,7 @@
 <template>
-  <a-spin :spinning="loading">
-    <validation-observer ref="observer">
-      <validation-provider name="non_field_errors" v-slot="{ errors }">
-        <span class="errorText">{{ errors[0] }}</span>
-      </validation-provider>
-
-      <form-validate :form="form" :submit="submit">
+  <page-header-wrapper>
+    <form-validate ref="observer">
+      <a-card :loading="loading">
         <form-item-validate label="Photo" required>
           <a-upload
             name="Photo"
@@ -26,43 +22,68 @@
           </a-upload>
         </form-item-validate>
 
-        <form-item-validate label="Email">
-          <validation-provider vid="email" v-slot="{ errors }">
-            <a-input v-model="form.email" disabled> </a-input>
-            <span class="errorText">{{ errors[0] }}</span>
-          </validation-provider>
-        </form-item-validate>
+        <a-row class="form-row" :gutter="16">
+          <a-col :lg="12" :md="12" :sm="24">
+            <form-item-validate label="Email" vid="Email">
+              <a-input v-model="form.email" disabled />
+            </form-item-validate>
+          </a-col>
 
-        <form-item-validate label="First Name">
-          <validation-provider vid="first_name" name="first name" v-slot="{ errors }">
-            <a-input v-model="form.first_name"> </a-input>
-            <span class="errorText">{{ errors[0] }}</span>
-          </validation-provider>
-        </form-item-validate>
+          <a-col :lg="12" :md="12" :sm="24">
+            <form-item-validate label="Password" vid="password">
+              <a-input v-model="form.password" disabled>
+                <a-icon slot="addonAfter" type="lock" />
+              </a-input>
+            </form-item-validate>
+          </a-col>
 
-        <form-item-validate label="Last Name">
-          <validation-provider vid="last_name" name="last name" v-slot="{ errors }">
-            <a-input v-model="form.last_name"> </a-input>
-            <span class="errorText">{{ errors[0] }}</span>
-          </validation-provider>
-        </form-item-validate>
+          <a-col :lg="12" :md="12" :sm="24">
+            <form-item-validate label="First Name" vid="first_name">
+              <a-input v-model="form.first_name" />
+            </form-item-validate>
+          </a-col>
 
-        <form-item-validate label="Role"> </form-item-validate>
+          <a-col :lg="12" :md="12" :sm="24">
+            <form-item-validate label="Last Name" vid="last_name">
+              <a-input v-model="form.last_name" />
+            </form-item-validate>
+          </a-col>
 
-        <form-item-validate label="Active" help="Whether the account is available">
-          <a-checkbox v-model="form.is_active" />
-        </form-item-validate>
+          <a-col :lg="12" :md="12" :sm="24">
+            <form-item-validate label="Department" vid="department_id">
+              <a-select v-model="form.department_id" disabled>
+                <a-select-option v-for="index in extra.department" :key="index.id" :value="index.id">{{
+                  index.name
+                }}</a-select-option>
+              </a-select>
+            </form-item-validate>
+          </a-col>
 
-        <form-item-validate label="Admin" help="Used to log in to the back-end website">
-          <a-checkbox v-model="form.is_superuser" />
-        </form-item-validate>
+          <a-col :lg="12" :md="12" :sm="24">
+            <form-item-validate label="Role" vid="role_id">
+              <a-select v-model="form.groups_id" mode="multiple" disabled>
+                <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">{{
+                  index.name 
+                }}</a-select-option>
+              </a-select>
+            </form-item-validate>
+          </a-col>
 
-        <a-button type="primary" html-type="submit" @click="submit" :loading="updateing">
-          Submit
-        </a-button>
-      </form-validate>
-    </validation-observer>
-  </a-spin>
+          <a-col :lg="12" :md="12" :sm="24">
+            <form-item-validate label="Active" vid="is_active" help="Whether the account is available">
+              <a-checkbox v-model="form.is_active" disabled />
+            </form-item-validate>
+          </a-col>
+
+          <a-col :lg="12" :md="12" :sm="24">
+            <form-item-validate label="Staff" vid="is_staff" help="Used to log in to the back-end website">
+              <a-checkbox v-model="form.is_staff" disabled />
+            </form-item-validate>
+          </a-col>
+        </a-row>
+      </a-card>
+    </form-validate>
+  </page-header-wrapper>
 </template>
 
 <script>
@@ -80,6 +101,7 @@ export default {
       loading: false,
       updateing: false,
       form: {},
+      extra: {},
       fileList: []
     }
   },
@@ -94,10 +116,11 @@ export default {
   methods: {
     getUserData() {
       this.loading = true
-      getUser(this.$route.params.id)
+      getUser(this.$store.getters.user.info.id)
         .then(res => {
-          const { result } = res
-          this.form = result
+          const { data, extra } = res.result
+          this.form = Object.assign({}, data)
+          this.extra = Object.assign({}, extra)
           this.fileList = []
         })
         .finally(() => {

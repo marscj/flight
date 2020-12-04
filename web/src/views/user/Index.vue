@@ -19,19 +19,24 @@
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="First Name" vid="first_name">
-              <a-input v-model="form.first_name" />
+              <a-input v-model="form.first_name" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Last Name" vid="last_name">
-              <a-input v-model="form.last_name" />
+              <a-input v-model="form.last_name" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Department" vid="department_id">
-              <a-select v-model="form.department_id" :allowClear="true" @change="onDepartmentChange">
+              <a-select
+                v-model="form.department_id"
+                :allowClear="true"
+                @change="onDepartmentChange"
+                :disabled="!$auth('change_user')"
+              >
                 <a-select-option v-for="index in extra.department" :key="index.id" :value="index.id">{{
                   index.name
                 }}</a-select-option>
@@ -41,7 +46,13 @@
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Role" vid="role_id">
-              <a-select v-model="form.groups_id" :allowClear="true" @change="onRoleChange" mode="multiple">
+              <a-select
+                v-model="form.groups_id"
+                :allowClear="true"
+                @change="onRoleChange"
+                mode="multiple"
+                :disabled="!$auth('change_user')"
+              >
                 <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">{{
                   index.name
                 }}</a-select-option>
@@ -51,13 +62,13 @@
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Active" vid="is_active" help="Whether the account is available">
-              <a-checkbox v-model="form.is_active" />
+              <a-checkbox v-model="form.is_active" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Staff" vid="is_staff" help="Used to log in to the back-end website">
-              <a-checkbox v-model="form.is_staff" />
+              <a-checkbox v-model="form.is_staff" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
         </a-row>
@@ -67,61 +78,61 @@
         <a-row class="form-row" :gutter="16">
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Type" vid="possport_type">
-              <a-input v-model="form.possport_type" :maxLength="4" />
+              <a-input v-model="form.possport_type" :maxLength="4" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Code" vid="passport_code">
-              <a-input v-model="form.passport_code" />
+              <a-input v-model="form.passport_code" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="No." vid="passport_no">
-              <a-input v-model="form.passport_no" />
+              <a-input v-model="form.passport_no" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Sex" vid="passport_sex">
-              <a-input v-model="form.passport_sex" />
+              <a-input v-model="form.passport_sex" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Nationality" vid="passport_nationality">
-              <a-input v-model="form.passport_nationality" />
+              <a-input v-model="form.passport_nationality" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Date of birth" vid="passport_date_birth">
-              <a-date-picker v-model="form.passport_date_birth" class="w-full" />
+              <a-date-picker v-model="form.passport_date_birth" class="w-full" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Date of issue" vid="passport_date_issue">
-              <a-date-picker v-model="form.passport_date_issue" class="w-full" />
+              <a-date-picker v-model="form.passport_date_issue" class="w-full" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Date of expiry" vid="passport_date_expiry">
-              <a-date-picker v-model="form.passport_date_expiry" class="w-full" />
+              <a-date-picker v-model="form.passport_date_expiry" class="w-full" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Place of birth" vid="passport_place_birth">
-              <a-input v-model="form.passport_place_birth" />
+              <a-input v-model="form.passport_place_birth" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="6" :md="12" :sm="24">
             <form-item-validate label="Issuing authority" vid="passport_issuing_authority">
-              <a-input v-model="form.passport_issuing_authority" />
+              <a-input v-model="form.passport_issuing_authority" :disabled="!$auth('change_user')" />
             </form-item-validate>
           </a-col>
         </a-row>
