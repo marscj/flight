@@ -7,7 +7,13 @@
         </form-item-validate>
       </a-card>
 
-      <a-card class="card" title="Permissions" :bordered="false" style="width:auto; overflow:auto;">
+      <a-card
+        v-if="post_type == 'edit'"
+        class="card"
+        title="Permissions"
+        :bordered="false"
+        style="width:auto; overflow:auto;"
+      >
         <a-spin :spinning="updateing">
           <table cellpadding="10" bordercolor="gray" bgcolor="white" border="1" width="auto">
             <tbody v-for="(permission, index) in permissionData" :key="index" class="whitespace-no-wrap bg-gray-100">
@@ -53,13 +59,18 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import { getRole, updateRole, deleteRole } from '@/api/role'
+import { getRole, updateRole, createRole, deleteRole } from '@/api/role'
 import moment from 'moment'
 import _ from 'lodash'
 
 export default {
   components: { FormValidate, FormItemValidate },
-
+  props: {
+    post_type: {
+      type: String,
+      default: 'edit'
+    }
+  },
   data() {
     return {
       loading: false,
@@ -111,20 +122,37 @@ export default {
     submit() {
       this.updateing = true
       var form = Object.assign({}, this.form, {})
-      updateRole(this.$route.params.id, form)
-        .then(res => {
-          const { data, extra } = res.result
 
-          this.extra = extra
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$refs.observer.checkError(error)
-          }
-        })
-        .finally(() => {
-          this.updateing = false
-        })
+      if (this.post_type == 'edit') {
+        updateRole(this.$route.params.id, form)
+          .then(res => {
+            const { data, extra } = res.result
+
+            this.extra = extra
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.checkError(error)
+            }
+          })
+          .finally(() => {
+            this.updateing = false
+          })
+      } else if (this.post_type == 'add') {
+        createRole(this.form)
+          .then(res => {
+            this.modal = false
+            this.$router.push({
+              name: 'RoleDetail',
+              params: { id: res.result.id }
+            })
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error)
+            }
+          })
+      }
     },
     updatePermission(permission) {
       this.updateing = true

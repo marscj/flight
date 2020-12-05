@@ -1,8 +1,5 @@
 <template>
   <page-header-wrapper>
-    <template slot="extra">
-      <a-button v-action:add_user type="primary" icon="plus" @click="openModal">Add</a-button>
-    </template>
     <a-card>
       <div class="table-page-search-wrapper">
         <form-validate layout="inline" :form="queryParam">
@@ -105,7 +102,7 @@
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getUsers, createUser } from '@/api/user'
+import { getUsers } from '@/api/user'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -196,24 +193,6 @@ export default {
           return res.result
         })
       }
-    }
-  },
-  methods: {
-    openModal() {
-      this.modal = true
-      this.form = {}
-    },
-    submit() {
-      createUser(this.form)
-        .then(res => {
-          this.modal = false
-          this.$refs.table.refresh()
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error)
-          }
-        })
     }
   }
 }
