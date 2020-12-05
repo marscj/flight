@@ -5,9 +5,10 @@ export const API = {
   Login: '/auth/login/',
   Logout: '/auth/logout/',
   Register: '/auth/register',
+  ChangePassword: '/auth/password/change/',
   UserInfo: '/auth/info/',
   User: '/users/',
-  ResetPassword: '/users/${pk}/set_password',
+  ResetPassword: pk => `/users/${pk}/reset_password/`,
   Role: '/roles/',
   Department: '/departments/',
   Booking: '/bookings/'

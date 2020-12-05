@@ -46,7 +46,7 @@ class UserView(viewset.ExtraModelViewSet, RegisterView):
             'department': serializers.DepartmentSerializer(models.Department.objects.all(), many=True, context={'request': request}).data
         }
 
-    @action(detail=True, methods=['put'], permission_classes=[IsAuthenticated, permissions.ResetPasswordPermission])
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated, permissions.ResetPasswordPermission])
     def reset_password(self, request, pk=None):
         user = self.get_object()
         serializer = serializers.PasswordSerializer(data=request.data)

@@ -1,15 +1,19 @@
 <template>
-  <a-modal v-model="visible" title="Rest Password" @ok="submit" :confirmLoading="loading">
+  <a-modal v-model="visible" title="Change Password" @ok="submit" :confirmLoading="loading">
     <form-validate ref="password">
-      <form-item-validate label="New Password" vid="password">
-        <a-input-password v-model="form.password" placeholder="Password"> </a-input-password>
+      <form-item-validate label="New Password" vid="new_password1">
+        <a-input-password v-model="form.new_password1" html-type="submit"> </a-input-password>
+      </form-item-validate>
+
+      <form-item-validate label="Repeat Password" vid="new_password2">
+        <a-input-password v-model="form.new_password2" html-type="submit"> </a-input-password>
       </form-item-validate>
     </form-validate>
   </a-modal>
 </template>
 
 <script>
-import { resetPassword } from '@/api/user'
+import { changePassword } from '@/api/user'
 import { FormValidate, FormItemValidate } from '@/components'
 export default {
   components: { FormValidate, FormItemValidate },
@@ -23,7 +27,7 @@ export default {
   methods: {
     submit() {
       this.loading = true
-      resetPassword(this.$route.params.id, this.form)
+      changePassword(this.form)
         .then(res => {
           this.setVisible(false)
         })

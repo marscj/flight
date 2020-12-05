@@ -89,12 +89,8 @@ class PasswordSerializer(serializers.Serializer):
     def validate(self, data):
         password = data.get('password', None)
         
-        errors = dict() 
         if password:
-            try:
-                validators.validate_password(password=password)
-            except exceptions.ValidationError as e:
-                raise serializers.ValidationError(list(e.messages))
+            validators.validate_password(password=password)
         
         return super().validate(data)
 
