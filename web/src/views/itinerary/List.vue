@@ -22,9 +22,9 @@
         </template>
       </template>
     </s-table>
-    <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember"
+    <!-- <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember"
       >Add Itinerary</a-button
-    >
+    > -->
   </div>
 </template>
 

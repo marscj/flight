@@ -37,14 +37,14 @@
       </a-card>
     </page-header-wrapper>
 
-    <a-row>
+    <a-row v-if="post_type == 'edit'">
       <a-col :span="12">
         <a-popconfirm
           title="Are you sure cancel?"
           @confirm="onDelete"
           okText="Yes"
           cancelText="No"
-          v-if="$auth('delete_booking') && edit"
+          v-if="$auth('delete_booking')"
         >
           <a-button href="javascript:;" type="danger">Delete</a-button>
         </a-popconfirm>
@@ -61,7 +61,10 @@
         >
           Submit
         </a-button>
-
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="24" class="text-right">
         <a-button
           v-if="post_type == 'add'"
           v-action:add_booking
@@ -102,6 +105,10 @@ export default {
         }
 
         if (this.post_type == 'edit' && this.$auth('change_booking')) {
+          return false
+        }
+
+        if (this.post_type == 'history') {
           return false
         }
 
