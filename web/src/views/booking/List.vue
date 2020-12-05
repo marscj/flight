@@ -1,18 +1,5 @@
 <template>
   <page-header-wrapper>
-    <template slot="extra">
-      <a-button
-        v-action:add_booking
-        type="primary"
-        icon="plus"
-        @click="
-          () => {
-            $router.push({ name: 'AddBooking' })
-          }
-        "
-        >Add</a-button
-      >
-    </template>
     <a-card>
       <s-table
         ref="table"

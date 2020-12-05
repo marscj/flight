@@ -149,6 +149,10 @@ export default {
           this.history_length = history.length
           this.history_index = history.length - 1
 
+          if (this.post_type == 'edit') {
+            this.form = Object.assign({}, data)
+          }
+
           if (this.post_type == 'history') {
             this.form = Object.assign({}, this.historyData[this.history_index])
           }
@@ -179,7 +183,7 @@ export default {
       } else if (this.post_type == 'add') {
         createBooking(form)
           .then(res => {
-            this.$router.push({
+            this.$router.replace({
               name: 'BookingDetail',
               params: { id: res.result.id }
             })
