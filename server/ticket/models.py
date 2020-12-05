@@ -11,8 +11,6 @@ from user.models import User
 class Booking(models.Model):
     title = models.CharField(blank=True, null=True, max_length=64)
     remark = models.CharField(blank=True, null=True, max_length=1024)
-    create_at = models.DateTimeField(auto_now_add=True)
-    change_at = models.DateTimeField(auto_now=True)
 
     author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -33,8 +31,6 @@ class Itinerary(models.Model):
     hotel = models.CharField(blank=True, null=True, max_length=256)
     is_lock = models.BooleanField(default=False)
     remark = models.CharField(blank=True, null=True, max_length=256)
-    create_at = models.DateTimeField(auto_now_add=True)
-    change_at = models.DateTimeField(auto_now=True)
 
     user = models.ForeignKey(User, related_name='itinerary_user', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='itinerary_author', on_delete=models.SET_NULL, blank=True, null=True)
@@ -62,8 +58,6 @@ class Ticket(models.Model):
     is_cancel = models.BooleanField(default=False)
     is_booking = models.BooleanField(default=False)
     is_ticketing = models.BooleanField(default=False)
-    create_at = models.DateTimeField(auto_now_add=True)
-    change_at = models.DateTimeField(auto_now=True)
 
     itinerary = models.ForeignKey(Itinerary, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
@@ -75,7 +69,6 @@ class Ticket(models.Model):
 
 class Comment(models.Model):
     comment = models.CharField(blank=True, null=True, max_length=256)
-    create_at = models.DateTimeField(auto_now_add=True)
 
     itinerary = models.ForeignKey(Itinerary, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
@@ -90,9 +83,6 @@ class UpLoad(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-
-    create_at = models.DateTimeField(auto_now_add=True)
-    change_at = models.DateTimeField(auto_now=True)
 
     author = models.ForeignKey(User, related_name='uploads', on_delete=models.SET_NULL, blank=True, null=True)
 
