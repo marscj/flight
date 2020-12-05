@@ -32,7 +32,7 @@
         </form-item-validate>
       </a-card>
 
-      <a-card class="card" title="Itineraries" :bordered="false">
+      <a-card v-if="post_type == 'edit'" class="card" title="Itineraries" :bordered="false">
         <itinerary-list> </itinerary-list>
       </a-card>
     </page-header-wrapper>

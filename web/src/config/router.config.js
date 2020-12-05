@@ -55,7 +55,6 @@ export const asyncRouterMap = [
           {
             path: '/booking/add',
             name: 'AddBooking',
-            hidden: true,
             component: () => import('@/views/booking/Add'),
             meta: { title: 'Add Booking', permission: ['add_booking'] }
           },
@@ -154,7 +153,7 @@ export const asyncRouterMap = [
             path: '/users/:id/detail',
             name: 'UserDetail',
             hidden: true,
-            component: () => import('@/views/user/Index'),
+            component: () => import('@/views/user/Edit'),
             meta: {
               title: 'User Detail',
               permission: ['view_user']
@@ -185,11 +184,11 @@ export const asyncRouterMap = [
             meta: { title: 'Add Department', permission: ['add_department'] }
           },
           {
-            path: '/departments/:id',
+            path: '/departments/:id/detail',
             name: 'DepartmentDetail',
             hidden: true,
             hideChildrenInMenu: true,
-            component: () => import('@/views/department/Index'),
+            component: () => import('@/views/department/Edit'),
             meta: {
               title: 'Department Detail',
               permission: ['view_department']
@@ -216,11 +215,11 @@ export const asyncRouterMap = [
             meta: { title: 'Add Role', permission: ['add_group'] }
           },
           {
-            path: '/roles/:id',
+            path: '/roles/:id/detail',
             name: 'RoleDetail',
             hidden: true,
             hideChildrenInMenu: true,
-            component: () => import('@/views/role/Index'),
+            component: () => import('@/views/role/Edit'),
             meta: {
               title: 'Role Detail',
               permission: ['view_group']
