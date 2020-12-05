@@ -211,7 +211,7 @@ export default {
         })
         .catch(error => {
           if (error.response) {
-            this.$refs.observer.checkError(error)
+            this.$refs.observer.setErrors(error)
           }
         })
     }

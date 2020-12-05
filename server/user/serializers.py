@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group, Permission
+import django.contrib.auth.password_validation as validators
+from django.core import exceptions
 
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
@@ -83,6 +85,18 @@ class LoginSerializer(AuthLoginSerializer):
 
 class PasswordSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=128)
+
+    def validate(self, data):
+        password = data.get('password', None)
+        
+        errors = dict() 
+        if password:
+            try:
+                validators.validate_password(password=password)
+            except exceptions.ValidationError as e:
+                raise serializers.ValidationError(list(e.messages))
+        
+        return super().validate(data)
 
 class UserDetailsSerializer(serializers.ModelSerializer):
 

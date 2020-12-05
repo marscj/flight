@@ -28,7 +28,7 @@ export default {
   name: 'FormValidate',
   props: Object.assign({}, F.props, {}),
   methods: {
-    checkError(error) {
+    setErrors(error) {
       // setTimeout(() => {
       //   this.$notification.success({
       //     message: 'Error: ' + error.response.status,
@@ -46,6 +46,9 @@ export default {
       } else {
         // this.$refs.observer.setErrors({ non_field_errors: error.response.data })
       }
+    },
+    reset() {
+      this.$refs.observer.reset
     }
   }
 }

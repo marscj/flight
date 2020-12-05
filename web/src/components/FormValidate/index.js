@@ -17,7 +17,7 @@ export default FormValidate
 //   }),
 
 //   methods: {
-//     checkError(error) {
+//     setErrors(error) {
 //       if (
 //         error != null &&
 //         error.response != null &&

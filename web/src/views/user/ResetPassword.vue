@@ -1,25 +1,24 @@
 <template>
-  <a-modal :visible="visible" title="Rest Password" @ok="submit" :confirmLoading="loading">
-    <form-item-validate label="New Password" vid="password">
-      <a-input-password v-model="form.password" placeholder="Password"> </a-input-password>
-    </form-item-validate>
+  <a-modal v-model="visible" title="Rest Password" @ok="submit" :confirmLoading="loading">
+    <form-validate ref="password">
+      <form-item-validate label="New Password" vid="password">
+        <a-input-password v-model="form.password" placeholder="Password"> </a-input-password>
+      </form-item-validate>
+    </form-validate>
   </a-modal>
 </template>
 
 <script>
 import { resetPassword } from '@/api/user'
-import { FormItemValidate } from '@/components'
+import { FormValidate, FormItemValidate } from '@/components'
 export default {
-  components: { FormItemValidate },
+  components: { FormValidate, FormItemValidate },
   data() {
     return {
       form: {},
       loading: false,
       visible: false
     }
-  },
-  mounted() {
-    this.$nextTick(() => {})
   },
   methods: {
     submit() {
@@ -29,7 +28,10 @@ export default {
           this.setVisible(false)
         })
         .catch(error => {
-          this.$emit('checkError', error)
+          if (error.response) {
+            console.log(error.response)
+            this.$refs.password.setErrors(error)
+          }
         })
         .finally(() => {
           this.loading = false
@@ -37,6 +39,13 @@ export default {
     },
     setVisible(b) {
       this.visible = b
+      if (this.visible) {
+        this.form = {}
+
+        this.$nextTick(() => {
+          this.$refs.password.reset()
+        })
+      }
     }
   }
 }

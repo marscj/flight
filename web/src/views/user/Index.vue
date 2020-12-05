@@ -1,6 +1,6 @@
 <template>
-  <form-validate ref="observer">
-    <page-header-wrapper>
+  <page-header-wrapper>
+    <form-validate ref="observer">
       <template v-if="post_type == 'edit'">
         <a-card class="card" title="Base Information" :bordered="false">
           <a-row class="form-row" :gutter="16">
@@ -188,9 +188,9 @@
           </a-col>
         </a-row>
       </template>
-      <reset-password v-on:checkError="checkError" ref="modal" title="Rest Password" />
-    </page-header-wrapper>
-  </form-validate>
+    </form-validate>
+    <reset-password ref="modal" title="Rest Password" />
+  </page-header-wrapper>
 </template>
 
 <script>
@@ -285,7 +285,7 @@ export default {
           })
           .catch(error => {
             if (error.response) {
-              this.$refs.observer.checkError(error)
+              this.$refs.observer.setErrors(error)
             }
           })
           .finally(() => {
@@ -305,7 +305,7 @@ export default {
           })
           .catch(error => {
             if (error.response) {
-              this.$refs.observer.checkError(error)
+              this.$refs.observer.setErrors(error)
             }
           })
           .finally(() => {
@@ -322,11 +322,6 @@ export default {
         .finally(() => {
           this.updateing = false
         })
-    },
-    checkError(error) {
-      if (error.response) {
-        this.$refs.observer.checkError(error)
-      }
     }
   }
 }
