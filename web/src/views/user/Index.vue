@@ -61,7 +61,7 @@
                   :allowClear="true"
                   @change="onRoleChange"
                   mode="multiple"
-                  :disabled="!$auth('assign_role')"
+                  :disabled="!($auth('assign_role') && $auth('change_user'))"
                 >
                   <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">{{
                     index.name
@@ -174,11 +174,11 @@
           </form-item-validate>
 
           <form-item-validate label="Password" vid="password1">
-            <a-input-password v-model="form.password1" placeholder="Password"> </a-input-password>
+            <a-input-password v-model="form.password1"> </a-input-password>
           </form-item-validate>
 
-          <form-item-validate label="Password" vid="password2">
-            <a-input-password v-model="form.password2" placeholder="Repeat password"> </a-input-password>
+          <form-item-validate label="Repeat Password" vid="password2">
+            <a-input-password v-model="form.password2"> </a-input-password>
           </form-item-validate>
         </a-card>
         <a-row>
