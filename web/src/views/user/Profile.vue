@@ -63,7 +63,7 @@
             <form-item-validate label="Role" vid="role_id">
               <a-select v-model="form.groups_id" mode="multiple" disabled>
                 <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">{{
-                  index.name 
+                  index.name
                 }}</a-select-option>
               </a-select>
             </form-item-validate>

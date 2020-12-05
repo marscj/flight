@@ -30,6 +30,10 @@
         <form-item-validate label="Remark" vid="remark">
           <a-textarea v-model="form.remark" :maxLength="1024" :rows="5" :disabled="disabled()" />
         </form-item-validate>
+      </a-card>  
+
+      <a-card class="card" title="Itineraries" :bordered="false">
+        <itinerary-list> </itinerary-list>
       </a-card>
     </page-header-wrapper>
 
@@ -75,11 +79,12 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
+import ItineraryList from '@/views/itinerary/List'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
 import moment from 'moment'
 
 export default {
-  components: { FormValidate, FormItemValidate, History },
+  components: { FormValidate, FormItemValidate, ItineraryList },
 
   props: {
     post_type: {
