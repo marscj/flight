@@ -17,7 +17,7 @@
           <a-button
             size="large"
             type="primary"
-            htmlType="submit"
+            html-type="submit"
             class="login-button"
             @click="handleSubmit"
             :loading="loginBtn.loading"

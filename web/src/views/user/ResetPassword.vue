@@ -2,7 +2,7 @@
   <a-modal v-model="visible" title="Rest Password" @ok="submit" :confirmLoading="loading">
     <form-validate ref="password">
       <form-item-validate label="New Password" vid="password">
-        <a-input-password v-model="form.password" placeholder="Password" html-type="submit"> </a-input-password>
+        <a-input-password v-model="form.password" placeholder="Password"> </a-input-password>
       </form-item-validate>
     </form-validate>
   </a-modal>

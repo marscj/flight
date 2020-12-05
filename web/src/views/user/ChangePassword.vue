@@ -2,11 +2,11 @@
   <a-modal v-model="visible" title="Change Password" @ok="submit" :confirmLoading="loading">
     <form-validate ref="password">
       <form-item-validate label="New Password" vid="new_password1">
-        <a-input-password v-model="form.new_password1" html-type="submit"> </a-input-password>
+        <a-input-password v-model="form.new_password1"> </a-input-password>
       </form-item-validate>
 
       <form-item-validate label="Repeat Password" vid="new_password2">
-        <a-input-password v-model="form.new_password2" html-type="submit"> </a-input-password>
+        <a-input-password v-model="form.new_password2"> </a-input-password>
       </form-item-validate>
     </form-validate>
   </a-modal>
