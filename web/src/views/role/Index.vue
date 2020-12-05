@@ -33,27 +33,33 @@
           </table>
         </a-spin>
       </a-card>
+      <a-row v-if="post_type == 'edit'">
+        <a-col :span="12">
+          <a-popconfirm
+            title="Are you sure cancel?"
+            @confirm="onDelete"
+            okText="Yes"
+            cancelText="No"
+            v-if="$auth('delete_group')"
+          >
+            <a-button href="javascript:;" type="danger">Delete</a-button>
+          </a-popconfirm>
+        </a-col>
+
+        <a-col :span="12" class="text-right">
+          <a-button v-action:change_group type="primary" @click="submit" :loading="updateing" html-type="submit">
+            Submit
+          </a-button>
+        </a-col>
+      </a-row>
+      <a-row v-if="post_type == 'add'">
+        <a-col :span="24" class="text-right">
+          <a-button v-action:add_group type="primary" @click="submit" :loading="updateing" html-type="submit">
+            Submit
+          </a-button>
+        </a-col>
+      </a-row>
     </page-header-wrapper>
-
-    <a-row>
-      <a-col :span="12">
-        <a-popconfirm
-          title="Are you sure cancel?"
-          @confirm="onDelete"
-          okText="Yes"
-          cancelText="No"
-          v-if="$auth('delete_group')"
-        >
-          <a-button href="javascript:;" type="danger">Delete</a-button>
-        </a-popconfirm>
-      </a-col>
-
-      <a-col :span="12" class="text-right">
-        <a-button v-action:change_group type="primary" @click="submit" :loading="updateing" html-type="submit">
-          Submit
-        </a-button>
-      </a-col>
-    </a-row>
   </form-validate>
 </template>
 
@@ -81,7 +87,7 @@ export default {
     }
   },
   mounted() {
-    this.getRoleData()
+    if (this.post_type == 'edit') this.getRoleData()
   },
   methods: {
     initRole(group, permission) {
@@ -142,7 +148,7 @@ export default {
         createRole(this.form)
           .then(res => {
             this.modal = false
-            this.$router.push({
+            this.$router.replace({
               name: 'RoleDetail',
               params: { id: res.result.id }
             })
@@ -151,6 +157,9 @@ export default {
             if (error.response) {
               this.$refs.observer.setErrors(error)
             }
+          })
+          .finally(() => {
+            this.updateing = false
           })
       }
     },

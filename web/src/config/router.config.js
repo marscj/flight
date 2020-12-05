@@ -193,14 +193,20 @@ export const asyncRouterMap = [
       {
         path: '/roles',
         component: RouteView,
-        meta: { title: 'Roles', icon: 'safety', permission: ['view_group'] },
+        meta: { title: 'Roles', icon: 'safety', permission: ['view_group', 'add_group'] },
         redirect: '/roles/list',
         children: [
           {
             path: '/roles/list',
             name: 'AllRoles',
             component: () => import('@/views/role/List'),
-            meta: { title: 'All Roles', keepAlive: true }
+            meta: { title: 'All Roles', keepAlive: true, permission: ['view_group'] }
+          },
+          {
+            path: '/roles/add',
+            name: 'AddRole',
+            component: () => import('@/views/role/Add'),
+            meta: { title: 'Add Role', permission: ['add_group'] }
           },
           {
             path: '/roles/:id',
@@ -209,7 +215,8 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true,
             component: () => import('@/views/role/Index'),
             meta: {
-              title: 'Role Detail'
+              title: 'Role Detail',
+              permission: ['view_group']
             }
           }
         ]

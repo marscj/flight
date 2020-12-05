@@ -169,7 +169,7 @@
       </template>
       <template v-if="post_type == 'add'">
         <a-card class="card" title="Authorization" :bordered="false">
-          <form-item-validate label="Email" vid="Email">
+          <form-item-validate label="Email" vid="email">
             <a-input v-model="form.email" />
           </form-item-validate>
 
@@ -299,7 +299,7 @@ export default {
           password2: this.form.password2
         })
           .then(res => {
-            this.$router.push({
+            this.$router.replace({
               name: 'UserDetail',
               params: { id: res.result.user.id }
             })
