@@ -271,6 +271,7 @@ export default {
           passport_date_expiry:
             this.form.passport_date_expiry != null ? moment(this.form.passport_date_expiry).format('YYYY-MM-DD') : null
         })
+
         updateUser(this.$route.params.id, form)
           .then(res => {
             const { data, extra } = res.result

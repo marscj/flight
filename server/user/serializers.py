@@ -118,16 +118,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         return obj.full_name
 
     def update(self, instance, validated_data):
-        print(instance.has_perm('user.assign_role'), validated_data, '-----')
-        # if instance.has_perm('user.assign_role'):
-        #     groups_id = validated_data.pop('groups_id', None)
-            
-        #     if groups_id is not None:
-        #         for group in list(instance.groups.all()):
-        #             instance.groups.remove(group)
-                        
-        #         for id in groups_id:
-        #             instance.groups.add(id)
+        if not instance.has_perm('user.assign_role'):
+            validated_data.pop('groups', None)
 
         return super().update(instance, validated_data)
 
