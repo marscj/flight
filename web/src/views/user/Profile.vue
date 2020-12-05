@@ -32,7 +32,15 @@
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Password" vid="password">
               <a-input v-model="form.password" disabled>
-                <a-icon slot="addonAfter" type="lock" />
+                <a-icon
+                  slot="addonAfter"
+                  type="lock"
+                  @click="
+                    () => {
+                      $refs.modal.setVisible(true)
+                    }
+                  "
+                />
               </a-input>
             </form-item-validate>
           </a-col>
@@ -83,6 +91,7 @@
         </a-row>
       </a-card>
     </form-validate>
+    <change-password ref="modal" title="Rest Password" />
   </page-header-wrapper>
 </template>
 
@@ -90,11 +99,13 @@
 import { getUser, updateUser } from '@/api/user'
 import FormValidate from '@/components/FormValidate'
 import FormItemValidate from '@/components/FormItemValidate'
+import ChangePassword from './ChangePassword'
 
 export default {
   components: {
     FormValidate,
-    FormItemValidate
+    FormItemValidate,
+    ChangePassword
   },
   data() {
     return {
