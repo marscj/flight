@@ -204,14 +204,9 @@ REST_AUTH_REGISTER_PERMISSION_CLASSES = [
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'image_size': [
         ('full_size', 'url'),
-        ('thumbnail', 'thumbnail__400x400'),
-        ('samll', 'crop__640x360'),
-        ('medium', 'crop__854x480'),
-        ('large', 'crop__1280x720'),
+        ('avatar', 'thumbnail__128x128'),
+        # ('samll', 'crop__640x360'),
+        # ('medium', 'crop__854x480'),
+        # ('large', 'crop__1280x720'),
     ],
-    'app_size': [
-        ('full', 'url'),
-        ('advertising', 'crop__1080x1920'),
-        ('banner', 'crop__854x480'),
-    ]
 }

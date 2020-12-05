@@ -1,14 +1,6 @@
 <template>
   <div>
-    <s-table
-      ref="table"
-      size="default"
-      :rowKey="record => record.id"
-      :columns="columns"
-      :data="loadData"
-      :showPagination="false"
-      bordered
-    >
+    <a-table ref="table" size="default" :rowKey="record => record.id" :columns="columns" :data="loadData()" bordered>
       <template slot="action" slot-scope="data">
         <template>
           <router-link v-action:view_booking :to="{ name: 'BookingHistory', params: { id: data.id } }">
@@ -20,7 +12,7 @@
           </router-link>
         </template>
       </template>
-    </s-table>
+    </a-table>
     <!-- <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember"
       >Add Itinerary</a-button
     > -->
