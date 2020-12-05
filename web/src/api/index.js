@@ -7,6 +7,7 @@ export const API = {
   Register: '/auth/register',
   UserInfo: '/auth/info/',
   User: '/users/',
+  ResetPassword: '/users/${pk}/set_password',
   Role: '/roles/',
   Department: '/departments/',
   Booking: '/bookings/'

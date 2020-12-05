@@ -26,6 +26,14 @@ export function getUser(pk) {
   })
 }
 
+export function resetPassword(pk, data) {
+  return axios({
+    url: API.User + `${pk}/` + 'reset_password/',
+    method: 'post',
+    data: data
+  })
+}
+
 export function createUser(data) {
   return axios({
     url: API.User,

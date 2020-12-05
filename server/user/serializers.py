@@ -81,6 +81,9 @@ class LoginSerializer(AuthLoginSerializer):
 
         return attrs
 
+class PasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(max_length=128)
+
 class UserDetailsSerializer(serializers.ModelSerializer):
 
     name = serializers.SerializerMethodField()

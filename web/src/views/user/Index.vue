@@ -13,7 +13,15 @@
             <a-col :lg="12" :md="12" :sm="24">
               <form-item-validate label="Password" vid="password">
                 <a-input v-model="form.password" disabled>
-                  <a-icon slot="addonAfter" type="lock" />
+                  <a-icon
+                    slot="addonAfter"
+                    type="lock"
+                    @click="
+                      () => {
+                        $refs.modal.setVisible(true)
+                      }
+                    "
+                  />
                 </a-input>
               </form-item-validate>
             </a-col>
@@ -180,6 +188,7 @@
           </a-col>
         </a-row>
       </template>
+      <reset-password v-on:checkError="checkError" ref="modal" title="Rest Password" />
     </page-header-wrapper>
   </form-validate>
 </template>
@@ -187,10 +196,11 @@
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getUser, updateUser, deleteUser, createUser } from '@/api/user'
+import ResetPassword from './ResetPassword'
 import moment from 'moment'
 
 export default {
-  components: { FormValidate, FormItemValidate },
+  components: { FormValidate, FormItemValidate, ResetPassword },
   props: {
     post_type: {
       type: String,
@@ -243,7 +253,6 @@ export default {
             passport_date_expiry:
               data.passport_date_expiry != null ? moment(data.passport_date_expiry, 'YYYY-MM-DD') : null
           })
-
           this.extra = Object.assign({}, extra)
         })
         .finally(() => {
@@ -313,6 +322,11 @@ export default {
         .finally(() => {
           this.updateing = false
         })
+    },
+    checkError(error) {
+      if (error.response) {
+        this.$refs.observer.checkError(error)
+      }
     }
   }
 }
@@ -321,45 +335,5 @@ export default {
 <style lang="less" scoped>
 .card {
   margin-bottom: 24px;
-}
-.popover-wrapper {
-  /deep/ .antd-pro-pages-forms-style-errorPopover .ant-popover-inner-content {
-    min-width: 256px;
-    max-height: 290px;
-    padding: 0;
-    overflow: auto;
-  }
-}
-.antd-pro-pages-forms-style-errorIcon {
-  user-select: none;
-  margin-right: 24px;
-  color: #f5222d;
-  cursor: pointer;
-  i {
-    margin-right: 4px;
-  }
-}
-.antd-pro-pages-forms-style-errorListItem {
-  padding: 8px 16px;
-  list-style: none;
-  border-bottom: 1px solid #e8e8e8;
-  cursor: pointer;
-  transition: all 0.3s;
-
-  &:hover {
-    background: #e6f7ff;
-  }
-  .antd-pro-pages-forms-style-errorIcon {
-    float: left;
-    margin-top: 4px;
-    margin-right: 12px;
-    padding-bottom: 22px;
-    color: #f5222d;
-  }
-  .antd-pro-pages-forms-style-errorField {
-    margin-top: 2px;
-    color: rgba(0, 0, 0, 0.45);
-    font-size: 12px;
-  }
 }
 </style>

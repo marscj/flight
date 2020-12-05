@@ -5,6 +5,7 @@ from django.conf import settings
 
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 import django_filters 
@@ -33,7 +34,6 @@ class UserView(viewset.ExtraModelViewSet, RegisterView):
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
 
     def get_serializer_class(self):
-        
         if self.action == 'create':
             return RegisterSerializer
 
@@ -44,6 +44,18 @@ class UserView(viewset.ExtraModelViewSet, RegisterView):
             'role': serializers.ListGroupSerializer(Group.objects.all(), many=True, context={'request': request}).data,
             'department': serializers.DepartmentSerializer(models.Department.objects.all(), many=True, context={'request': request}).data
         }
+
+    @action(detail=True, methods=['post'])
+    def reset_password(self, request, pk=None):
+        user = self.get_object()
+        serializer = serializers.PasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.data['password'])
+            user.save()
+            return Response({'status': 'password set'})
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
  
 class GroupFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
