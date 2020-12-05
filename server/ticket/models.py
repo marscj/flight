@@ -27,7 +27,7 @@ class Itinerary(models.Model):
     email = models.CharField(blank=True, null=True, max_length=64)
     passport_no = models.CharField(blank=True, null=True, max_length=16)
     entry = models.CharField(blank=True, null=True, max_length=256)
-    aexit = models.CharField(blank=True, null=True, max_length=256)
+    exit = models.CharField(blank=True, null=True, max_length=256)
     ticket1 = models.CharField(blank=True, null=True, max_length=256)
     ticket2 = models.CharField(blank=True, null=True, max_length=256)
     hotel = models.CharField(blank=True, null=True, max_length=256)
@@ -36,8 +36,9 @@ class Itinerary(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     change_at = models.DateTimeField(auto_now=True)
 
-    user = models.ForeignKey(User, related_name='itinerarys', on_delete=models.SET_NULL, blank=True, null=True)
-    booking = models.ForeignKey(Booking, related_name='itinerarys', on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(User, related_name='itinerary_user', on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(User, related_name='itinerary_author', on_delete=models.SET_NULL, blank=True, null=True)
+    booking = models.ForeignKey(Booking, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
 
     history = HistoricalRecords(table_name='itinerary_history', custom_model_name='itinerary_history')
 

@@ -53,7 +53,8 @@ export default {
       this.loading = true
       getItineraries({ booking_id: this.bookingId })
         .then(res => {
-          return res.result
+          const { result } = res
+          this.data = Object.assign([], result)
         })
         .finally(() => {
           this.loading = false

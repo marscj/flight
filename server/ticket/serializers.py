@@ -2,11 +2,22 @@ from rest_framework import serializers
 
 from .models import *
 
+class CurrentUserDefault:
+    requires_context = True
+
+    def __call__(self, serializer_field):
+        return serializer_field.context['request'].user.id
+
+    def __repr__(self):
+        return '%s()' % self.__class__.__name__
+
 class BookingSerializer(serializers.ModelSerializer):
 
     title = serializers.CharField(max_length=64)
 
     remark = serializers.CharField(allow_blank=True, allow_null=True, max_length=1024)
+
+    author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     
     class Meta:
         model = Booking
@@ -21,6 +32,8 @@ class BookingHistorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ItinerarySerializer(serializers.ModelSerializer):
+
+    author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     class Meta:
         model = Itinerary
