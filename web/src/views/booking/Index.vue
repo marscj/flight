@@ -82,7 +82,7 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import ItineraryList from '@/views/itinerary/List'
+import ItineraryList from '@/views/itinerary/ActionList'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
 import moment from 'moment'
 
