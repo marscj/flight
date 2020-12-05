@@ -8,7 +8,7 @@
       </a-card>
     </page-header-wrapper>
 
-    <a-row>
+    <a-row v-if="post_type == 'edit'">
       <a-col :span="12">
         <a-popconfirm
           title="Are you sure cancel?"
@@ -27,6 +27,14 @@
         </a-button>
       </a-col>
     </a-row>
+
+    <a-row v-if="post_type == 'add'">
+      <a-col :span="12" class="text-right">
+        <a-button v-action:add_department type="primary" @click="submit" :loading="updateing" html-type="submit">
+          Submit
+        </a-button>
+      </a-col>
+    </a-row>
   </form-validate>
 </template>
 
@@ -36,7 +44,12 @@ import { getDepartment, updateDepartment, deleteDepartment } from '@/api/departm
 
 export default {
   components: { FormValidate, FormItemValidate },
-
+  props: {
+    post_type: {
+      type: String,
+      default: 'edit'
+    }
+  },
   data() {
     return {
       loading: false,

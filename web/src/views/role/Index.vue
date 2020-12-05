@@ -3,7 +3,7 @@
     <page-header-wrapper>
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Name" vid="name" required>
-          <a-input v-model="form.name" :disabled="!$auth('change_group')" />
+          <a-input v-model="form.name" :disabled="disabled()" />
         </form-item-validate>
       </a-card>
 
@@ -24,7 +24,7 @@
               </tr>
               <tr>
                 <td v-for="data in permission" :key="data.id" class="py-4 ">
-                  <a-checkbox v-model="data.check" :disabled="!$auth('change_group')" @change="onClick(data)"
+                  <a-checkbox v-model="data.check" :disabled="disabled()" @change="onClick(data)"
                     ><span class="">{{ data.name }}</span></a-checkbox
                   >
                 </td>
@@ -81,6 +81,17 @@ export default {
     return {
       loading: false,
       updateing: false,
+      disabled: () => {
+        if (this.post_type == 'add' && this.$auth('add_group')) {
+          return false
+        }
+
+        if (this.post_type == 'edit' && this.$auth('change_group')) {
+          return false
+        }
+
+        return true
+      },
       form: {},
       permission: [],
       permissionData: []

@@ -107,7 +107,6 @@ export default {
 
         return true
       },
-
       form: {},
       historyData: [],
       history_index: 0,
