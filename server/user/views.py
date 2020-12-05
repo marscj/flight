@@ -11,6 +11,7 @@ import django_filters
 
 from . import serializers, models
 from middleware import viewset, permissions
+from authorization.views import RegisterView
 
 UserModel = get_user_model()
 
@@ -21,7 +22,7 @@ class UserFilter(django_filters.FilterSet):
     is_staff = django_filters.BooleanFilter('is_staff')
     is_active = django_filters.BooleanFilter('is_active')
 
-class UserView(viewset.ExtraModelViewSet):
+class UserView(viewset.ExtraModelViewSet, RegisterView):
     serializer_class = serializers.UserDetailsSerializer
     list_serializer_class = serializers.UserSerializer
     permission_classes = [IsAuthenticated, permissions.ModelPermissions]
@@ -31,7 +32,6 @@ class UserView(viewset.ExtraModelViewSet):
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
 
     def get_extra_data(self, request):
-
         return {
             'role': serializers.ListGroupSerializer(Group.objects.all(), many=True, context={'request': request}).data,
             'department': serializers.DepartmentSerializer(models.Department.objects.all(), many=True, context={'request': request}).data

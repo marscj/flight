@@ -3,19 +3,41 @@
     <page-header-wrapper>
       <a-card class="card" title="Base Information" :bordered="false">
         <a-row class="form-row" :gutter="16">
-          <a-col :lg="12" :md="12" :sm="24">
-            <form-item-validate label="Email" vid="Email">
-              <a-input v-model="form.email" disabled />
-            </form-item-validate>
-          </a-col>
+          <template v-if="post_type == 'edit'">
+            <a-col :lg="12" :md="12" :sm="24">
+              <form-item-validate label="Email" vid="Email">
+                <a-input v-model="form.email" disabled />
+              </form-item-validate>
+            </a-col>
 
-          <a-col :lg="12" :md="12" :sm="24">
-            <form-item-validate label="Password" vid="password">
-              <a-input v-model="form.password" disabled>
-                <a-icon slot="addonAfter" type="lock" />
-              </a-input>
-            </form-item-validate>
-          </a-col>
+            <a-col :lg="12" :md="12" :sm="24">
+              <form-item-validate label="Password" vid="password">
+                <a-input v-model="form.password" disabled>
+                  <a-icon slot="addonAfter" type="lock" />
+                </a-input>
+              </form-item-validate>
+            </a-col>
+          </template>
+
+          <template v-if="post_type == 'add'">
+            <a-col :lg="8" :md="8" :sm="24">
+              <form-item-validate label="Email" vid="Email">
+                <a-input v-model="form.email" disabled />
+              </form-item-validate>
+            </a-col>
+
+            <a-col :lg="8" :md="8" :sm="24">
+              <form-item-validate label="Password" vid="password1">
+                <a-input v-model="form.password1"> </a-input>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :lg="8" :md="8" :sm="24">
+              <form-item-validate label="Password" vid="password2">
+                <a-input v-model="form.password2"> </a-input>
+              </form-item-validate>
+            </a-col>
+          </template>
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="First Name" vid="first_name">
@@ -163,12 +185,17 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import { getUser, updateUser, deleteUser } from '@/api/user'
+import { getUser, updateUser, deleteUser, createUser } from '@/api/user'
 import moment from 'moment'
 
 export default {
   components: { FormValidate, FormItemValidate },
-
+  props: {
+    post_type: {
+      type: String,
+      default: 'edit'
+    }
+  },
   data() {
     return {
       loading: false,

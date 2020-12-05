@@ -30,7 +30,7 @@
         <form-item-validate label="Remark" vid="remark">
           <a-textarea v-model="form.remark" :maxLength="1024" :rows="5" :disabled="disabled()" />
         </form-item-validate>
-      </a-card>  
+      </a-card>
 
       <a-card class="card" title="Itineraries" :bordered="false">
         <itinerary-list> </itinerary-list>
