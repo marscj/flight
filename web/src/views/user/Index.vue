@@ -283,7 +283,6 @@ export default {
             this.updateing = false
           })
       } else if (this.post_type == 'add') {
-        console.log(this.form)
         createUser({
           email: this.form.email,
           password1: this.form.password1,
