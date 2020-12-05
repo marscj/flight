@@ -158,7 +158,6 @@ export default {
       } else if (this.post_type == 'add') {
         createRole(this.form)
           .then(res => {
-            this.modal = false
             this.$router.replace({
               name: 'RoleDetail',
               params: { id: res.result.id }

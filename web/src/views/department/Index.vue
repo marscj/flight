@@ -3,7 +3,7 @@
     <page-header-wrapper>
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Name" vid="name" required>
-          <a-input v-model="form.name" :disabled="!$auth('change_department')" />
+          <a-input v-model="form.name" :disabled="disabled()" />
         </form-item-validate>
       </a-card>
     </page-header-wrapper>
@@ -29,7 +29,7 @@
     </a-row>
 
     <a-row v-if="post_type == 'add'">
-      <a-col :span="12" class="text-right">
+      <a-col :span="24" class="text-right">
         <a-button v-action:add_department type="primary" @click="submit" :loading="updateing" html-type="submit">
           Submit
         </a-button>
@@ -40,7 +40,7 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import { getDepartment, updateDepartment, deleteDepartment } from '@/api/department'
+import { getDepartment, updateDepartment, deleteDepartment, createDepartment } from '@/api/department'
 
 export default {
   components: { FormValidate, FormItemValidate },
@@ -54,11 +54,22 @@ export default {
     return {
       loading: false,
       updateing: false,
+      disabled: () => {
+        if (this.post_type == 'add' && this.$auth('add_department')) {
+          return false
+        }
+
+        if (this.post_type == 'edit' && this.$auth('change_department')) {
+          return false
+        }
+
+        return true
+      },
       form: {}
     }
   },
   mounted() {
-    this.getDepartmentData()
+    if (this.post_type == 'edit') this.getDepartmentData()
   },
   methods: {
     getDepartmentData() {
@@ -75,20 +86,39 @@ export default {
     submit() {
       this.updateing = true
       var form = Object.assign({}, this.form, {})
-      updateDepartment(this.$route.params.id, form)
-        .then(res => {
-          const { data, extra } = res.result
 
-          this.extra = extra
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error)
-          }
-        })
-        .finally(() => {
-          this.updateing = false
-        })
+      if (this.post_type == 'edit') {
+        updateDepartment(this.$route.params.id, form)
+          .then(res => {
+            const { data, extra } = res.result
+
+            this.extra = extra
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error)
+            }
+          })
+          .finally(() => {
+            this.updateing = false
+          })
+      } else if (this.post_type == 'add') {
+        createDepartment(form)
+          .then(res => {
+            this.$router.replace({
+              name: 'DepartmentDetail',
+              params: { id: res.result.id }
+            })
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error)
+            }
+          })
+          .finally(() => {
+            this.updateing = false
+          })
+      }
     },
     onDelete() {
       this.updateing = true

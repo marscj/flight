@@ -114,7 +114,6 @@ export default {
   data() {
     return {
       extra: {},
-      modal: false,
       form: {},
       queryParam: {
         role: 0,

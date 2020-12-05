@@ -168,7 +168,7 @@ export const asyncRouterMap = [
         meta: {
           title: 'Departments',
           icon: 'safety',
-          permission: ['view_department']
+          permission: ['view_department', 'add_department']
         },
         redirect: '/departments/list',
         children: [
@@ -176,7 +176,13 @@ export const asyncRouterMap = [
             path: '/departments/list',
             name: 'AllDepartments',
             component: () => import('@/views/department/List'),
-            meta: { title: 'All Departments', keepAlive: true }
+            meta: { title: 'All Departments', keepAlive: true, permission: ['view_department'] }
+          },
+          {
+            path: '/roles/add',
+            name: 'AddDepartment',
+            component: () => import('@/views/department/Add'),
+            meta: { title: 'Add Department', permission: ['add_department'] }
           },
           {
             path: '/departments/:id',
@@ -185,7 +191,8 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true,
             component: () => import('@/views/department/Index'),
             meta: {
-              title: 'Department Detail'
+              title: 'Department Detail',
+              permission: ['view_department']
             }
           }
         ]

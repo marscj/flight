@@ -26,13 +26,10 @@
 <script>
 import { STable, Ellipsis } from '@/components'
 import { getRoles } from '@/api/role'
-import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
   components: {
-    STable,
-    FormValidate,
-    FormItemValidate
+    STable
   },
   data() {
     return {
