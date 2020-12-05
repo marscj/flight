@@ -51,6 +51,10 @@ class User(AbstractUser):
 
     class Meta:
         db_table = 'user'
+        permissions = (
+            ('assign_role', 'Can assign role'),
+            ('reset_password', 'Can reset password'),
+        )
 
     def __str__(self):
         return self.email

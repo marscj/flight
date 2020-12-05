@@ -14,6 +14,7 @@
               <form-item-validate label="Password" vid="password">
                 <a-input v-model="form.password" disabled>
                   <a-icon
+                    v-action:reset_password
                     slot="addonAfter"
                     type="lock"
                     @click="
@@ -60,7 +61,7 @@
                   :allowClear="true"
                   @change="onRoleChange"
                   mode="multiple"
-                  :disabled="!$auth('change_user')"
+                  :disabled="!$auth('assign_role')"
                 >
                   <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">{{
                     index.name

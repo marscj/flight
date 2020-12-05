@@ -7,18 +7,20 @@
         </form-item-validate>
       </a-card>
 
-      <a-card class="card" title="Permissions" :bordered="false">
+      <a-card class="card" title="Permissions" :bordered="false" style="width:auto; overflow:auto;">
         <a-spin :spinning="updateing">
-          <table border="1" cellpadding="10" bordercolor="gray" bgcolor="white" width="100%">
+          <table cellpadding="10" bordercolor="gray" bgcolor="white" border="1" width="auto">
             <tbody v-for="(permission, index) in permissionData" :key="index" class="whitespace-no-wrap bg-gray-100">
               <tr>
-                <td rowspan="2" class="py-4 text-center">{{ index }}</td>
+                <td colspan="10" class="py-4 ">
+                  <span class="uppercase font-bold">{{ index }}</span>
+                </td>
               </tr>
               <tr>
-                <td v-for="data in permission" :key="data.id" class="py-4">
-                  <a-checkbox v-model="data.check" :disabled="!$auth('change_group')" @change="onClick(data)">{{
-                    data.name
-                  }}</a-checkbox>
+                <td v-for="data in permission" :key="data.id" class="py-4 ">
+                  <a-checkbox v-model="data.check" :disabled="!$auth('change_group')" @change="onClick(data)"
+                    ><span class="">{{ data.name }}</span></a-checkbox
+                  >
                 </td>
               </tr>
             </tbody>
@@ -117,7 +119,7 @@ export default {
         })
         .catch(error => {
           if (error.response) {
-            this.$refs.observer.setErrors(error)
+            this.$refs.observer.checkError(error)
           }
         })
         .finally(() => {

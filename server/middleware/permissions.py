@@ -1,5 +1,13 @@
 from rest_framework import permissions
 
+class ResetPasswordPermission(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.user and request.user.is_authenticated:
+            return request.user.has_perm('user.reset_password')
+        
+        return False
+
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.

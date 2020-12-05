@@ -22,7 +22,7 @@ const errorHandler = error => {
     if (error.response.status === 403) {
       notification.error({
         message: 'Forbidden',
-        description: data.message
+        description: data.result.detail || data.message
       })
     } else if (error.response.status === 401 && data.result) {
       notification.error({
