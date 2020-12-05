@@ -33,7 +33,7 @@
       </a-card>
 
       <a-card v-if="post_type == 'edit'" class="card" title="Itineraries" :bordered="false">
-        <itinerary-list> </itinerary-list>
+        <itinerary-list :bookingId="parseInt($route.params.id)"> </itinerary-list>
       </a-card>
     </page-header-wrapper>
 

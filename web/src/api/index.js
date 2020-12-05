@@ -11,7 +11,8 @@ export const API = {
   ResetPassword: pk => `/users/${pk}/reset_password/`,
   Role: '/roles/',
   Department: '/departments/',
-  Booking: '/bookings/'
+  Booking: '/bookings/',
+  Itinerary: '/itineraries/'
 }
 
 export function updateSuccess(res) {

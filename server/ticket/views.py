@@ -29,7 +29,7 @@ class BookingView(viewset.ExtraModelViewSet):
             return super().get_queryset().filter(itinerarys__user_id=self.request.user.id).distinct()
 
 class ItineraryFilter(django_filters.FilterSet):
-    pass
+    booking_id = django_filters.NumberFilter('booking_id')
 
 class ItineraryView(viewsets.ModelViewSet):
     serializer_class = serializers.ItinerarySerializer

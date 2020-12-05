@@ -1,6 +1,14 @@
 <template>
   <div>
-    <a-table ref="table" size="default" :rowKey="record => record.id" :columns="columns" :data="loadData()" bordered>
+    <a-table
+      ref="table"
+      size="default"
+      :rowKey="record => record.id"
+      :columns="columns"
+      :data-source="data"
+      :loading="loading"
+      bordered
+    >
       <template slot="action" slot-scope="data">
         <template>
           <router-link v-action:view_booking :to="{ name: 'BookingHistory', params: { id: data.id } }">
@@ -21,7 +29,7 @@
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getBookings, createBooking } from '@/api/booking'
+import { getItineraries, createBooking } from '@/api/itinerary'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -31,46 +39,51 @@ export default {
     FormValidate,
     FormItemValidate
   },
+  props: {
+    bookingId: {
+      type: Number,
+      default: undefined
+    }
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    loadData() {
+      this.loading = true
+      getItineraries({ booking_id: this.bookingId })
+        .then(res => {
+          return res.result
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    }
+  },
   data() {
     return {
-      queryParam: {
-        name: undefined
-      },
+      data: [],
+      loading: false,
       columns: [
         {
           title: 'ID',
           dataIndex: 'id',
           align: 'center',
-          width: '80px',
-          sorter: true
+          width: '80px'
         },
         {
-          title: 'Title',
-          dataIndex: 'title',
+          title: 'Name',
+          dataIndex: 'name',
           align: 'center'
         },
-        {
-          title: 'Remark',
-          dataIndex: 'remark',
-          align: 'center',
-          ellipsis: true
-        },
-
         {
           title: 'Action',
           width: '100px',
           scopedSlots: { customRender: 'action' },
           align: 'center'
         }
-      ],
-      loadData: parameter => {
-        return getBookings(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
-          return res.result
-        })
-      }
+      ]
     }
   }
 }
 </script>
-
-<style></style>
