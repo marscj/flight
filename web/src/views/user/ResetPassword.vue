@@ -29,7 +29,6 @@ export default {
         })
         .catch(error => {
           if (error.response) {
-            console.log(error.response)
             this.$refs.password.setErrors(error)
           }
         })
@@ -41,7 +40,6 @@ export default {
       this.visible = b
       if (this.visible) {
         this.form = {}
-
         this.$nextTick(() => {
           this.$refs.password.reset()
         })

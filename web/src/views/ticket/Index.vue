@@ -134,7 +134,6 @@ export default {
       getBooking(this.$route.params.id, { history: true })
         .then(res => {
           const { data, history } = res.result
-          console.log(res.result)
           this.historyData = Object.assign([], history)
           this.history_length = history.length
           this.history_index = history.length - 1
