@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 import django_filters 
+from rest_auth.registration.app_settings import RegisterSerializer
 
 from . import serializers, models
 from middleware import viewset, permissions
@@ -30,6 +31,13 @@ class UserView(viewset.ExtraModelViewSet, RegisterView):
 
     filter_class = UserFilter
     search_fields = ['email', 'first_name', 'last_name', 'passport_no']
+
+    def get_serializer_class(self):
+        
+        if self.action == 'create':
+            return RegisterSerializer
+
+        return super().get_serializer_class()
 
     def get_extra_data(self, request):
         return {

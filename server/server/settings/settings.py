@@ -192,9 +192,9 @@ REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'user.serializers.UserDetailsSerializer',
 }
 
-REST_AUTH_REGISTER_SERIALIZERS = {
-    'REST_AUTH_REGISTER_PERMISSION_CLASSES': 'rest_framework.permissions.DjangoModelPermissions'
-}
+# REST_AUTH_REGISTER_SERIALIZERS = {
+    
+# }
 
 REST_AUTH_REGISTER_PERMISSION_CLASSES = [
     'rest_framework.permissions.DjangoModelPermissions'
