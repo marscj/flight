@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <a-card class="card" title="Itineraries" :bordered="false" v-action:view_itinerary>
     <a-table
       ref="table"
       size="default"
@@ -7,84 +7,113 @@
       :columns="columns"
       :data-source="data"
       :loading="loading"
-      :scroll="{ x: 1380 }"
+      tableLayout="fixed"
       :pagination="false"
       bordered
     >
-      <template slot="serial_no" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="serial_no" slot-scope="text, record, index">
+        <a-input v-if="record.editable" v-model="data[index].serial_no" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="email" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="email" slot-scope="text, record, index">
+        <a-input v-if="record.editable" v-model="data[index].email" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="name" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="name" slot-scope="text, record, index">
+        <a-input v-if="record.editable" v-model="data[index].name" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="passport_no" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="passport_no" slot-scope="text, record, index">
+        <a-input v-if="record.editable" v-model="data[index].passport_no" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="entry" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="entry" slot-scope="text, record, index">
+        <a-input v-if="record.editable" v-model="data[index].entry" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="exit" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="exit" slot-scope="text, record, index">
+        <a-input v-if="record.editable" v-model="data[index].exit" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="ticket1" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="ticket1" slot-scope="text, record, index">
+        <a-input v-if="record.editable" v-model="data[index].ticket1" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="ticket2" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="ticket2" slot-scope="text, record, index">
+        <a-input v-if="record.editable" v-model="data[index].ticket2" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="hotel" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="hotel" slot-scope="text, record, index">
+        <a-textarea
+          v-if="record.editable"
+          v-model="data[index].hotel"
+          :rows="6"
+          :disabled="record.loading"
+        ></a-textarea>
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="remark" slot-scope="text, data">
-        <a-input v-if="data.editable" :value="text"></a-input>
+      <template slot="remark" slot-scope="text, record, index">
+        <a-textarea
+          v-if="record.editable"
+          v-model="data[index].remark"
+          :rows="6"
+          :disabled="record.loading"
+        ></a-textarea>
         <template v-else>{{ text }}</template>
       </template>
 
-      <template slot="is_lock" slot-scope="text, data">
-        <a-checkbox v-if="data.editable" :value="text"></a-checkbox>
+      <template slot="is_lock" slot-scope="text, record, index">
+        <a-checkbox v-if="record.editable" v-model="data[index].is_lock" :disabled="record.loading"></a-checkbox>
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="action" slot-scope="data">
-        <template v-if="data.editable">
-          <a @click="toggle(data.id)">Cancel</a>
-          <a-divider type="vertical" />
-          <a @click="toggle(data.id)">Save</a>
+        <template v-if="data.loading">
+          <a-spin :spinning="data.loading"></a-spin>
         </template>
         <template v-else>
-          <router-link v-action:view_booking :to="{ name: 'BookingHistory', params: { id: data.id } }">
-            <span>History</span>
-          </router-link>
+          <template v-if="data.editable">
+            <a @click="cancel(data)">Cancel</a>
+            <a-divider type="vertical" />
+            <a @click="save(data)">Save</a>
+          </template>
+          <template v-else>
+            <router-link v-action:view_booking :to="{ name: 'BookingHistory', params: { id: data.id } }">
+              <span>History</span>
+            </router-link>
 
-          <a-divider type="vertical" />
+            <a-divider type="vertical" v-action:delete_itinerary />
 
-          <a @click="toggle(data.id)">Edit</a>
+            <a-popconfirm
+              title="Are you sure cancel?"
+              @confirm="remove(data)"
+              okText="Yes"
+              cancelText="No"
+              v-action:delete_itinerary
+            >
+              <a>Delete</a>
+            </a-popconfirm>
+
+            <a-divider type="vertical" v-action:change_itinerary />
+
+            <a @click="toggle(data)" v-action:change_itinerary>Edit</a>
+          </template>
         </template>
       </template>
     </a-table>
-    <a-button class="w-full mt-4 mb-4 h-12" type="dashed" icon="plus" @click="newMember">Add Itinerary</a-button>
-  </div>
+    <a-button class="w-full mt-4 mb-4 h-12" type="dashed" icon="plus" @click="newMember" v-action:add_itinerary
+      >Add Itinerary</a-button
+    >
+  </a-card>
 </template>
 
 <script>
@@ -94,16 +123,9 @@ import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
   components: {
-    STable,
     Ellipsis,
     FormValidate,
     FormItemValidate
-  },
-  props: {
-    bookingId: {
-      type: Number,
-      default: undefined
-    }
   },
   mounted() {
     this.loadData()
@@ -111,13 +133,15 @@ export default {
   methods: {
     loadData() {
       this.loading = true
-      getItineraries({ booking_id: this.bookingId })
+      getItineraries({ booking_id: parseInt(this.$route.params.id) })
         .then(res => {
           const { result } = res
           this.data = Object.assign(
             [],
             result.map(f => {
+              f.isNew = false
               f.editable = false
+              f.loading = false
               return f
             })
           )
@@ -141,13 +165,164 @@ export default {
         hotel: '',
         remark: '',
         is_lock: false,
-        editable: true
+
+        editable: true,
+        isNew: true,
+        loading: false
       })
     },
-    toggle(id) {
-      const target = this.data.find(item => item.id === id)
+    toggle(data) {
+      const target = this.data.find(item => item.id === data.id)
       target._originalData = { ...target }
       target.editable = !target.editable
+    },
+    setData(id, data) {
+      let target = this.data.find(item => item.id === id)
+      Object.assign(target, data)
+    },
+    save(data) {
+      let target = this.data.find(item => item.id === data.id)
+
+      var form = Object.assign({
+        serial_no: data.serial_no,
+        email: data.email,
+        name: data.name,
+        passport_no: data.passport_no,
+        entry: data.entry,
+        exit: data.exit,
+        ticket1: data.ticket1,
+        ticket2: data.ticket2,
+        hotel: data.hotel,
+        remark: data.remark,
+        is_lock: data.is_lock,
+        booking_id: parseInt(this.$route.params.id)
+      })
+
+      if (data.isNew) {
+        this.setData(data.id, { loading: true })
+        createItinerary(form)
+          .then(res => {
+            this.setData(
+              data.id,
+              Object.assign(res.result, {
+                editable: false,
+                isNew: false,
+                loading: false
+              })
+            )
+          })
+          .catch(error => {
+            this.$notification.error({
+              message: this.getMessage(error),
+              description: this.getDescription(error)
+            })
+          })
+          .finally(() => {
+            this.setData(data.id, { loading: false })
+          })
+      } else {
+        this.setData(data.id, { loading: true })
+        updateItinerary(data.id, form)
+          .then(res => {
+            this.setData(
+              data.id,
+              Object.assign(res.result, {
+                editable: false,
+                isNew: false,
+                loading: false
+              })
+            )
+          })
+          .catch(error => {
+            this.$notification.error({
+              message: this.getMessage(error),
+              description: this.getDescription(error)
+            })
+          })
+          .finally(() => {
+            this.setData(data.id, { loading: false })
+          })
+      }
+    },
+    getMessage(error) {
+      if (
+        error != null &&
+        error.response != null &&
+        error.response.data != null &&
+        error.response.data.result != null
+      ) {
+        if (error.response.data.result['serial_no'] != null) return 'Serial No'
+        if (error.response.data.result['email'] != null) return 'Email'
+        if (error.response.data.result['name'] != null) return 'name'
+        if (error.response.data.result['passport_no'] != null) return 'Passport No'
+        if (error.response.data.result['entry'] != null) return 'Entry'
+        if (error.response.data.result['exit'] != null) return 'Eixt'
+        if (error.response.data.result['ticket1'] != null) return 'Ticket1'
+        if (error.response.data.result['ticket2'] != null) return 'Ticket2'
+        if (error.response.data.result['hotel'] != null) return 'Hotel'
+        if (error.response.data.result['remark'] != null) return 'Remark'
+        if (error.response.data.result['is_lock'] != null) return 'Lock'
+      }
+      return 'Error'
+    },
+    getDescription(error) {
+      console.log(error.response)
+      if (
+        error != null &&
+        error.response != null &&
+        error.response.data != null &&
+        error.response.data.result != null
+      ) {
+        return (
+          error.response.data.result['serial_no'] ||
+          error.response.data.result['email'] ||
+          error.response.data.result['name'] ||
+          error.response.data.result['passport_no'] ||
+          error.response.data.result['entry'] ||
+          error.response.data.result['exit'] ||
+          error.response.data.result['ticket1'] ||
+          error.response.data.result['ticket2'] ||
+          error.response.data.result['hotel'] ||
+          error.response.data.result['remark'] ||
+          error.response.data.result['is_lock'] ||
+          error.response.data.result['detail'] ||
+          error.response.data.result['non_field_errors']
+        )
+      }
+
+      return ''
+    },
+    remove(data) {
+      if (data.isNew) {
+        const newData = this.data.filter(item => item.id !== data.id)
+        this.data = newData
+      } else {
+        this.setData(data.id, { loading: true })
+        deleteItinerary(data.id)
+          .then(res => {
+            this.loadData()
+          })
+          .catch(error => {
+            this.$notification.error({
+              message: this.getMessage(error),
+              description: this.getDescription(error)
+            })
+          })
+          .finally(() => {
+            this.setData(data.id, { loading: false })
+          })
+      }
+    },
+    cancel(data) {
+      const target = this.data.find(item => item.id === data.id)
+      if (target.isNew) {
+        this.remove(data)
+      } else {
+        Object.keys(target).forEach(key => {
+          target[key] = target._originalData[key]
+        })
+        target._originalData = undefined
+      }
     }
   },
   data() {
@@ -160,28 +335,24 @@ export default {
           title: 'Serial No',
           dataIndex: 'serial_no',
           align: 'center',
-          width: '180px',
           scopedSlots: { customRender: 'serial_no' }
         },
         {
           title: 'Email',
           dataIndex: 'email',
           align: 'center',
-          width: '180px',
           scopedSlots: { customRender: 'email' }
         },
         {
           title: 'Name',
           dataIndex: 'name',
           align: 'center',
-          width: '140px',
           scopedSlots: { customRender: 'name' }
         },
         {
           title: 'Passport No',
           dataIndex: 'passport_no',
           align: 'center',
-          width: '140px',
           scopedSlots: { customRender: 'passport_no' }
         },
         {
@@ -192,14 +363,12 @@ export default {
               title: 'Entry',
               dataIndex: 'entry',
               align: 'center',
-              width: '180px',
               scopedSlots: { customRender: 'entry' }
             },
             {
               title: 'Exit',
               dataIndex: 'exit',
               align: 'center',
-              width: '180px',
               scopedSlots: { customRender: 'exit' }
             }
           ]
@@ -212,14 +381,12 @@ export default {
               title: 'Ticket1',
               dataIndex: 'ticket1',
               align: 'center',
-              width: '180px',
               scopedSlots: { customRender: 'ticket1' }
             },
             {
               title: 'Ticket2',
               dataIndex: 'ticket2',
               align: 'center',
-              width: '180px',
               scopedSlots: { customRender: 'ticket2' }
             }
           ]
@@ -228,21 +395,19 @@ export default {
           title: 'Hotel',
           dataIndex: 'hotel',
           align: 'center',
-          width: '180px',
           scopedSlots: { customRender: 'hotel' }
         },
         {
           title: 'Remark',
           dataIndex: 'remark',
           align: 'center',
-          width: '180px',
           scopedSlots: { customRender: 'remark' }
         },
         {
           title: 'Lock',
           dataIndex: 'is_lock',
           align: 'center',
-          width: '100px',
+          width: '80px',
           scopedSlots: { customRender: 'is_lock' }
         },
         {

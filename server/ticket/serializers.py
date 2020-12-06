@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from .models import *
 
@@ -32,14 +33,17 @@ class BookingHistorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ItinerarySerializer(serializers.ModelSerializer):
-
+    serial_no = serializers.CharField(max_length=32, validators=[UniqueValidator(queryset=Itinerary.objects.all())])
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+    booking_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Itinerary
         fields = '__all__'
 
 class TicketSerializer(serializers.ModelSerializer):
+
+    author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     class Meta:
         model = Ticket

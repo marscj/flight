@@ -32,9 +32,7 @@
         </form-item-validate>
       </a-card>
 
-      <a-card v-if="post_type == 'edit'" class="card" title="Itineraries" :bordered="false">
-        <itinerary-list :bookingId="parseInt($route.params.id)"> </itinerary-list>
-      </a-card>
+      <itinerary-list v-if="post_type == 'edit'" />
     </page-header-wrapper>
 
     <a-row v-if="post_type == 'edit'">

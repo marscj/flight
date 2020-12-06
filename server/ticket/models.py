@@ -29,7 +29,7 @@ class Itinerary(models.Model):
     ticket1 = models.CharField(blank=True, null=True, max_length=256)
     ticket2 = models.CharField(blank=True, null=True, max_length=256)
     hotel = models.CharField(blank=True, null=True, max_length=256)
-    is_lock = models.BooleanField(default=False)
+    is_lock = models.BooleanField(default=False, null=True)
     remark = models.CharField(blank=True, null=True, max_length=256)
 
     user = models.ForeignKey(User, related_name='itinerary_user', on_delete=models.SET_NULL, blank=True, null=True)
