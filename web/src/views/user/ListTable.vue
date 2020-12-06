@@ -88,7 +88,8 @@
       </template>
 
       <template slot="action" slot-scope="data">
-        <template>
+        <template v-if="modal"> <a @click="() => $emit('select', data)">Select</a> </template>
+        <template v-else>
           <router-link :to="{ name: 'UserDetail', params: { id: data.id } }">
             <span>Detail</span>
           </router-link>
@@ -108,6 +109,12 @@ export default {
     STable,
     FormValidate,
     FormItemValidate
+  },
+  props: {
+    modal: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

@@ -41,6 +41,12 @@ class ItinerarySerializer(serializers.ModelSerializer):
         model = Itinerary
         fields = '__all__'
 
+    def update(self, instance, validated_data):
+        if not instance.has_perm('itinerary.lock_itinerary'):
+            validated_data.pop('is_lock', None)
+
+        return super().update(instance, validated_data)
+
 class TicketSerializer(serializers.ModelSerializer):
 
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))

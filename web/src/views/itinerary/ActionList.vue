@@ -8,6 +8,7 @@
       :data-source="data"
       :loading="loading"
       :pagination="false"
+      :scroll="{ x: 1500 }"
       bordered
     >
       <template slot="serial_no" slot-scope="text, record, index">
@@ -16,46 +17,55 @@
       </template>
 
       <template slot="email" slot-scope="text, record, index">
-        <a-input v-if="record.editable" v-model="data[index].email" :disabled="record.loading" />
+        <a-input
+          allowClear
+          v-if="record.editable"
+          v-model="data[index].email"
+          :disabled="record.loading"
+          @click="openModal(data[index])"
+        />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="name" slot-scope="text, record, index">
         <a-input
+          allowClear
           v-if="record.editable"
           v-model="data[index].name"
           :disabled="record.loading"
-          @click="
-            () => {
-              modal = true
-            }
-          "
+          @click="openModal(data[index])"
         />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="passport_no" slot-scope="text, record, index">
-        <a-input v-if="record.editable" v-model="data[index].passport_no" :disabled="record.loading" />
+        <a-input
+          allowClear
+          v-if="record.editable"
+          v-model="data[index].passport_no"
+          :disabled="record.loading"
+          @click="openModal(data[index])"
+        />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="entry" slot-scope="text, record, index">
-        <a-input v-if="record.editable" v-model="data[index].entry" :disabled="record.loading" />
+        <a-textarea v-if="record.editable" v-model="data[index].entry" :rows="5" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="exit" slot-scope="text, record, index">
-        <a-input v-if="record.editable" v-model="data[index].exit" :disabled="record.loading" />
+        <a-textarea v-if="record.editable" v-model="data[index].exit" :rows="5" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="ticket1" slot-scope="text, record, index">
-        <a-input v-if="record.editable" v-model="data[index].ticket1" :disabled="record.loading" />
+        <a-textarea v-if="record.editable" v-model="data[index].ticket1" :rows="5" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="ticket2" slot-scope="text, record, index">
-        <a-input v-if="record.editable" v-model="data[index].ticket2" :disabled="record.loading" />
+        <a-textarea v-if="record.editable" v-model="data[index].ticket2" :rows="5" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
@@ -63,7 +73,7 @@
         <a-textarea
           v-if="record.editable"
           v-model="data[index].hotel"
-          :rows="6"
+          :rows="5"
           :disabled="record.loading"
         ></a-textarea>
         <template v-else>{{ text }}</template>
@@ -73,7 +83,7 @@
         <a-textarea
           v-if="record.editable"
           v-model="data[index].remark"
-          :rows="6"
+          :rows="5"
           :disabled="record.loading"
         ></a-textarea>
         <template v-else>{{ text }}</template>
@@ -84,8 +94,10 @@
           v-if="record.editable"
           v-model="data[index].is_lock"
           :disabled="record.loading || !$auth('lock_itinerary')"
-        ></a-checkbox>
-        <template v-else>{{ text }}</template>
+        />
+        <template v-else>
+          <a-checkbox v-model="data[index].is_lock" disabled />
+        </template>
       </template>
 
       <template slot="action" slot-scope="data">
@@ -127,7 +139,7 @@
     >
 
     <a-modal v-model="modal" title="Select User" width="80%">
-      <user-list-table />
+      <user-list-table :modal="true" @select="onSelect" />
     </a-modal>
   </a-card>
 </template>
@@ -341,6 +353,20 @@ export default {
         })
         target._originalData = undefined
       }
+    },
+    openModal(data) {
+      this.modal = true
+      this.modalData = data
+    },
+    onSelect(data) {
+      this.modal = false
+      Object.assign(this.modalData, {
+        email: data.email,
+        name: data.name,
+        passport_no: data.passport_no
+      })
+      console.log(this.modalData)
+      this.setData(this.modalData.id, this.modalData)
     }
   },
   data() {
@@ -348,30 +374,35 @@ export default {
       data: [],
       loading: false,
       form: {},
-      modal: true,
+      modal: false,
+      modalData: {},
       columns: [
         {
           title: 'Serial No',
           dataIndex: 'serial_no',
           align: 'center',
+          width: '160px',
           scopedSlots: { customRender: 'serial_no' }
         },
         {
           title: 'Email',
           dataIndex: 'email',
           align: 'center',
+          width: '180px',
           scopedSlots: { customRender: 'email' }
         },
         {
           title: 'Name',
           dataIndex: 'name',
           align: 'center',
+          width: '160px',
           scopedSlots: { customRender: 'name' }
         },
         {
           title: 'Passport No',
           dataIndex: 'passport_no',
           align: 'center',
+          width: '160px',
           scopedSlots: { customRender: 'passport_no' }
         },
         {

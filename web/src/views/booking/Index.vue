@@ -107,7 +107,7 @@ export default {
         }
 
         if (this.post_type == 'history') {
-          return false
+          return true
         }
 
         return true
@@ -121,8 +121,10 @@ export default {
   },
   watch: {
     history_index(val) {
-      this.form = Object.assign({}, this.historyData[val])
-      this.setContent()
+      if (this.post_type == 'history') {
+        this.form = Object.assign({}, this.historyData[val])
+        this.setContent()
+      }
     }
   },
   mounted() {
@@ -142,10 +144,11 @@ export default {
       this.loading = true
       getBooking(this.$route.params.id, { history: true })
         .then(res => {
+          console.log(res.result)
           const { data, history } = res.result
           this.historyData = Object.assign([], history)
           this.history_length = history.length
-          this.history_index = history.length - 1
+          this.history_index = history.length - 1 > 0 ? history.length - 1 : 0
 
           if (this.post_type == 'edit') {
             this.form = Object.assign({}, data)
