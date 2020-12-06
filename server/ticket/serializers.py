@@ -42,7 +42,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def update(self, instance, validated_data):
-        if not instance.has_perm('itinerary.lock_itinerary'):
+        if not self.context['request'].user.has_perm('ticket.lock_itinerary'):
             validated_data.pop('is_lock', None)
 
         return super().update(instance, validated_data)
