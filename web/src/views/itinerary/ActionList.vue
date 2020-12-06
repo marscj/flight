@@ -72,7 +72,11 @@
       </template>
 
       <template slot="is_lock" slot-scope="text, record, index">
-        <a-checkbox v-if="record.editable" v-model="data[index].is_lock" :disabled="record.loading"></a-checkbox>
+        <a-checkbox
+          v-if="record.editable"
+          v-model="data[index].is_lock"
+          :disabled="record.loading || !$auth('lock_itinerary')"
+        ></a-checkbox>
         <template v-else>{{ text }}</template>
       </template>
 
