@@ -7,7 +7,6 @@
       :columns="columns"
       :data-source="data"
       :loading="loading"
-      tableLayout="fixed"
       :pagination="false"
       bordered
     >
@@ -22,7 +21,16 @@
       </template>
 
       <template slot="name" slot-scope="text, record, index">
-        <a-input v-if="record.editable" v-model="data[index].name" :disabled="record.loading" />
+        <a-input
+          v-if="record.editable"
+          v-model="data[index].name"
+          :disabled="record.loading"
+          @click="
+            () => {
+              modal = true
+            }
+          "
+        />
         <template v-else>{{ text }}</template>
       </template>
 
@@ -117,6 +125,10 @@
     <a-button class="w-full mt-4 mb-4 h-12" type="dashed" icon="plus" @click="newMember" v-action:add_itinerary
       >Add Itinerary</a-button
     >
+
+    <a-modal v-model="modal" title="Select User" width="80%">
+      <user-list-table />
+    </a-modal>
   </a-card>
 </template>
 
@@ -124,12 +136,14 @@
 import { STable, Ellipsis } from '@/components'
 import { getItineraries, updateItinerary, createItinerary, deleteItinerary } from '@/api/itinerary'
 import { FormValidate, FormItemValidate } from '@/components'
+import UserListTable from '@/views/user/ListTable'
 
 export default {
   components: {
     Ellipsis,
     FormValidate,
-    FormItemValidate
+    FormItemValidate,
+    UserListTable
   },
   mounted() {
     this.loadData()
@@ -334,6 +348,7 @@ export default {
       data: [],
       loading: false,
       form: {},
+      modal: true,
       columns: [
         {
           title: 'Serial No',
