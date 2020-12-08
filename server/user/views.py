@@ -41,9 +41,6 @@ class UserView(mixins.ExtraRetrieveModelMixin, mixins.ExtraListModelMixin, Regis
         return super().get_serializer_class()
 
     def get_extra_data(self):
-        return self.get_extra_list_data()
-
-    def get_extra_list_data(self):
         return {
             'role': serializers.ListGroupSerializer(Group.objects.all(), many=True).data,
             'department': serializers.DepartmentSerializer(models.Department.objects.all(), many=True).data
@@ -73,17 +70,16 @@ class GroupView(viewset.ExtraModelViewSet):
     filter_class = GroupFilter
     search_fields = ['name']
 
-    def get_extra_data(self, request):
+    def get_extra_data(self):
         queryset = Permission.objects.filter(content_type__model__in=['user', 'department', 'group', 'booking', 'itinerary', 'ticket', 'comment', 'historicalbooking'])
         return {
-            'permission': serializers.PermissionSerializer(queryset, many=True, context={'request': request}).data,
+            'permission': serializers.PermissionSerializer(queryset, many=True).data,
         }
-
 
 class DepartmentFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
 
-class DepartmentView(viewset.ExtraModelViewSet):
+class DepartmentView(viewsets.ModelViewSet):
     serializer_class = serializers.DepartmentSerializer
     permission_classes = [IsAuthenticated, permissions.ModelPermissions]
     queryset = models.Department.objects.all().order_by('id')

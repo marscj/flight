@@ -8,6 +8,6 @@ class ExtraModelViewSet(mixins.CreateModelMixin,
                    ModelViewSet):
     
     extra_data = None
-    
+
     def get_extra_data(self):
-        return extra_data
+        return self.extra_data

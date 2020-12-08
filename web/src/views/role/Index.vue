@@ -144,7 +144,7 @@ export default {
         updateRole(this.$route.params.id, form)
           .then(res => {
             const { data, extra } = res.result
-
+            this.form = Object.assign({}, data)
             this.extra = extra
           })
           .catch(error => {
@@ -160,7 +160,7 @@ export default {
           .then(res => {
             this.$router.replace({
               name: 'RoleDetail',
-              params: { id: res.result.id }
+              params: { id: res.result.data.id }
             })
           })
           .catch(error => {
@@ -175,21 +175,20 @@ export default {
     },
     updatePermission(permission) {
       this.updateing = true
-      setTimeout(() => {
-        updateRole(this.$route.params.id, {
-          permission: permission.id
-        })
-          .then(res => {
-            const { data, extra } = res.result
-            this.form = Object.assign({}, data)
-            this.permission = Object.assign([], extra.permission)
+      updateRole(this.$route.params.id, {
+        permission: permission.id
+      })
+        .then(res => {
+          console.log(res)
+          const { data, extra } = res.result
+          this.form = Object.assign({}, data)
+          this.permission = Object.assign([], extra.permission)
 
-            this.initRole(this.form, this.permission)
-          })
-          .finally(() => {
-            this.updateing = false
-          })
-      }, 0)
+          this.initRole(this.form, this.permission)
+        })
+        .finally(() => {
+          this.updateing = false
+        })
     },
     onClick(permission) {
       this.updatePermission(permission)

@@ -3,14 +3,10 @@ from rest_framework.response import Response
 
 class ExtraListModelMixin:
     
-    extra_list_data = None
     list_serializer_class = None
 
-    def get_extra_list_data(self):
-        return self.extra_list_data
-
     def get_serializer_class(self):        
-        if self.list_serializer_class is not None:
+        if self.action == 'list' and self.list_serializer_class is not None:
             return self.list_serializer_class
 
         return super().get_serializer_class()
@@ -24,22 +20,17 @@ class ExtraListModelMixin:
             
             return Response({
                 'data': self.paginator.get_paginated_data(serializer.data),
-                'extra': self.get_extra_list_data()
+                'extra': self.get_extra_data()
             })
 
         serializer = self.get_serializer(queryset, many=True)
         
         return Response({
             'data': serializer.data,
-            'extra': self.get_extra_list_data()
+            'extra': self.get_extra_data()
         })
 
 class ExtraRetrieveModelMixin:
-    
-    extra_data = None
-
-    def get_extra_data(self):
-        return self.extra_data
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -50,11 +41,6 @@ class ExtraRetrieveModelMixin:
         })
 
 class ExtraUpdateModelMixin:
-
-    extra_data = None
-
-    def get_extra_data(self):
-        return self.extra_data
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
@@ -72,17 +58,13 @@ class ExtraUpdateModelMixin:
         })
 
 class CreateModelMixin:
-    extra_data = None
-
-    def get_extra_data(self):
-        return self.extra_data
-
+    
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response({
-            data: serializer.data,
-            extra: self.get_extra_data()
+            'data': serializer.data,
+            'extra': self.get_extra_data()
         }, status=status.HTTP_201_CREATED, headers=headers)
