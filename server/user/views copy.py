@@ -8,12 +8,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
-from rest_framework import viewsets
+from rest_framework.viewsets import ModelViewSet
 import django_filters 
 from rest_auth.registration.app_settings import RegisterSerializer
 
 from . import serializers, models
-from middleware import viewset, permissions, minxins
+from middleware import viewset, permissions
 from authorization.views import RegisterView
 
 UserModel = get_user_model()
@@ -25,8 +25,9 @@ class UserFilter(django_filters.FilterSet):
     is_staff = django_filters.BooleanFilter('is_staff')
     is_active = django_filters.BooleanFilter('is_active')
 
-class UserView(viewsets.ModelViewSet, RegisterView, minxins.ExtraRetrieveModelMixin, minxins.ExtraListModelMixin):
-    serializer_class = serializers.UserSerializer
+class UserView(viewset.ExtraModelViewSet, RegisterView):
+    serializer_class = serializers.UserDetailsSerializer
+    list_serializer_class = serializers.UserSerializer
     permission_classes = [IsAuthenticated, permissions.ModelPermissions]
     queryset = UserModel.objects.all().order_by('id')
 

@@ -96,7 +96,38 @@ class PasswordSerializer(serializers.Serializer):
         
         return super().validate(data)
 
-class UserListSerializer(serializers.ModelSerializer):
+class UserDetailsSerializer(serializers.ModelSerializer):
+
+    name = serializers.SerializerMethodField()
+
+    roles = GroupSerializer(read_only=True, many=True, source='groups')
+
+    department_id = serializers.IntegerField(required=False, allow_null=True)
+
+    groups_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Group.objects.all(), source='groups')
+
+    # avatar = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+
+    class Meta:
+        model = UserModel
+        fields = (
+            'id', 'email', 'password', 'first_name', 'last_name', 'roles', 'is_active', 'is_staff', 'is_superuser',
+            'possport_type', 'passport_code', 'passport_no', 'passport_sex', 'passport_nationality', 'passport_date_birth',
+            'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
+            'name', 'department_id', 'groups_id'
+        )
+        read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined')
+
+    def get_name(self, obj):
+        return obj.full_name
+
+    def update(self, instance, validated_data):
+        if not self.context['request'].user.has_perm('user.assign_role'):
+            validated_data.pop('groups', None)
+        
+        return super().update(instance, validated_data)
+
+class UserSerializer(serializers.ModelSerializer):
     
     name = serializers.SerializerMethodField()
 
@@ -113,34 +144,3 @@ class UserListSerializer(serializers.ModelSerializer):
 
     def get_name(self, obj):
         return obj.full_name
-
-class UserSerializer(serializers.ModelSerializer):
-
-    name = serializers.SerializerMethodField()
-
-    roles = GroupSerializer(read_only=True, many=True, source='groups')
-
-    department_id = serializers.IntegerField(required=False, allow_null=True)
-
-    groups_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Group.objects.all(), source='groups')
-
-    class Meta:
-        model = UserModel
-        fields = (
-            'id', 'email', 'password', 'first_name', 'last_name', 'roles', 'is_active', 'is_staff', 'is_superuser',
-            'possport_type', 'passport_code', 'passport_no', 'passport_sex', 'passport_nationality', 'passport_date_birth',
-            'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
-            'name', 'department_id', 'groups_id'
-        )
-        read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined')
-        # list_serializer_class = UserListSerializer
-
-    def get_name(self, obj):
-        return obj.full_name
-
-    def update(self, instance, validated_data):
-
-        if not self.context['request'].user.has_perm('user.assign_role'):
-            validated_data.pop('groups', None)
-        
-        return super().update(instance, validated_data)
