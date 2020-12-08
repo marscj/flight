@@ -76,8 +76,8 @@ export default {
       this.loading = true
       getDepartment(this.$route.params.id)
         .then(res => {
-          const { data, extra } = res.result
-          this.form = Object.assign({}, data)
+          const { result } = res
+          this.form = Object.assign({}, result)
         })
         .finally(() => {
           this.loading = false
@@ -90,9 +90,7 @@ export default {
       if (this.post_type == 'edit') {
         updateDepartment(this.$route.params.id, form)
           .then(res => {
-            const { data, extra } = res.result
-
-            this.extra = extra
+            const { result } = res
           })
           .catch(error => {
             if (error.response) {
