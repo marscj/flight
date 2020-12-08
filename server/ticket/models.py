@@ -19,31 +19,6 @@ class Booking(models.Model):
     class Meta:
         db_table = 'booking'
 
-class Itinerary(models.Model):
-    serial_no = models.CharField(unique=True, blank=True, null=True, max_length=32)
-    name = models.CharField(blank=True, null=True, max_length=64)
-    email = models.CharField(blank=True, null=True, max_length=64)
-    passport_no = models.CharField(blank=True, null=True, max_length=16)
-    entry = models.CharField(blank=True, null=True, max_length=256)
-    exit = models.CharField(blank=True, null=True, max_length=256)
-    ticket1 = models.CharField(blank=True, null=True, max_length=256)
-    ticket2 = models.CharField(blank=True, null=True, max_length=256)
-    hotel = models.CharField(blank=True, null=True, max_length=256)
-    is_lock = models.BooleanField(default=False, null=True)
-    remark = models.CharField(blank=True, null=True, max_length=256)
-
-    user = models.ForeignKey(User, related_name='itinerary_user', on_delete=models.SET_NULL, blank=True, null=True)
-    author = models.ForeignKey(User, related_name='itinerary_author', on_delete=models.SET_NULL, blank=True, null=True)
-    booking = models.ForeignKey(Booking, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
-
-    history = HistoricalRecords(table_name='itinerary_history', custom_model_name='itinerary_history')
-
-    class Meta:
-        db_table = 'itinerary'
-        permissions = (
-            ('lock_itinerary', 'Can lock itinerary'),
-        )
-
 class Ticket(models.Model):
     serial_no = models.CharField(blank=True, null=True, max_length=32)
     name = models.CharField(blank=True, null=True, max_length=64)
@@ -57,15 +32,41 @@ class Ticket(models.Model):
     is_confirm = models.BooleanField(default=False)
     is_cancel = models.BooleanField(default=False)
     is_booking = models.BooleanField(default=False)
-    is_ticketing = models.BooleanField(default=False)
+    is_complete = models.BooleanField(default=False)
 
-    itinerary = models.ForeignKey(Itinerary, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
-    author = models.ForeignKey(User, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(User, related_name='ticket_users', on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(User, related_name='ticket_authors', on_delete=models.SET_NULL, blank=True, null=True)
 
     history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
 
     class Meta:
         db_table = 'ticket'
+
+class Itinerary(models.Model):
+    serial_no = models.CharField(unique=True, blank=True, null=True, max_length=32)
+    name = models.CharField(blank=True, null=True, max_length=64)
+    email = models.CharField(blank=True, null=True, max_length=64)
+    passport_no = models.CharField(blank=True, null=True, max_length=16)
+    entry = models.CharField(blank=True, null=True, max_length=256)
+    exit = models.CharField(blank=True, null=True, max_length=256)
+    ticket1 = models.CharField(blank=True, null=True, max_length=256)
+    ticket2 = models.CharField(blank=True, null=True, max_length=256)
+    hotel = models.CharField(blank=True, null=True, max_length=256)
+    is_lock = models.BooleanField(default=False, null=True)
+    remark = models.CharField(blank=True, null=True, max_length=256)
+
+    user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
+    booking = models.ForeignKey(Booking, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
+    ticket = models.ForeignKey(Ticket, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
+
+    history = HistoricalRecords(table_name='itinerary_history', custom_model_name='itinerary_history')
+
+    class Meta:
+        db_table = 'itinerary'
+        permissions = (
+            ('lock_itinerary', 'Can lock itinerary'),
+        )
 
 class Comment(models.Model):
     comment = models.CharField(blank=True, null=True, max_length=256)
