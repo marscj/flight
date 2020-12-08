@@ -133,7 +133,6 @@ class UserSerializer(serializers.ModelSerializer):
             'name', 'department_id', 'groups_id'
         )
         read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined')
-        # list_serializer_class = UserListSerializer
 
     def get_name(self, obj):
         return obj.full_name

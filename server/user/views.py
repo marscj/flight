@@ -13,7 +13,7 @@ import django_filters
 from rest_auth.registration.app_settings import RegisterSerializer
 
 from . import serializers, models
-from middleware import viewset, permissions, minxins
+from middleware import viewset, permissions, mixins
 from authorization.views import RegisterView
 
 UserModel = get_user_model()
@@ -25,8 +25,9 @@ class UserFilter(django_filters.FilterSet):
     is_staff = django_filters.BooleanFilter('is_staff')
     is_active = django_filters.BooleanFilter('is_active')
 
-class UserView(viewsets.ModelViewSet, RegisterView, minxins.ExtraRetrieveModelMixin, minxins.ExtraListModelMixin):
+class UserView(mixins.ExtraRetrieveModelMixin, mixins.ExtraListModelMixin, RegisterView, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
+    list_serializer_class = serializers.UserListSerializer
     permission_classes = [IsAuthenticated, permissions.ModelPermissions]
     queryset = UserModel.objects.all().order_by('id')
 
@@ -39,10 +40,13 @@ class UserView(viewsets.ModelViewSet, RegisterView, minxins.ExtraRetrieveModelMi
 
         return super().get_serializer_class()
 
-    def get_extra_data(self, request):
+    def get_extra_data(self):
+        return self.get_extra_list_data()
+
+    def get_extra_list_data(self):
         return {
-            'role': serializers.ListGroupSerializer(Group.objects.all(), many=True, context={'request': request}).data,
-            'department': serializers.DepartmentSerializer(models.Department.objects.all(), many=True, context={'request': request}).data
+            'role': serializers.ListGroupSerializer(Group.objects.all(), many=True).data,
+            'department': serializers.DepartmentSerializer(models.Department.objects.all(), many=True).data
         }
 
     @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated, permissions.ResetPasswordPermission])

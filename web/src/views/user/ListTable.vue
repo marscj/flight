@@ -198,8 +198,9 @@ export default {
             })
           )
         ).then(res => {
-          this.extra = res.result.extra
-          return res.result
+          const { data, extra } = res.result
+          this.extra = Object.assign({}, extra)
+          return data
         })
       }
     }
