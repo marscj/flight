@@ -46,18 +46,26 @@ class ItinerarySerializer(serializers.ModelSerializer):
 
     def validate(self, validate_data):
         email = validate_data.get('email', None)
-        try:
-            user = UserModel.objects.get(email=email)
-            validate_data['user_id'] = user.id
-        except UserModel.DoesNotExist:
-            raise serializers.ValidationError({'email': 'No user for such email'})
 
-        if not self.context['request'].user.has_perm('ticket.lock_itinerary'):
-            validate_data.pop('is_lock', None)
+        if email:
+            try:
+                user = UserModel.objects.get(email=email)
+                validate_data['user_id'] = user.id
+            except UserModel.DoesNotExist:
+                raise serializers.ValidationError({'email': 'No user for such email'})
 
         return validate_data
 
+    def create(self, validated_data):
+        if not self.context['request'].user.has_perm('ticket.lock_itinerary'):
+            validated_data['is_lock'] = True
+        
+        return Itinerary(**validated_data)
+
     def update(self, instance, validated_data):
+        if not self.context['request'].user.has_perm('ticket.lock_itinerary'):
+            validated_data.pop('is_lock', None)
+
         return super().update(instance, validated_data)
 
 class TicketSerializer(serializers.ModelSerializer):

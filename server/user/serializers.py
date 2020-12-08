@@ -121,11 +121,11 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     def get_name(self, obj):
         return obj.full_name
 
-    def validate(self, validate_data):
+    def update(self, instance, validated_data):
         if not self.context['request'].user.has_perm('user.assign_role'):
-            validate_data.pop('groups', None)
+            validated_data.pop('groups', None)
         
-        return validate_data
+        return super().update(instance, validated_data)
 
 class UserSerializer(serializers.ModelSerializer):
     
