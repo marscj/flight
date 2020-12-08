@@ -28,24 +28,12 @@
       </template>
 
       <template slot="name" slot-scope="text, record, index">
-        <a-input
-          allowClear
-          v-if="record.editable"
-          v-model="data[index].name"
-          :disabled="record.loading"
-          @click="openModal(data[index])"
-        />
+        <a-input allowClear v-if="record.editable" v-model="data[index].name" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="passport_no" slot-scope="text, record, index">
-        <a-input
-          allowClear
-          v-if="record.editable"
-          v-model="data[index].passport_no"
-          :disabled="record.loading"
-          @click="openModal(data[index])"
-        />
+        <a-input allowClear v-if="record.editable" v-model="data[index].passport_no" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
