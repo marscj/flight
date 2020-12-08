@@ -43,7 +43,7 @@ class Ticket(models.Model):
         db_table = 'ticket'
 
 class Itinerary(models.Model):
-    serial_no = models.CharField(unique=True, blank=True, null=True, max_length=32)
+    serial_no = models.CharField(blank=True, null=True, max_length=32)
     name = models.CharField(blank=True, null=True, max_length=64)
     email = models.CharField(blank=True, null=True, max_length=64)
     passport_no = models.CharField(blank=True, null=True, max_length=16)

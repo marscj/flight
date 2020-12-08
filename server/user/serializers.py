@@ -106,7 +106,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
     groups_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Group.objects.all(), source='groups')
 
-    # avatar = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+    avatar = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
 
     class Meta:
         model = UserModel

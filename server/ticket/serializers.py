@@ -36,7 +36,7 @@ class BookingHistorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ItinerarySerializer(serializers.ModelSerializer):
-    serial_no = serializers.CharField(max_length=32, validators=[UniqueValidator(queryset=Itinerary.objects.all())])
+    serial_no = serializers.CharField(max_length=32)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     booking_id = serializers.IntegerField(write_only=True)
 
