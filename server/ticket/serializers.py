@@ -1,7 +1,10 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from .models import *
+
+UserModel = get_user_model()
 
 class CurrentUserDefault:
     requires_context = True
@@ -40,6 +43,16 @@ class ItinerarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Itinerary
         fields = '__all__'
+
+    def validate(self, validate_data):
+        email = validate_data.get('email', None)
+        try:
+            user = UserModel.objects.get(email=email)
+            validate_data['user_id'] = user.id
+        except UserModel.DoesNotExist:
+            raise serializers.ValidationError({'email': 'No user for such email'})
+
+        return validate_data
 
     def update(self, instance, validated_data):
         if not self.context['request'].user.has_perm('ticket.lock_itinerary'):

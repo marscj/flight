@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "/Users/mars/.pyenv/versions/3.9.0/bin/python",
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django"
+    ]
+}
