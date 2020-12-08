@@ -72,7 +72,8 @@ export default {
       ],
       loadData: parameter => {
         return getBookings(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
-          return res.result
+          const { data, extra } = res.result
+          return data
         })
       }
     }

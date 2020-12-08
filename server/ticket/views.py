@@ -14,7 +14,7 @@ class BookingFilter(django_filters.FilterSet):
 class BookingView(viewset.ExtraModelViewSet):
     serializer_class = serializers.BookingSerializer
     permission_classes = [IsAuthenticated, permissions.ModelPermissions]
-    queryset = models.Booking.objects.all().order_by('id')
+    queryset = models.Booking.objects.all().order_by('-id')
  
     filter_class = BookingFilter
     search_fields = ['']
@@ -24,9 +24,9 @@ class BookingView(viewset.ExtraModelViewSet):
         
     def get_queryset(self):
         if self.request.user.has_perm('ticket.view_booking'):
-            return models.Booking.objects.all().order_by('id')
+            return models.Booking.objects.all().order_by('-id')
         else :
-            return super().get_queryset().filter(itinerarys__user_id=self.request.user.id).distinct()
+            return super().get_queryset().filter(itineraries__user_id=self.request.user.id).distinct()
 
 class ItineraryFilter(django_filters.FilterSet):
     booking_id = django_filters.NumberFilter('booking_id')

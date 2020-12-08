@@ -25,7 +25,7 @@ class UserFilter(django_filters.FilterSet):
     is_staff = django_filters.BooleanFilter('is_staff')
     is_active = django_filters.BooleanFilter('is_active')
 
-class UserView(mixins.ExtraRetrieveModelMixin, mixins.ExtraListModelMixin, RegisterView, viewsets.ModelViewSet):
+class UserView(RegisterView, viewset.ExtraModelViewSet):
     serializer_class = serializers.UserSerializer
     list_serializer_class = serializers.UserListSerializer
     permission_classes = [IsAuthenticated, permissions.ModelPermissions]
