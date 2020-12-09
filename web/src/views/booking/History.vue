@@ -81,6 +81,12 @@ export default {
           ellipsis: true
         },
         {
+          title: 'Author',
+          dataIndex: 'author',
+          align: 'center',
+          ellipsis: true
+        },
+        {
           title: 'Operator',
           dataIndex: 'history_user',
           align: 'center',

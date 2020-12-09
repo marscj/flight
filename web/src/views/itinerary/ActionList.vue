@@ -99,12 +99,6 @@
             <a @click="save(data)">Save</a>
           </template>
           <template v-else>
-            <router-link v-action:view_booking :to="{ name: 'BookingHistory', params: { id: data.id } }">
-              <span>History</span>
-            </router-link>
-
-            <a-divider type="vertical" v-action:delete_itinerary />
-
             <a-popconfirm
               title="Are you sure cancel?"
               @confirm="remove(data)"
@@ -147,7 +141,6 @@ export default {
   },
   mounted() {
     this.loadData()
-    console.log(this.$route.params.id)
   },
   methods: {
     loadData() {
@@ -172,7 +165,7 @@ export default {
     newMember() {
       const length = this.data.length
       this.data.push({
-        id: length === 0 ? '1' : (parseInt(this.data[length - 1].id) + 1).toString(),
+        id: length === 0 ? 1 : this.data[length - 1].id + 1,
         serial_no: '',
         email: '',
         name: '',
@@ -196,11 +189,12 @@ export default {
       target.editable = !target.editable
     },
     setData(id, data) {
+      if (id == null) return
       let target = this.data.find(item => item.id === id)
       Object.assign(target, data)
     },
     save(data) {
-      let target = this.data.find(item => item.id === data.id)
+      const { id } = data
 
       var form = Object.assign({
         serial_no: data.serial_no,
@@ -217,14 +211,12 @@ export default {
         booking_id: parseInt(this.$route.params.id)
       })
 
-      console.log(form)
-
       if (data.isNew) {
-        this.setData(data.id, { loading: true })
+        this.setData(id, { loading: true })
         createItinerary(form)
           .then(res => {
             this.setData(
-              data.id,
+              id,
               Object.assign(res.result, {
                 editable: false,
                 isNew: false,
@@ -239,7 +231,7 @@ export default {
             })
           })
           .finally(() => {
-            this.setData(data.id, { loading: false })
+            this.setData(id, { loading: false })
           })
       } else {
         this.setData(data.id, { loading: true })
@@ -356,7 +348,6 @@ export default {
         name: data.name,
         passport_no: data.passport_no
       })
-      console.log(this.modalData)
       this.setData(this.modalData.id, this.modalData)
     }
   },
@@ -380,6 +371,7 @@ export default {
           dataIndex: 'email',
           align: 'center',
           width: '180px',
+          ellipsis: true,
           scopedSlots: { customRender: 'email' }
         },
         {
@@ -387,6 +379,7 @@ export default {
           dataIndex: 'name',
           align: 'center',
           width: '160px',
+          ellipsis: true,
           scopedSlots: { customRender: 'name' }
         },
         {
@@ -394,6 +387,7 @@ export default {
           dataIndex: 'passport_no',
           align: 'center',
           width: '160px',
+          ellipsis: true,
           scopedSlots: { customRender: 'passport_no' }
         },
         {
@@ -404,12 +398,14 @@ export default {
               title: 'Entry',
               dataIndex: 'entry',
               align: 'center',
+              ellipsis: true,
               scopedSlots: { customRender: 'entry' }
             },
             {
               title: 'Exit',
               dataIndex: 'exit',
               align: 'center',
+              ellipsis: true,
               scopedSlots: { customRender: 'exit' }
             }
           ]
@@ -422,12 +418,14 @@ export default {
               title: 'Ticket1',
               dataIndex: 'ticket1',
               align: 'center',
+              ellipsis: true,
               scopedSlots: { customRender: 'ticket1' }
             },
             {
               title: 'Ticket2',
               dataIndex: 'ticket2',
               align: 'center',
+              ellipsis: true,
               scopedSlots: { customRender: 'ticket2' }
             }
           ]
@@ -436,12 +434,14 @@ export default {
           title: 'Hotel',
           dataIndex: 'hotel',
           align: 'center',
+          ellipsis: true,
           scopedSlots: { customRender: 'hotel' }
         },
         {
           title: 'Remark',
           dataIndex: 'remark',
           align: 'center',
+          ellipsis: true,
           scopedSlots: { customRender: 'remark' }
         },
         {
@@ -449,11 +449,12 @@ export default {
           dataIndex: 'is_lock',
           align: 'center',
           width: '80px',
+          ellipsis: true,
           scopedSlots: { customRender: 'is_lock' }
         },
         {
           title: 'Action',
-          width: '180px',
+          width: '120px',
           scopedSlots: { customRender: 'action' },
           align: 'center'
         }

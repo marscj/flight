@@ -55,7 +55,8 @@ export default {
         {
           title: 'Title',
           dataIndex: 'title',
-          align: 'center'
+          align: 'center',
+          ellipsis: true
         },
         {
           title: 'Remark',
@@ -63,7 +64,12 @@ export default {
           align: 'center',
           ellipsis: true
         },
-
+        {
+          title: 'Author',
+          dataIndex: 'author',
+          align: 'center',
+          ellipsis: true
+        },
         {
           title: 'Action',
           width: '100px',

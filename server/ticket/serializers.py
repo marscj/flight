@@ -21,6 +21,8 @@ class BookingSerializer(serializers.ModelSerializer):
 
     remark = serializers.CharField(allow_blank=True, allow_null=True, max_length=1024)
 
+    author = serializers.StringRelatedField(read_only=True)
+
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     
     class Meta:
@@ -28,7 +30,8 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BookingHistorySerializer(serializers.ModelSerializer):
-
+    
+    author = serializers.StringRelatedField(read_only=True)
     history_user = serializers.StringRelatedField(read_only=True)
     
     class Meta:
@@ -39,6 +42,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     booking_id = serializers.IntegerField(write_only=True)
+    author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Itinerary
@@ -60,7 +64,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
         if not self.context['request'].user.has_perm('ticket.lock_itinerary'):
             validated_data['is_lock'] = True
         
-        return Itinerary(**validated_data)
+        return super().create(validated_data)
 
     def update(self, instance, validated_data):
         if not self.context['request'].user.has_perm('ticket.lock_itinerary'):
