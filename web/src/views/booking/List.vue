@@ -1,5 +1,10 @@
 <template>
   <page-header-wrapper>
+    <template slot="extra">
+      <router-link v-action:view_booking :to="{ name: 'BookingHistory' }">
+        <a-button type="primary">History</a-button>
+      </router-link>
+    </template>
     <a-card>
       <s-table
         ref="table"

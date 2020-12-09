@@ -53,6 +53,16 @@ export const asyncRouterMap = [
             }
           },
           {
+            path: '/bookings/list/history',
+            name: 'BookingHistory',
+            component: () => import('@/views/booking/HistoryList'),
+            meta: {
+              title: 'Booking Histories',
+              keepAlive: true,
+              permission: ['view_booking']
+            }
+          },
+          {
             path: '/booking/add',
             name: 'AddBooking',
             component: () => import('@/views/booking/Add'),

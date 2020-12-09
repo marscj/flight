@@ -18,10 +18,8 @@ from django.urls import path
 from django.conf.urls import include, url
 
 urlpatterns = [
-    url(r'^api/auth/', include('authorization.urls')),
-    url(r'^api/users/', include('user.urls')),
-    url(r'^api/roles/', include('user.url_group')),
-    url(r'^api/departments/', include('user.url_department')),
-    url(r'^api/bookings/', include('ticket.url_booking')),
-    url(r'^api/itineraries/', include('ticket.url_itinerary')),
+    url('api/', include('authorization.urls')),
+    url('api/', include('user.urls')),
+    url('api/bookings/', include('ticket.url_booking')),
+    url('api/itineraries/', include('ticket.url_itinerary')),
 ]
