@@ -147,6 +147,7 @@ export default {
   },
   mounted() {
     this.loadData()
+    console.log(this.$route.params.id)
   },
   methods: {
     loadData() {
@@ -215,6 +216,8 @@ export default {
         is_lock: data.is_lock,
         booking_id: parseInt(this.$route.params.id)
       })
+
+      console.log(form)
 
       if (data.isNew) {
         this.setData(data.id, { loading: true })

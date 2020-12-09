@@ -130,7 +130,7 @@ export default {
           .then(res => {
             this.$router.replace({
               name: 'BookingDetail',
-              params: { id: res.result.id }
+              params: { id: res.result.data.id }
             })
           })
           .catch(error => {
