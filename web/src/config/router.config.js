@@ -55,7 +55,7 @@ export const asyncRouterMap = [
           {
             path: '/bookings/list/history',
             name: 'BookingHistory',
-            component: () => import('@/views/booking/HistoryList'),
+            component: () => import('@/views/booking/History'),
             hidden: true,
             meta: {
               title: 'Booking Histories',
@@ -76,16 +76,6 @@ export const asyncRouterMap = [
             component: () => import('@/views/booking/Edit'),
             meta: {
               title: 'Booking Detail',
-              permission: ['view_booking']
-            }
-          },
-          {
-            path: '/bookings/:id/history',
-            name: 'BookingHistory',
-            hidden: true,
-            component: () => import('@/views/booking/History'),
-            meta: {
-              title: 'Booking History',
               permission: ['view_booking']
             }
           }
