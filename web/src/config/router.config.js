@@ -38,7 +38,7 @@ export const asyncRouterMap = [
         redirect: '/bookings/list',
         meta: {
           title: 'Bookings',
-          icon: 'safety',
+          icon: 'line',
           permission: ['view_booking', 'add_booking']
         },
         children: [
@@ -88,7 +88,7 @@ export const asyncRouterMap = [
         redirect: '/itineraries/list',
         meta: {
           title: 'Itineraries',
-          icon: 'safety',
+          icon: 'line',
           permission: ['view_itinerary']
         },
         children: [
@@ -120,7 +120,7 @@ export const asyncRouterMap = [
         redirect: '/tickets/list',
         meta: {
           title: 'Tickets',
-          icon: 'safety',
+          icon: 'line',
           permission: ['view_ticket', 'add_ticket']
         },
         children: [
@@ -200,7 +200,7 @@ export const asyncRouterMap = [
         component: RouteView,
         meta: {
           title: 'Departments',
-          icon: 'safety',
+          icon: 'line',
           permission: ['view_department', 'add_department']
         },
         redirect: '/departments/list',
@@ -232,7 +232,7 @@ export const asyncRouterMap = [
       {
         path: '/roles',
         component: RouteView,
-        meta: { title: 'Roles', icon: 'safety', permission: ['view_group', 'add_group'] },
+        meta: { title: 'Roles', icon: 'line', permission: ['view_group', 'add_group'] },
         redirect: '/roles/list',
         children: [
           {
