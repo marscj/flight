@@ -84,9 +84,19 @@ class ItineraryHistorySerializer(serializers.ModelSerializer):
 class TicketSerializer(serializers.ModelSerializer):
 
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+    author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Ticket
+        fields = '__all__'
+
+class TicketHistorySerializer(serializers.ModelSerializer):
+
+    history_user = serializers.StringRelatedField(read_only=True)
+    author = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model =  Ticket.history.model
         fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):

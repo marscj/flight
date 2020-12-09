@@ -63,6 +63,14 @@ class TicketView(viewset.ExtraModelViewSet):
     filter_class = TicketFilter
     search_fields = ['']
 
+class TicketHistoryView(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.TicketHistorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = models.Ticket.history.all().order_by('-id')
+ 
+    filter_class = TicketFilter
+    search_fields = ['']
+
 class CommentFilter(django_filters.FilterSet):
     pass
 
