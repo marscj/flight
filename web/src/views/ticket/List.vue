@@ -66,13 +66,13 @@ export default {
         },
         {
           title: 'Line',
-          dataIndex: 'airline',
+          dataIndex: 'air_info',
           align: 'center',
           ellipsis: true
         },
         {
           title: 'Info',
-          dataIndex: 'air_information',
+          dataIndex: 'air_info',
           align: 'center',
           ellipsis: true
         },

@@ -1,6 +1,61 @@
 <template>
-  <form-validate ref="observer">
-    <page-header-wrapper>
+  <form-validate ref="observer" :form="form">
+    <page-header-wrapper v-if="post_type == 'add'">
+      <a-card class="card" title="Related Itinerary" :bordered="false">
+        <itinerary-list />
+      </a-card>
+      <a-card class="card" title="Ticket Info" :bordered="false">
+        <a-row class="form-row" :gutter="16">
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Serial No.">
+              <a-input v-model="form.serial_no"></a-input>
+            </form-item-validate>
+          </a-col>
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Line">
+              <a-input v-model="form.air_line"></a-input>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Class">
+              <a-input v-model="form.air_class"></a-input>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Fare">
+              <a-input v-model="form.fare"></a-input>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Tax">
+              <a-input v-model="form.tax"></a-input>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Total">
+              <a-input v-model="form.total"></a-input>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="12">
+            <form-item-validate label="Info">
+              <a-textarea v-model="form.air_info" :rows="5"></a-textarea>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="12">
+            <form-item-validate label="remark">
+              <a-textarea v-model="form.remark" :rows="5"></a-textarea>
+            </form-item-validate>
+          </a-col>
+        </a-row>
+      </a-card>
+    </page-header-wrapper>
+    <page-header-wrapper v-else>
       <a-card class="card" title="Progress" :bordered="false"> </a-card>
     </page-header-wrapper>
 
@@ -11,7 +66,7 @@
           @confirm="onDelete"
           okText="Yes"
           cancelText="No"
-          v-if="$auth('delete_booking')"
+          v-if="$auth('delete_ticket')"
         >
           <a-button href="javascript:;" type="danger">Delete</a-button>
         </a-popconfirm>
@@ -20,7 +75,7 @@
       <a-col :span="12" class="text-right">
         <a-button
           v-if="post_type == 'edit'"
-          v-action:change_booking
+          v-action:change_ticket
           type="primary"
           @click="submit"
           :loading="updateing"
@@ -34,7 +89,7 @@
       <a-col :span="24" class="text-right">
         <a-button
           v-if="post_type == 'add'"
-          v-action:add_booking
+          v-action:add_ticket
           type="primary"
           @click="submit"
           :loading="updateing"
@@ -49,8 +104,8 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
-import ItineraryList from '@/views/itinerary/ActionList'
-import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
+import { getTicket, updateTicket, createTicket, deleteTicket } from '@/api/ticket'
+import ItineraryList from '@/views/itinerary/List'
 import moment from 'moment'
 
 export default {
@@ -66,11 +121,11 @@ export default {
       loading: false,
       updateing: false,
       disabled: () => {
-        if (this.post_type == 'add' && this.$auth('add_booking')) {
+        if (this.post_type == 'add' && this.$auth('add_ticket')) {
           return false
         }
 
-        if (this.post_type == 'edit' && this.$auth('change_booking')) {
+        if (this.post_type == 'edit' && this.$auth('change_ticket')) {
           return false
         }
 
@@ -82,13 +137,13 @@ export default {
   },
   mounted() {
     if (this.$route.params.id) {
-      this.getBookingData()
+      this.getTicketData()
     }
   },
   methods: {
-    getBookingData() {
+    getTicketData() {
       this.loading = true
-      getBooking(this.$route.params.id)
+      getTicket(this.$route.params.id)
         .then(res => {
           const { data } = res.result
           this.form = Object.assign({}, data)
@@ -102,7 +157,7 @@ export default {
       var form = Object.assign({}, this.form, {})
 
       if (this.post_type == 'edit') {
-        updateBooking(this.$route.params.id, form)
+        updateTicket(this.$route.params.id, form)
           .then(res => {
             const { data, extra } = res.result
 
@@ -117,10 +172,10 @@ export default {
             this.updateing = false
           })
       } else if (this.post_type == 'add') {
-        createBooking(form)
+        createTicket(form)
           .then(res => {
             this.$router.replace({
-              name: 'BookingDetail',
+              name: 'TicketDetail',
               params: { id: res.result.data.id }
             })
           })
@@ -136,7 +191,7 @@ export default {
     },
     onDelete() {
       this.updateing = true
-      deleteBooking(this.$route.params.id)
+      deleteTicket(this.$route.params.id)
         .then(() => {
           this.$router.go(-1)
         })

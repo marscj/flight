@@ -121,7 +121,7 @@
     >
 
     <a-modal v-model="modal" title="Select User" width="80%">
-      <user-list-table :modal="true" @select="onSelect" />
+      <user-table-list :modal="true" @select="onSelect" />
     </a-modal>
   </a-card>
 </template>
@@ -130,14 +130,14 @@
 import { STable, Ellipsis } from '@/components'
 import { getItineraries, updateItinerary, createItinerary, deleteItinerary } from '@/api/itinerary'
 import { FormValidate, FormItemValidate } from '@/components'
-import UserListTable from '@/views/user/ListTable'
+import UserTableList from '@/views/user/TableList'
 
 export default {
   components: {
     Ellipsis,
     FormValidate,
     FormItemValidate,
-    UserListTable
+    UserTableList
   },
   mounted() {
     this.loadData()

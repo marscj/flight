@@ -1,15 +1,15 @@
 <template>
   <page-header-wrapper>
-    <list-table />
+    <table-list />
   </page-header-wrapper>
 </template>
 
 <script>
-import ListTable from './ListTable'
+import TableList from './TableList'
 
 export default {
   components: {
-    ListTable
+    TableList
   }
 }
 </script>
