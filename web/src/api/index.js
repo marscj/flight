@@ -14,7 +14,9 @@ export const API = {
   Booking: '/bookings/',
   BookingHistory: '/booking/histories/',
   Itinerary: '/itineraries/',
-  ItineraryHistory: '/itinerary/histories/'
+  ItineraryHistory: '/itinerary/histories/',
+  Ticket: '/tickets/',
+  TicketHistory: '/ticket/histories/'
 }
 
 export function updateSuccess(res) {

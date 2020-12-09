@@ -11,25 +11,25 @@ import {
 } from './index'
 import { axios } from '@/utils/request'
 
-export function getBookings(parameter) {
+export function getTickets(parameter) {
   return axios({
-    url: API.Booking,
+    url: API.Ticket,
     method: 'get',
     params: parameter
   })
 }
 
-export function getBooking(pk, parameter) {
+export function getTicket(pk, parameter) {
   return axios({
-    url: API.Booking + `${pk}/`,
+    url: API.Ticket + `${pk}/`,
     params: parameter,
     method: 'get'
   })
 }
 
-export function createBooking(data) {
+export function createTicket(data) {
   return axios({
-    url: API.Booking,
+    url: API.Ticket,
     method: 'post',
     data: data
   })
@@ -37,9 +37,9 @@ export function createBooking(data) {
     .catch(createFailed)
 }
 
-export function updateBooking(pk, data) {
+export function updateTicket(pk, data) {
   return axios({
-    url: API.Booking + `${pk}/`,
+    url: API.Ticket + `${pk}/`,
     method: 'patch',
     data: data
   })
@@ -47,18 +47,18 @@ export function updateBooking(pk, data) {
     .catch(updateFailed)
 }
 
-export function deleteBooking(pk, data) {
+export function deleteTicket(pk, data) {
   return axios({
-    url: API.Booking + `${pk}/`,
+    url: API.Ticket + `${pk}/`,
     method: 'delete'
   })
     .then(deleteSuccess)
     .catch(deleteFailed)
 }
 
-export function getBookingHistories(parameter) {
+export function getTicketHistories(parameter) {
   return axios({
-    url: API.BookingHistory,
+    url: API.TicketHistory,
     method: 'get',
     params: parameter
   })
