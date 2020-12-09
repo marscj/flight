@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
-from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, IsAuthenticatedOrReadOnly
+from rest_framework import viewsets, mixins
 import django_filters
 
 from middleware import viewset, permissions
@@ -11,6 +11,7 @@ from . import models
 class BookingFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
 
+
 class BookingView(viewset.ExtraModelViewSet):
     serializer_class = serializers.BookingSerializer
     permission_classes = [IsAuthenticated, permissions.ModelPermissions]
@@ -18,15 +19,20 @@ class BookingView(viewset.ExtraModelViewSet):
  
     filter_class = BookingFilter
     search_fields = ['']
-
-    def get_history_data(self, request):
-        return serializers.BookingHistorySerializer(self.get_object().history.all().order_by('-id'), many=True, context={'request': request}).data
-        
+      
     def get_queryset(self):
         if self.request.user.has_perm('ticket.view_booking'):
             return models.Booking.objects.all().order_by('-id')
         else :
             return super().get_queryset().filter(itineraries__user_id=self.request.user.id).distinct()
+
+class BookingHistoryView(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.BookingHistorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = models.Booking.history.all().order_by('-id')
+ 
+    filter_class = BookingFilter
+    search_fields = ['title', 'author__email', 'author__first_name', 'author__last_name']
 
 class ItineraryFilter(django_filters.FilterSet):
     booking_id = django_filters.NumberFilter('booking_id')

@@ -38,7 +38,6 @@ class ExtraRetrieveModelMixin:
         return Response({
             'data': serializer.data,
             'extra': self.get_extra_data(),
-            'history': self.get_history_data()
         })
 
 class ExtraUpdateModelMixin:
@@ -56,7 +55,6 @@ class ExtraUpdateModelMixin:
         return Response({
             'data': serializer.data,
             'extra': self.get_extra_data(),
-            'history': self.get_history_data()
         })
 
 class CreateModelMixin:
@@ -68,6 +66,5 @@ class CreateModelMixin:
         headers = self.get_success_headers(serializer.data)
         return Response({
             'data': serializer.data,
-            'extra': self.get_extra_data(),
-            'history': self.get_history_data()
+            'extra': self.get_extra_data()
         }, status=status.HTTP_201_CREATED, headers=headers)
