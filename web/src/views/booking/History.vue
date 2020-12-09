@@ -49,15 +49,30 @@ export default {
           sorter: true
         },
         {
-          title: 'BookingID',
+          title: 'BID',
           dataIndex: 'id',
           align: 'center',
+          width: '80px',
           sorter: true
+        },
+        {
+          title: 'Type',
+          dataIndex: 'history_type',
+          align: 'center',
+          width: '80px'
+        },
+        {
+          title: 'Date',
+          dataIndex: 'history_date',
+          scopedSlots: { customRender: 'history_date' },
+          align: 'center',
+          ellipsis: true
         },
         {
           title: 'Title',
           dataIndex: 'title',
-          align: 'center'
+          align: 'center',
+          ellipsis: true
         },
         {
           title: 'Remark',
@@ -66,21 +81,15 @@ export default {
           ellipsis: true
         },
         {
-          title: 'Type',
-          dataIndex: 'history_type',
-          align: 'center'
-        },
-        {
-          title: 'Date',
-          dataIndex: 'history_date',
-          scopedSlots: { customRender: 'history_date' },
-          align: 'center'
+          title: 'Operator',
+          dataIndex: 'history_user',
+          align: 'center',
+          ellipsis: true
         }
       ],
       loadData: parameter => {
         return getBookingHistories(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
           const { result } = res
-          console.log(result)
           return result
         })
       }
