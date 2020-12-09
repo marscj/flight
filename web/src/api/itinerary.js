@@ -55,3 +55,11 @@ export function deleteItinerary(pk, data) {
     .then(deleteSuccess)
     .catch(deleteFailed)
 }
+
+export function getItineraryHistories(parameter) {
+  return axios({
+    url: API.ItineraryHistory,
+    method: 'get',
+    params: parameter
+  })
+}

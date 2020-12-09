@@ -28,7 +28,7 @@ class UserFilter(django_filters.FilterSet):
 class UserView(RegisterView, viewset.ExtraModelViewSet):
     serializer_class = serializers.UserSerializer
     list_serializer_class = serializers.UserListSerializer
-    permission_classes = [IsAuthenticated, permissions.ModelPermissions]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = UserModel.objects.all().order_by('id')
 
     filter_class = UserFilter
@@ -64,7 +64,7 @@ class GroupFilter(django_filters.FilterSet):
 class GroupView(viewset.ExtraModelViewSet):
     serializer_class = serializers.GroupSerializer
     list_serializer_class = serializers.ListGroupSerializer
-    permission_classes = [IsAuthenticated, permissions.ModelPermissions]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = Group.objects.all().order_by('id')
  
     filter_class = GroupFilter
@@ -81,7 +81,7 @@ class DepartmentFilter(django_filters.FilterSet):
 
 class DepartmentView(viewsets.ModelViewSet):
     serializer_class = serializers.DepartmentSerializer
-    permission_classes = [IsAuthenticated, permissions.ModelPermissions]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = models.Department.objects.all().order_by('id')
  
     filter_class = DepartmentFilter

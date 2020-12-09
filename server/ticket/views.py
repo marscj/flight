@@ -13,7 +13,7 @@ class BookingFilter(django_filters.FilterSet):
 
 class BookingView(viewset.ExtraModelViewSet):
     serializer_class = serializers.BookingSerializer
-    permission_classes = [IsAuthenticated, permissions.ModelPermissions]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = models.Booking.objects.all().order_by('-id')
  
     filter_class = BookingFilter
@@ -36,10 +36,18 @@ class BookingHistoryView(viewsets.ReadOnlyModelViewSet):
 class ItineraryFilter(django_filters.FilterSet):
     booking_id = django_filters.NumberFilter('booking_id')
 
-class ItineraryView(viewsets.ModelViewSet):
+class ItineraryView(viewset.ExtraModelViewSet):
     serializer_class = serializers.ItinerarySerializer
-    permission_classes = [DjangoModelPermissions, IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = models.Itinerary.objects.all().order_by('id')
+ 
+    filter_class = ItineraryFilter
+    search_fields = ['']
+
+class ItineraryHistoryView(viewset.ExtraModelViewSet):
+    serializer_class = serializers.ItineraryHistorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = models.Itinerary.history.all().order_by('-id')
  
     filter_class = ItineraryFilter
     search_fields = ['']
@@ -47,9 +55,9 @@ class ItineraryView(viewsets.ModelViewSet):
 class TicketFilter(django_filters.FilterSet):
     pass
 
-class TicketView(viewsets.ModelViewSet):
+class TicketView(viewset.ExtraModelViewSet):
     serializer_class = serializers.TicketSerializer
-    permission_classes = [DjangoModelPermissions, IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = models.Ticket.objects.all().order_by('id')
  
     filter_class = TicketFilter
@@ -58,9 +66,9 @@ class TicketView(viewsets.ModelViewSet):
 class CommentFilter(django_filters.FilterSet):
     pass
 
-class CommentView(viewsets.ModelViewSet):
+class CommentView(viewset.ExtraModelViewSet):
     serializer_class = serializers.CommentSerializer
-    permission_classes = [DjangoModelPermissions, IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = models.Comment.objects.all().order_by('id')
  
     filter_class = CommentFilter
@@ -69,9 +77,9 @@ class CommentView(viewsets.ModelViewSet):
 class UpLoadFilter(django_filters.FilterSet):
     pass
 
-class UpLoadView(viewsets.ModelViewSet):
+class UpLoadView(viewset.ExtraModelViewSet):
     serializer_class = serializers.UpLoadSerializer
-    permission_classes = [DjangoModelPermissions, IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = models.UpLoad.objects.all().order_by('id')
  
     filter_class = UpLoadFilter

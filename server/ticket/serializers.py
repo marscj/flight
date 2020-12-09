@@ -30,7 +30,7 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BookingHistorySerializer(serializers.ModelSerializer):
-    
+
     author = serializers.StringRelatedField(read_only=True)
     history_user = serializers.StringRelatedField(read_only=True)
     
@@ -71,6 +71,15 @@ class ItinerarySerializer(serializers.ModelSerializer):
             validated_data.pop('is_lock', None)
 
         return super().update(instance, validated_data)
+
+class ItineraryHistorySerializer(serializers.ModelSerializer):
+    
+    author = serializers.StringRelatedField(read_only=True)
+    history_user = serializers.StringRelatedField(read_only=True)
+    
+    class Meta:
+        model = Itinerary.history.model
+        fields = '__all__'
 
 class TicketSerializer(serializers.ModelSerializer):
 

@@ -147,10 +147,10 @@ export default {
       this.loading = true
       getItineraries({ booking_id: parseInt(this.$route.params.id) })
         .then(res => {
-          const { result } = res
+          const { data } = res.result
           this.data = Object.assign(
             [],
-            result.map(f => {
+            data.map(f => {
               f.isNew = false
               f.editable = false
               f.loading = false
@@ -191,6 +191,7 @@ export default {
     setData(id, data) {
       if (id == null) return
       let target = this.data.find(item => item.id === id)
+      if (target == null) return
       Object.assign(target, data)
     },
     save(data) {
@@ -215,9 +216,10 @@ export default {
         this.setData(id, { loading: true })
         createItinerary(form)
           .then(res => {
+            const { data } = res.result
             this.setData(
               id,
-              Object.assign(res.result, {
+              Object.assign(data, {
                 editable: false,
                 isNew: false,
                 loading: false
@@ -237,9 +239,10 @@ export default {
         this.setData(data.id, { loading: true })
         updateItinerary(data.id, form)
           .then(res => {
+            const { data } = res.result
             this.setData(
               data.id,
-              Object.assign(res.result, {
+              Object.assign(data, {
                 editable: false,
                 isNew: false,
                 loading: false

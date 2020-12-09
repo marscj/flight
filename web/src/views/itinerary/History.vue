@@ -1,8 +1,8 @@
 <template>
   <page-header-wrapper>
     <template slot="extra">
-      <router-link v-action:view_itinerary :to="{ name: 'ItineraryHistory' }">
-        <a-button type="primary">History</a-button>
+      <router-link v-action:view_itinerary :to="{ name: 'AllItineraries' }">
+        <a-button type="primary">Back</a-button>
       </router-link>
     </template>
     <a-card>
@@ -26,7 +26,7 @@
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getItineraries } from '@/api/itinerary'
+import { getItineraryHistories } from '@/api/itinerary'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -126,7 +126,7 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getItineraries(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+        return getItineraryHistories(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
           const { data } = res.result
           return data
         })

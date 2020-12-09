@@ -13,7 +13,8 @@ export const API = {
   Department: '/departments/',
   Booking: '/bookings/',
   BookingHistory: '/booking/histories/',
-  Itinerary: '/itineraries/'
+  Itinerary: '/itineraries/',
+  ItineraryHistory: '/itinerary/histories/'
 }
 
 export function updateSuccess(res) {
