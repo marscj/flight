@@ -1,28 +1,6 @@
 <template>
   <form-validate ref="observer">
-    <page-header-wrapper :content="content">
-      <template v-if="post_type == 'edit'" slot="extra">
-        <router-link :to="{ name: 'BookingHistory', params: { id: $route.params.id } }">
-          <span>History</span>
-        </router-link>
-      </template>
-      <template v-else-if="post_type == 'history'" slot="extra">
-        <router-link :to="{ name: 'BookingDetail', params: { id: $route.params.id } }">
-          <span>Back</span>
-        </router-link>
-      </template>
-
-      <div v-if="post_type == 'history'" class="pb-4">
-        <a-row>
-          <a-col :span="12">
-            <a-button type="link" v-if="history_index > 0" @click="onPreviou">Previou</a-button>
-          </a-col>
-          <a-col :span="12" class="text-right">
-            <a-button type="link" v-if="history_index < history_length - 1" @click="onNext">Next</a-button>
-          </a-col>
-        </a-row>
-      </div>
-
+    <page-header-wrapper>
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Title" vid="title" required>
           <a-input v-model="form.title" :maxLength="64" :disabled="disabled()" />
@@ -31,16 +9,18 @@
           <a-textarea v-model="form.remark" :maxLength="1024" :rows="5" :disabled="disabled()" />
         </form-item-validate>
       </a-card>
+
+      <itinerary-list v-if="post_type == 'edit'" />
     </page-header-wrapper>
 
-    <a-row>
+    <a-row v-if="post_type == 'edit'">
       <a-col :span="12">
         <a-popconfirm
           title="Are you sure cancel?"
           @confirm="onDelete"
           okText="Yes"
           cancelText="No"
-          v-if="$auth('delete_booking') && edit"
+          v-if="$auth('delete_booking')"
         >
           <a-button href="javascript:;" type="danger">Delete</a-button>
         </a-popconfirm>
@@ -57,7 +37,10 @@
         >
           Submit
         </a-button>
-
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="24" class="text-right">
         <a-button
           v-if="post_type == 'add'"
           v-action:add_booking
@@ -75,12 +58,12 @@
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
+import ItineraryList from '@/views/itinerary/ActionList'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
 import moment from 'moment'
 
 export default {
-  components: { FormValidate, FormItemValidate, History },
-
+  components: { FormValidate, FormItemValidate, ItineraryList },
   props: {
     post_type: {
       type: String,
@@ -102,18 +85,8 @@ export default {
 
         return true
       },
-
       form: {},
-      historyData: [],
-      history_index: 0,
-      history_length: 0,
       content: ''
-    }
-  },
-  watch: {
-    history_index(val) {
-      this.form = Object.assign({}, this.historyData[val])
-      this.setContent()
     }
   },
   mounted() {
@@ -122,25 +95,12 @@ export default {
     }
   },
   methods: {
-    setContent() {
-      this.content =
-        'author: ' +
-        this.historyData[this.history_index].history_user +
-        '  change at: ' +
-        moment(this.historyData[this.history_index].history_date).format('YYYY-MM-DD HH:mm')
-    },
     getBookingData() {
       this.loading = true
-      getBooking(this.$route.params.id, { history: true })
+      getBooking(this.$route.params.id)
         .then(res => {
-          const { data, history } = res.result
-          this.historyData = Object.assign([], history)
-          this.history_length = history.length
-          this.history_index = history.length - 1
-
-          if (this.post_type == 'history') {
-            this.form = Object.assign({}, this.historyData[this.history_index])
-          }
+          const { data } = res.result
+          this.form = Object.assign({}, data)
         })
         .finally(() => {
           this.loading = false
@@ -168,9 +128,9 @@ export default {
       } else if (this.post_type == 'add') {
         createBooking(form)
           .then(res => {
-            this.$router.push({
+            this.$router.replace({
               name: 'BookingDetail',
-              params: { id: res.result.id }
+              params: { id: res.result.data.id }
             })
           })
           .catch(error => {
@@ -192,16 +152,6 @@ export default {
         .finally(() => {
           this.updateing = false
         })
-    },
-    onPreviou() {
-      if (this.history_index > 0) {
-        this.history_index--
-      }
-    },
-    onNext() {
-      if (this.history_index < this.history_length - 1) {
-        this.history_index++
-      }
     }
   }
 }

@@ -1,17 +1,9 @@
 <template>
   <page-header-wrapper>
     <template slot="extra">
-      <a-button
-        v-action:add_booking
-        type="primary"
-        icon="plus"
-        @click="
-          () => {
-            $router.push({ name: 'AddBooking' })
-          }
-        "
-        >Add</a-button
-      >
+      <router-link v-action:view_booking :to="{ name: 'BookingHistory' }">
+        <a-button type="primary">History</a-button>
+      </router-link>
     </template>
     <a-card>
       <s-table
@@ -26,10 +18,6 @@
       >
         <template slot="action" slot-scope="data">
           <template>
-            <router-link v-action:view_booking :to="{ name: 'BookingHistory', params: { id: data.id } }">
-              <span>History</span>
-            </router-link>
-            <a-divider type="vertical" />
             <router-link v-action:view_booking :to="{ name: 'BookingDetail', params: { id: data.id } }">
               <span>Detail</span>
             </router-link>
@@ -42,7 +30,7 @@
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getBookings, createBooking } from '@/api/booking'
+import { getBookings } from '@/api/booking'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -67,7 +55,8 @@ export default {
         {
           title: 'Title',
           dataIndex: 'title',
-          align: 'center'
+          align: 'center',
+          ellipsis: true
         },
         {
           title: 'Remark',
@@ -75,7 +64,12 @@ export default {
           align: 'center',
           ellipsis: true
         },
-
+        {
+          title: 'Author',
+          dataIndex: 'author',
+          align: 'center',
+          ellipsis: true
+        },
         {
           title: 'Action',
           width: '100px',
@@ -85,7 +79,8 @@ export default {
       ],
       loadData: parameter => {
         return getBookings(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
-          return res.result
+          const { data, extra } = res.result
+          return data
         })
       }
     }

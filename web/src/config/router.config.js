@@ -115,13 +115,14 @@ export const asyncRouterMap = [
       },
       {
         path: '/tickets',
+        name: 'Tickets',
         component: RouteView,
+        redirect: '/tickets/list',
         meta: {
           title: 'Tickets',
           icon: 'safety',
           permission: ['view_ticket', 'add_ticket']
         },
-        redirect: '/tickets/list',
         children: [
           {
             path: '/tickets/list',
@@ -134,9 +135,19 @@ export const asyncRouterMap = [
             }
           },
           {
+            path: '/tickets/list/history',
+            name: 'TicketHistory',
+            component: () => import('@/views/ticket/History'),
+            hidden: true,
+            meta: {
+              title: 'Ticket Histories',
+              keepAlive: true,
+              permission: ['view_ticket']
+            }
+          },
+          {
             path: '/ticket/add',
             name: 'AddTicket',
-            hidden: true,
             component: () => import('@/views/ticket/Add'),
             meta: { title: 'Add Ticket', permission: ['add_ticket'] }
           },
@@ -147,16 +158,6 @@ export const asyncRouterMap = [
             component: () => import('@/views/ticket/Edit'),
             meta: {
               title: 'Ticket Detail',
-              permission: ['view_ticket']
-            }
-          },
-          {
-            path: '/tickets/:id/history',
-            name: 'TicketHistory',
-            hidden: true,
-            component: () => import('@/views/ticket/History'),
-            meta: {
-              title: 'Ticket History',
               permission: ['view_ticket']
             }
           }
