@@ -9,12 +9,13 @@
       <s-table
         ref="table"
         size="default"
-        :rowKey="record => record.id"
+        :rowKey="record => record.history_id"
         :columns="columns"
         :data="loadData"
         showPagination="auto"
         :pageURI="true"
         bordered
+        :scroll="{ x: 1500 }"
       >
         <template slot="is_lock" slot-scope="data">
           <a-checkbox :checked="data" disabled />
@@ -41,6 +42,32 @@ export default {
         name: undefined
       },
       columns: [
+        {
+          title: 'ID',
+          dataIndex: 'history_id',
+          align: 'center',
+          width: '80px',
+          sorter: true
+        },
+        {
+          title: 'IID',
+          dataIndex: 'id',
+          align: 'center',
+          sorter: true
+        },
+        {
+          title: 'Type',
+          dataIndex: 'history_type',
+          align: 'center',
+          width: '80px'
+        },
+        {
+          title: 'Date',
+          dataIndex: 'history_date',
+          scopedSlots: { customRender: 'history_date' },
+          align: 'center',
+          ellipsis: true
+        },
         {
           title: 'Serial No',
           dataIndex: 'serial_no',
@@ -123,12 +150,24 @@ export default {
           width: '80px',
           ellipsis: true,
           scopedSlots: { customRender: 'is_lock' }
+        },
+        {
+          title: 'Author',
+          dataIndex: 'author',
+          align: 'center',
+          ellipsis: true
+        },
+        {
+          title: 'Operator',
+          dataIndex: 'history_user',
+          align: 'center',
+          ellipsis: true
         }
       ],
       loadData: parameter => {
         return getItineraryHistories(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
-          const { data } = res.result
-          return data
+          console.log(res.result)
+          return res.result
         })
       }
     }

@@ -363,6 +363,12 @@ export default {
       modalData: {},
       columns: [
         {
+          title: 'ID',
+          dataIndex: 'id',
+          align: 'center',
+          width: '80px'
+        },
+        {
           title: 'Serial No',
           dataIndex: 'serial_no',
           align: 'center',
@@ -454,6 +460,12 @@ export default {
           width: '80px',
           ellipsis: true,
           scopedSlots: { customRender: 'is_lock' }
+        },
+        {
+          title: 'Author',
+          dataIndex: 'author',
+          align: 'center',
+          ellipsis: true
         },
         {
           title: 'Action',

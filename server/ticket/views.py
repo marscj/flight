@@ -44,7 +44,7 @@ class ItineraryView(viewset.ExtraModelViewSet):
     filter_class = ItineraryFilter
     search_fields = ['']
 
-class ItineraryHistoryView(viewset.ExtraModelViewSet):
+class ItineraryHistoryView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ItineraryHistorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = models.Itinerary.history.all().order_by('-id')
