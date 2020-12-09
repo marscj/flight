@@ -105,7 +105,7 @@
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getTicket, updateTicket, createTicket, deleteTicket } from '@/api/ticket'
-import ItineraryList from '@/views/itinerary/List'
+import ItineraryList from '@/views/itinerary/ActionList'
 import moment from 'moment'
 
 export default {

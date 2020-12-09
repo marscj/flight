@@ -9,6 +9,15 @@
       :loading="loading"
       :pagination="false"
       :scroll="{ x: 1500 }"
+      :row-selection="{
+        selectedRowKeys: selectedRowKeys,
+        onChange: onSelectChange,
+        getCheckboxProps: record => ({
+          props: {
+            disabled: record.isNew
+          }
+        })
+      }"
       bordered
     >
       <template slot="serial_no" slot-scope="text, record, index">
@@ -116,9 +125,28 @@
         </template>
       </template>
     </a-table>
-    <a-button class="w-full mt-4 mb-4 h-12" type="dashed" icon="plus" @click="newMember" v-action:add_itinerary
-      >Add Itinerary</a-button
-    >
+    <a-row>
+      <a-col :span="12"
+        ><a-button
+          class="w-full mt-4 mb-4 h-12 mr-4 "
+          type="primary"
+          :disabled="selectedRowKeys.length == 0"
+          @click="ticket()"
+        >
+          Ticketing
+        </a-button></a-col
+      >
+      <a-col :span="12"
+        ><a-button
+          class="w-full mt-4 mb-4 h-12 ml-4"
+          type="primary"
+          icon="plus"
+          @click="newMember"
+          v-action:add_itinerary
+          >Add Itinerary</a-button
+        ></a-col
+      >
+    </a-row>
 
     <a-modal v-model="modal" title="Select User" width="80%">
       <user-table-list :modal="true" @select="onSelect" />
@@ -352,13 +380,22 @@ export default {
         passport_no: data.passport_no
       })
       this.setData(this.modalData.id, this.modalData)
+    },
+    onSelectChange(selectedRowKeys) {
+      this.selectedRowKeys = selectedRowKeys
+    },
+    ticket() {
+      var data = this.selectedRowKeys.map(f => {
+        return this.data.find(f1 => f1.id === f)
+      })
+      console.log(data)
     }
   },
   data() {
     return {
       data: [],
+      selectedRowKeys: [],
       loading: false,
-      form: {},
       modal: false,
       modalData: {},
       columns: [
