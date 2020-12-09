@@ -21,7 +21,9 @@ class Booking(models.Model):
 
 class Ticket(models.Model):
     serial_no = models.CharField(blank=True, null=True, max_length=32)
+    email = models.CharField(blank=True, null=True, max_length=64)
     name = models.CharField(blank=True, null=True, max_length=64)
+    passport_no = models.CharField(blank=True, null=True, max_length=16)
     airline = models.CharField(blank=True, null=True, max_length=16)
     air_information = models.CharField(blank=True, null=True, max_length=1024)
     air_class = models.CharField(blank=True, null=True, max_length=64)
@@ -44,8 +46,8 @@ class Ticket(models.Model):
 
 class Itinerary(models.Model):
     serial_no = models.CharField(blank=True, null=True, max_length=32)
-    name = models.CharField(blank=True, null=True, max_length=64)
     email = models.CharField(blank=True, null=True, max_length=64)
+    name = models.CharField(blank=True, null=True, max_length=64)
     passport_no = models.CharField(blank=True, null=True, max_length=16)
     entry = models.CharField(blank=True, null=True, max_length=256)
     exit = models.CharField(blank=True, null=True, max_length=256)

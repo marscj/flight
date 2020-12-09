@@ -100,7 +100,7 @@
           </template>
           <template v-else>
             <a-popconfirm
-              title="Are you sure cancel?"
+              title="Are you sure delete?"
               @confirm="remove(data)"
               okText="Yes"
               cancelText="No"

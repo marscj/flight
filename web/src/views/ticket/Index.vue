@@ -1,22 +1,13 @@
 <template>
   <form-validate ref="observer">
     <page-header-wrapper>
-      <a-card class="card" title="Base Information" :bordered="false">
-        <form-item-validate label="Title" vid="title" required>
-          <a-input v-model="form.title" :maxLength="64" :disabled="disabled()" />
-        </form-item-validate>
-        <form-item-validate label="Remark" vid="remark">
-          <a-textarea v-model="form.remark" :maxLength="1024" :rows="5" :disabled="disabled()" />
-        </form-item-validate>
-      </a-card>
-
-      <itinerary-list v-if="post_type == 'edit'" />
+      <a-card class="card" title="Progress" :bordered="false"> </a-card>
     </page-header-wrapper>
 
     <a-row v-if="post_type == 'edit'">
       <a-col :span="12">
         <a-popconfirm
-          title="Are you sure cancel?"
+          title="Are you sure delete?"
           @confirm="onDelete"
           okText="Yes"
           cancelText="No"

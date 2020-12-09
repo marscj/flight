@@ -150,7 +150,7 @@
         <a-row>
           <a-col :span="12">
             <a-popconfirm
-              title="Are you sure cancel?"
+              title="Are you sure delete?"
               @confirm="onDelete"
               okText="Yes"
               cancelText="No"

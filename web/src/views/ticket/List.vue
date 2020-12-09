@@ -53,20 +53,52 @@ export default {
           sorter: true
         },
         {
-          title: 'Title',
-          dataIndex: 'title',
+          title: 'Serial No',
+          dataIndex: 'serial_no',
           align: 'center',
           ellipsis: true
+        },
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          align: 'center',
+          ellipsis: true
+        },
+        {
+          title: 'Line',
+          dataIndex: 'airline',
+          align: 'center',
+          ellipsis: true
+        },
+        {
+          title: 'Info',
+          dataIndex: 'air_information',
+          align: 'center',
+          ellipsis: true
+        },
+        {
+          title: 'Class',
+          dataIndex: 'air_class',
+          align: 'center'
+        },
+        {
+          title: 'Fare',
+          dataIndex: 'fare',
+          align: 'center'
+        },
+        {
+          title: 'Tax',
+          dataIndex: 'tax',
+          align: 'center'
+        },
+        {
+          title: 'Total',
+          dataIndex: 'total',
+          align: 'center'
         },
         {
           title: 'Remark',
           dataIndex: 'remark',
-          align: 'center',
-          ellipsis: true
-        },
-        {
-          title: 'Author',
-          dataIndex: 'author',
           align: 'center',
           ellipsis: true
         },
