@@ -56,6 +56,7 @@ export const asyncRouterMap = [
             path: '/bookings/list/history',
             name: 'BookingHistory',
             component: () => import('@/views/booking/HistoryList'),
+            hidden: true,
             meta: {
               title: 'Booking Histories',
               keepAlive: true,

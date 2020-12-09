@@ -20,6 +20,5 @@ from django.conf.urls import include, url
 urlpatterns = [
     url('api/', include('authorization.urls')),
     url('api/', include('user.urls')),
-    url('api/bookings/', include('ticket.url_booking')),
-    url('api/itineraries/', include('ticket.url_itinerary')),
+    url('api/', include('ticket.urls')),
 ]
