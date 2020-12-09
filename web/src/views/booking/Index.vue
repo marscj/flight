@@ -86,7 +86,6 @@ import moment from 'moment'
 
 export default {
   components: { FormValidate, FormItemValidate, ItineraryList },
-
   props: {
     post_type: {
       type: String,

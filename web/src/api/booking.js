@@ -55,3 +55,19 @@ export function deleteBooking(pk, data) {
     .then(deleteSuccess)
     .catch(deleteFailed)
 }
+
+export function getBookingHistories(parameter) {
+  return axios({
+    url: API.BookingHistory,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function getHistory(pk, parameter) {
+  return axios({
+    url: API.BookingHistory + `${pk}/`,
+    params: parameter,
+    method: 'get'
+  })
+}

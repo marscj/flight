@@ -29,7 +29,7 @@
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getBookings } from '@/api/booking'
+import { getBookingHistories } from '@/api/booking'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -71,9 +71,9 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getBookings(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
-          const { data, extra } = res.result
-          return data
+        return getBookingHistories(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+          const { result } = res
+          return result
         })
       }
     }

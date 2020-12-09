@@ -12,6 +12,7 @@ export const API = {
   Role: '/roles/',
   Department: '/departments/',
   Booking: '/bookings/',
+  BookingHistory: '/bookings/histories/',
   Itinerary: '/itineraries/'
 }
 
