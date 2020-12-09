@@ -1,7 +1,7 @@
 <template>
   <page-header-wrapper>
     <template slot="extra">
-      <router-link v-action:view_booking :to="{ name: 'BookingHistory' }">
+      <router-link v-action:view_ticket :to="{ name: 'TicketHistory' }">
         <a-button type="primary">History</a-button>
       </router-link>
     </template>
@@ -18,7 +18,7 @@
       >
         <template slot="action" slot-scope="data">
           <template>
-            <router-link v-action:view_booking :to="{ name: 'BookingDetail', params: { id: data.id } }">
+            <router-link v-action:view_ticket :to="{ name: 'TicketDetail', params: { id: data.id } }">
               <span>Detail</span>
             </router-link>
           </template>
@@ -30,7 +30,7 @@
 
 <script>
 import { STable, Ellipsis } from '@/components'
-import { getBookings } from '@/api/booking'
+import { getTickets } from '@/api/ticket'
 import { FormValidate, FormItemValidate } from '@/components'
 
 export default {
@@ -78,7 +78,7 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getBookings(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+        return getTickets(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
           const { data, extra } = res.result
           return data
         })
