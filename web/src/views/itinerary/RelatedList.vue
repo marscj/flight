@@ -8,7 +8,7 @@
       :data-source="data"
       :pagination="false"
       :loading="loading"
-      :scroll="{ x: 1500 }"
+      :scroll="{ x: 1200 }"
       bordered
     >
       <template slot="is_lock" slot-scope="data">
@@ -36,12 +36,11 @@
       <itinerary-table-list
         @onData="onData"
         :rowSelection="{
-          hideDefaultSelections: false,
           selectedRowKeys: selectedRowKeys,
           onChange: onSelectChange,
           getCheckboxProps: record => ({
             props: {
-              disabled: false
+              disabled: record.ticket_id != null && !data.find(f => f.id == record.id)
             }
           })
         }"

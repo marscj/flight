@@ -8,13 +8,13 @@
       :data-source="data"
       :loading="loading"
       :pagination="false"
-      :scroll="{ x: 1500 }"
+      :scroll="{ x: 1200 }"
       :row-selection="{
         selectedRowKeys: selectedRowKeys,
         onChange: onSelectChange,
         getCheckboxProps: record => ({
           props: {
-            disabled: record.isNew
+            disabled: record.isNew || record.ticket_id != null
           }
         })
       }"

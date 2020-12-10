@@ -42,7 +42,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     booking_id = serializers.IntegerField(required=True)
-    ticket_id = serializers.IntegerField(required=True)
+    ticket_id = serializers.IntegerField(required=False)
     author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
@@ -99,7 +99,6 @@ class TicketSerializer(serializers.ModelSerializer):
         
         if itineraries is not None:
             for itinerary in itineraries:
-                print(itinerary.user)
                 if itinerary.user is None:
                     raise serializers.ValidationError({'user_id': 'The related itineraries is missing user information'})        
 

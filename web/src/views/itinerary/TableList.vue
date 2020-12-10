@@ -9,7 +9,7 @@
     :pageURI="true"
     :rowSelection="rowSelection"
     bordered
-    :scroll="{ x: 1500 }"
+    :scroll="{ x: 1200 }"
   >
     <template slot="is_lock" slot-scope="data">
       <a-checkbox :checked="data" disabled />
