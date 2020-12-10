@@ -54,7 +54,7 @@ class Itinerary(models.Model):
     user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
     booking = models.ForeignKey(Booking, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
-    tickets = models.ManyToManyField(Ticket, related_name='itineraries', blank=True)
+    ticket = models.ForeignKey(Ticket, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
 
     history = HistoricalRecords(table_name='itinerary_history', custom_model_name='itinerary_history')
 

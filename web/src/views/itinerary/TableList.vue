@@ -14,6 +14,12 @@
     <template slot="is_lock" slot-scope="data">
       <a-checkbox :checked="data" disabled />
     </template>
+
+    <template slot="action" slot-scope="data">
+      <router-link v-action:view_ticket :to="{ name: 'BookingDetail', params: { id: data.booking_id } }">
+        <span>Booking</span>
+      </router-link>
+    </template>
   </s-table>
 </template>
 
@@ -136,6 +142,11 @@ export default {
           dataIndex: 'author',
           align: 'center',
           ellipsis: true
+        },
+        {
+          title: 'Action',
+          align: 'center',
+          scopedSlots: { customRender: 'action' }
         }
       ],
       loadData: parameter => {
