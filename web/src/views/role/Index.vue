@@ -179,7 +179,6 @@ export default {
         permission: permission.id
       })
         .then(res => {
-          console.log(res)
           const { data, extra } = res.result
           this.form = Object.assign({}, data)
           this.permission = Object.assign([], extra.permission)

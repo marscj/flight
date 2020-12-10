@@ -1,7 +1,6 @@
 <template>
   <form-validate ref="observer" :form="form">
     <page-header-wrapper v-if="post_type == 'add'">
-      <itinerary-list title="Related Itineraries"> </itinerary-list>
       <a-card class="card" title="Ticket Info" :bordered="false">
         <a-row class="form-row" :gutter="16">
           <a-col :sm="24" :md="8">
@@ -51,6 +50,10 @@
             </form-item-validate>
           </a-col>
         </a-row>
+      </a-card>
+
+      <a-card class="card" title="Related Itineraries" :bordered="false">
+        <itinerary-list :data="itinerary"> </itinerary-list>
       </a-card>
     </page-header-wrapper>
     <page-header-wrapper v-else>
@@ -103,7 +106,7 @@
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getTicket, updateTicket, createTicket, deleteTicket } from '@/api/ticket'
-import ItineraryList from '@/views/itinerary/ActionList'
+import ItineraryList from '@/views/itinerary/DataList'
 import moment from 'moment'
 
 export default {
@@ -112,6 +115,10 @@ export default {
     post_type: {
       type: String,
       default: 'edit'
+    },
+    itinerary: {
+      type: Array,
+      default: undefined
     }
   },
   data() {

@@ -1,40 +1,30 @@
 <template>
-  <page-header-wrapper>
-    <template slot="extra">
-      <router-link v-action:view_itinerary :to="{ name: 'AllItineraries' }">
-        <a-button type="primary">Back</a-button>
-      </router-link>
+  <a-table
+    ref="table"
+    size="default"
+    :rowKey="record => record.id"
+    :columns="columns"
+    :data="data"
+    bordered
+    :scroll="{ x: 1200 }"
+  >
+    <template slot="footer">
+      <a-button type="primary" class="text-center w-full h-12">Related Itinerary</a-button>
     </template>
-    <a-card>
-      <s-table
-        ref="table"
-        size="default"
-        :rowKey="record => record.history_id"
-        :columns="columns"
-        :data="loadData"
-        showPagination="auto"
-        :pageURI="true"
-        bordered
-        :scroll="{ x: 1500 }"
-      >
-        <template slot="is_lock" slot-scope="data">
-          <a-checkbox :checked="data" disabled />
-        </template>
-      </s-table>
-    </a-card>
-  </page-header-wrapper>
+
+    <template slot="is_lock" slot-scope="data">
+      <a-checkbox :checked="data" disabled />
+    </template>
+  </a-table>
 </template>
 
 <script>
-import { STable, Ellipsis } from '@/components'
-import { getItineraryHistories } from '@/api/itinerary'
-import { FormValidate, FormItemValidate } from '@/components'
-
 export default {
-  components: {
-    STable,
-    FormValidate,
-    FormItemValidate
+  props: {
+    data: {
+      type: Array,
+      default: undefined
+    }
   },
   data() {
     return {
@@ -44,48 +34,36 @@ export default {
       columns: [
         {
           title: 'ID',
-          dataIndex: 'history_id',
-          align: 'center',
-          sorter: true
-        },
-        {
-          title: 'IID',
           dataIndex: 'id',
           align: 'center',
+          width: '80px',
           sorter: true
-        },
-        {
-          title: 'Type',
-          dataIndex: 'history_type',
-          align: 'center'
-        },
-        {
-          title: 'Date',
-          dataIndex: 'history_date',
-          scopedSlots: { customRender: 'history_date' },
-          align: 'center'
         },
         {
           title: 'Serial No',
           dataIndex: 'serial_no',
-          align: 'center'
+          align: 'center',
+          width: '160px'
         },
         {
           title: 'Email',
           dataIndex: 'email',
           align: 'center',
+          width: '180px',
           ellipsis: true
         },
         {
           title: 'Name',
           dataIndex: 'name',
           align: 'center',
+          width: '160px',
           ellipsis: true
         },
         {
           title: 'Passport No',
           dataIndex: 'passport_no',
           align: 'center',
+          width: '160px',
           ellipsis: true
         },
         {
@@ -149,19 +127,8 @@ export default {
           dataIndex: 'author',
           align: 'center',
           ellipsis: true
-        },
-        {
-          title: 'Operator',
-          dataIndex: 'history_user',
-          align: 'center',
-          ellipsis: true
         }
-      ],
-      loadData: parameter => {
-        return getItineraryHistories(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
-          return res.result
-        })
-      }
+      ]
     }
   }
 }

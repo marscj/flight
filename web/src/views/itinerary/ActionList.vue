@@ -1,5 +1,5 @@
 <template>
-  <a-card class="card" :title="title" :bordered="false" v-action:view_itinerary>
+  <a-card class="card" title="Itineraries" :bordered="false" v-action:view_itinerary>
     <a-table
       ref="table"
       size="default"
@@ -124,29 +124,27 @@
           </template>
         </template>
       </template>
+
+      <template slot="footer">
+        <a-row>
+          <a-col :span="12"
+            ><a-button
+              class="w-full   h-12 mr-4 "
+              type="primary"
+              :disabled="selectedRowKeys.length == 0"
+              @click="ticket()"
+            >
+              Ticketing
+            </a-button></a-col
+          >
+          <a-col :span="12"
+            ><a-button class="w-full   h-12 ml-4" type="primary" icon="plus" @click="newMember" v-action:add_itinerary
+              >Add Itinerary</a-button
+            ></a-col
+          >
+        </a-row>
+      </template>
     </a-table>
-    <a-row>
-      <a-col :span="12"
-        ><a-button
-          class="w-full mt-4 mb-4 h-12 mr-4 "
-          type="primary"
-          :disabled="selectedRowKeys.length == 0"
-          @click="ticket()"
-        >
-          Ticketing
-        </a-button></a-col
-      >
-      <a-col :span="12"
-        ><a-button
-          class="w-full mt-4 mb-4 h-12 ml-4"
-          type="primary"
-          icon="plus"
-          @click="newMember"
-          v-action:add_itinerary
-          >Add Itinerary</a-button
-        ></a-col
-      >
-    </a-row>
 
     <a-modal v-model="modal" title="Select User" width="80%">
       <user-table-list :modal="true" @select="onSelect" />
@@ -166,12 +164,6 @@ export default {
     FormValidate,
     FormItemValidate,
     UserTableList
-  },
-  props: {
-    title: {
-      type: String,
-      default: 'Itineraries'
-    }
   },
   mounted() {
     this.loadData()
@@ -316,7 +308,6 @@ export default {
       return 'Error'
     },
     getDescription(error) {
-      console.log(error.response)
       if (
         error != null &&
         error.response != null &&
@@ -394,7 +385,7 @@ export default {
       var data = this.selectedRowKeys.map(f => {
         return this.data.find(f1 => f1.id === f)
       })
-      console.log(data)
+      this.$router.push({ name: 'AddTicket', props: { itinerary: data } })
     }
   },
   data() {
