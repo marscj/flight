@@ -130,14 +130,10 @@ export default {
         return true
       },
       form: {},
-      itineraries: []
+      itineraries: Object.assign([], this.$route.params.itinerary)
     }
   },
   mounted() {
-    if (this.post_type == 'add') {
-      this.itineraries = Object.assign([], this.$route.params.itinerary)
-    }
-
     if (this.$route.params.id) {
       this.getTicketData()
     }

@@ -82,6 +82,7 @@ export default {
   },
   data() {
     return {
+      tableData: [],
       modalData: [],
       selectedRowKeys: [],
       modal: false,

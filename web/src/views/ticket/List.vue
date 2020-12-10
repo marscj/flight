@@ -59,14 +59,14 @@ export default {
           ellipsis: true
         },
         {
-          title: 'Name',
-          dataIndex: 'name',
+          title: 'User',
+          dataIndex: 'user',
           align: 'center',
           ellipsis: true
         },
         {
           title: 'Line',
-          dataIndex: 'air_info',
+          dataIndex: 'air_line',
           align: 'center',
           ellipsis: true
         },

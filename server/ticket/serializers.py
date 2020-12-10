@@ -87,6 +87,11 @@ class TicketSerializer(serializers.ModelSerializer):
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     author = serializers.StringRelatedField(read_only=True)
 
+    user_id = serializers.IntegerField(write_only=True)
+    user = serializers.StringRelatedField(read_only=True)
+
+    itineraries_id = serializers.PrimaryKeyRelatedField(write_only=True, many=True, queryset=Itinerary.objects.all())
+
     class Meta:
         model = Ticket
         fields = '__all__'
