@@ -36,12 +36,12 @@
       <itinerary-table-list
         @onData="onData"
         :rowSelection="{
+          hideDefaultSelections: false,
           selectedRowKeys: selectedRowKeys,
           onChange: onSelectChange,
           getCheckboxProps: record => ({
             props: {
-              disabled: false,
-              checked: true
+              disabled: false
             }
           })
         }"
@@ -210,14 +210,7 @@ export default {
           align: 'center',
           ellipsis: true
         }
-      ],
-      loadData: parameter => {
-        return getItineraries(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
-          const { data } = res.result
-          this.modalData = Object.assign([], data.data)
-          return data
-        })
-      }
+      ]
     }
   }
 }

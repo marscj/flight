@@ -42,6 +42,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     booking_id = serializers.IntegerField(required=True)
+    ticket_id = serializers.IntegerField(required=True)
     author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
