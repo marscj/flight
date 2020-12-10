@@ -144,7 +144,7 @@
       >
     </a-row>
 
-    <a-modal v-model="modal" title="Select User" width="80%" :footer="null">
+    <a-modal v-model="modal" title="Select User" width="90%" :footer="null">
       <user-table-list :modal="true" @select="onSelect" />
     </a-modal>
   </a-card>

@@ -25,8 +25,24 @@
       "
       >Related Itinerary</a-button
     >
-    <a-modal v-model="modal" title="Related Itinerary" width="100%" @ok="handleOk">
-      <itinerary-table-list />
+    <a-modal v-model="modal" title="Related Itinerary" width="90%">
+      <template slot="footer">
+        <a-button key="submit" type="primary" :disabled="selectedRowKeys.length == 0" @click="handleOk">
+          Select
+        </a-button>
+      </template>
+      <itinerary-table-list
+        :rowSelection="{
+          selectedRowKeys: selectedRowKeys,
+          onChange: onSelectChange,
+          getCheckboxProps: record => ({
+            props: {
+              disabled: false,
+              checked: true
+            }
+          })
+        }"
+      />
     </a-modal>
   </a-card>
 </template>
@@ -45,7 +61,10 @@ export default {
     }
   },
   methods: {
-    handleOk() {}
+    handleOk() {},
+    onSelectChange(selectedRowKeys) {
+      this.selectedRowKeys = selectedRowKeys
+    }
   },
   data() {
     return {
