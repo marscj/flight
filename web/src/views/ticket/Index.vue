@@ -1,6 +1,7 @@
 <template>
   <form-validate ref="observer" :form="form">
-    <page-header-wrapper v-if="post_type == 'add'">
+    <page-header-wrapper>
+      <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false"> </a-card>
       <a-card class="card" title="Ticket Info" :bordered="false">
         <a-row class="form-row" :gutter="16">
           <a-col :sm="24" :md="8">
@@ -53,9 +54,6 @@
       </a-card>
 
       <itinerary-related-list :data="itineraries" @select="onSelectItinerary" />
-    </page-header-wrapper>
-    <page-header-wrapper v-else>
-      <a-card class="card" title="Progress" :bordered="false"> </a-card>
     </page-header-wrapper>
 
     <a-row v-if="post_type == 'edit'">
@@ -158,13 +156,21 @@ export default {
     },
     submit() {
       this.updateing = true
-      var form = Object.assign({}, this.form, {})
+      var form = Object.assign({
+        serial_no: this.form.serial_no,
+        air_line: this.form.air_line,
+        air_class: this.form.air_class,
+        fare: this.form.fare,
+        tax: this.form.tax,
+        total: this.form.total,
+        air_info: this.form.air_info,
+        remark: this.form.remark
+      })
 
       if (this.post_type == 'edit') {
         updateTicket(this.$route.params.id, form)
           .then(res => {
             const { data, extra } = res.result
-
             this.extra = extra
           })
           .catch(error => {
