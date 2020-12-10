@@ -53,7 +53,7 @@
         </a-row>
       </a-card>
 
-      <itinerary-related-list :data="itineraries" @select="onSelectItinerary" />
+      <itinerary-related-list @select="onSelectItinerary" />
     </page-header-wrapper>
 
     <a-row v-if="post_type == 'edit'">
@@ -129,8 +129,7 @@ export default {
 
         return true
       },
-      form: {},
-      itineraries: Object.assign([], this.$route.params.itinerary)
+      form: {}
     }
   },
   mounted() {
@@ -206,7 +205,7 @@ export default {
         })
     },
     onSelectItinerary(val) {
-      this.itineraries = Object.assign([], val)
+      console.log('onSelectItinerary')
     }
   }
 }

@@ -4,7 +4,7 @@
     size="default"
     :rowKey="record => record.id"
     :columns="columns"
-    :data="tableData || loadData"
+    :data="loadData"
     showPagination="auto"
     :pageURI="true"
     :rowSelection="rowSelection"
@@ -32,10 +32,6 @@ export default {
     rowSelection: {
       type: Object,
       default: null
-    },
-    tableData: {
-      type: Function,
-      default: undefined
     }
   },
   methods: {},
@@ -145,6 +141,7 @@ export default {
       loadData: parameter => {
         return getItineraries(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
           const { data } = res.result
+          this.$emit('onData', data)
           return data
         })
       }

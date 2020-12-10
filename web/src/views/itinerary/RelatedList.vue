@@ -32,6 +32,7 @@
         </a-button>
       </template>
       <itinerary-table-list
+        @onData="onData"
         :rowSelection="{
           selectedRowKeys: selectedRowKeys,
           onChange: onSelectChange,
@@ -42,7 +43,6 @@
             }
           })
         }"
-        :tableData="loadData"
       />
     </a-modal>
   </a-card>
@@ -56,18 +56,20 @@ export default {
   components: {
     ItineraryTableList
   },
-  props: {
-    data: {
-      type: Array,
-      default: undefined
-    }
-  },
-  watch: {
-    data(val) {
-      this.selectedRowKeys = val != null ? val.map(f => f.id) : []
-    }
-  },
   methods: {
+    getData() {
+      this.loading = true
+      getItineraries({
+        ticket_id: this.$route.params.id
+      })
+        .then(res => {
+          const { data } = res.result
+          this.data = Object.assign([], data)
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
     handleOk() {
       var data = this.selectedRowKeys.map(f => {
         return this.modalData.find(f1 => f1.id === f)
@@ -76,15 +78,19 @@ export default {
       this.modal = false
       this.$emit('select', data)
     },
+    onData(data) {
+      this.modalData = Object.assign([], data)
+    },
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     }
   },
   data() {
     return {
-      tableData: [],
+      loading: false,
+      data: [],
       modalData: [],
-      selectedRowKeys: [],
+      selectedRowKeys: this.data != null && this.data.length > 0 ? this.data.map(f => f.id) : [],
       modal: false,
       queryParam: {
         name: undefined
