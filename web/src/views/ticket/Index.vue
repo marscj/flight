@@ -53,7 +53,7 @@
       </a-card>
 
       <a-card class="card" title="Related Itineraries" :bordered="false">
-        <itinerary-list :data="itinerary"> </itinerary-list>
+        <itinerary-list :data="$route.params.itinerary"> </itinerary-list>
       </a-card>
     </page-header-wrapper>
     <page-header-wrapper v-else>
@@ -141,6 +141,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route.params.itinerary)
     if (this.$route.params.id) {
       this.getTicketData()
     }

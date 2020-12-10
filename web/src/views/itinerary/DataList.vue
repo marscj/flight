@@ -4,9 +4,11 @@
     size="default"
     :rowKey="record => record.id"
     :columns="columns"
-    :data="data"
+    :data-source="data"
+    :loading="loading"
+    :pagination="false"
+    :scroll="{ x: 1500 }"
     bordered
-    :scroll="{ x: 1200 }"
   >
     <template slot="footer">
       <a-button type="primary" class="text-center w-full h-12">Related Itinerary</a-button>
@@ -25,6 +27,9 @@ export default {
       type: Array,
       default: undefined
     }
+  },
+  mounted() {
+    console.log(this.data, '-----')
   },
   data() {
     return {
@@ -133,5 +138,3 @@ export default {
   }
 }
 </script>
-
-<style></style>

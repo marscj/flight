@@ -8,7 +8,7 @@
     showPagination="auto"
     :pageURI="true"
     bordered
-    :scroll="{ x: 1200 }"
+    :scroll="{ x: 1500 }"
   >
     <template slot="is_lock" slot-scope="data">
       <a-checkbox :checked="data" disabled />
