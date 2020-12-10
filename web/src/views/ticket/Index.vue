@@ -53,7 +53,18 @@
       </a-card>
 
       <a-card class="card" title="Related Itineraries" :bordered="false">
-        <itinerary-list :data="$route.params.itinerary"> </itinerary-list>
+        <itinerary-list :data="itineraries"> </itinerary-list>
+
+        <a-button
+          type="primary"
+          class="text-center w-full h-12 mt-4"
+          @click="
+            () => {
+              modal = true
+            }
+          "
+          >Related Itinerary</a-button
+        >
       </a-card>
     </page-header-wrapper>
     <page-header-wrapper v-else>
@@ -100,6 +111,10 @@
         </a-button>
       </a-col>
     </a-row>
+
+    <a-modal v-model="modal" title="Related Itinerary" width="100%">
+      <itinerary-modal-list />
+    </a-modal>
   </form-validate>
 </template>
 
@@ -107,18 +122,15 @@
 import { FormValidate, FormItemValidate } from '@/components'
 import { getTicket, updateTicket, createTicket, deleteTicket } from '@/api/ticket'
 import ItineraryList from '@/views/itinerary/DataList'
+import ItineraryModalList from '@/views/itinerary/TableList'
 import moment from 'moment'
 
 export default {
-  components: { FormValidate, FormItemValidate, ItineraryList },
+  components: { FormValidate, FormItemValidate, ItineraryList, ItineraryModalList },
   props: {
     post_type: {
       type: String,
       default: 'edit'
-    },
-    itinerary: {
-      type: Array,
-      default: undefined
     }
   },
   data() {
@@ -137,11 +149,15 @@ export default {
         return true
       },
       form: {},
-      content: ''
+      itineraries: [],
+      modal: false
     }
   },
   mounted() {
-    console.log(this.$route.params.itinerary)
+    if (this.post_type == 'add') {
+      this.itineraries = Object.assign([], this.$route.params.itinerary)
+    }
+
     if (this.$route.params.id) {
       this.getTicketData()
     }

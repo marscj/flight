@@ -5,15 +5,10 @@
     :rowKey="record => record.id"
     :columns="columns"
     :data-source="data"
-    :loading="loading"
     :pagination="false"
     :scroll="{ x: 1500 }"
     bordered
   >
-    <template slot="footer">
-      <a-button type="primary" class="text-center w-full h-12">Related Itinerary</a-button>
-    </template>
-
     <template slot="is_lock" slot-scope="data">
       <a-checkbox :checked="data" disabled />
     </template>
@@ -27,9 +22,6 @@ export default {
       type: Array,
       default: undefined
     }
-  },
-  mounted() {
-    console.log(this.data, '-----')
   },
   data() {
     return {

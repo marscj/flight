@@ -385,7 +385,7 @@ export default {
       var data = this.selectedRowKeys.map(f => {
         return this.data.find(f1 => f1.id === f)
       })
-      this.$router.push({ name: 'AddTicket', params: { itinerary: data }, props: { itinerary: data } })
+      this.$router.push({ name: 'AddTicket', params: { itinerary: data } })
     }
   },
   data() {
