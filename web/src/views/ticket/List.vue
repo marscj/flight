@@ -59,12 +59,6 @@ export default {
           ellipsis: true
         },
         {
-          title: 'User',
-          dataIndex: 'user',
-          align: 'center',
-          ellipsis: true
-        },
-        {
           title: 'Line',
           dataIndex: 'air_line',
           align: 'center',
@@ -99,6 +93,12 @@ export default {
         {
           title: 'Remark',
           dataIndex: 'remark',
+          align: 'center',
+          ellipsis: true
+        },
+        {
+          title: 'Author',
+          dataIndex: 'author',
           align: 'center',
           ellipsis: true
         },

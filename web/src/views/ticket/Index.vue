@@ -53,7 +53,9 @@
         </a-row>
       </a-card>
 
-      <itinerary-related-list @select="onSelectItinerary" />
+      <form-item-validate vid="user_id">
+        <itinerary-related-list @select="onSelectItinerary" />
+      </form-item-validate>
     </page-header-wrapper>
 
     <a-row v-if="post_type == 'edit'">

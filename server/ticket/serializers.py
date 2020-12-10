@@ -87,9 +87,6 @@ class TicketSerializer(serializers.ModelSerializer):
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     author = serializers.StringRelatedField(read_only=True)
 
-    user_id = serializers.IntegerField(write_only=True)
-    user = serializers.StringRelatedField(read_only=True)
-
     itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Itinerary.objects.all(), source='itineraries')
 
     class Meta:
@@ -97,6 +94,14 @@ class TicketSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, validated_data):
+        itineraries = validated_data.get('itineraries', None)
+        
+        if itineraries is not None:
+            for itinerary in itineraries:
+                print(itinerary.user)
+                if itinerary.user is None:
+                    raise serializers.ValidationError({'user_id': 'The related itineraries is missing user information'})        
+
         return super().validate(validated_data)
 
 class TicketHistorySerializer(serializers.ModelSerializer):

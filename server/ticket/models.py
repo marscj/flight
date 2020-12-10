@@ -13,7 +13,6 @@ class Booking(models.Model):
     remark = models.CharField(blank=True, null=True, max_length=1024)
 
     author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
-
     history = HistoricalRecords(table_name='booking_history', custom_model_name='booking_history')
 
     class Meta:
@@ -33,9 +32,7 @@ class Ticket(models.Model):
     is_booking = models.BooleanField(default=False, blank=True, null=True)
     is_complete = models.BooleanField(default=False, blank=True, null=True)
 
-    user = models.ForeignKey(User, related_name='ticket_users', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='ticket_authors', on_delete=models.SET_NULL, blank=True, null=True)
-
     history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
 
     class Meta:
