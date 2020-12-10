@@ -52,20 +52,7 @@
         </a-row>
       </a-card>
 
-      <a-card class="card" title="Related Itineraries" :bordered="false">
-        <itinerary-list :data="itineraries"> </itinerary-list>
-
-        <a-button
-          type="primary"
-          class="text-center w-full h-12 mt-4"
-          @click="
-            () => {
-              modal = true
-            }
-          "
-          >Related Itinerary</a-button
-        >
-      </a-card>
+      <itinerary-related-list :data="itineraries" />
     </page-header-wrapper>
     <page-header-wrapper v-else>
       <a-card class="card" title="Progress" :bordered="false"> </a-card>
@@ -111,22 +98,18 @@
         </a-button>
       </a-col>
     </a-row>
-
-    <a-modal v-model="modal" title="Related Itinerary" width="100%">
-      <itinerary-modal-list />
-    </a-modal>
   </form-validate>
 </template>
 
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getTicket, updateTicket, createTicket, deleteTicket } from '@/api/ticket'
-import ItineraryList from '@/views/itinerary/DataList'
-import ItineraryModalList from '@/views/itinerary/TableList'
+import ItineraryRelatedList from '@/views/itinerary/RelatedList'
+
 import moment from 'moment'
 
 export default {
-  components: { FormValidate, FormItemValidate, ItineraryList, ItineraryModalList },
+  components: { FormValidate, FormItemValidate, ItineraryRelatedList },
   props: {
     post_type: {
       type: String,
@@ -149,8 +132,7 @@ export default {
         return true
       },
       form: {},
-      itineraries: [],
-      modal: false
+      itineraries: []
     }
   },
   mounted() {

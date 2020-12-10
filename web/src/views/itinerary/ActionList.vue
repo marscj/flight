@@ -124,29 +124,27 @@
           </template>
         </template>
       </template>
-
-      <template slot="footer">
-        <a-row>
-          <a-col :span="12"
-            ><a-button
-              class="w-full   h-12 mr-4 "
-              type="primary"
-              :disabled="selectedRowKeys.length == 0"
-              @click="ticket()"
-            >
-              Ticketing
-            </a-button></a-col
-          >
-          <a-col :span="12"
-            ><a-button class="w-full   h-12 ml-4" type="primary" icon="plus" @click="newMember" v-action:add_itinerary
-              >Add Itinerary</a-button
-            ></a-col
-          >
-        </a-row>
-      </template>
     </a-table>
 
-    <a-modal v-model="modal" title="Select User" width="80%">
+    <a-row>
+      <a-col :span="12"
+        ><a-button
+          class="w-full mt-4 h-12 mr-4 "
+          type="primary"
+          :disabled="selectedRowKeys.length == 0"
+          @click="ticket()"
+        >
+          Ticketing
+        </a-button></a-col
+      >
+      <a-col :span="12"
+        ><a-button class="w-full mt-4 h-12 ml-4" type="primary" icon="plus" @click="newMember" v-action:add_itinerary
+          >Add Itinerary</a-button
+        ></a-col
+      >
+    </a-row>
+
+    <a-modal v-model="modal" title="Select User" width="80%" :footer="null">
       <user-table-list :modal="true" @select="onSelect" />
     </a-modal>
   </a-card>

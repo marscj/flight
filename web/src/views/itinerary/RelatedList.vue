@@ -1,30 +1,56 @@
 <template>
-  <a-table
-    ref="table"
-    size="default"
-    :rowKey="record => record.id"
-    :columns="columns"
-    :data-source="data"
-    :pagination="false"
-    :scroll="{ x: 1500 }"
-    bordered
-  >
-    <template slot="is_lock" slot-scope="data">
-      <a-checkbox :checked="data" disabled />
-    </template>
-  </a-table>
+  <a-card class="card" title="Related Itineraries" :bordered="false">
+    <a-table
+      ref="table"
+      size="default"
+      :rowKey="record => record.id"
+      :columns="columns"
+      :data-source="data"
+      :pagination="false"
+      :scroll="{ x: 1500 }"
+      bordered
+    >
+      <template slot="is_lock" slot-scope="data">
+        <a-checkbox :checked="data" disabled />
+      </template>
+    </a-table>
+
+    <a-button
+      type="primary"
+      class="text-center w-full h-12 mt-4"
+      @click="
+        () => {
+          modal = true
+        }
+      "
+      >Related Itinerary</a-button
+    >
+    <a-modal v-model="modal" title="Related Itinerary" width="100%" @ok="handleOk">
+      <itinerary-table-list />
+    </a-modal>
+  </a-card>
 </template>
 
 <script>
+import ItineraryTableList from '@/views/itinerary/TableList'
+
 export default {
+  components: {
+    ItineraryTableList
+  },
   props: {
     data: {
       type: Array,
       default: undefined
     }
   },
+  methods: {
+    handleOk() {}
+  },
   data() {
     return {
+      selectedRowKeys: [],
+      modal: false,
       queryParam: {
         name: undefined
       },

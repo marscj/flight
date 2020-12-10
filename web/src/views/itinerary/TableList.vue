@@ -7,6 +7,15 @@
     :data="loadData"
     showPagination="auto"
     :pageURI="true"
+    :rowSelection="{
+      selectedRowKeys: selectedRowKeys,
+      onChange: onSelectChange,
+      getCheckboxProps: record => ({
+        props: {
+          disabled: false
+        }
+      })
+    }"
     bordered
     :scroll="{ x: 1500 }"
   >
@@ -27,8 +36,20 @@ export default {
     FormValidate,
     FormItemValidate
   },
+  props: {
+    rowSelection: {
+      type: Object,
+      default: null
+    }
+  },
+  methods: {
+    onSelectChange(selectedRowKeys) {
+      this.selectedRowKeys = selectedRowKeys
+    }
+  },
   data() {
     return {
+      selectedRowKeys: [],
       queryParam: {
         name: undefined
       },
