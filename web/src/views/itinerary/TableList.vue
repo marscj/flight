@@ -4,7 +4,7 @@
     size="default"
     :rowKey="record => record.id"
     :columns="columns"
-    :data="loadData"
+    :data="tableData || loadData"
     showPagination="auto"
     :pageURI="true"
     :rowSelection="rowSelection"
@@ -32,6 +32,10 @@ export default {
     rowSelection: {
       type: Object,
       default: null
+    },
+    tableData: {
+      type: Function,
+      default: undefined
     }
   },
   methods: {},
@@ -148,5 +152,3 @@ export default {
   }
 }
 </script>
-
-<style></style>

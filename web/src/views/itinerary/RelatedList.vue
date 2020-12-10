@@ -42,6 +42,7 @@
             }
           })
         }"
+        :tableData="loadData"
       />
     </a-modal>
   </a-card>
@@ -49,6 +50,7 @@
 
 <script>
 import ItineraryTableList from '@/views/itinerary/TableList'
+import { getItineraries } from '@/api/itinerary'
 
 export default {
   components: {
@@ -60,14 +62,27 @@ export default {
       default: undefined
     }
   },
+  watch: {
+    data(val) {
+      this.selectedRowKeys = val != null ? val.map(f => f.id) : []
+    }
+  },
   methods: {
-    handleOk() {},
+    handleOk() {
+      var data = this.selectedRowKeys.map(f => {
+        return this.modalData.find(f1 => f1.id === f)
+      })
+
+      this.modal = false
+      this.$emit('select', data)
+    },
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     }
   },
   data() {
     return {
+      modalData: [],
       selectedRowKeys: [],
       modal: false,
       queryParam: {
@@ -170,7 +185,14 @@ export default {
           align: 'center',
           ellipsis: true
         }
-      ]
+      ],
+      loadData: parameter => {
+        return getItineraries(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+          const { data } = res.result
+          this.modalData = Object.assign([], data.data)
+          return data
+        })
+      }
     }
   }
 }

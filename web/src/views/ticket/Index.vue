@@ -52,7 +52,7 @@
         </a-row>
       </a-card>
 
-      <itinerary-related-list :data="itineraries" />
+      <itinerary-related-list :data="itineraries" @select="onSelectItinerary" />
     </page-header-wrapper>
     <page-header-wrapper v-else>
       <a-card class="card" title="Progress" :bordered="false"> </a-card>
@@ -202,6 +202,9 @@ export default {
         .finally(() => {
           this.updateing = false
         })
+    },
+    onSelectItinerary(val) {
+      this.itineraries = Object.assign([], val)
     }
   }
 }
