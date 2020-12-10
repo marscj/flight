@@ -64,6 +64,7 @@ export default {
         'select',
         val.map(f => f.id)
       )
+      this.selectedRowKeys = val.map(f => f.id)
     }
   },
   mounted() {

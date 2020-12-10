@@ -90,11 +90,14 @@ class TicketSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(write_only=True)
     user = serializers.StringRelatedField(read_only=True)
 
-    itineraries_id = serializers.PrimaryKeyRelatedField(write_only=True, many=True, queryset=Itinerary.objects.all())
+    itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Itinerary.objects.all(), source='itineraries')
 
     class Meta:
         model = Ticket
         fields = '__all__'
+
+    def validate(self, validated_data):
+        return super().validate(validated_data)
 
 class TicketHistorySerializer(serializers.ModelSerializer):
 
