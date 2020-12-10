@@ -129,7 +129,8 @@ export default {
 
         return true
       },
-      form: {}
+      form: {},
+      itineraries_id: []
     }
   },
   mounted() {
@@ -159,7 +160,8 @@ export default {
         tax: this.form.tax,
         total: this.form.total,
         air_info: this.form.air_info,
-        remark: this.form.remark
+        remark: this.form.remark,
+        itineraries_id: this.itineraries_id
       })
 
       if (this.post_type == 'edit') {
@@ -205,7 +207,7 @@ export default {
         })
     },
     onSelectItinerary(val) {
-      console.log('onSelectItinerary')
+      this.itineraries_id = Object.assign([], val)
     }
   }
 }

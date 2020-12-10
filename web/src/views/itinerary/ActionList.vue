@@ -169,7 +169,7 @@ export default {
   methods: {
     loadData() {
       this.loading = true
-      getItineraries({ booking_id: parseInt(this.$route.params.id) })
+      getItineraries({ booking_id: parseInt(this.$route.params.id), sorter: 'id' })
         .then(res => {
           const { data } = res.result
           this.data = Object.assign(

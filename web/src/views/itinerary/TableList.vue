@@ -141,7 +141,7 @@ export default {
       loadData: parameter => {
         return getItineraries(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
           const { data } = res.result
-          this.$emit('onData', data)
+          this.$emit('onData', data.data)
           return data
         })
       }

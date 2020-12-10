@@ -9,7 +9,7 @@ from . import serializers
 from . import models
 
 class BookingFilter(django_filters.FilterSet):
-    id = django_filters.NumberFilter('id')
+    id = django_filters.NumberFilter('-id')
 
 class BookingView(viewset.ExtraModelViewSet):
     serializer_class = serializers.BookingSerializer
@@ -34,12 +34,14 @@ class BookingHistoryView(viewsets.ReadOnlyModelViewSet):
     search_fields = ['title', 'author__email', 'author__first_name', 'author__last_name']
 
 class ItineraryFilter(django_filters.FilterSet):
-    booking_id = django_filters.NumberFilter('booking_id')
+    booking_id = django_filters.NumberFilter('booking__id')
+    ticket_id = django_filters.NumberFilter('ticket__id')
+
 
 class ItineraryView(viewset.ExtraModelViewSet):
     serializer_class = serializers.ItinerarySerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = models.Itinerary.objects.all().order_by('id')
+    queryset = models.Itinerary.objects.all().order_by('-id')
  
     filter_class = ItineraryFilter
     search_fields = ['']
@@ -58,7 +60,7 @@ class TicketFilter(django_filters.FilterSet):
 class TicketView(viewset.ExtraModelViewSet):
     serializer_class = serializers.TicketSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = models.Ticket.objects.all().order_by('id')
+    queryset = models.Ticket.objects.all().order_by('-id')
  
     filter_class = TicketFilter
     search_fields = ['']
@@ -77,7 +79,7 @@ class CommentFilter(django_filters.FilterSet):
 class CommentView(viewset.ExtraModelViewSet):
     serializer_class = serializers.CommentSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = models.Comment.objects.all().order_by('id')
+    queryset = models.Comment.objects.all().order_by('-id')
  
     filter_class = CommentFilter
     search_fields = ['']
@@ -88,7 +90,7 @@ class UpLoadFilter(django_filters.FilterSet):
 class UpLoadView(viewset.ExtraModelViewSet):
     serializer_class = serializers.UpLoadSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = models.UpLoad.objects.all().order_by('id')
+    queryset = models.UpLoad.objects.all().order_by('-id')
  
     filter_class = UpLoadFilter
     search_fields = ['']

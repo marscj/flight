@@ -7,6 +7,7 @@
       :columns="columns"
       :data-source="data"
       :pagination="false"
+      :loading="loading"
       :scroll="{ x: 1500 }"
       bordered
     >
@@ -18,6 +19,7 @@
     <a-button
       type="primary"
       class="text-center w-full h-12 mt-4"
+      :disabled="loading"
       @click="
         () => {
           modal = true
@@ -27,7 +29,7 @@
     >
     <a-modal v-model="modal" title="Related Itinerary" width="90%">
       <template slot="footer">
-        <a-button key="submit" type="primary" :disabled="selectedRowKeys.length == 0" @click="handleOk">
+        <a-button key="submit" type="primary" @click="handleOk">
           Select
         </a-button>
       </template>
@@ -56,6 +58,21 @@ export default {
   components: {
     ItineraryTableList
   },
+  watch: {
+    data(val) {
+      this.$emit(
+        'select',
+        val.map(f => f.id)
+      )
+    }
+  },
+  mounted() {
+    if (this.$route.params.id) {
+      this.getData()
+    } else {
+      this.data = Object.assign([], this.$route.params.itinerary)
+    }
+  },
   methods: {
     getData() {
       this.loading = true
@@ -76,7 +93,7 @@ export default {
       })
 
       this.modal = false
-      this.$emit('select', data)
+      this.data = Object.assign([], data)
     },
     onData(data) {
       this.modalData = Object.assign([], data)
@@ -90,7 +107,7 @@ export default {
       loading: false,
       data: [],
       modalData: [],
-      selectedRowKeys: this.data != null && this.data.length > 0 ? this.data.map(f => f.id) : [],
+      selectedRowKeys: [],
       modal: false,
       queryParam: {
         name: undefined
