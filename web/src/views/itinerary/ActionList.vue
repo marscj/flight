@@ -1,5 +1,5 @@
 <template>
-  <a-card class="card" title="Itineraries" :bordered="false" v-action:view_itinerary>
+  <a-card class="card" :title="title" :bordered="false" v-action:view_itinerary>
     <a-table
       ref="table"
       size="default"
@@ -166,6 +166,12 @@ export default {
     FormValidate,
     FormItemValidate,
     UserTableList
+  },
+  props: {
+    title: {
+      type: String,
+      default: 'Itineraries'
+    }
   },
   mounted() {
     this.loadData()

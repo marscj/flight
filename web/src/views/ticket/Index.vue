@@ -1,9 +1,7 @@
 <template>
   <form-validate ref="observer" :form="form">
     <page-header-wrapper v-if="post_type == 'add'">
-      <a-card class="card" title="Related Itinerary" :bordered="false">
-        <itinerary-list />
-      </a-card>
+      <itinerary-list title="Related Itineraries"> </itinerary-list>
       <a-card class="card" title="Ticket Info" :bordered="false">
         <a-row class="form-row" :gutter="16">
           <a-col :sm="24" :md="8">
