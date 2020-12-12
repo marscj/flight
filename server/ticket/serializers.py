@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from .models import *
+from . import models
 
 UserModel = get_user_model()
 
@@ -26,7 +26,7 @@ class BookingSerializer(serializers.ModelSerializer):
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     
     class Meta:
-        model = Booking
+        model = models.Booking
         fields = '__all__'
 
 class BookingHistorySerializer(serializers.ModelSerializer):
@@ -35,7 +35,7 @@ class BookingHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.StringRelatedField(read_only=True)
     
     class Meta:
-        model = Booking.history.model
+        model = models.Booking.history.model
         fields = '__all__'
 
 class ItinerarySerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
-        model = Itinerary
+        model = models.Itinerary
         fields = '__all__'
 
     def validate(self, validate_data):
@@ -80,7 +80,7 @@ class ItineraryHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.StringRelatedField(read_only=True)
     
     class Meta:
-        model = Itinerary.history.model
+        model = models.Itinerary.history.model
         fields = '__all__'
 
 class TicketSerializer(serializers.ModelSerializer):
@@ -89,10 +89,10 @@ class TicketSerializer(serializers.ModelSerializer):
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     author = serializers.StringRelatedField(read_only=True)
 
-    itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Itinerary.objects.all(), source='itineraries')
+    itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=models.Itinerary.objects.all(), source='itineraries')
 
     class Meta:
-        model = Ticket
+        model = models.Ticket
         fields = '__all__'
 
     def validate(self, validated_data):
@@ -115,23 +115,23 @@ class TicketHistorySerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
-        model =  Ticket.history.model
+        model =  models.Ticket.history.model
         fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Comment
+        model = models.Comment
         fiels = '__all__'
 
 class UpLoadSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = UpLoad
+        model = models.UpLoad
         fields = '__all__'
 
 class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Message
+        model = models.Message
         fields = '__all__'

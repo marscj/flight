@@ -33,32 +33,24 @@
             <a-list>
               <a-list-item :key="index" v-for="(item, index) in messages">
                 <a-list-item-meta>
-                  <!-- <a-avatar slot="avatar" :src="item.user.avatar" /> -->
-                  <!-- <div slot="title">
-                    <span>{{ item.user.nickname }}</span
-                    >&nbsp; 在&nbsp;<a href="#">{{ item.project.name }}</a
-                    >&nbsp; <span>{{ item.project.action }}</span
-                    >&nbsp;
-                    <a href="#">{{ item.project.event }}</a>
-                  </div> -->
                   <div slot="title">
                     <router-link
-                      v-if="item.model_name == 'Booking'"
+                      v-if="item.model == 'Booking'"
                       :to="{ name: 'BookingDetail', params: { id: item.model_id } }"
                     >
-                      <span>{{ item.message }}</span>
+                      <span>{{ item.json }}</span>
                     </router-link>
                     <router-link
-                      v-else-if="item.model_name == 'Ticket'"
+                      v-else-if="item.model == 'Ticket'"
                       :to="{ name: 'TicketDetail', params: { id: item.model_id } }"
                     >
-                      <span>{{ item.message }}</span>
+                      <span>{{ item.json }}</span>
                     </router-link>
-                    <span v-else-if="item.model_name == 'Itinerary'">
-                      {{ item.message }}
-                    </span>
+                    <router-link v-if="item.model == 'Itinerary'" :to="{ name: 'BookingDetail', params: { id: 1 } }">
+                      <span>{{ item.json['booking'] }}</span>
+                    </router-link>
                   </div>
-                  <div slot="description">{{ item.time }}</div>
+                  <div slot="description">{{ item.json['history_date'] | moment }}</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -122,7 +114,13 @@ export default {
       this.loading = true
       getMessages()
         .then(res => {
-          this.messages = Object.assign([], res.result)
+          this.messages = Object.assign(
+            [],
+            res.result.map(f => {
+              f.json = JSON.parse(f.json)
+              return f
+            })
+          )
         })
         .finally(() => (this.loading = false))
     }
