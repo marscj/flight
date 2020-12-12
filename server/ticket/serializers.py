@@ -97,11 +97,16 @@ class TicketSerializer(serializers.ModelSerializer):
     def validate(self, validated_data):
         itineraries = validated_data.get('itineraries', None)
         
+
         if itineraries is not None:
             for itinerary in itineraries:
                 if itinerary.user is None:
-                    raise serializers.ValidationError({'user_id': 'The related itineraries is missing user information'})        
+                    raise serializers.ValidationError('The itinerary id %s is missing user information' % itinerary.id)
+                
+                if itinerary.ticket is not None and itinerary.ticket.id != self.instance.id:
+                        raise serializers.ValidationError('The itinerary id %s has ticket' % itinerary.id)
 
+                    
         return super().validate(validated_data)
 
 class TicketHistorySerializer(serializers.ModelSerializer):
