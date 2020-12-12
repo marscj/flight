@@ -173,7 +173,7 @@ export const asyncRouterMap = [
         children: [
           {
             path: '/users/list',
-            name: 'AllUser',
+            name: 'AllUsers',
             component: () => import('@/views/user/List'),
             meta: { title: 'All Users', keepAlive: true, permission: ['view_user'] }
           },

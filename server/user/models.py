@@ -8,6 +8,9 @@ class Department(models.Model):
 
     class Meta:
         db_table = 'department'
+
+    def __str__(self):
+        return self.name
         
 class User(AbstractUser):
 

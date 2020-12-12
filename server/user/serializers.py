@@ -122,6 +122,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     department_id = serializers.IntegerField(required=False, allow_null=True)
 
+    department = serializers.StringRelatedField(read_only=True)
+
     groups_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Group.objects.all(), source='groups')
 
     class Meta:
@@ -130,9 +132,9 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'email', 'password', 'first_name', 'last_name', 'roles', 'is_active', 'is_staff', 'is_superuser',
             'possport_type', 'passport_code', 'passport_no', 'passport_sex', 'passport_nationality', 'passport_date_birth',
             'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
-            'name', 'department_id', 'groups_id'
+            'name', 'department_id', 'groups_id', 'department'
         )
-        read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined')
+        read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined', 'department')
 
     def get_name(self, obj):
         return obj.full_name or obj.email
