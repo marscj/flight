@@ -34,10 +34,14 @@
               <a-list-item :key="index" v-for="(item, index) in messages">
                 <a-list-item-meta>
                   <!-- <a-avatar slot="avatar" :src="item.user.avatar" /> -->
-                  <div slot="title">
-                    <a href="#">{{ item.message }}</a>
-                  </div>
-                  <div slot="description">{{ item.date }}</div>
+                  <!-- <div slot="title">
+                    <span>{{ item.user.nickname }}</span
+                    >&nbsp; 在&nbsp;<a href="#">{{ item.project.name }}</a
+                    >&nbsp; <span>{{ item.project.action }}</span
+                    >&nbsp;
+                    <a href="#">{{ item.project.event }}</a>
+                  </div> -->
+                  <div slot="description">{{ item.time }}</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
