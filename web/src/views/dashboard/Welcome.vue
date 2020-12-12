@@ -31,17 +31,13 @@
         <a-col :xl="16" :lg="24" :md="24" :sm="24" :xs="24">
           <a-card :loading="loading" title="Messages" :bordered="false">
             <a-list>
-              <a-list-item :key="index" v-for="(item, index) in activities">
+              <a-list-item :key="index" v-for="(item, index) in messages">
                 <a-list-item-meta>
-                  <a-avatar slot="avatar" :src="item.user.avatar" />
+                  <!-- <a-avatar slot="avatar" :src="item.user.avatar" /> -->
                   <div slot="title">
-                    <span>{{ item.user.nickname }}</span
-                    >&nbsp; 在&nbsp;<a href="#">{{ item.project.name }}</a
-                    >&nbsp; <span>{{ item.project.action }}</span
-                    >&nbsp;
-                    <a href="#">{{ item.project.event }}</a>
+                    <a href="#">{{ item.message }}</a>
                   </div>
-                  <div slot="description">{{ item.time }}</div>
+                  <div slot="description">{{ item.date }}</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -65,17 +61,13 @@
 <script>
 import { timeFix } from '@/utils/util'
 import { mapState } from 'vuex'
-import { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
-import { Radar } from '@/components'
+import { getMessages } from '@/api/messages'
 
 const DataSet = require('@antv/data-set')
 
 export default {
   name: 'Welcome',
-  components: {
-    PageHeaderWrapper,
-    Radar
-  },
+  components: {},
   data() {
     return {
       timeFix: timeFix(),
@@ -84,6 +76,7 @@ export default {
 
       projects: [],
       loading: true,
+      messages: [],
       activities: []
     }
   },
@@ -100,8 +93,19 @@ export default {
     this.user = this.userInfo
     this.avatar = this.userInfo.avatar
   },
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.getMessageData()
+  },
+  methods: {
+    getMessageData() {
+      this.loading = true
+      getMessages()
+        .then(res => {
+          this.messages = Object.assign([], res.result)
+        })
+        .finally(() => (this.loading = false))
+    }
+  }
 }
 </script>
 

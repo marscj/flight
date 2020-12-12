@@ -94,6 +94,8 @@ class Message(models.Model):
     message = models.TextField()
     model_id = models.IntegerField(null=True, blank=True)
     model_name = models.CharField(null=True, blank=True, max_length=32)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='messages', blank=True, null=True)
+    date = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'message'
@@ -110,10 +112,10 @@ def pre_create_historical_record_callback(sender, **kwargs):
 def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
 
     if history_instance.history_type == '+':
-        Message.objects.create(message='%s Added a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__)
+        Message.objects.create(message='%s Added a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__, author=history_user)
 
     elif history_instance.history_type == '~':
-        Message.objects.create(message='%s Changed a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__)
+        Message.objects.create(message='%s Changed a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__, author=history_user)
 
     elif history_instance.history_type == '-':
-        Message.objects.create(message='%s Deleted a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__)
+        Message.objects.create(message='%s Deleted a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__, author=history_user)

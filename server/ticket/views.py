@@ -93,3 +93,9 @@ class UpLoadView(viewset.ExtraModelViewSet):
  
     filter_class = UpLoadFilter
     search_fields = ['']
+
+
+class MessageView(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.MessageSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = models.Message.objects.all().order_by('-id')[:10]

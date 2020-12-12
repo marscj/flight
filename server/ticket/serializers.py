@@ -129,3 +129,9 @@ class UpLoadSerializer(serializers.ModelSerializer):
     class Meta:
         model = UpLoad
         fields = '__all__'
+
+class MessageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Message
+        fields = '__all__'

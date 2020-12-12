@@ -16,7 +16,8 @@ export const API = {
   Itinerary: '/itineraries/',
   ItineraryHistory: '/itinerary/histories/',
   Ticket: '/tickets/',
-  TicketHistory: '/ticket/histories/'
+  TicketHistory: '/ticket/histories/',
+  Message: '/messages/'
 }
 
 export function updateSuccess(res) {
