@@ -54,21 +54,39 @@
                       <!-- <a-avatar slot="avatar" :src="item.user.avatar" /> -->
                       <span>{{ data.json['history_user'] }} </span>
                       <span>{{ actionString[data.json['history_type']] }}</span>
-                      <router-link :to="{ name: 'BookingDetail', params: { id: data.json['id'] } }">
+                      <router-link
+                        v-if="data.json['history_type'] == '-'"
+                        :to="{ name: 'BookingHistory', params: { id: data.json['id'] } }"
+                      >
+                        Booking for ID:{{ data.json['id'] }}
+                      </router-link>
+                      <router-link v-else :to="{ name: 'BookingDetail', params: { id: data.json['id'] } }">
                         Booking for ID:{{ data.json['id'] }}
                       </router-link>
                     </template>
                     <template v-if="data.json['model'] == 'Ticket'">
                       <span>{{ data.json['history_user'] }} </span>
                       <span>{{ actionString[data.json['history_type']] }}</span>
-                      <router-link :to="{ name: 'TicketDetail', params: { id: data.json['id'] } }">
+                      <router-link
+                        v-if="data.json['history_type'] == '-'"
+                        :to="{ name: 'TicketHistory', params: { id: data.json['id'] } }"
+                      >
+                        Ticket for ID:{{ data.json['id'] }}
+                      </router-link>
+                      <router-link v-else :to="{ name: 'TicketDetail', params: { id: data.json['id'] } }">
                         Ticket for ID:{{ data.json['id'] }}
                       </router-link>
                     </template>
                     <template v-if="data.json['model'] == 'Itinerary'">
                       <span>{{ data.json['history_user'] }} </span>
                       <span>{{ actionString[data.json['history_type']] }}</span>
-                      <router-link :to="{ name: 'BookingDetail', params: { id: data.json['booking'] } }">
+                      <router-link
+                        v-if="data.json['history_type'] == '-'"
+                        :to="{ name: 'ItineraryHistory', params: { id: data.json['booking'] } }"
+                      >
+                        Itinerary for ID:{{ data.json['id'] }}
+                      </router-link>
+                      <router-link v-else :to="{ name: 'BookingDetail', params: { id: data.json['booking'] } }">
                         Itinerary for ID:{{ data.json['id'] }}
                       </router-link>
                     </template>
