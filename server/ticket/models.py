@@ -1,19 +1,11 @@
-import json
 from django.db import models
 from django.db.models import Value
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
-from django.core import serializers
-from django.forms.models import model_to_dict
-from django.core.serializers.json import DjangoJSONEncoder
 
 from simple_history.models import HistoricalRecords
-from simple_history.signals import (
-    pre_create_historical_record,
-    post_create_historical_record
-)
 
 from user.models import User
 
@@ -96,7 +88,6 @@ class UpLoad(models.Model):
         db_table = 'upload'
 
 class Message(models.Model):
-    model = models.CharField(null=True, blank=True, max_length=32)
     json = models.JSONField(null=True, blank=True)
 
     class Meta:
@@ -105,11 +96,3 @@ class Message(models.Model):
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
     pass
-
-@receiver(pre_create_historical_record)
-def pre_create_historical_record_callback(sender, **kwargs):
-    pass
-
-@receiver(post_create_historical_record)
-def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
-    Message.objects.create(model=type(instance).__name__, json=json.dumps(model_to_dict(history_instance), sort_keys=True, indent=2, cls=DjangoJSONEncoder))

@@ -1,6 +1,18 @@
+import json
+from django.dispatch import receiver
+from django.core import serializers
+from django.forms.models import model_to_dict
+from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth import get_user_model
+
+
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+
+from simple_history.signals import (
+    pre_create_historical_record,
+    post_create_historical_record
+)
 
 from . import models
 
@@ -135,3 +147,28 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Message
         fields = '__all__'
+
+
+
+@receiver(pre_create_historical_record)
+def pre_create_historical_record_callback(sender, **kwargs):
+    pass
+
+@receiver(post_create_historical_record)
+def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
+    
+    serializer = None
+    if type(instance).__name__ == 'Booking':
+        serializer = BookingHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
+        models.Message.objects.create(json=serializer)
+
+    if type(instance).__name__ == 'Ticket':
+        serializer = TicketHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
+        models.Message.objects.create(json=serializer)
+
+    if type(instance).__name__ == 'Itinerary':
+        serializer = ItineraryHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
+        models.Message.objects.create(json=serializer)

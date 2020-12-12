@@ -35,18 +35,21 @@
                 <a-list-item-meta>
                   <div slot="title">
                     <router-link
-                      v-if="item.model == 'Booking'"
-                      :to="{ name: 'BookingDetail', params: { id: item.model_id } }"
+                      v-if="item.json['model'] == 'Booking'"
+                      :to="{ name: 'BookingDetail', params: { id: item.json['id'] } }"
                     >
                       <span>{{ item.json }}</span>
                     </router-link>
                     <router-link
-                      v-else-if="item.model == 'Ticket'"
-                      :to="{ name: 'TicketDetail', params: { id: item.model_id } }"
+                      v-else-if="item.json['model'] == 'Ticket'"
+                      :to="{ name: 'TicketDetail', params: { id: item.json['id'] } }"
                     >
                       <span>{{ item.json }}</span>
                     </router-link>
-                    <router-link v-if="item.model == 'Itinerary'" :to="{ name: 'BookingDetail', params: { id: 1 } }">
+                    <router-link
+                      v-if="item.json['model'] == 'Itinerary'"
+                      :to="{ name: 'BookingDetail', params: { id: item.json['booking'] } }"
+                    >
                       <span>{{ item.json['booking'] }}</span>
                     </router-link>
                   </div>
@@ -114,13 +117,7 @@ export default {
       this.loading = true
       getMessages()
         .then(res => {
-          this.messages = Object.assign(
-            [],
-            res.result.map(f => {
-              f.json = JSON.parse(f.json)
-              return f
-            })
-          )
+          this.messages = Object.assign([], res.result)
         })
         .finally(() => (this.loading = false))
     }
