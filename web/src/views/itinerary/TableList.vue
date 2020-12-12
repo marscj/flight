@@ -16,7 +16,11 @@
     </template>
 
     <template slot="action" slot-scope="data">
-      <router-link v-action:view_ticket :to="{ name: 'BookingDetail', params: { id: data.booking_id } }">
+      <router-link
+        v-action:view_ticket
+        v-if="data.booking_id"
+        :to="{ name: 'BookingDetail', params: { id: data.booking_id } }"
+      >
         <span>Booking</span>
       </router-link>
     </template>
