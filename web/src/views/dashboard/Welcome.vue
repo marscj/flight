@@ -31,29 +31,19 @@
         <a-col :xl="16" :lg="24" :md="24" :sm="24" :xs="24">
           <a-card :loading="loading" title="Messages" :bordered="false">
             <a-list>
-              <a-list-item :key="index" v-for="(item, index) in messages">
+              <a-list-item :key="index" v-for="(data, index) in messages">
                 <a-list-item-meta>
                   <div slot="title">
-                    <router-link
-                      v-if="item.json['model'] == 'Booking'"
-                      :to="{ name: 'BookingDetail', params: { id: item.json['id'] } }"
-                    >
-                      <span>{{ item.json }}</span>
-                    </router-link>
-                    <router-link
-                      v-else-if="item.json['model'] == 'Ticket'"
-                      :to="{ name: 'TicketDetail', params: { id: item.json['id'] } }"
-                    >
-                      <span>{{ item.json }}</span>
-                    </router-link>
-                    <router-link
-                      v-if="item.json['model'] == 'Itinerary'"
-                      :to="{ name: 'BookingDetail', params: { id: item.json['booking'] } }"
-                    >
-                      <span>{{ item.json['booking'] }}</span>
-                    </router-link>
+                    <template v-if="data.json['model'] == 'Booking'">
+                      <!-- <a-avatar slot="avatar" :src="item.user.avatar" /> -->
+                      <span>{{ data.json['history_user'] }} </span>
+                      <span>{{ actionString[data.json['history_type']] }}</span>
+                      <router-link :to="{ name: 'BookingDetail', params: { id: data.json['id'] } }">
+                        Booking for ID is {{ data.json['id'] }}
+                      </router-link>
+                    </template>
                   </div>
-                  <div slot="description">{{ item.json['history_date'] | moment }}</div>
+                  <div slot="description">{{ data.json['history_date'] | moment }}</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -79,13 +69,18 @@ import { timeFix } from '@/utils/util'
 import { mapState } from 'vuex'
 import { getMessages } from '@/api/messages'
 
-const DataSet = require('@antv/data-set')
+const ActionString = {
+  '+': 'Added',
+  '~': 'Changed',
+  '-': 'Deleted'
+}
 
 export default {
   name: 'Welcome',
   components: {},
   data() {
     return {
+      actionString: ActionString,
       timeFix: timeFix(),
       avatar: '',
       user: {},
