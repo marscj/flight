@@ -19,7 +19,7 @@ class BookingSerializer(serializers.ModelSerializer):
 
     title = serializers.CharField(max_length=64)
 
-    remark = serializers.CharField(allow_blank=True, allow_null=True, max_length=1024)
+    remark = serializers.CharField(required=False, allow_null=True, max_length=1024)
 
     author = serializers.StringRelatedField(read_only=True)
 
@@ -40,6 +40,7 @@ class BookingHistorySerializer(serializers.ModelSerializer):
 
 class ItinerarySerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
+    remark = serializers.CharField(required=False, allow_null=True, max_length=1024)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     booking_id = serializers.IntegerField(required=True)
     ticket_id = serializers.IntegerField(required=False)
@@ -84,7 +85,7 @@ class ItineraryHistorySerializer(serializers.ModelSerializer):
 
 class TicketSerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
-    
+    remark = serializers.CharField(required=False, allow_null=True, max_length=1024)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     author = serializers.StringRelatedField(read_only=True)
 

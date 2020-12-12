@@ -5,12 +5,16 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
 from simple_history.models import HistoricalRecords
+from simple_history.signals import (
+    pre_create_historical_record,
+    post_create_historical_record
+)
 
 from user.models import User
 
 class Booking(models.Model):
     title = models.CharField(blank=True, null=True, max_length=64)
-    remark = models.CharField(blank=True, null=True, max_length=1024)
+    remark = models.TextField(blank=True, null=True)
 
     author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
     history = HistoricalRecords(table_name='booking_history', custom_model_name='booking_history')
@@ -26,7 +30,7 @@ class Ticket(models.Model):
     fare = models.FloatField(blank=True, null=True)
     tax = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    remark = models.CharField(blank=True, null=True, max_length=256)
+    remark = models.TextField(blank=True, null=True)
     is_confirm = models.BooleanField(default=False, blank=True, null=True)
     is_cancel = models.BooleanField(default=False, blank=True, null=True)
     is_booking = models.BooleanField(default=False, blank=True, null=True)
@@ -49,7 +53,7 @@ class Itinerary(models.Model):
     ticket2 = models.CharField(blank=True, null=True, max_length=256)
     hotel = models.CharField(blank=True, null=True, max_length=256)
     is_lock = models.BooleanField(default=False, null=True)
-    remark = models.CharField(blank=True, null=True, max_length=256)
+    remark = models.TextField(blank=True, null=True)
 
     user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
@@ -74,7 +78,7 @@ class Comment(models.Model):
         db_table = 'comment'
 
 class UpLoad(models.Model):
-    remark = models.CharField(blank=True, null=True, max_length=128)
+    remark = models.TextField(blank=True, null=True)
     file = models.FileField(upload_to='upload/', blank=True)
     
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -86,6 +90,25 @@ class UpLoad(models.Model):
     class Meta:
         db_table = 'upload'
 
+class Message(models.Model):
+    message = models.TextField()
+
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
     pass
+
+@receiver(pre_create_historical_record)
+def pre_create_historical_record_callback(sender, **kwargs):
+    print(kwargs)
+    pass
+    # print("Sent before saving historical record", sender, kwargs)
+
+@receiver(post_create_historical_record)
+def post_create_historical_record_callback(sender, instance, history_instance, **kwargs):
+    print(history_instance.history_type)
+    pass
+    # print(kwargs)
+    # delta = history_instance.diff_against(instance.history.last())
+    # for change in delta.changes:
+    #     print(type(instance).__name__)
+    #     print("{} changed from {} to {}".format(change.field, change.old, change.new))
