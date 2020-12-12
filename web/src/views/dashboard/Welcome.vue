@@ -12,7 +12,7 @@
         </div>
       </div>
     </template>
-    <template v-slot:extraContent>
+    <!-- <template v-slot:extraContent>
       <div class="extra-content">
         <div class="stat-item">
           <a-statistic title="项目数" :value="56" />
@@ -24,7 +24,7 @@
           <a-statistic title="项目访问" :value="2223" />
         </div>
       </div>
-    </template>
+    </template> -->
 
     <div>
       <a-row :gutter="24">
@@ -39,7 +39,21 @@
                       <span>{{ data.json['history_user'] }} </span>
                       <span>{{ actionString[data.json['history_type']] }}</span>
                       <router-link :to="{ name: 'BookingDetail', params: { id: data.json['id'] } }">
-                        Booking for ID is {{ data.json['id'] }}
+                        Booking for ID:{{ data.json['id'] }}
+                      </router-link>
+                    </template>
+                    <template v-if="data.json['model'] == 'Ticket'">
+                      <span>{{ data.json['history_user'] }} </span>
+                      <span>{{ actionString[data.json['history_type']] }}</span>
+                      <router-link :to="{ name: 'TicketDetail', params: { id: data.json['id'] } }">
+                        Ticket for ID:{{ data.json['id'] }}
+                      </router-link>
+                    </template>
+                    <template v-if="data.json['model'] == 'Itinerary'">
+                      <span>{{ data.json['history_user'] }} </span>
+                      <span>{{ actionString[data.json['history_type']] }}</span>
+                      <router-link :to="{ name: 'BookingDetail', params: { id: data.json['booking'] } }">
+                        Itinerary for ID:{{ data.json['id'] }}
                       </router-link>
                     </template>
                   </div>
