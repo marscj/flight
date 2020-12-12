@@ -1,6 +1,6 @@
 <template>
   <form-validate ref="observer" :form="form">
-    <page-header-wrapper>
+    <page-header-wrapper :content="'ID:' + $route.params.id">
       <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false"> </a-card>
       <a-card class="card" title="Ticket Info" :bordered="false">
         <a-row class="form-row" :gutter="16">
