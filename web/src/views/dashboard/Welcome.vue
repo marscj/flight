@@ -41,6 +41,23 @@
                     >&nbsp;
                     <a href="#">{{ item.project.event }}</a>
                   </div> -->
+                  <div slot="title">
+                    <router-link
+                      v-if="item.model_name == 'Booking'"
+                      :to="{ name: 'BookingDetail', params: { id: item.model_id } }"
+                    >
+                      <span>{{ item.message }}</span>
+                    </router-link>
+                    <router-link
+                      v-else-if="item.model_name == 'Ticket'"
+                      :to="{ name: 'TicketDetail', params: { id: item.model_id } }"
+                    >
+                      <span>{{ item.message }}</span>
+                    </router-link>
+                    <span v-else-if="item.model_name == 'Itinerary'">
+                      {{ item.message }}
+                    </span>
+                  </div>
                   <div slot="description">{{ item.time }}</div>
                 </a-list-item-meta>
               </a-list-item>
