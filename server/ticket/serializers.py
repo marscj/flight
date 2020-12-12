@@ -148,8 +148,6 @@ class MessageSerializer(serializers.ModelSerializer):
         model = models.Message
         fields = '__all__'
 
-
-
 @receiver(pre_create_historical_record)
 def pre_create_historical_record_callback(sender, **kwargs):
     pass

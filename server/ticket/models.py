@@ -89,6 +89,7 @@ class UpLoad(models.Model):
 
 class Message(models.Model):
     json = models.JSONField(null=True, blank=True)
+    date = models.DateField(auto_now_add=True)
 
     class Meta:
         db_table = 'message'

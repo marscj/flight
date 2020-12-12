@@ -94,8 +94,13 @@ class UpLoadView(viewset.ExtraModelViewSet):
     filter_class = UpLoadFilter
     search_fields = ['']
 
+class MessageFilter(django_filters.FilterSet):
+    date = django_filters.DateFilter('date')
+    week = django_filters.DateFromToRangeFilter('date')
 
 class MessageView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.MessageSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = models.Message.objects.all().order_by('-id')[:10]
+    queryset = models.Message.objects.all().order_by('-id')
+
+    filter_class = MessageFilter

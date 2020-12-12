@@ -29,7 +29,23 @@
     <div>
       <a-row :gutter="24">
         <a-col :xl="16" :lg="24" :md="24" :sm="24" :xs="24">
-          <a-card :loading="loading" title="Messages" :bordered="false">
+          <a-card
+            :loading="loading"
+            title="Messages"
+            :bordered="false"
+            :tab-list="tabList"
+            @tabChange="
+              key => {
+                if (key == 'today') {
+                  today()
+                } else if (key == 'yesterday') {
+                  yesterday()
+                } else {
+                  week()
+                }
+              }
+            "
+          >
             <a-list>
               <a-list-item :key="index" v-for="(data, index) in messages">
                 <a-list-item-meta>
@@ -57,7 +73,7 @@
                       </router-link>
                     </template>
                   </div>
-                  <div slot="description">{{ data.json['history_date'] | moment }}</div>
+                  <div slot="description">{{ data.date | moment }}</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -82,6 +98,7 @@
 import { timeFix } from '@/utils/util'
 import { mapState } from 'vuex'
 import { getMessages } from '@/api/messages'
+import moment from 'moment'
 
 const ActionString = {
   '+': 'Added',
@@ -98,11 +115,23 @@ export default {
       timeFix: timeFix(),
       avatar: '',
       user: {},
-
-      projects: [],
+      queryParams: {},
+      tabList: [
+        {
+          key: 'today',
+          tab: 'Today'
+        },
+        {
+          key: 'yesterday',
+          tab: 'Yesterday'
+        },
+        {
+          key: 'last_week',
+          tab: 'Last Week'
+        }
+      ],
       loading: true,
-      messages: [],
-      activities: []
+      messages: []
     }
   },
   computed: {
@@ -119,12 +148,32 @@ export default {
     this.avatar = this.userInfo.avatar
   },
   mounted() {
-    this.getMessageData()
+    this.today()
   },
   methods: {
-    getMessageData() {
+    today() {
+      return this.getMessageData({
+        date: moment().format('YYYY-MM-DD')
+      })
+    },
+    yesterday() {
+      return this.getMessageData({
+        date: moment()
+          .add(-1, 'days')
+          .format('YYYY-MM-DD')
+      })
+    },
+    week() {
+      return this.getMessageData({
+        week_after: moment()
+          .add(-7, 'days')
+          .format('YYYY-MM-DD'),
+        week_before: moment().format('YYYY-MM-DD')
+      })
+    },
+    getMessageData(queryParams) {
       this.loading = true
-      getMessages()
+      getMessages(queryParams)
         .then(res => {
           this.messages = Object.assign([], res.result)
         })
