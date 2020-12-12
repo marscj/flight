@@ -97,7 +97,6 @@ class TicketSerializer(serializers.ModelSerializer):
     def validate(self, validated_data):
         itineraries = validated_data.get('itineraries', None)
         
-
         if itineraries is not None:
             for itinerary in itineraries:
                 if itinerary.user is None:

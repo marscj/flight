@@ -5,48 +5,48 @@
       <a-card class="card" title="Ticket Info" :bordered="false">
         <a-row class="form-row" :gutter="16">
           <a-col :sm="24" :md="8">
-            <form-item-validate label="Serial No.">
+            <form-item-validate label="Serial No." vid="serial_no">
               <a-input v-model="form.serial_no"></a-input>
             </form-item-validate>
           </a-col>
           <a-col :sm="24" :md="8">
-            <form-item-validate label="Line">
+            <form-item-validate label="Line" vid="air_line">
               <a-input v-model="form.air_line"></a-input>
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="8">
-            <form-item-validate label="Class">
+            <form-item-validate label="Class" vid="air_class">
               <a-input v-model="form.air_class"></a-input>
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="8">
-            <form-item-validate label="Fare">
-              <a-input v-model="form.fare"></a-input>
+            <form-item-validate label="Fare" vid="fare">
+              <a-input-number v-model="form.fare" :min="0" :precision="2" decimalSeparator="." class="w-full" />
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="8">
-            <form-item-validate label="Tax">
-              <a-input v-model="form.tax"></a-input>
+            <form-item-validate label="Tax" vid="tax">
+              <a-input-number v-model="form.tax" :min="0" :precision="2" decimalSeparator="." class="w-full" />
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="8">
-            <form-item-validate label="Total">
-              <a-input v-model="form.total"></a-input>
+            <form-item-validate label="Total" vid="total">
+              <a-input-number v-model="form.total" :min="0" :precision="2" decimalSeparator="." class="w-full" />
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="12">
-            <form-item-validate label="Info">
+            <form-item-validate label="Info" vid="air_info">
               <a-textarea v-model="form.air_info" :rows="5"></a-textarea>
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="12">
-            <form-item-validate label="remark">
+            <form-item-validate label="remark" vid="remark">
               <a-textarea v-model="form.remark" :rows="5"></a-textarea>
             </form-item-validate>
           </a-col>
@@ -165,6 +165,7 @@ export default {
         remark: this.form.remark,
         itineraries_id: this.itineraries_id
       })
+      console.log(form)
 
       if (this.post_type == 'edit') {
         updateTicket(this.$route.params.id, form)
