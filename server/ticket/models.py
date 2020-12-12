@@ -92,6 +92,11 @@ class UpLoad(models.Model):
 
 class Message(models.Model):
     message = models.TextField()
+    model_id = models.IntegerField(null=True, blank=True)
+    model_name = models.CharField(null=True, blank=True, max_length=32)
+
+    class Meta:
+        db_table = 'message'
 
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
@@ -99,16 +104,16 @@ def upload_pre_delete(sender, instance, **kwargs):
 
 @receiver(pre_create_historical_record)
 def pre_create_historical_record_callback(sender, **kwargs):
-    print(kwargs)
     pass
-    # print("Sent before saving historical record", sender, kwargs)
 
 @receiver(post_create_historical_record)
-def post_create_historical_record_callback(sender, instance, history_instance, **kwargs):
-    print(history_instance.history_type)
-    pass
-    # print(kwargs)
-    # delta = history_instance.diff_against(instance.history.last())
-    # for change in delta.changes:
-    #     print(type(instance).__name__)
-    #     print("{} changed from {} to {}".format(change.field, change.old, change.new))
+def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
+
+    if history_instance.history_type == '+':
+        Message.objects.create(message='%s Added a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__)
+
+    elif history_instance.history_type == '~':
+        Message.objects.create(message='%s Changed a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__)
+
+    elif history_instance.history_type == '-':
+        Message.objects.create(message='%s Deleted a %s with id %d' % (history_user.full_name, type(instance).__name__, instance.id), model_id=instance.id, model_name=type(instance).__name__)

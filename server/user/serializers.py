@@ -137,7 +137,7 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined', 'department')
 
     def get_name(self, obj):
-        return obj.full_name or obj.email
+        return obj.full_name
 
     def update(self, instance, validated_data):
 
