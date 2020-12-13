@@ -3,9 +3,7 @@
     <template v-slot:title> Welcome {{ timeFix }} </template>
     <template v-slot:content>
       <div class="page-header-content">
-        <div class="avatar">
-          <a-avatar size="large" :src="currentUser.avatar" />
-        </div>
+        <a-avatar size="large" icon="user" :src="currentUser.avatar.thumbnail" alt="center" />
         <div class="content">
           <div class="content-title">{{ user.name }}</div>
           <span>{{ user.department }}</span>
@@ -51,7 +49,7 @@
                 <a-list-item-meta>
                   <div slot="title">
                     <template v-if="data.json['model'] == 'Booking'">
-                      <!-- <a-avatar slot="avatar" :src="item.user.avatar" /> -->
+                      <!-- <a-avatar slot="avatar" icon="user" :src="item.user.avatar" /> -->
                       <span>{{ data.json['history_user'] }} </span>
                       <span>{{ actionString[data.json['history_type']] }}</span>
                       <router-link

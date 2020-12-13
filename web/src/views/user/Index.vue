@@ -246,8 +246,6 @@ export default {
         .then(res => {
           const { data, extra } = res.result
 
-          console.log(res, '----')
-
           this.form = Object.assign(data, {
             passport_date_birth:
               data.passport_date_birth != null ? moment(data.passport_date_birth, 'YYYY-MM-DD') : null,
@@ -271,10 +269,9 @@ export default {
           passport_date_issue:
             this.form.passport_date_issue != null ? moment(this.form.passport_date_issue).format('YYYY-MM-DD') : null,
           passport_date_expiry:
-            this.form.passport_date_expiry != null ? moment(this.form.passport_date_expiry).format('YYYY-MM-DD') : null
+            this.form.passport_date_expiry != null ? moment(this.form.passport_date_expiry).format('YYYY-MM-DD') : null,
+          avatar: undefined
         })
-
-        console.log(form, '----')
 
         updateUser(this.$route.params.id, form)
           .then(res => {

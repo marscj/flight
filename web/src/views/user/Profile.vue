@@ -1,22 +1,26 @@
 <template>
   <page-header-wrapper>
-    <form-validate ref="observer">
-      <a-card :loading="loading">
-        <form-item-validate label="Photo" required>
+    <form-validate ref="observer" :form="form">
+      <a-card class="card" :loading="loading" :bordered="false">
+        <form-item-validate label="Photo">
           <a-upload
-            name="Photo"
-            :multiple="false"
-            :fileList="fileList"
-            :beforeUpload="beforeUpload"
-            :disabled="fileList.length > 0"
-            :remove="handleRemove"
-            listType="text"
+            name="avatar"
+            list-type="picture"
+            class="avatar-uploader"
+            :show-upload-list="false"
+            :before-upload="beforeUpload"
+            :custom-request="customRequest"
           >
-            <div v-if="fileList.length == 0">
-              <img v-if="form && form.photo && form.photo.thumbnail" alt="images" :src="form.photo.thumbnail" />
-
-              <div v-else>
-                <a-button v-if="fileList.length == 0"> <a-icon type="upload" /> Select File </a-button>
+            <a-avatar
+              v-if="form && form.avatar && form.avatar.medium"
+              :src="form.avatar.medium"
+              :size="128"
+              alt="avatar"
+            />
+            <div v-else>
+              <a-icon :type="loading ? 'loading' : 'plus'" />
+              <div class="ant-upload-text">
+                Upload
               </div>
             </div>
           </a-upload>
@@ -90,6 +94,13 @@
           </a-col>
         </a-row>
       </a-card>
+      <a-row>
+        <a-col :span="24" class="text-right">
+          <a-button type="primary" @click="submit" :loading="loading" html-type="submit">
+            Submit
+          </a-button>
+        </a-col>
+      </a-row>
     </form-validate>
     <change-password ref="modal" title="Rest Password" />
   </page-header-wrapper>
@@ -101,6 +112,12 @@ import FormValidate from '@/components/FormValidate'
 import FormItemValidate from '@/components/FormItemValidate'
 import ChangePassword from './ChangePassword'
 
+function getBase64(img, callback) {
+  const reader = new FileReader()
+  reader.addEventListener('load', () => callback(reader.result))
+  reader.readAsDataURL(img)
+}
+
 export default {
   components: {
     FormValidate,
@@ -111,6 +128,7 @@ export default {
     return {
       loading: false,
       updateing: false,
+      uploading: false,
       form: {},
       extra: {},
       fileList: []
@@ -118,11 +136,6 @@ export default {
   },
   mounted() {
     this.getUserData()
-  },
-  computed: {
-    photo() {
-      return this.fileList[0]
-    }
   },
   methods: {
     getUserData() {
@@ -139,46 +152,47 @@ export default {
         })
     },
     beforeUpload(file) {
-      const isIMG = file.type === 'image/jpeg' || file.type === 'image/png'
-      if (!isIMG) {
-        this.$message.error('You can only upload JPG or PNG file!')
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+      if (!isJpgOrPng) {
+        this.$message.error('You can only upload JPG file!')
       }
-
       const isLt2M = file.size / 1024 / 1024 < 2
       if (!isLt2M) {
         this.$message.error('Image must smaller than 2MB!')
       }
-
-      if (isIMG && isLt2M) {
-        this.fileList = [...this.fileList, file]
-      }
-      return false
+      return isJpgOrPng && isLt2M
     },
-    handleRemove(file) {
-      const index = this.fileList.indexOf(file)
-      const newFileList = this.fileList.slice()
-      newFileList.splice(index, 1)
-      this.fileList = newFileList
+    customRequest(request) {
+      this.loading = true
+      const formData = new FormData()
+      formData.append('avatar', request.file)
+
+      updateUser(this.$store.getters.user.info.id, formData)
+        .then(res => {
+          const { data, extra } = res.result
+          this.form = Object.assign({}, data)
+          this.extra = Object.assign({}, extra)
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result)
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     submit() {
       this.updateing = true
-      const formData = new FormData()
-
-      if (this.photo) {
-        formData.append('photo', this.photo)
+      var form = {
+        first_name: this.form.first_name,
+        last_name: this.form.last_name
       }
-
-      formData.append('username', this.form.username)
-      formData.append('phone_number', this.form.phone_number)
-      formData.append('first_name', this.form.first_name)
-      formData.append('last_name', this.form.last_name)
-      formData.append('role', this.form.role)
-      formData.append('is_active', this.form.is_active)
-      formData.append('is_superuser', this.form.is_superuser)
-
-      updateUser(this.$route.params.id, formData)
+      updateUser(this.$store.getters.user.info.id, form)
         .then(res => {
-          this.getUserData()
+          const { data, extra } = res.result
+          this.form = Object.assign({}, data)
+          this.extra = Object.assign({}, extra)
         })
         .catch(error => {
           if (error.response) {
@@ -194,6 +208,10 @@ export default {
 </script>
 
 <style>
+.card {
+  margin-bottom: 24px;
+}
+
 .avatar-uploader > .ant-upload {
   width: 128px;
   height: 128px;

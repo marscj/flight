@@ -109,7 +109,7 @@ class UserListSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'email', 'roles', 'is_staff', 'is_active', 'department', 'passport_no', 'avatar'
         )
-        read_only_fields = ('id', 'email', 'is_staff', 'is_active')
+        read_only_fields = ('id', 'email', 'is_staff', 'is_active', 'avatar')
 
     def get_name(self, obj):
         return obj.full_name or obj.email
