@@ -40,9 +40,11 @@ class BookingHistoryView(viewsets.ReadOnlyModelViewSet):
     search_fields = ['title', 'history_user__email', 'history_user__first_name', 'history_user__last_name']
 
 class ItineraryFilter(django_filters.FilterSet):
+    id = django_filters.NumberFilter('id')
     booking_id = django_filters.NumberFilter('booking__id')
     ticket_id = django_filters.NumberFilter('ticket__id')
     date = django_filters.DateFromToRangeFilter('date')
+    serial_no = django_filters.CharFilter('serial_no')
 
 class ItineraryView(viewset.ExtraModelViewSet):
     serializer_class = serializers.ItinerarySerializer
@@ -50,7 +52,7 @@ class ItineraryView(viewset.ExtraModelViewSet):
     queryset = models.Itinerary.objects.all().order_by('-id')
  
     filter_class = ItineraryFilter
-    search_fields = ['']
+    search_fields = ['serial_no', 'email', 'name', 'passport_no']
 
 class ItineraryHistoryView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ItineraryHistorySerializer
