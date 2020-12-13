@@ -136,7 +136,7 @@ class UserSerializer(serializers.ModelSerializer):
             'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
             'name', 'department_id', 'groups_id', 'department', 'avatar'
         )
-        read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined', 'department', 'avatar')
+        read_only_fields = ('id', 'username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined', 'department', 'avatar')
 
     def get_name(self, obj):
         return obj.full_name
