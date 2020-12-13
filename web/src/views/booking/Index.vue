@@ -9,8 +9,8 @@
           <a-textarea v-model="form.remark" :maxLength="1024" :rows="5" :disabled="disabled()" />
         </form-item-validate>
 
-        <a-upload
-          v-if="post_type == 'edit'"
+        <a-upload-dragger
+          v-if="post_type == 'edit' && form.uploads"
           :multiple="true"
           :before-upload="beforeUpload"
           :remove="handleRemove"
@@ -22,8 +22,16 @@
             object_id: $route.params.id
           }"
         >
-          <a-button> <a-icon type="upload" /> Upload </a-button>
-        </a-upload>
+          <p class="ant-upload-drag-icon">
+            <a-icon type="inbox" />
+          </p>
+          <p class="ant-upload-text">
+            Click or drag file to this area to upload
+          </p>
+          <p class="ant-upload-hint">
+            Support for a single or bulk upload
+          </p>
+        </a-upload-dragger>
       </a-card>
 
       <itinerary-list v-if="post_type == 'edit'" />
@@ -118,7 +126,6 @@ export default {
         .then(res => {
           const { data } = res.result
           this.form = Object.assign({}, data)
-          console.log(this.form.uploads)
         })
         .finally(() => {
           this.loading = false
@@ -179,7 +186,6 @@ export default {
       return isLt2M
     },
     handleRemove(file) {
-      console.log(file)
       if (file != null && file.id != null) {
         deleteFile(file.id)
       }
