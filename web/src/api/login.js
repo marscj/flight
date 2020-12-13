@@ -1,4 +1,4 @@
-import { API, LoginFailed, LoginSuccess } from './index'
+import { API, LoginFailed, LoginSuccess, updateSuccess, updateFailed } from './index'
 import { axios } from '@/utils/request'
 
 export function login(data) {
@@ -14,26 +14,23 @@ export function login(data) {
 export function getInfo() {
   return axios({
     url: API.UserInfo,
-    method: 'get',
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    }
+    method: 'get'
   })
 }
 
-export function getCurrentUserNav() {
+export function updateInfo(data) {
   return axios({
-    url: API.UserMenu,
-    method: 'get'
+    url: API.UserInfo,
+    method: 'patch',
+    data: data
   })
+    .then(updateSuccess)
+    .catch(updateFailed)
 }
 
 export function logout() {
   return axios({
     url: API.Logout,
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    }
+    method: 'post'
   })
 }

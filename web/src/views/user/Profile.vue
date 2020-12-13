@@ -12,17 +12,18 @@
             :custom-request="customRequest"
           >
             <a-avatar
-              v-if="form && form.avatar && form.avatar.medium"
+              v-if="form.avatar && form.avatar.medium"
               :src="form.avatar.medium"
               :size="128"
               alt="avatar"
+              icon="user"
             />
-            <div v-else>
+            <!-- <div v-else>
               <a-icon :type="loading ? 'loading' : 'plus'" />
               <div class="ant-upload-text">
                 Upload
               </div>
-            </div>
+            </div> -->
           </a-upload>
         </form-item-validate>
 
@@ -63,21 +64,13 @@
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Department" vid="department_id">
-              <a-select v-model="form.department_id" disabled>
-                <a-select-option v-for="index in extra.department" :key="index.id" :value="index.id">{{
-                  index.name
-                }}</a-select-option>
-              </a-select>
+              <a-input v-model="form.department" disabled />
             </form-item-validate>
           </a-col>
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Role" vid="role_id">
-              <a-select v-model="form.groups_id" mode="multiple" disabled>
-                <a-select-option v-for="index in extra.role" :key="index.id" :value="index.id">{{
-                  index.name
-                }}</a-select-option>
-              </a-select>
+              <a-input :value="form.roles.map(f => f.name).join(' ')" disabled />
             </form-item-validate>
           </a-col>
 
@@ -107,7 +100,7 @@
 </template>
 
 <script>
-import { getUser, updateUser } from '@/api/user'
+import { getInfo, updateInfo } from '@/api/login'
 import FormValidate from '@/components/FormValidate'
 import FormItemValidate from '@/components/FormItemValidate'
 import ChangePassword from './ChangePassword'
@@ -129,9 +122,7 @@ export default {
       loading: false,
       updateing: false,
       uploading: false,
-      form: {},
-      extra: {},
-      fileList: []
+      form: {}
     }
   },
   mounted() {
@@ -140,12 +131,10 @@ export default {
   methods: {
     getUserData() {
       this.loading = true
-      getUser(this.$store.getters.user.info.id)
+      getInfo()
         .then(res => {
-          const { data, extra } = res.result
-          this.form = Object.assign({}, data)
-          this.extra = Object.assign({}, extra)
-          this.fileList = []
+          const { result } = res
+          this.form = Object.assign({}, result)
         })
         .finally(() => {
           this.loading = false
@@ -167,11 +156,10 @@ export default {
       const formData = new FormData()
       formData.append('avatar', request.file)
 
-      updateUser(this.$store.getters.user.info.id, formData)
+      updateInfo(formData)
         .then(res => {
-          const { data, extra } = res.result
-          this.form = Object.assign({}, data)
-          this.extra = Object.assign({}, extra)
+          const { result } = res
+          this.form = Object.assign({}, result)
         })
         .catch(error => {
           if (error.response) {
@@ -188,11 +176,10 @@ export default {
         first_name: this.form.first_name,
         last_name: this.form.last_name
       }
-      updateUser(this.$store.getters.user.info.id, form)
+      updateInfo(form)
         .then(res => {
-          const { data, extra } = res.result
-          this.form = Object.assign({}, data)
-          this.extra = Object.assign({}, extra)
+          const { result } = res
+          this.form = Object.assign({}, result)
         })
         .catch(error => {
           if (error.response) {
