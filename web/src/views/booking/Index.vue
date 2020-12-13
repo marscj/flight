@@ -72,6 +72,7 @@ import { FormValidate, FormItemValidate } from '@/components'
 import ItineraryList from '@/views/itinerary/ActionList'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
 import { uploadFile, deleteFile } from '@/api/upload'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 import moment from 'moment'
 
 export default {
@@ -85,7 +86,7 @@ export default {
   data() {
     return {
       headers: {
-        authorization: 'authorization-text'
+        'Access-Token': this.$ls.get(ACCESS_TOKEN)
       },
       fileList: [],
       loading: false,
