@@ -9,7 +9,7 @@ from . import serializers
 from . import models
 
 class BookingFilter(django_filters.FilterSet):
-    id = django_filters.NumberFilter('-id')
+    id = django_filters.NumberFilter('id')
 
 class BookingView(viewset.ExtraModelViewSet):
     serializer_class = serializers.BookingSerializer

@@ -12,6 +12,7 @@ from user.models import User
 class Booking(models.Model):
     title = models.CharField(blank=True, null=True, max_length=64)
     remark = models.TextField(blank=True, null=True)
+    date = models.DateField(auto_now_add=True)
 
     author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
     history = HistoricalRecords(table_name='booking_history', custom_model_name='booking_history')
@@ -32,6 +33,7 @@ class Ticket(models.Model):
     is_cancel = models.BooleanField(default=False, blank=True, null=True)
     is_booking = models.BooleanField(default=False, blank=True, null=True)
     is_complete = models.BooleanField(default=False, blank=True, null=True)
+    date = models.DateField(auto_now_add=True)
 
     author = models.ForeignKey(User, related_name='ticket_authors', on_delete=models.SET_NULL, blank=True, null=True)
     history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
@@ -51,6 +53,7 @@ class Itinerary(models.Model):
     hotel = models.CharField(blank=True, null=True, max_length=256)
     is_lock = models.BooleanField(default=False, null=True)
     remark = models.TextField(blank=True, null=True)
+    date = models.DateField(auto_now_add=True)
 
     user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
@@ -67,16 +70,18 @@ class Itinerary(models.Model):
 
 class Comment(models.Model):
     comment = models.CharField(blank=True, null=True, max_length=256)
+    date = models.DateField(auto_now_add=True)
 
     itinerary = models.ForeignKey(Itinerary, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
-
+    
     class Meta:
         db_table = 'comment'
 
 class UpLoad(models.Model):
     remark = models.TextField(blank=True, null=True)
     file = models.FileField(upload_to='upload/', blank=True)
+    date = models.DateField(auto_now_add=True)
     
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
