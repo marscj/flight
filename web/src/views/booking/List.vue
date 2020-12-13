@@ -5,7 +5,36 @@
         <a-button type="primary">History</a-button>
       </router-link>
     </template>
+
     <a-card>
+      <div class="table-page-search-wrapper">
+        <form-validate layout="inline" :form="queryParam">
+          <a-row :gutter="24">
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="ID">
+                <a-input v-model="queryParam.id" @pressEnter="() => $refs.table.refresh()"></a-input>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="18" :sm="24">
+              <form-item-validate label="Create At">
+                <a-range-picker v-model="date" @change="() => $refs.table.refresh()" />
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="24" :sm="24">
+              <form-item-validate>
+                <a-input-search
+                  v-model="queryParam.search"
+                  placeholder="E.g Title or Author"
+                  enter-button="Search"
+                  @search="() => $refs.table.refresh()"
+                />
+              </form-item-validate>
+            </a-col>
+          </a-row>
+        </form-validate>
+      </div>
       <s-table
         ref="table"
         size="default"
@@ -32,6 +61,7 @@
 import { STable, Ellipsis } from '@/components'
 import { getBookings } from '@/api/booking'
 import { FormValidate, FormItemValidate } from '@/components'
+import moment from 'moment'
 
 export default {
   components: {
@@ -41,6 +71,7 @@ export default {
   },
   data() {
     return {
+      date: [],
       queryParam: {
         name: undefined
       },
@@ -78,7 +109,20 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getBookings(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+        return getBookings(
+          Object.assign(
+            parameter,
+            Object.assign(
+              {
+                date_before:
+                  this.date != null && this.date.length > 0 ? moment(this.date[1]).format('YYYY-MM-DD') : undefined,
+                date_after:
+                  this.date != null && this.date.length > 0 ? moment(this.date[0]).format('YYYY-MM-DD') : undefined
+              },
+              this.queryParam
+            )
+          )
+        ).then(res => {
           const { data, extra } = res.result
           return data
         })

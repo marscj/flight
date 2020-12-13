@@ -10,6 +10,7 @@ from . import models
 
 class BookingFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
+    date = django_filters.DateFromToRangeFilter('date')
 
 class BookingView(viewset.ExtraModelViewSet):
     serializer_class = serializers.BookingSerializer
@@ -17,7 +18,7 @@ class BookingView(viewset.ExtraModelViewSet):
     queryset = models.Booking.objects.all().order_by('-id')
  
     filter_class = BookingFilter
-    search_fields = ['']
+    search_fields = ['title', 'author__email', 'author__first_name', 'author__last_name']
       
     def get_queryset(self):
         if self.request.user.has_perm('ticket.view_booking'):
@@ -36,6 +37,7 @@ class BookingHistoryView(viewsets.ReadOnlyModelViewSet):
 class ItineraryFilter(django_filters.FilterSet):
     booking_id = django_filters.NumberFilter('booking__id')
     ticket_id = django_filters.NumberFilter('ticket__id')
+    date = django_filters.DateFromToRangeFilter('date')
 
 class ItineraryView(viewset.ExtraModelViewSet):
     serializer_class = serializers.ItinerarySerializer
@@ -54,7 +56,8 @@ class ItineraryHistoryView(viewsets.ReadOnlyModelViewSet):
     search_fields = ['']
 
 class TicketFilter(django_filters.FilterSet):
-    pass
+    id = django_filters.NumberFilter('id')
+    date = django_filters.DateFromToRangeFilter('date')
 
 class TicketView(viewset.ExtraModelViewSet):
     serializer_class = serializers.TicketSerializer
