@@ -26,13 +26,18 @@ class BookingView(viewset.ExtraModelViewSet):
         else :
             return super().get_queryset().filter(itineraries__user_id=self.request.user.id).distinct()
 
+class BookingHistoryFilter(django_filters.FilterSet):
+    id = django_filters.NumberFilter('id')
+    history_id = django_filters.NumberFilter('history_id')
+    date = django_filters.DateFromToRangeFilter('history_date')
+
 class BookingHistoryView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.BookingHistorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = models.Booking.history.all().order_by('-id')
  
-    filter_class = BookingFilter
-    search_fields = ['title', 'author__email', 'author__first_name', 'author__last_name']
+    filter_class = BookingHistoryFilter
+    search_fields = ['title', 'history_user__email', 'history_user__first_name', 'history_user__last_name']
 
 class ItineraryFilter(django_filters.FilterSet):
     booking_id = django_filters.NumberFilter('booking__id')

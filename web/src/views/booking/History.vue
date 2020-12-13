@@ -6,6 +6,40 @@
       </router-link>
     </template>
     <a-card>
+      <div class="table-page-search-wrapper">
+        <form-validate layout="inline" :form="queryParam">
+          <a-row :gutter="24">
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="ID">
+                <a-input v-model="queryParam.id" @pressEnter="() => $refs.table.refresh()"></a-input>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="BID">
+                <a-input v-model="queryParam.history_id" @pressEnter="() => $refs.table.refresh()"></a-input>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="12" :sm="24">
+              <form-item-validate label="History Date">
+                <a-range-picker v-model="date" @change="() => $refs.table.refresh()" />
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="24" :sm="24">
+              <form-item-validate>
+                <a-input-search
+                  v-model="queryParam.search"
+                  placeholder="E.g Title or Operator"
+                  enter-button="Search"
+                  @search="() => $refs.table.refresh()"
+                />
+              </form-item-validate>
+            </a-col>
+          </a-row>
+        </form-validate>
+      </div>
       <s-table
         ref="table"
         size="default"
@@ -28,6 +62,7 @@
 import { STable, Ellipsis } from '@/components'
 import { getBookingHistories } from '@/api/booking'
 import { FormValidate, FormItemValidate } from '@/components'
+import moment from 'moment'
 
 export default {
   components: {
@@ -37,6 +72,7 @@ export default {
   },
   data() {
     return {
+      date: [],
       queryParam: {
         name: undefined
       },
@@ -94,7 +130,20 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getBookingHistories(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+        return getBookingHistories(
+          Object.assign(
+            parameter,
+            Object.assign(
+              {
+                date_before:
+                  this.date != null && this.date.length > 0 ? moment(this.date[1]).format('YYYY-MM-DD') : undefined,
+                date_after:
+                  this.date != null && this.date.length > 0 ? moment(this.date[0]).format('YYYY-MM-DD') : undefined
+              },
+              this.queryParam
+            )
+          )
+        ).then(res => {
           const { result } = res
           return result
         })

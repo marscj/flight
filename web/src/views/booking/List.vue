@@ -16,7 +16,7 @@
               </form-item-validate>
             </a-col>
 
-            <a-col :md="18" :sm="24">
+            <a-col :md="12" :sm="24">
               <form-item-validate label="Create At">
                 <a-range-picker v-model="date" @change="() => $refs.table.refresh()" />
               </form-item-validate>
@@ -98,6 +98,12 @@ export default {
         {
           title: 'Author',
           dataIndex: 'author',
+          align: 'center',
+          ellipsis: true
+        },
+        {
+          title: 'Create At',
+          dataIndex: 'date',
           align: 'center',
           ellipsis: true
         },
