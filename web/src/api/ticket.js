@@ -1,14 +1,4 @@
-import {
-  API,
-  updateSuccess,
-  createSuccess,
-  deleteSuccess,
-  deleteFailed,
-  createFailed,
-  updateFailed,
-  uploadSuccess,
-  uploadFailed
-} from './index'
+import { API, updateSuccess, createSuccess, deleteSuccess, deleteFailed, createFailed, updateFailed } from './index'
 import { axios } from '@/utils/request'
 
 export function getTickets(parameter) {

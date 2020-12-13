@@ -3,8 +3,8 @@ from django.dispatch import receiver
 from django.core import serializers
 from django.forms.models import model_to_dict
 from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
-
 
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -27,6 +27,39 @@ class CurrentUserDefault:
     def __repr__(self):
         return '%s()' % self.__class__.__name__
 
+class ContentTypeField(serializers.Field):
+
+    def to_representation(self, obj):
+        return obj.model
+
+    def to_internal_value(self, data):
+        return ContentType.objects.get(model=data)
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeField()
+
+    author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+    
+    class Meta:
+        model = models.Comment
+        fiels = '__all__'
+
+class UpLoadSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeField()
+
+    author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.UpLoad
+        fields = '__all__'
+
+    def get_name(self, obj):
+        return str(obj.url).split("/")[-1]
+
 class BookingSerializer(serializers.ModelSerializer):
 
     title = serializers.CharField(max_length=64)
@@ -36,6 +69,9 @@ class BookingSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
 
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+
+    uploads = UpLoadSerializer(read_only=True, many=True) 
+    comments = CommentSerializer(read_only=True, many=True)
     
     class Meta:
         model = models.Booking
@@ -57,6 +93,9 @@ class ItinerarySerializer(serializers.ModelSerializer):
     booking_id = serializers.IntegerField(required=True)
     ticket_id = serializers.IntegerField(required=False)
     author = serializers.StringRelatedField(read_only=True)
+
+    uploads = UpLoadSerializer(read_only=True, many=True) 
+    comments = CommentSerializer(read_only=True, many=True)
 
     class Meta:
         model = models.Itinerary
@@ -103,6 +142,9 @@ class TicketSerializer(serializers.ModelSerializer):
 
     itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=models.Itinerary.objects.all(), source='itineraries')
 
+    uploads = UpLoadSerializer(read_only=True, many=True) 
+    comments = CommentSerializer(read_only=True, many=True)
+
     class Meta:
         model = models.Ticket
         fields = '__all__'
@@ -128,30 +170,6 @@ class TicketHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model =  models.Ticket.history.model
-        fields = '__all__'
-
-class ContentTypeField(serializers.Field):
-
-    def to_representation(self, obj):
-        return obj.model
-
-    def to_internal_value(self, data):
-        return ContentType.objects.get(model=data)
-
-class CommentSerializer(serializers.ModelSerializer):
-
-    content_type = ContentTypeField()
-    
-    class Meta:
-        model = models.Comment
-        fiels = '__all__'
-
-class UpLoadSerializer(serializers.ModelSerializer):
-
-    content_type = ContentTypeField()
-
-    class Meta:
-        model = models.UpLoad
         fields = '__all__'
 
 class MessageSerializer(serializers.ModelSerializer):
