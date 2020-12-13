@@ -6,6 +6,34 @@
       </router-link>
     </template>
     <a-card>
+      <div class="table-page-search-wrapper">
+        <form-validate layout="inline" :form="queryParam">
+          <a-row :gutter="24">
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="ID">
+                <a-input v-model="queryParam.id" @pressEnter="() => $refs.table.refresh()"></a-input>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="12" :sm="24">
+              <form-item-validate label="Create">
+                <a-range-picker v-model="date" @change="() => $refs.table.refresh()" />
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="24" :sm="24">
+              <form-item-validate>
+                <a-input-search
+                  v-model="queryParam.search"
+                  placeholder="E.g Serial No. or Author"
+                  enter-button="Search"
+                  @search="() => $refs.table.refresh()"
+                />
+              </form-item-validate>
+            </a-col>
+          </a-row>
+        </form-validate>
+      </div>
       <s-table
         ref="table"
         size="default"
@@ -32,6 +60,7 @@
 import { STable, Ellipsis } from '@/components'
 import { getTickets } from '@/api/ticket'
 import { FormValidate, FormItemValidate } from '@/components'
+import moment from 'moment'
 
 export default {
   components: {
@@ -41,6 +70,7 @@ export default {
   },
   data() {
     return {
+      date: [],
       queryParam: {
         name: undefined
       },
@@ -103,6 +133,12 @@ export default {
           ellipsis: true
         },
         {
+          title: 'Create',
+          dataIndex: 'date',
+          align: 'center',
+          ellipsis: true
+        },
+        {
           title: 'Action',
           width: '100px',
           scopedSlots: { customRender: 'action' },
@@ -110,7 +146,20 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getTickets(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+        return getTickets(
+          Object.assign(
+            parameter,
+            Object.assign(
+              {
+                date_before:
+                  this.date != null && this.date.length > 0 ? moment(this.date[1]).format('YYYY-MM-DD') : undefined,
+                date_after:
+                  this.date != null && this.date.length > 0 ? moment(this.date[0]).format('YYYY-MM-DD') : undefined
+              },
+              this.queryParam
+            )
+          )
+        ).then(res => {
           const { data, extra } = res.result
           return data
         })

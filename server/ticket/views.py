@@ -78,15 +78,20 @@ class TicketView(viewset.ExtraModelViewSet):
     queryset = models.Ticket.objects.all().order_by('-id')
  
     filter_class = TicketFilter
-    search_fields = ['']
+    search_fields = ['serial_no', 'author__email', 'author__first_name', 'author__last_name']
+
+class TicketHistoryFilter(django_filters.FilterSet):
+    id = django_filters.NumberFilter('id')
+    history_id = django_filters.NumberFilter('history_id')
+    date = django_filters.DateFromToRangeFilter('history_date')
 
 class TicketHistoryView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.TicketHistorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = models.Ticket.history.all().order_by('-id')
  
-    filter_class = TicketFilter
-    search_fields = ['']
+    filter_class = TicketHistoryFilter
+    search_fields = ['serial_no', 'history_user__email', 'history_user__first_name', 'history_user__last_name']
 
 class CommentFilter(django_filters.FilterSet):
     pass

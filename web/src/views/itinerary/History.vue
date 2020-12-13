@@ -12,7 +12,7 @@
           <a-row :gutter="24">
             <a-col :md="6" :sm="24">
               <form-item-validate label="IID">
-                <a-input v-model="queryParam.history_id" @pressEnter="() => $refs.tableList.refresh()"></a-input>
+                <a-input v-model="queryParam.id" @pressEnter="() => $refs.tableList.refresh()"></a-input>
               </form-item-validate>
             </a-col>
 

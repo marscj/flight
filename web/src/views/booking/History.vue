@@ -11,7 +11,7 @@
           <a-row :gutter="24">
             <a-col :md="6" :sm="24">
               <form-item-validate label="BID">
-                <a-input v-model="queryParam.history_id" @pressEnter="() => $refs.table.refresh()"></a-input>
+                <a-input v-model="queryParam.id" @pressEnter="() => $refs.table.refresh()"></a-input>
               </form-item-validate>
             </a-col>
 
