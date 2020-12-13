@@ -46,8 +46,8 @@
               }
             "
           >
-            <a-list>
-              <a-list-item :key="index" v-for="(data, index) in messages">
+            <a-list item-layout="vertical" size="large" :pagination="{ pageSize: 10 }" :data-source="messages">
+              <a-list-item slot="renderItem" :key="index" slot-scope="data, index">
                 <a-list-item-meta>
                   <div slot="title">
                     <template v-if="data.json['model'] == 'Booking'">
