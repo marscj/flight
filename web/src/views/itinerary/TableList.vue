@@ -32,7 +32,7 @@
               v-model="queryParam.search"
               placeholder="E.g Serial No. or Email or Name or Passport"
               enter-button="Search"
-              @search="search"
+              @search="() => $refs.tableList.refresh()"
             />
           </form-item-validate>
         </a-col>
@@ -96,11 +96,7 @@ export default {
       default: null
     }
   },
-  methods: {
-    search() {
-      console.log(this.$refs)
-    }
-  },
+  methods: {},
   data() {
     return {
       date: [],

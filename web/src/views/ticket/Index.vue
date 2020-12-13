@@ -165,7 +165,6 @@ export default {
         remark: this.form.remark,
         itineraries_id: this.itineraries_id
       })
-      console.log(form)
 
       if (this.post_type == 'edit') {
         updateTicket(this.$route.params.id, form)
