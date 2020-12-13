@@ -109,7 +109,7 @@ class UpLoadFilter(django_filters.FilterSet):
 
 class UpLoadView(viewset.ExtraModelViewSet):
     serializer_class = serializers.UpLoadSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = models.UpLoad.objects.all().order_by('-id')
  
     filter_class = UpLoadFilter

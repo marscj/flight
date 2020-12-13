@@ -44,7 +44,7 @@ class UpLoad(models.Model):
     
     remark = models.TextField(blank=True, null=True)
 
-    url = models.FileField(upload_to=file_path_name, blank=True)
+    file = models.FileField(upload_to=file_path_name, blank=True)
 
     date = models.DateField(auto_now_add=True)
     
@@ -135,5 +135,5 @@ class Message(models.Model):
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
     
-    if instance.url is not None: 
-        instance.url.delete()
+    if instance.file is not None: 
+        instance.file.delete()

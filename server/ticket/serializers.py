@@ -53,12 +53,17 @@ class UpLoadSerializer(serializers.ModelSerializer):
 
     name = serializers.SerializerMethodField()
 
+    url = serializers.SerializerMethodField()
+
     class Meta:
         model = models.UpLoad
         fields = '__all__'
 
     def get_name(self, obj):
-        return str(obj.url).split("/")[-1]
+        return str(obj.file).split("/")[-1]
+
+    def get_url(self, obj):
+        return self.context['request'].build_absolute_uri(obj.file.url)
 
 class BookingSerializer(serializers.ModelSerializer):
 

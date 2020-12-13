@@ -13,9 +13,14 @@
           v-if="post_type == 'edit'"
           :multiple="true"
           :before-upload="beforeUpload"
-          action="http://127.0.0.1:8000/api/uploads/"
-          :data="{ object_id: 3, content_type: 'booking' }"
-          :headers="headers"
+          :remove="handleRemove"
+          action="http://localhost:8001/api/uploads/"
+          :withCredentials="true"
+          :default-file-list="form.uploads"
+          :data="{
+            content_type: 'booking',
+            object_id: $route.params.id
+          }"
         >
           <a-button> <a-icon type="upload" /> Upload </a-button>
         </a-upload>
@@ -72,7 +77,6 @@ import { FormValidate, FormItemValidate } from '@/components'
 import ItineraryList from '@/views/itinerary/ActionList'
 import { getBooking, updateBooking, createBooking, deleteBooking } from '@/api/booking'
 import { uploadFile, deleteFile } from '@/api/upload'
-import { ACCESS_TOKEN } from '@/store/mutation-types'
 import moment from 'moment'
 
 export default {
@@ -85,10 +89,6 @@ export default {
   },
   data() {
     return {
-      headers: {
-        'Access-Token': this.$ls.get(ACCESS_TOKEN)
-      },
-      fileList: [],
       loading: false,
       updateing: false,
       disabled: () => {
@@ -118,7 +118,7 @@ export default {
         .then(res => {
           const { data } = res.result
           this.form = Object.assign({}, data)
-          this.fileList = Object.assign([], data.uploads)
+          console.log(this.form.uploads)
         })
         .finally(() => {
           this.loading = false
@@ -133,7 +133,6 @@ export default {
           .then(res => {
             const { data, extra } = res.result
             this.form = Object.assign({}, data)
-            this.fileList = Object.assign([], data.uploads)
             this.extra = extra
           })
           .catch(error => {
@@ -176,27 +175,15 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 2
       if (!isLt2M) {
         this.$message.error('Image must smaller than 2MB!')
-      } else {
-        // this.fileList = [...this.fileList, file]
       }
       return isLt2M
     },
     handleRemove(file) {
-      const index = this.fileList.indexOf(file)
-      const newFileList = this.fileList.slice()
-      newFileList.splice(index, 1)
-      this.fileList = newFileList
-    },
-    customRequest(request) {
-      const formData = new FormData()
-      formData.append('url', request.file)
-      formData.append('content_type', 'booking')
-      formData.append('object_id', this.$route.params.id)
-      uploadFile(formData).then(res => {
-        this.fileList = [...this.fileList, request.file]
-      })
-    },
-    handleChange({ fileList }) {}
+      console.log(file)
+      if (file != null && file.id != null) {
+        deleteFile(file.id)
+      }
+    }
   }
 }
 </script>
