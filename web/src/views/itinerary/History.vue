@@ -5,7 +5,48 @@
         <a-button type="primary">Back</a-button>
       </router-link>
     </template>
+
     <a-card>
+      <div class="table-page-search-wrapper">
+        <form-validate layout="inline" :form="queryParam">
+          <a-row :gutter="24">
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="IID">
+                <a-input v-model="queryParam.history_id" @pressEnter="() => $refs.tableList.refresh()"></a-input>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="Booking ID">
+                <a-input v-model="queryParam.booking_id" @pressEnter="() => $refs.tableList.refresh()"></a-input>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="Ticket ID">
+                <a-input v-model="queryParam.ticket_id" @pressEnter="() => $refs.tableList.refresh()"></a-input>
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="6" :sm="24">
+              <form-item-validate label="History">
+                <a-range-picker v-model="date" @change="() => $refs.tableList.refresh()" />
+              </form-item-validate>
+            </a-col>
+
+            <a-col :md="24" :sm="24">
+              <form-item-validate>
+                <a-input-search
+                  v-model="queryParam.search"
+                  placeholder="E.g Serial No. or Email or Name or Passport"
+                  enter-button="Search"
+                  @search="search"
+                />
+              </form-item-validate>
+            </a-col>
+          </a-row>
+        </form-validate>
+      </div>
       <s-table
         ref="table"
         size="default"

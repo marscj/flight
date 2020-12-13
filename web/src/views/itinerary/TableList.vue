@@ -4,25 +4,25 @@
       <a-row :gutter="24">
         <a-col :md="6" :sm="24">
           <form-item-validate label="ID">
-            <a-input v-model="queryParam.id" @pressEnter="() => $refs.table.refresh()"></a-input>
+            <a-input v-model="queryParam.id" @pressEnter="() => $refs.tableList.refresh()"></a-input>
           </form-item-validate>
         </a-col>
 
         <a-col :md="6" :sm="24">
           <form-item-validate label="Booking ID">
-            <a-input v-model="queryParam.booking_id" @pressEnter="() => $refs.table.refresh()"></a-input>
+            <a-input v-model="queryParam.booking_id" @pressEnter="() => $refs.tableList.refresh()"></a-input>
           </form-item-validate>
         </a-col>
 
         <a-col :md="6" :sm="24">
           <form-item-validate label="Ticket ID">
-            <a-input v-model="queryParam.ticket_id" @pressEnter="() => $refs.table.refresh()"></a-input>
+            <a-input v-model="queryParam.ticket_id" @pressEnter="() => $refs.tableList.refresh()"></a-input>
           </form-item-validate>
         </a-col>
 
         <a-col :md="6" :sm="24">
           <form-item-validate label="Create">
-            <a-range-picker v-model="date" @change="() => $refs.table.refresh()" />
+            <a-range-picker v-model="date" @change="() => $refs.tableList.refresh()" />
           </form-item-validate>
         </a-col>
 
@@ -30,9 +30,9 @@
           <form-item-validate>
             <a-input-search
               v-model="queryParam.search"
-              placeholder="E.g Email or Name or Passport"
+              placeholder="E.g Serial No. or Email or Name or Passport"
               enter-button="Search"
-              @search="() => $refs.table.refresh()"
+              @search="search"
             />
           </form-item-validate>
         </a-col>
@@ -40,7 +40,7 @@
     </form-validate>
 
     <s-table
-      ref="table"
+      ref="tableList"
       size="default"
       :rowKey="record => record.id"
       :columns="columns"
@@ -96,7 +96,11 @@ export default {
       default: null
     }
   },
-  methods: {},
+  methods: {
+    search() {
+      console.log(this.$refs)
+    }
+  },
   data() {
     return {
       date: [],
@@ -228,7 +232,6 @@ export default {
           )
         ).then(res => {
           const { data } = res.result
-          console.log(data)
           this.$emit('onData', data.data)
           return data
         })

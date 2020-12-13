@@ -10,19 +10,13 @@
         <form-validate layout="inline" :form="queryParam">
           <a-row :gutter="24">
             <a-col :md="6" :sm="24">
-              <form-item-validate label="ID">
-                <a-input v-model="queryParam.id" @pressEnter="() => $refs.table.refresh()"></a-input>
-              </form-item-validate>
-            </a-col>
-
-            <a-col :md="6" :sm="24">
               <form-item-validate label="BID">
                 <a-input v-model="queryParam.history_id" @pressEnter="() => $refs.table.refresh()"></a-input>
               </form-item-validate>
             </a-col>
 
             <a-col :md="12" :sm="24">
-              <form-item-validate label="History Date">
+              <form-item-validate label="History">
                 <a-range-picker v-model="date" @change="() => $refs.table.refresh()" />
               </form-item-validate>
             </a-col>
