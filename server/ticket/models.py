@@ -69,25 +69,54 @@ class Itinerary(models.Model):
         )
 
 class Comment(models.Model):
-    comment = models.CharField(blank=True, null=True, max_length=256)
+    
+    comment = models.TextField(blank=True, null=True)
+
+    rating = models.IntegerField(blank=True, null=True, default=5)
+
+    read = models.BooleanField(blank=True, null=True, default=False)
+
     date = models.DateField(auto_now_add=True)
 
-    itinerary = models.ForeignKey(Itinerary, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+
+    object_id = models.PositiveIntegerField()
+
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return self.comment
+
+    class Meta:
+        db_table = 'comment'
+
+    ticket = models.ForeignKey(Ticket, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
     
     class Meta:
         db_table = 'comment'
 
+def file_path_name(instance, filename):
+    file_path = 'uploads/{model}/{id}/{filename}'.format(model=instance.content_type.model, id=instance.object_id, filename=filename) 
+    return file_path
+
 class UpLoad(models.Model):
+    
     remark = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to='upload/', blank=True)
+
+    file = models.FileField(upload_to=file_path_name, blank=True)
+
     date = models.DateField(auto_now_add=True)
     
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id')
-
     author = models.ForeignKey(User, related_name='uploads', on_delete=models.SET_NULL, blank=True, null=True)
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+
+    object_id = models.PositiveIntegerField()
+
+    content_object = GenericForeignKey('content_type', 'object_id')
 
     class Meta:
         db_table = 'upload'

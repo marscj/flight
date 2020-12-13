@@ -11,19 +11,7 @@
             :before-upload="beforeUpload"
             :custom-request="customRequest"
           >
-            <a-avatar
-              v-if="form.avatar && form.avatar.medium"
-              :src="form.avatar.medium"
-              :size="128"
-              alt="avatar"
-              icon="user"
-            />
-            <!-- <div v-else>
-              <a-icon :type="loading ? 'loading' : 'plus'" />
-              <div class="ant-upload-text">
-                Upload
-              </div>
-            </div> -->
+            <a-avatar :src="form.avatar.medium" :size="128" alt="avatar" icon="user" />
           </a-upload>
         </form-item-validate>
 
@@ -89,7 +77,7 @@
       </a-card>
       <a-row>
         <a-col :span="24" class="text-right">
-          <a-button type="primary" @click="submit" :loading="loading" html-type="submit">
+          <a-button type="primary" @click="submit" :loading="uploading" html-type="submit">
             Submit
           </a-button>
         </a-col>
@@ -120,7 +108,6 @@ export default {
   data() {
     return {
       loading: false,
-      updateing: false,
       uploading: false,
       form: {}
     }
@@ -152,7 +139,6 @@ export default {
       return isJpgOrPng && isLt2M
     },
     customRequest(request) {
-      this.loading = true
       const formData = new FormData()
       formData.append('avatar', request.file)
 
@@ -166,12 +152,9 @@ export default {
             this.$refs.observer.setErrors(error.response.data.result)
           }
         })
-        .finally(() => {
-          this.loading = false
-        })
     },
     submit() {
-      this.updateing = true
+      this.uploading = true
       var form = {
         first_name: this.form.first_name,
         last_name: this.form.last_name
@@ -187,7 +170,7 @@ export default {
           }
         })
         .finally(() => {
-          this.updateing = false
+          this.uploading = false
         })
     }
   }

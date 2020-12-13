@@ -130,13 +130,25 @@ class TicketHistorySerializer(serializers.ModelSerializer):
         model =  models.Ticket.history.model
         fields = '__all__'
 
+class ContentTypeField(serializers.Field):
+
+    def to_representation(self, obj):
+        return obj.model
+
+    def to_internal_value(self, data):
+        return ContentType.objects.get(model=data)
+
 class CommentSerializer(serializers.ModelSerializer):
 
+    content_type = ContentTypeField()
+    
     class Meta:
         model = models.Comment
         fiels = '__all__'
 
 class UpLoadSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeField()
 
     class Meta:
         model = models.UpLoad
