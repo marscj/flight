@@ -203,10 +203,8 @@ REST_AUTH_REGISTER_PERMISSION_CLASSES = [
 # 图片处理
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'image_size': [
-        ('full_size', 'url'),
-        ('avatar', 'thumbnail__128x128'),
-        # ('samll', 'crop__640x360'),
-        # ('medium', 'crop__854x480'),
-        # ('large', 'crop__1280x720'),
-    ],
+        ('large', 'url'),
+        ('medium', 'crop__400x400'),
+        ('thumbnail', 'thumbnail__100x100')
+    ]
 }

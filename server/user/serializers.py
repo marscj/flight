@@ -107,7 +107,7 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = (
-            'id', 'name', 'email', 'roles', 'is_staff', 'is_active', 'department', 'passport_no'
+            'id', 'name', 'email', 'roles', 'is_staff', 'is_active', 'department', 'passport_no', 'avatar'
         )
         read_only_fields = ('id', 'email', 'is_staff', 'is_active')
 
@@ -126,15 +126,17 @@ class UserSerializer(serializers.ModelSerializer):
 
     groups_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=Group.objects.all(), source='groups')
 
+    avatar = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size', read_only=False)
+
     class Meta:
         model = UserModel
         fields = (
             'id', 'email', 'password', 'first_name', 'last_name', 'roles', 'is_active', 'is_staff', 'is_superuser',
             'possport_type', 'passport_code', 'passport_no', 'passport_sex', 'passport_nationality', 'passport_date_birth',
             'passport_place_birth', 'passport_date_issue', 'passport_date_expiry', 'passport_issuing_authority',
-            'name', 'department_id', 'groups_id', 'department'
+            'name', 'department_id', 'groups_id', 'department', 'avatar'
         )
-        read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined', 'department')
+        read_only_fields = ('username', 'password', 'email', 'last_login', 'is_superuser', 'date_joined', 'department', 'avatar')
 
     def get_name(self, obj):
         return obj.full_name
