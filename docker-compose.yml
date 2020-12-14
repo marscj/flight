@@ -1,7 +1,7 @@
 version: '3'
 services:
 
-  postgres:
+  db:
     container_name: flight_postgres
     image: postgres
     hostname: db
@@ -20,7 +20,7 @@ services:
     ports:
       - 5050:80
     depends_on:
-      - postgres
+      - db
     restart: unless-stopped
   
   redis:
@@ -57,10 +57,10 @@ services:
         - static_volume:/server/static
         - media_volume:/server/media
       links:
-        - postgres
+        - db
         - redis
       depends_on:
-        - postgres
+        - db
         - redis
 
 volumes:

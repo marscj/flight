@@ -1,6 +1,7 @@
 FROM python:latest
 ENV PYTHONUNBUFFERED 1
 ENV REDIS_HOST "redis"
+ENV DB_HOST "postgres"
 RUN mkdir /server
 WORKDIR /server
 COPY . /server
