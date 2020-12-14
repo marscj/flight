@@ -6,55 +6,101 @@
         <a-row class="form-row" :gutter="16">
           <a-col :sm="24" :md="8">
             <form-item-validate label="Serial No." vid="serial_no">
-              <a-input v-model="form.serial_no"></a-input>
+              <a-input v-model="form.serial_no" :disabled="disabled()"></a-input>
             </form-item-validate>
           </a-col>
           <a-col :sm="24" :md="8">
             <form-item-validate label="Line" vid="air_line">
-              <a-input v-model="form.air_line"></a-input>
+              <a-input v-model="form.air_line" :disabled="disabled()"></a-input>
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="8">
             <form-item-validate label="Class" vid="air_class">
-              <a-input v-model="form.air_class"></a-input>
+              <a-input v-model="form.air_class" :disabled="disabled()"></a-input>
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="8">
             <form-item-validate label="Fare" vid="fare">
-              <a-input-number v-model="form.fare" :min="0" :precision="2" decimalSeparator="." class="w-full" />
+              <a-input-number
+                v-model="form.fare"
+                :disabled="disabled()"
+                :min="0"
+                :precision="2"
+                decimalSeparator="."
+                class="w-full"
+              />
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="8">
             <form-item-validate label="Tax" vid="tax">
-              <a-input-number v-model="form.tax" :min="0" :precision="2" decimalSeparator="." class="w-full" />
+              <a-input-number
+                v-model="form.tax"
+                :disabled="disabled()"
+                :min="0"
+                :precision="2"
+                decimalSeparator="."
+                class="w-full"
+              />
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="8">
             <form-item-validate label="Total" vid="total">
-              <a-input-number v-model="form.total" :min="0" :precision="2" decimalSeparator="." class="w-full" />
+              <a-input-number
+                v-model="form.total"
+                :disabled="disabled()"
+                :min="0"
+                :precision="2"
+                decimalSeparator="."
+                class="w-full"
+              />
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="12">
             <form-item-validate label="Info" vid="air_info">
-              <a-textarea v-model="form.air_info" :rows="5"></a-textarea>
+              <a-textarea v-model="form.air_info" :disabled="disabled()" :rows="5"></a-textarea>
             </form-item-validate>
           </a-col>
 
           <a-col :sm="24" :md="12">
             <form-item-validate label="remark" vid="remark">
-              <a-textarea v-model="form.remark" :rows="5"></a-textarea>
+              <a-textarea v-model="form.remark" :disabled="disabled()" :rows="5"></a-textarea>
             </form-item-validate>
           </a-col>
         </a-row>
+
+        <a-upload-dragger
+          v-if="post_type == 'edit' && form.uploads"
+          :multiple="true"
+          :before-upload="beforeUpload"
+          :remove="handleRemove"
+          action="http://localhost:8001/api/uploads/"
+          :withCredentials="true"
+          :default-file-list="form.uploads"
+          :data="{
+            content_type: 'ticket',
+            object_id: $route.params.id
+          }"
+          :disabled="disabled()"
+        >
+          <p class="ant-upload-drag-icon">
+            <a-icon type="inbox" />
+          </p>
+          <p class="ant-upload-text">
+            Click or drag file to this area to upload
+          </p>
+          <p class="ant-upload-hint">
+            Support for a single or bulk upload
+          </p>
+        </a-upload-dragger>
       </a-card>
 
       <form-item-validate vid="user_id">
-        <itinerary-related-list @select="onSelectItinerary" />
+        <itinerary-related-list @select="onSelectItinerary" :disabled="disabled()" />
       </form-item-validate>
     </page-header-wrapper>
 
@@ -104,6 +150,7 @@
 <script>
 import { FormValidate, FormItemValidate } from '@/components'
 import { getTicket, updateTicket, createTicket, deleteTicket } from '@/api/ticket'
+import { uploadFile, deleteFile } from '@/api/upload'
 import ItineraryRelatedList from '@/views/itinerary/RelatedList'
 
 import moment from 'moment'
@@ -210,6 +257,18 @@ export default {
     },
     onSelectItinerary(val) {
       this.itineraries_id = Object.assign([], val)
+    },
+    beforeUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('Image must smaller than 2MB!')
+      }
+      return isLt2M
+    },
+    handleRemove(file) {
+      if (file != null && file.id != null) {
+        deleteFile(file.id)
+      }
     }
   }
 }

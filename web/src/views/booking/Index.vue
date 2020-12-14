@@ -21,6 +21,7 @@
             content_type: 'booking',
             object_id: $route.params.id
           }"
+          :disabled="disabled()"
         >
           <p class="ant-upload-drag-icon">
             <a-icon type="inbox" />

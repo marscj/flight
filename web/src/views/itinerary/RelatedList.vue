@@ -19,7 +19,7 @@
     <a-button
       type="primary"
       class="text-center w-full h-12 mt-4"
-      :disabled="loading"
+      :disabled="loading || disabled"
       @click="
         () => {
           modal = true
@@ -56,6 +56,12 @@ import { getItineraries } from '@/api/itinerary'
 export default {
   components: {
     ItineraryTableList
+  },
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   },
   watch: {
     data(val) {

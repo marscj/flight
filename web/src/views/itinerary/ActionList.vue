@@ -131,14 +131,19 @@
         ><a-button
           class="w-full mt-4 h-12 mr-4 "
           type="primary"
-          :disabled="selectedRowKeys.length == 0"
           @click="ticket()"
+          :disabled="!$auth('change_booking') || !$auth('add_ticket') || selectedRowKeys.length == 0"
         >
           Ticketing
         </a-button></a-col
       >
       <a-col :span="12"
-        ><a-button class="w-full mt-4 h-12 ml-4" type="primary" icon="plus" @click="newMember" v-action:add_itinerary
+        ><a-button
+          class="w-full mt-4 h-12 ml-4"
+          type="primary"
+          icon="plus"
+          @click="newMember"
+          :disabled="!$auth('change_booking') || !$auth('add_itinerary')"
           >Add Itinerary</a-button
         ></a-col
       >
