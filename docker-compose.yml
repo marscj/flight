@@ -1,0 +1,70 @@
+version: '3'
+services:
+
+  postgres:
+    container_name: flight_postgres
+    image: postgres
+    hostname: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: Z)<f[>sOXXcBJ>wi
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+  
+  pgadmin:
+    container_name: flight_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: mars.jingxing@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: Z)<f[>sOXXcBJ>wi
+    ports:
+      - 5050:80
+    depends_on:
+      - postgres
+    restart: unless-stopped
+  
+  redis:
+    image: redis
+    container_name: flight_redis
+    hostname: redis
+    restart: always
+    volumes:
+      - redisdata:/data
+
+  nginx:
+    container_name: flight_nginx
+    build: 
+      context: ./
+      dockerfile: ./nginx/Dockerfile
+    restart: always
+    ports:
+      - "8001:80"
+    volumes:
+      - ./nginx/conf.d/local.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./web/dist:/web/dist/
+      - static_volume:/server/static
+      - media_volume:/server/media
+    depends_on:
+      - server
+
+  server:
+      container_name: flight_server
+      build: ./server
+      command: "gunicorn --chdir server --bind :8000 server.wsgi:application" 
+      restart: always
+      volumes:
+        - .:/server
+        - static_volume:/server/static
+        - media_volume:/server/media
+      links:
+        - postgres
+        - redis
+      depends_on:
+        - postgres
+        - redis
+
+volumes:
+  pgdata:
+  redisdata:
+  static_volume:
+  media_volume:
