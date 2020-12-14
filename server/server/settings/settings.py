@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'cacheops',
     'corsheaders',
 
     'allauth',
@@ -207,4 +208,12 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
         ('medium', 'crop__400x400'),
         ('thumbnail', 'thumbnail__100x100')
     ]
+}
+
+CACHEOPS_DEFAULTS = {
+    'timeout': 60 * 60
+}
+
+CACHEOPS = {
+    '*.*': {},
 }
