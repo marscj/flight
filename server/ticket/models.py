@@ -84,7 +84,7 @@ class Ticket(models.Model):
     remark = models.TextField(blank=True, null=True)
     is_confirm = models.BooleanField(default=False, blank=True, null=True)
     is_cancel = models.BooleanField(default=False, blank=True, null=True)
-    is_booking = models.BooleanField(default=False, blank=True, null=True)
+    is_booking = models.BooleanField(default=True, blank=True, null=True)
     is_complete = models.BooleanField(default=False, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
     comments = GenericRelation(Comment, related_query_name='ticket')

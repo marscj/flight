@@ -1,7 +1,43 @@
 <template>
   <form-validate ref="observer" :form="form">
     <page-header-wrapper :content="'ID:' + $route.params.id">
-      <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false"> </a-card>
+      <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false">
+        <a-steps
+          v-if="!form.is_cancel"
+          :direction="(isMobile && 'vertical') || 'horizontal'"
+          :current="current"
+          progressDot
+        >
+          <a-step>
+            <template v-slot:title>
+              <span>Create Ticket</span>
+            </template>
+            <template v-slot:description>
+              <div class="antd-pro-pages-profile-advanced-style-stepDescription">
+                {{ form.author }}
+                <div>{{ form.date }}</div>
+              </div>
+            </template>
+          </a-step>
+          <a-step title="Booked" />
+          <a-step title="Confirmed" />
+          <a-step title="Completed" />
+        </a-steps>
+        <a-steps v-else :direction="(isMobile && 'vertical') || 'horizontal'" :current="1" progressDot>
+          <a-step>
+            <template v-slot:title>
+              <span>Create Ticket</span>
+            </template>
+            <template v-slot:description>
+              <div class="antd-pro-pages-profile-advanced-style-stepDescription">
+                {{ form.author }}
+                <div>{{ form.date }}</div>
+              </div>
+            </template>
+          </a-step>
+          <a-step title="Cancelled" />
+        </a-steps>
+      </a-card>
       <a-card class="card" title="Ticket Info" :bordered="false">
         <a-row class="form-row" :gutter="16">
           <a-col :sm="24" :md="8">
@@ -85,7 +121,7 @@
             content_type: 'ticket',
             object_id: $route.params.id
           }"
-          :disabled="disabled()"
+          :disabled="disabled() || form.is_confirm"
         >
           <p class="ant-upload-drag-icon">
             <a-icon type="inbox" />
@@ -185,6 +221,24 @@ export default {
   mounted() {
     if (this.$route.params.id) {
       this.getTicketData()
+    }
+  },
+  computed: {
+    current() {
+      var _step = 0
+      if (this.form.is_booking) {
+        _step = 1
+      }
+
+      if (this.form.is_confirm) {
+        _step = 2
+      }
+
+      if (this.form.is_complete) {
+        _step = 3
+      }
+
+      return _step
     }
   },
   methods: {
