@@ -75,7 +75,8 @@ class BookingSerializer(serializers.ModelSerializer):
 
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
-    uploads = UpLoadSerializer(read_only=True, many=True) 
+    uploads = UpLoadSerializer(read_only=True, many=True)
+     
     comments = CommentSerializer(read_only=True, many=True)
     
     class Meta:
