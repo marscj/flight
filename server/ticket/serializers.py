@@ -15,6 +15,7 @@ from simple_history.signals import (
 )
 
 from . import models
+from user.serializers import UserListSerializer
 
 UserModel = get_user_model()
 
@@ -41,6 +42,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     
+    author = UserListSerializer(read_only=True)
+
     class Meta:
         model = models.Comment
         fiels = '__all__'
