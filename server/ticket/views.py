@@ -94,7 +94,8 @@ class TicketHistoryView(viewsets.ReadOnlyModelViewSet):
     search_fields = ['serial_no', 'history_user__email', 'history_user__first_name', 'history_user__last_name']
 
 class CommentFilter(django_filters.FilterSet):
-    pass
+    object_id = django_filters.NumberFilter('object_id')
+    content_type = django_filters.CharFilter('content_type')
 
 class CommentView(viewset.ExtraModelViewSet):
     serializer_class = serializers.CommentSerializer
