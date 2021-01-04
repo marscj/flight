@@ -106,6 +106,7 @@ class CommentView(viewset.ExtraModelViewSet):
 
 class UpLoadFilter(django_filters.FilterSet):
     object_id = django_filters.NumberFilter('object_id')
+    content_type = django_filters.CharFilter('content_type')
 
 class UpLoadView(viewset.ExtraModelViewSet):
     serializer_class = serializers.UpLoadSerializer
