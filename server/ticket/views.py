@@ -105,7 +105,7 @@ class CommentView(viewset.ExtraModelViewSet):
     search_fields = ['']
 
 class UpLoadFilter(django_filters.FilterSet):
-    pass
+    object_id = django_filters.NumberFilter('object_id')
 
 class UpLoadView(viewset.ExtraModelViewSet):
     serializer_class = serializers.UpLoadSerializer
