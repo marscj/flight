@@ -126,6 +126,7 @@ class TicketSerializer(serializers.ModelSerializer):
 
     uploads = UpLoadSerializer(read_only=True, many=True) 
     comments = CommentSerializer(read_only=True, many=True)
+    itineraries = ItinerarySerializer(read_only=True, many=True)
 
     class Meta:
         model = models.Ticket
