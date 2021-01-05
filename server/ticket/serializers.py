@@ -68,33 +68,6 @@ class UpLoadSerializer(serializers.ModelSerializer):
     def get_url(self, obj):
         return self.context['request'].build_absolute_uri(obj.file.url)
 
-class BookingSerializer(serializers.ModelSerializer):
-
-    title = serializers.CharField(max_length=64)
-
-    remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
-
-    author = serializers.StringRelatedField(read_only=True)
-
-    author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
-
-    uploads = UpLoadSerializer(read_only=True, many=True)
-     
-    comments = CommentSerializer(read_only=True, many=True)
-    
-    class Meta:
-        model = models.Booking
-        fields = '__all__'
-
-class BookingHistorySerializer(serializers.ModelSerializer):
-
-    author = serializers.StringRelatedField(read_only=True)
-    history_user = serializers.StringRelatedField(read_only=True)
-    
-    class Meta:
-        model = models.Booking.history.model
-        fields = '__all__'
-
 class ItinerarySerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
     remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
@@ -209,3 +182,32 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         serializer = ItineraryHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
         models.Message.objects.create(json=serializer)
+
+class BookingSerializer(serializers.ModelSerializer):
+
+    title = serializers.CharField(max_length=64)
+
+    remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
+
+    author = serializers.StringRelatedField(read_only=True)
+
+    author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+
+    uploads = UpLoadSerializer(read_only=True, many=True)
+     
+    comments = CommentSerializer(read_only=True, many=True)
+
+    itineraries = ItinerarySerializer(read_only=True, many=True)
+    
+    class Meta:
+        model = models.Booking
+        fields = '__all__'
+
+class BookingHistorySerializer(serializers.ModelSerializer):
+
+    author = serializers.StringRelatedField(read_only=True)
+    history_user = serializers.StringRelatedField(read_only=True)
+    
+    class Meta:
+        model = models.Booking.history.model
+        fields = '__all__'
