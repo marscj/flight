@@ -53,6 +53,13 @@ class ItineraryView(viewset.ExtraModelViewSet):
     filter_class = ItineraryFilter
     search_fields = ['serial_no', 'email', 'name', 'passport_no']
 
+    def get_queryset(self):
+        if self.request.user.has_perm('ticket.view_itinerary'):
+            return models.Itinerary.objects.all().order_by('-id')
+        else :
+            return super().get_queryset().filter(user_id=self.request.user.id).distinct()
+
+
 class ItineraryHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
     history_id = django_filters.NumberFilter('history_id')
@@ -79,6 +86,12 @@ class TicketView(viewset.ExtraModelViewSet):
  
     filter_class = TicketFilter
     search_fields = ['serial_no', 'author__email', 'author__first_name', 'author__last_name']
+
+    def get_queryset(self):
+        if self.request.user.has_perm('ticket.view_ticket'):
+            return models.Ticket.objects.all().order_by('-id')
+        else :
+            return super().get_queryset().filter(itineraries__user_id=self.request.user.id).distinct()
 
 class TicketHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
