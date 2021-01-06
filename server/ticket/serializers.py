@@ -126,11 +126,22 @@ class TicketSerializer(serializers.ModelSerializer):
 
     uploads = UpLoadSerializer(read_only=True, many=True) 
     comments = CommentSerializer(read_only=True, many=True)
-    itineraries = ItinerarySerializer(read_only=True, many=True)
+    itineraries = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Ticket
         fields = '__all__'
+
+    def get_itineraries(self, obj):
+        query = None
+        if self.context['request'].user.has_perm('ticket.view_itinerary'):
+            query = obj.itineraries.all()
+        else:
+            query = obj.itineraries.filter(user_id=self.context['request'].user.id)
+
+        serializer = ItinerarySerializer(instance=query, many=True)
+
+        return serializer.data
 
     def validate(self, validated_data):
         itineraries = validated_data.get('itineraries', None)
@@ -198,11 +209,22 @@ class BookingSerializer(serializers.ModelSerializer):
      
     comments = CommentSerializer(read_only=True, many=True)
 
-    itineraries = ItinerarySerializer(read_only=True, many=True)
+    itineraries = serializers.SerializerMethodField()
     
     class Meta:
         model = models.Booking
         fields = '__all__'
+
+    def get_itineraries(self, obj):
+        query = None
+        if self.context['request'].user.has_perm('ticket.view_itinerary'):
+            query = obj.itineraries.all()
+        else:
+            query = obj.itineraries.filter(user_id=self.context['request'].user.id)
+
+        serializer = ItinerarySerializer(instance=query, many=True)
+
+        return serializer.data
 
 class BookingHistorySerializer(serializers.ModelSerializer):
 
