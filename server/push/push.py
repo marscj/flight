@@ -1,13 +1,14 @@
 from .conf import app_key, master_secret
 import jpush
+import json
 
 _jpush = jpush.JPush(app_key, master_secret)
 # _jpush.set_logging("DEBUG")
 
-def send_message(alias, title, body=None):
+def send_message(title, body=None, **kwargs):
     push = _jpush.create_push()
     push.audience = jpush.audience(
-        jpush.alias(alias)
+        kwargs
     )
     push.options = {
          "apns_production": False
@@ -16,7 +17,6 @@ def send_message(alias, title, body=None):
         "title": title,
         "body": body
     }, android={
-        "badge": "+1",
         "extras": {
             "android-key1": "android-value1"
         }

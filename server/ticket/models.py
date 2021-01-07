@@ -3,12 +3,13 @@ from django.db import models
 from django.db.models import Value
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from django.db.models.signals import pre_delete
+from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
 
 from simple_history.models import HistoricalRecords
 
 from user.models import User
+from push import push
 
 class Comment(models.Model):
     
@@ -137,3 +138,9 @@ def upload_pre_delete(sender, instance, **kwargs):
     
     if instance.file is not None: 
         instance.file.delete()
+
+@receiver(post_save, sender=Booking)
+def booking_post_save(sender, instance, created, **kwargs):
+
+    if created:
+        push.send_message()

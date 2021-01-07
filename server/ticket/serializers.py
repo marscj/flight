@@ -234,3 +234,4 @@ class BookingHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Booking.history.model
         fields = '__all__'
+
