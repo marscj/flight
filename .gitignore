@@ -6,3 +6,4 @@ web/.DS_Store
 /static
 server/dump.rdb
 .DS_Store
+server/push/conf.py
