@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.db.models import Value
+from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import pre_delete, post_save
@@ -147,4 +148,7 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
     if type(instance).__name__ == 'Itinerary':
         serializer = ItineraryHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
-        models.Message.objects.create(json=serializer)
+        
+        role in Group.objects.filter(permissions__name='view_itinerary'):
+            user in role.user.all():
+                models.Message.objects.create(json=serializer, content_type=ContentType.objects.get(model=type(instance).__name__), object_id= instance.id, user=user)

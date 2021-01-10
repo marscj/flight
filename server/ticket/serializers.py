@@ -33,6 +33,8 @@ class ContentTypeField(serializers.Field):
 
 class MessageSerializer(serializers.ModelSerializer):
 
+    content_type = ContentTypeField()
+    
     class Meta:
         model = models.Message
         fields = '__all__'
