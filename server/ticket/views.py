@@ -26,6 +26,11 @@ class BookingView(viewset.ExtraModelViewSet):
         else :
             return super().get_queryset().filter(itineraries__user_id=self.request.user.id).distinct()
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.messages.filter(user=self.request.user).update(read=True)
+        return super().retrieve(request, *args, **kwargs)
+
 class BookingHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
     history_id = django_filters.NumberFilter('history_id')
@@ -128,3 +133,6 @@ class MessageView(viewsets.ReadOnlyModelViewSet):
     queryset = models.Message.objects.all().order_by('-id')
 
     filter_class = MessageFilter
+
+    def get_queryset(self):
+        return models.Message.objects.filter(user=self.request.user).order_by('-id')

@@ -61,6 +61,7 @@
                       <router-link v-else :to="{ name: 'BookingDetail', params: { id: data.json['id'] } }">
                         Booking for ID:{{ data.json['id'] }}
                       </router-link>
+                      <a-icon type="inbox" v-if="!data.read"> </a-icon>
                     </template>
                     <template v-if="data.json['model'] == 'Ticket'">
                       <span>{{ data.json['history_user'] }} </span>
@@ -74,6 +75,7 @@
                       <router-link v-else :to="{ name: 'TicketDetail', params: { id: data.json['id'] } }">
                         Ticket for ID:{{ data.json['id'] }}
                       </router-link>
+                      <a-icon type="inbox" v-if="!data.read"> </a-icon>
                     </template>
                     <template v-if="data.json['model'] == 'Itinerary'">
                       <span>{{ data.json['history_user'] }} </span>
@@ -87,6 +89,7 @@
                       <router-link v-else :to="{ name: 'BookingDetail', params: { id: data.json['booking'] } }">
                         Itinerary for ID:{{ data.json['id'] }}
                       </router-link>
+                      <a-icon type="inbox" v-if="!data.read"> </a-icon>
                     </template>
                   </div>
                   <div slot="description">{{ data.date | moment }}</div>

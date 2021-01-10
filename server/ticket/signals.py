@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.dispatch import receiver
 from simple_history.signals import (
     pre_create_historical_record,
@@ -25,9 +26,8 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         serializer = BookingHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
         
-        if(not history_instance.history_user.is_staff):
-            for user in User.objects.filter(is_staff=True):
-                Message.objects.create(json=serializer, content_object=instance, user=user)
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
+            Message.objects.create(json=serializer, content_object=instance, user=user)
         
         if(history_instance.history_user.is_staff):
             push.send_message('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), tag=['customer'])
@@ -38,9 +38,8 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         serializer = TicketHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
         
-        if(not history_instance.history_user.is_staff):
-            for user in User.objects.filter(is_staff=True):
-                Message.objects.create(json=serializer, content_object=instance, user=user)
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
+            Message.objects.create(json=serializer, content_object=instance, user=user)
         
         if(history_instance.history_user.is_staff):
             push.send_message('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), tag=['customer'])
@@ -51,9 +50,8 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         serializer = ItineraryHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
         
-        if(not history_instance.history_user.is_staff):
-            for user in User.objects.filter(is_staff=True):
-                Message.objects.create(json=serializer, content_object=instance, user=user)
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
+            Message.objects.create(json=serializer, content_object=instance, user=user)
 
         if(history_instance.history_user.is_staff):
             push.send_message('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), tag=['customer'])
