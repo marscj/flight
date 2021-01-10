@@ -16,20 +16,6 @@ from simple_history.signals import (
 from user.models import User
 from push import push
 
-class Message(models.Model):
-    
-    json = models.JSONField(null=True, blank=True)
-    date = models.DateField(auto_now_add=True)
-    read = models.BooleanField(default=False, blank=True, null=True)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id')
-
-    user = models.ForeignKey(User, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
-
-    class Meta:
-        db_table = 'message'
-
 def file_path_name(instance, filename):
     file_path = 'uploads/{model}/{id}/{filename}'.format(model=instance.content_type.model, id=instance.object_id, filename=filename) 
     return file_path
@@ -49,13 +35,43 @@ class UpLoad(models.Model):
     class Meta:
         db_table = 'upload'
 
+class Message(models.Model):
+    
+    json = models.JSONField(null=True, blank=True)
+    date = models.DateField(auto_now_add=True)
+    read = models.BooleanField(default=False, blank=True, null=True)
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    user = models.ForeignKey(User, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        db_table = 'message'
+
+class Comment(models.Model):
+    
+    content = models.TextField(blank=True, null=True)
+    date = models.DateField(auto_now_add=True)
+    read = models.BooleanField(default=False, blank=True, null=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    user = models.ForeignKey(User, related_name='comments', on_delete=models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        db_table = 'comment'
+
 class Booking(models.Model):
     title = models.CharField(blank=True, null=True, max_length=64)
     remark = models.TextField(blank=True, null=True)
     date = models.DateField(auto_now_add=True)
     
-    uploads = GenericRelation(UpLoad, related_query_name='booking')
     messages = GenericRelation(Message, related_query_name='booking')
+    comments = GenericRelation(Comment, related_query_name='booking')
+    uploads = GenericRelation(UpLoad, related_query_name='booking')   
     author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
     history = HistoricalRecords(table_name='booking_history', custom_model_name='booking_history')
 
@@ -78,6 +94,7 @@ class Ticket(models.Model):
     date = models.DateField(auto_now_add=True)
     
     messages = GenericRelation(Message, related_query_name='ticket')
+    comments = GenericRelation(Comment, related_query_name='ticket')
     uploads = GenericRelation(UpLoad, related_query_name='ticket')
     author = models.ForeignKey(User, related_name='ticket_authors', on_delete=models.SET_NULL, blank=True, null=True)
     history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
@@ -100,6 +117,7 @@ class Itinerary(models.Model):
     date = models.DateField(auto_now_add=True)
     
     messages = GenericRelation(Message, related_query_name='itinerary')
+    comments = GenericRelation(Comment, related_query_name='itinerary')
     uploads = GenericRelation(UpLoad, related_query_name='itinerary')
     user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
@@ -138,17 +156,17 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
     if type(instance).__name__ == 'Booking':
         serializer = BookingHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
-        models.Message.objects.create(json=serializer)
+        for user in User.objects.filter(groups__permissions_codename='view_booking'):
+            models.Message.objects.create(json=serializer, content_object=instance, user=user)
 
     if type(instance).__name__ == 'Ticket':
         serializer = TicketHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
-        models.Message.objects.create(json=serializer)
+        for user in User.objects.filter(groups__permissions_codename='view_ticket'):
+            models.Message.objects.create(json=serializer, content_object=instance, user=user)
 
     if type(instance).__name__ == 'Itinerary':
         serializer = ItineraryHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
-        
-        role in Group.objects.filter(permissions__name='view_itinerary'):
-            user in role.user.all():
-                models.Message.objects.create(json=serializer, content_type=ContentType.objects.get(model=type(instance).__name__), object_id= instance.id, user=user)
+        for user in User.objects.filter(groups__permissions_codename='view_itinerary'):
+            models.Message.objects.create(json=serializer, content_object=instance, user=user)

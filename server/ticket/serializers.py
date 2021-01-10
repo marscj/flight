@@ -31,14 +31,6 @@ class ContentTypeField(serializers.Field):
     def to_internal_value(self, data):
         return ContentType.objects.get(model=data)
 
-class MessageSerializer(serializers.ModelSerializer):
-
-    content_type = ContentTypeField()
-    
-    class Meta:
-        model = models.Message
-        fields = '__all__'
-
 class UpLoadSerializer(serializers.ModelSerializer):
 
     content_type = ContentTypeField()
@@ -59,6 +51,23 @@ class UpLoadSerializer(serializers.ModelSerializer):
     def get_url(self, obj):
         return self.context['request'].build_absolute_uri(obj.file.url)
 
+class MessageSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeField()
+
+    class Meta:
+        model = models.Message
+        fields = '__all__'
+
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeField()
+    
+    class Meta:
+        model = models.Message
+        fields = '__all__'
+
 class ItinerarySerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
     remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
@@ -67,8 +76,9 @@ class ItinerarySerializer(serializers.ModelSerializer):
     ticket_id = serializers.IntegerField(required=False)
     author = serializers.StringRelatedField(read_only=True)
 
-    uploads = UpLoadSerializer(read_only=True, many=True) 
     messages = MessageSerializer(read_only=True, many=True)
+    comments = CommentSerializer(read_only=True, many=True)
+    uploads = UpLoadSerializer(read_only=True, many=True)   
 
     class Meta:
         model = models.Itinerary
@@ -115,8 +125,9 @@ class TicketSerializer(serializers.ModelSerializer):
 
     itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=models.Itinerary.objects.all(), source='itineraries')
 
-    uploads = UpLoadSerializer(read_only=True, many=True) 
     messages = MessageSerializer(read_only=True, many=True)
+    comments = CommentSerializer(read_only=True, many=True)
+    uploads = UpLoadSerializer(read_only=True, many=True) 
     itineraries = serializers.SerializerMethodField()
 
     class Meta:
@@ -160,17 +171,13 @@ class TicketHistorySerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
 
     title = serializers.CharField(max_length=64)
-
     remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
-
     author = serializers.StringRelatedField(read_only=True)
-
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
-    uploads = UpLoadSerializer(read_only=True, many=True)
-
     messages = MessageSerializer(read_only=True, many=True)
-
+    comments = CommentSerializer(read_only=True, many=True)
+    uploads = UpLoadSerializer(read_only=True, many=True)
     itineraries = serializers.SerializerMethodField()
     
     class Meta:
