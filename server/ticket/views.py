@@ -7,7 +7,6 @@ import django_filters
 from middleware import viewset, permissions
 from . import serializers
 from . import models
-from push import push
 
 class BookingFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
@@ -22,7 +21,6 @@ class BookingView(viewset.ExtraModelViewSet):
     search_fields = ['title', 'author__email', 'author__first_name', 'author__last_name']
       
     def get_queryset(self):
-        push.send_message('You have a new message', 'cc', tag=['lala', 'haha'])
         if self.request.user.has_perm('ticket.view_booking'):
             return models.Booking.objects.all().order_by('-id')
         else :

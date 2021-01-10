@@ -6,12 +6,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
-
 from simple_history.models import HistoricalRecords
-from simple_history.signals import (
-    pre_create_historical_record,
-    post_create_historical_record
-)
 
 from user.models import User
 from push import push
@@ -137,36 +132,3 @@ def upload_pre_delete(sender, instance, **kwargs):
     
     if instance.file is not None: 
         instance.file.delete()
-
-# @receiver(post_save, sender=Booking)
-# def booking_post_save(sender, instance, created, **kwargs):
-
-#     body = None
-#     if created:
-#         body = 'customer created a booking'
-#     else:
-#         body = 'customer modified the booking information'
-
-#     push.send_message('You have a new message', body, tag=['haha'])
-
-@receiver(post_create_historical_record)
-def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
-    
-    serializer = None
-    if type(instance).__name__ == 'Booking':
-        serializer = BookingHistorySerializer(instance=history_instance).data
-        serializer['model'] = type(instance).__name__
-        for user in User.objects.filter(groups__permissions_codename='view_booking'):
-            models.Message.objects.create(json=serializer, content_object=instance, user=user)
-
-    if type(instance).__name__ == 'Ticket':
-        serializer = TicketHistorySerializer(instance=history_instance).data
-        serializer['model'] = type(instance).__name__
-        for user in User.objects.filter(groups__permissions_codename='view_ticket'):
-            models.Message.objects.create(json=serializer, content_object=instance, user=user)
-
-    if type(instance).__name__ == 'Itinerary':
-        serializer = ItineraryHistorySerializer(instance=history_instance).data
-        serializer['model'] = type(instance).__name__
-        for user in User.objects.filter(groups__permissions_codename='view_itinerary'):
-            models.Message.objects.create(json=serializer, content_object=instance, user=user)

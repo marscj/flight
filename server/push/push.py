@@ -5,7 +5,7 @@ import json
 _jpush = jpush.JPush(app_key, master_secret)
 # _jpush.set_logging("DEBUG")
 
-def send_message(title, body=None, **kwargs):
+def send_message(title, **kwargs):
     push = _jpush.create_push()
     push.audience = jpush.audience(
         kwargs
@@ -14,8 +14,7 @@ def send_message(title, body=None, **kwargs):
          "apns_production": False
     }
     push.notification = jpush.notification(alert={
-        "title": title,
-        "body": body
+        "title": title
     }, android={
         "extras": {
             "android-key1": "android-value1"
