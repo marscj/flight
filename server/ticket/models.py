@@ -7,33 +7,27 @@ from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
 
 from simple_history.models import HistoricalRecords
+from simple_history.signals import (
+    pre_create_historical_record,
+    post_create_historical_record
+)
 
 from user.models import User
 from push import push
 
-class Comment(models.Model):
+class Message(models.Model):
     
-    comment = models.TextField(blank=True, null=True)
-
-    rating = models.IntegerField(blank=True, null=True, default=5)
-
-    read = models.BooleanField(blank=True, null=True, default=False)
-
+    json = models.JSONField(null=True, blank=True)
     date = models.DateField(auto_now_add=True)
-
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comments', blank=True, null=True)
-    
+    read = models.BooleanField(default=False, blank=True, null=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-
     object_id = models.PositiveIntegerField()
-
     content_object = GenericForeignKey('content_type', 'object_id')
 
-    def __str__(self):
-        return self.id
+    user = models.ForeignKey(User, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
-        db_table = 'comment'
+        db_table = 'message'
 
 def file_path_name(instance, filename):
     file_path = 'uploads/{model}/{id}/{filename}'.format(model=instance.content_type.model, id=instance.object_id, filename=filename) 
@@ -42,17 +36,11 @@ def file_path_name(instance, filename):
 class UpLoad(models.Model):
 
     uid = models.UUIDField(default=uuid.uuid4, editable=False)
-    
     remark = models.TextField(blank=True, null=True)
-
     file = models.FileField(upload_to=file_path_name, blank=True)
-
-    date = models.DateField(auto_now_add=True)
-    
+    date = models.DateField(auto_now_add=True)  
     author = models.ForeignKey(User, related_name='uploads', on_delete=models.SET_NULL, blank=True, null=True)
-
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-
     object_id = models.PositiveIntegerField()
 
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -64,10 +52,9 @@ class Booking(models.Model):
     title = models.CharField(blank=True, null=True, max_length=64)
     remark = models.TextField(blank=True, null=True)
     date = models.DateField(auto_now_add=True)
-
-    comments = GenericRelation(Comment, related_query_name='booking')
+    
     uploads = GenericRelation(UpLoad, related_query_name='booking')
-
+    messages = GenericRelation(Message, related_query_name='booking')
     author = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL, blank=True, null=True)
     history = HistoricalRecords(table_name='booking_history', custom_model_name='booking_history')
 
@@ -88,9 +75,9 @@ class Ticket(models.Model):
     is_booking = models.BooleanField(default=True, blank=True, null=True)
     is_complete = models.BooleanField(default=False, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
-    comments = GenericRelation(Comment, related_query_name='ticket')
+    
+    messages = GenericRelation(Message, related_query_name='ticket')
     uploads = GenericRelation(UpLoad, related_query_name='ticket')
-
     author = models.ForeignKey(User, related_name='ticket_authors', on_delete=models.SET_NULL, blank=True, null=True)
     history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
 
@@ -110,9 +97,9 @@ class Itinerary(models.Model):
     is_lock = models.BooleanField(default=False, null=True)
     remark = models.TextField(blank=True, null=True)
     date = models.DateField(auto_now_add=True)
-    comments = GenericRelation(Comment, related_query_name='itinerary')
+    
+    messages = GenericRelation(Message, related_query_name='itinerary')
     uploads = GenericRelation(UpLoad, related_query_name='itinerary')
-
     user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
     booking = models.ForeignKey(Booking, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
@@ -126,21 +113,38 @@ class Itinerary(models.Model):
             ('lock_itinerary', 'Can lock itinerary'),
         )
 
-class Message(models.Model):
-    json = models.JSONField(null=True, blank=True)
-    date = models.DateField(auto_now_add=True)
-
-    class Meta:
-        db_table = 'message'
-
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
     
     if instance.file is not None: 
         instance.file.delete()
 
-@receiver(post_save, sender=Booking)
-def booking_post_save(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Booking)
+# def booking_post_save(sender, instance, created, **kwargs):
 
-    if created:
-        push.send_message()
+#     body = None
+#     if created:
+#         body = 'customer created a booking'
+#     else:
+#         body = 'customer modified the booking information'
+
+#     push.send_message('You have a new message', body, tag=['haha'])
+
+@receiver(post_create_historical_record)
+def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
+    
+    serializer = None
+    if type(instance).__name__ == 'Booking':
+        serializer = BookingHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
+        models.Message.objects.create(json=serializer)
+
+    if type(instance).__name__ == 'Ticket':
+        serializer = TicketHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
+        models.Message.objects.create(json=serializer)
+
+    if type(instance).__name__ == 'Itinerary':
+        serializer = ItineraryHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
+        models.Message.objects.create(json=serializer)

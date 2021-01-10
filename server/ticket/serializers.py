@@ -9,11 +9,6 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from simple_history.signals import (
-    pre_create_historical_record,
-    post_create_historical_record
-)
-
 from . import models
 from user.serializers import UserListSerializer
 
@@ -36,17 +31,11 @@ class ContentTypeField(serializers.Field):
     def to_internal_value(self, data):
         return ContentType.objects.get(model=data)
 
-class CommentSerializer(serializers.ModelSerializer):
-
-    content_type = ContentTypeField()
-
-    author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
-    
-    author = UserListSerializer(read_only=True)
+class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.Comment
-        fiels = '__all__'
+        model = models.Message
+        fields = '__all__'
 
 class UpLoadSerializer(serializers.ModelSerializer):
 
@@ -77,7 +66,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
 
     uploads = UpLoadSerializer(read_only=True, many=True) 
-    comments = CommentSerializer(read_only=True, many=True)
+    messages = MessageSerializer(read_only=True, many=True)
 
     class Meta:
         model = models.Itinerary
@@ -125,7 +114,7 @@ class TicketSerializer(serializers.ModelSerializer):
     itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=models.Itinerary.objects.all(), source='itineraries')
 
     uploads = UpLoadSerializer(read_only=True, many=True) 
-    comments = CommentSerializer(read_only=True, many=True)
+    messages = MessageSerializer(read_only=True, many=True)
     itineraries = serializers.SerializerMethodField()
 
     class Meta:
@@ -166,35 +155,6 @@ class TicketHistorySerializer(serializers.ModelSerializer):
         model =  models.Ticket.history.model
         fields = '__all__'
 
-class MessageSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = models.Message
-        fields = '__all__'
-
-@receiver(pre_create_historical_record)
-def pre_create_historical_record_callback(sender, **kwargs):
-    pass
-
-@receiver(post_create_historical_record)
-def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
-    
-    serializer = None
-    if type(instance).__name__ == 'Booking':
-        serializer = BookingHistorySerializer(instance=history_instance).data
-        serializer['model'] = type(instance).__name__
-        models.Message.objects.create(json=serializer)
-
-    if type(instance).__name__ == 'Ticket':
-        serializer = TicketHistorySerializer(instance=history_instance).data
-        serializer['model'] = type(instance).__name__
-        models.Message.objects.create(json=serializer)
-
-    if type(instance).__name__ == 'Itinerary':
-        serializer = ItineraryHistorySerializer(instance=history_instance).data
-        serializer['model'] = type(instance).__name__
-        models.Message.objects.create(json=serializer)
-
 class BookingSerializer(serializers.ModelSerializer):
 
     title = serializers.CharField(max_length=64)
@@ -206,8 +166,8 @@ class BookingSerializer(serializers.ModelSerializer):
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     uploads = UpLoadSerializer(read_only=True, many=True)
-     
-    comments = CommentSerializer(read_only=True, many=True)
+
+    messages = MessageSerializer(read_only=True, many=True)
 
     itineraries = serializers.SerializerMethodField()
     

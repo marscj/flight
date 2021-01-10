@@ -7,6 +7,7 @@ import django_filters
 from middleware import viewset, permissions
 from . import serializers
 from . import models
+from push import push
 
 class BookingFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
@@ -21,6 +22,7 @@ class BookingView(viewset.ExtraModelViewSet):
     search_fields = ['title', 'author__email', 'author__first_name', 'author__last_name']
       
     def get_queryset(self):
+        push.send_message('You have a new message', 'cc', tag=['lala', 'haha'])
         if self.request.user.has_perm('ticket.view_booking'):
             return models.Booking.objects.all().order_by('-id')
         else :
@@ -105,18 +107,6 @@ class TicketHistoryView(viewsets.ReadOnlyModelViewSet):
  
     filter_class = TicketHistoryFilter
     search_fields = ['serial_no', 'history_user__email', 'history_user__first_name', 'history_user__last_name']
-
-class CommentFilter(django_filters.FilterSet):
-    object_id = django_filters.NumberFilter('object_id')
-    type = django_filters.CharFilter('content_type__model')
-
-class CommentView(viewset.ExtraModelViewSet):
-    serializer_class = serializers.CommentSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = models.Comment.objects.all().order_by('-id')
- 
-    filter_class = CommentFilter
-    search_fields = ['']
 
 class UpLoadFilter(django_filters.FilterSet):
     object_id = django_filters.NumberFilter('object_id')
