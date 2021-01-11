@@ -21,6 +21,9 @@ export default {
 
       return this.$i18n.getLocaleMessage(this.$store.getters.lang).antLocale
     }
+  },
+  beforeCreate() {
+    this.$store.dispatch('initJIM')
   }
 }
 </script>
