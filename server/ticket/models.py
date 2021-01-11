@@ -9,7 +9,6 @@ from django.dispatch import receiver
 from simple_history.models import HistoricalRecords
 
 from user.models import User
-from push import push
 
 def file_path_name(instance, filename):
     file_path = 'uploads/{model}/{id}/{filename}'.format(model=instance.content_type.model, id=instance.object_id, filename=filename) 
