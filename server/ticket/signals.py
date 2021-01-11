@@ -16,6 +16,7 @@ ActionString = {
 from .serializers import BookingHistorySerializer, TicketHistorySerializer, ItineraryHistorySerializer
 from .models import Message
 from tookit import push
+from tookit import message
 
 @receiver(post_create_historical_record)
 def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
@@ -28,7 +29,8 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         
         for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
             Message.objects.create(json=serializer, content_object=instance, user=user)
-        
+            message.send_message('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
+
         if(history_instance.history_user.is_staff):
             push.send_message('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), tag=['customer'])
         else:
@@ -40,6 +42,7 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         
         for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
             Message.objects.create(json=serializer, content_object=instance, user=user)
+            message.send_message('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
         
         if(history_instance.history_user.is_staff):
             push.send_message('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), tag=['customer'])
@@ -52,6 +55,7 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         
         for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
             Message.objects.create(json=serializer, content_object=instance, user=user)
+            message.send_message('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
 
         if(history_instance.history_user.is_staff):
             push.send_message('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), tag=['customer'])

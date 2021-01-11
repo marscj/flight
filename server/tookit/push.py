@@ -5,7 +5,7 @@ import json
 _jpush = jpush.JPush(app_key, master_secret)
 # _jpush.set_logging("DEBUG")
 
-def send_message(title, **kwargs):
+async def send_message(title, **kwargs):
     push = _jpush.create_push()
     push.audience = jpush.audience(
         kwargs
@@ -28,7 +28,7 @@ def send_message(title, **kwargs):
     })
     push.platform = jpush.all_
     try:
-        response=push.send()
+        await push.send()
     except jpush.common.Unauthorized:
         raise jpush.common.Unauthorized("Unauthorized")
     except jpush.common.APIConnectionException:

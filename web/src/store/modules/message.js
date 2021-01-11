@@ -19,7 +19,7 @@ const message = {
   },
 
   actions: {
-    initJIM({ commit, dispatch }) {
+    initJIM({ commit, dispatch }, action) {
       const JIM = new JMessage()
       commit('SET_JIM', JIM)
       var timestamp = new Date().getTime()
@@ -34,7 +34,11 @@ const message = {
       })
         .onSuccess(function(data) {
           console.log('success:' + JSON.stringify(data))
-          dispatch('loginJIM')
+          if (action == null) {
+            dispatch('loginJIM')
+          } else {
+            dispatch(action)
+          }
         })
         .onFail(function(data) {
           console.log('error:' + JSON.stringify(data))
