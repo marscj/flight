@@ -20,15 +20,14 @@ def send_message(content, target):
     Message(_jmessage).send(modal)
 
 @app.task()
-def update_password(self, username, password):
+def update_password(username, password):
     User(_jmessage).update_password(username, password)
 
 @app.task()
-def delete(self, usernames):
+def delete(username):
     User(_jmessage).delete(username)
 
 @app.task()
-def create(self, username, password,
-        nickname=None, avatar=None, birthday=None, signature=None, gender=None, region=None, address=None, extras=None, admin=False):
-    User(_jmessage).create()
+def create(username, password):
+    User(_jmessage).create(username, password)
     

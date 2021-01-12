@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework.response import Response
 from rest_framework import throttling
+from rest_framework import status
 from rest_auth.views import (
     LoginView as AuthLoginView, 
     LogoutView as AuthLogoutView, 
@@ -26,7 +27,10 @@ class RegisterView(AuthRegisterView):
         user = self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
-        message.create.delay(serializer.email, serializer.password1)
+        print(request.data)
+        print(request.data.get('email'))
+        print(request.data.get('password1'))
+        message.create.delay(request.data.get('email'), request.data.get('password1'))
 
         return Response(self.get_response_data(user),
                         status=status.HTTP_201_CREATED,
@@ -45,5 +49,5 @@ class PasswordChangeView(AuthPasswordChangeView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        message.update_password.delay(request.user, serializer.password1)
+        message.update_password.delay(request.user, request.data.get('password1'))
         return Response({"detail": _("New password has been saved.")})
