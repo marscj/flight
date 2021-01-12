@@ -76,7 +76,7 @@ const message = {
           })
           .onFail(function(data) {
             if (data != null && data.code == '880103') {
-              dispatch('registJIM')
+              // dispatch('registJIM')
             }
             console.log('loginError' + JSON.stringify(data))
           })

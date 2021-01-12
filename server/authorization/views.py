@@ -27,9 +27,6 @@ class RegisterView(AuthRegisterView):
         user = self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
-        print(request.data)
-        print(request.data.get('email'))
-        print(request.data.get('password1'))
         message.create.delay(request.data.get('email'), request.data.get('password1'))
 
         return Response(self.get_response_data(user),
@@ -49,5 +46,5 @@ class PasswordChangeView(AuthPasswordChangeView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        message.update_password.delay(request.user, request.data.get('password1'))
+        message.update_password.delay(request.user.email, request.data.get('password1'))
         return Response({"detail": _("New password has been saved.")})

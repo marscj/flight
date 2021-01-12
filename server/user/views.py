@@ -54,6 +54,9 @@ class UserView(RegisterView, viewset.ExtraModelViewSet):
         if serializer.is_valid():
             user.set_password(serializer.data['password'])
             user.save()
+            
+            message.update_password.delay(user.email, serializer.data['password'])
+
             return Response({'status': 'password set'})
         else:
             return Response(serializer.errors,
@@ -61,7 +64,9 @@ class UserView(RegisterView, viewset.ExtraModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
+
         message.delete.delay(instance.email)
+
         return super().destroy(request, *args, **kwargs)
  
 class GroupFilter(django_filters.FilterSet):
