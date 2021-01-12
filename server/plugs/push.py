@@ -1,13 +1,13 @@
 import jpush
 import json
-from celery import task
+from server.celery import app
 
 from .conf import app_key, master_secret
 
 _jpush = jpush.JPush(app_key, master_secret)
 # _jpush.set_logging("DEBUG")
 
-@task()
+@app.task()
 def send_message(title, **kwargs):
     push = _jpush.create_push()
     push.audience = jpush.audience(

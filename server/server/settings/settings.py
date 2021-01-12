@@ -224,7 +224,6 @@ CACHEOPS = {
 
 #celery
 # BROKER_URL = 'django://'
-
 BROKER_URL = "redis://localhost:6379/0"
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'

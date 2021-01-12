@@ -1,6 +1,6 @@
 from jmessage import JMessage
 from jmessage.message import Message, Model
-from celery import task
+from server.celery import app
 
 from .conf import app_key, master_secret
 import json
@@ -8,7 +8,7 @@ import json
 _jmessage = JMessage(app_key, master_secret)
 # _jpush.set_logging("DEBUG")
 
-@task()
+@app.task()
 def send_message(content, target):
     message = Message(_jmessage)
     modal = Model()
