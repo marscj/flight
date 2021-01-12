@@ -4,12 +4,14 @@ from server.celery import app
 
 from .conf import app_key, master_secret
 import json
+import time
 
 _jmessage = JMessage(app_key, master_secret)
 # _jpush.set_logging("DEBUG")
 
 @app.task()
 def send_message(content, target):
+    time.sleep(100)
     message = Message(_jmessage)
     modal = Model()
     modal.text(content)
@@ -18,7 +20,7 @@ def send_message(content, target):
     
     try:
         print(modal.json())
-        message.send(modal)
+        return message.send(modal)
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:",errh)
     except requests.exceptions.ConnectionError as errc:

@@ -1,6 +1,7 @@
 from __future__ import absolute_import
  
 import os
+import time
  
 from celery import Celery
  
@@ -15,3 +16,8 @@ app = Celery('server')
 # pickle the object when using Windows.
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+
+@app.task
+def add(x, y):
+    time.sleep(5)
+    return x + y
