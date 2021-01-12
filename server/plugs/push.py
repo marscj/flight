@@ -31,7 +31,8 @@ def send_message(title, **kwargs):
     })
     push.platform = jpush.all_
     try:
-        return push.send()
+        response = push.send()
+        return response.payload
     except jpush.common.Unauthorized:
         raise jpush.common.Unauthorized("Unauthorized")
     except jpush.common.APIConnectionException:

@@ -20,7 +20,8 @@ def send_message(content, target):
     
     try:
         print(modal.json())
-        return message.send(modal)
+        response = message.send(modal)
+        return response.json
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:",errh)
     except requests.exceptions.ConnectionError as errc:
