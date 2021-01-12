@@ -14,9 +14,6 @@ import os
 from pathlib import Path
 import datetime
 
-import djcelery
-djcelery.setup_loader()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,7 +49,6 @@ INSTALLED_APPS = [
 
     'cacheops',
     'corsheaders',
-    'djcelery',
 
     'allauth',
     'allauth.account',
@@ -69,7 +65,9 @@ INSTALLED_APPS = [
     
     'authorization',
     'user',
-    'ticket'
+    'ticket',
+
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -225,8 +223,9 @@ CACHEOPS = {
 #celery
 # BROKER_URL = 'django://'
 BROKER_URL = "redis://localhost:6379/0"
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

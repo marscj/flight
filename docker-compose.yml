@@ -65,7 +65,7 @@ services:
 
   celery:
       build: ./server
-      command: celery -A web worker -l info
+      command: celery -A server worker -l info
       volumes:
         - ./server
       links:
