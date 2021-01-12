@@ -15,6 +15,7 @@ from rest_auth.registration.app_settings import RegisterSerializer
 from . import serializers, models
 from middleware import viewset, permissions, mixins
 from authorization.views import RegisterView
+from plugs import message
 
 UserModel = get_user_model()
 
@@ -57,6 +58,11 @@ class UserView(RegisterView, viewset.ExtraModelViewSet):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        message.delete.delay(instance.email)
+        return super().destroy(request, *args, **kwargs)
  
 class GroupFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
