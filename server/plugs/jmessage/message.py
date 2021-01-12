@@ -14,12 +14,11 @@ class Message(object):
         resp = self._jmessage.post(uri, data=data)
         return resp
 
-    async def send(self, msg):
+    def send(self, msg):
         if isinstance(msg, Model):
             msg = msg.json()
-        
-        async with self._jmessage.post(Message.URI, data=msg) as response:
-           return await response
+        resp = self._jmessage.post(Message.URI, data=msg)
+        return resp
 
 
 class Resource(object):
