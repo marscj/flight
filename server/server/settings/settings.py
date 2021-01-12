@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 import datetime
+import djcelery
+
+djcelery.setup_loader()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
 
     'cacheops',
     'corsheaders',
+    'djcelery',
 
     'allauth',
     'allauth.account',
@@ -217,3 +221,6 @@ CACHEOPS_DEFAULTS = {
 CACHEOPS = {
     '*.*': {},
 }
+
+#celery
+BROKER_URL = 'django://'
