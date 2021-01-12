@@ -1,7 +1,6 @@
-from celery import task
-
 import jpush
 import json
+from celery import task
 
 from .conf import app_key, master_secret
 

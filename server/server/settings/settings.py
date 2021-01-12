@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 import datetime
-import djcelery
 
+import djcelery
 djcelery.setup_loader()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -223,4 +223,16 @@ CACHEOPS = {
 }
 
 #celery
-BROKER_URL = 'django://'
+# BROKER_URL = 'django://'
+
+BROKER_URL = "redis://localhost:6379/0"
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+TIME_ZONE = 'Asia/Dubai'
+CELERY_ENABLE_UTC = False
+CELERYD_CONCURRENCY = 10
+CELERYD_MAX_TASKS_PER_CHILD = 5
+CELERY_SEND_EVENTS = True

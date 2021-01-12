@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.6.9
 ENV PYTHONUNBUFFERED 1
 ENV REDIS_HOST "redis"
 ENV DB_HOST "postgres"

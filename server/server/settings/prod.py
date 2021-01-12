@@ -8,6 +8,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CACHEOPS_REDIS = "redis://redis:6379/0"
 
+BROKER_URL = "redis://redis:6379/0"
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #db

@@ -63,6 +63,18 @@ services:
         - db
         - redis
 
+  celery:
+      build: ./server
+      command: celery -A web worker -l info
+      volumes:
+        - ./server
+      links:
+        - db
+        - redis
+      depends_on:
+        - db
+        - redis
+
 volumes:
   pgdata:
   redisdata:

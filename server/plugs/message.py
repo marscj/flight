@@ -1,8 +1,6 @@
-
-from celery import task
-
 from jmessage import JMessage
 from jmessage.message import Message, Model
+from celery import task
 
 from .conf import app_key, master_secret
 import json
