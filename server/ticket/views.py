@@ -7,7 +7,6 @@ import django_filters
 from middleware import viewset, permissions
 from . import serializers
 from . import models
-from tookit import message
 
 class BookingFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')

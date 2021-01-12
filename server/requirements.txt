@@ -15,4 +15,3 @@ gunicorn==20.0.4
 Pillow
 python-dotenv==0.15.0
 jpush==3.3.8
-jmessage==2.0.0

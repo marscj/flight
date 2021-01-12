@@ -1,7 +1,7 @@
-
-from jmessage import JMessage
-from jmessage.message import Message, Model
 import requests
+from .jmessage import JMessage
+from .jmessage.message import Message, Model
+
 
 from .conf import app_key, master_secret
 import json
@@ -9,7 +9,7 @@ import json
 _jmessage = JMessage(app_key, master_secret)
 # _jpush.set_logging("DEBUG")
 
-async def send_message(content, target):
+def send_message(content, target):
     message = Message(_jmessage)
     modal = Model()
     modal.text(content)
@@ -18,7 +18,7 @@ async def send_message(content, target):
     
     try:
         print(modal.json())
-        await message.send(modal)
+        response = message.send(modal)
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:",errh)
     except requests.exceptions.ConnectionError as errc:

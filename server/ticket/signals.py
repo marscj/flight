@@ -15,8 +15,7 @@ ActionString = {
 
 from .serializers import BookingHistorySerializer, TicketHistorySerializer, ItineraryHistorySerializer
 from .models import Message
-from tookit import push
-from tookit import message
+from plugs import push, message
 
 @receiver(post_create_historical_record)
 def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
