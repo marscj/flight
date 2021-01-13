@@ -101,6 +101,9 @@ class Itinerary(models.Model):
         permissions = (
             ('lock_itinerary', 'Can lock itinerary'),
         )
+    
+    def __str__(self):
+        return self.serial_no
 
 class Ticket(models.Model):
     serial_no = models.CharField(blank=True, null=True, max_length=32)
@@ -127,6 +130,9 @@ class Ticket(models.Model):
 
     class Meta:
         db_table = 'ticket'
+
+    def __str__(self):
+        return self.serial_no
 
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):

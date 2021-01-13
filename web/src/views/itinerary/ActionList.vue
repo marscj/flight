@@ -10,13 +10,12 @@
       :pagination="false"
       :scroll="{ x: 1200 }"
       :row-selection="{
+        fixed: true,
+        hideDefaultSelections: true,
+        type: 'radio',
         selectedRowKeys: selectedRowKeys,
         onChange: onSelectChange,
-        getCheckboxProps: record => ({
-          props: {
-            disabled: record.isNew || record.ticket_id != null
-          }
-        })
+        getCheckboxProps: getCheckboxProps
       }"
       bordered
     >
@@ -216,13 +215,14 @@ export default {
       const target = this.data.find(item => item.id === data.id)
       target._originalData = { ...target }
       target.editable = !target.editable
+      this.data = Object.assign([], this.data)
     },
     setData(id, data) {
       if (id == null) return
       let target = this.data.find(item => item.id === id)
       if (target == null) return
       Object.assign(target, data)
-      console.log(this.data)
+      this.data = Object.assign([], this.data)
     },
     save(data) {
       const { id } = data
@@ -390,6 +390,13 @@ export default {
         return this.data.find(f1 => f1.id === f)
       })
       this.$router.push({ name: 'AddTicket', params: { itinerary: data } })
+    },
+    getCheckboxProps(record) {
+      return {
+        props: {
+          disabled: record.isNew || record.ticket != null
+        }
+      }
     }
   },
   data() {
