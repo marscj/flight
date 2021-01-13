@@ -81,38 +81,38 @@ export const asyncRouterMap = [
           }
         ]
       },
-      {
-        path: '/itineraries',
-        name: 'Itineraries',
-        component: RouteView,
-        redirect: '/itineraries/list',
-        meta: {
-          title: 'Itineraries',
-          icon: 'car',
-          permission: ['view_itinerary']
-        },
-        children: [
-          {
-            path: '/itineraries/list',
-            name: 'AllItineraries',
-            component: () => import('@/views/itinerary/List'),
-            meta: {
-              title: 'All Itineraries',
-              keepAlive: true
-            }
-          },
-          {
-            path: '/itineraries/list/history',
-            name: 'ItineraryHistory',
-            component: () => import('@/views/itinerary/History'),
-            hidden: true,
-            meta: {
-              title: 'Itinerary Histories',
-              keepAlive: true
-            }
-          }
-        ]
-      },
+      // {
+      //   path: '/itineraries',
+      //   name: 'Itineraries',
+      //   component: RouteView,
+      //   redirect: '/itineraries/list',
+      //   meta: {
+      //     title: 'Itineraries',
+      //     icon: 'car',
+      //     permission: ['view_itinerary']
+      //   },
+      //   children: [
+      //     {
+      //       path: '/itineraries/list',
+      //       name: 'AllItineraries',
+      //       component: () => import('@/views/itinerary/List'),
+      //       meta: {
+      //         title: 'All Itineraries',
+      //         keepAlive: true
+      //       }
+      //     },
+      //     {
+      //       path: '/itineraries/list/history',
+      //       name: 'ItineraryHistory',
+      //       component: () => import('@/views/itinerary/History'),
+      //       hidden: true,
+      //       meta: {
+      //         title: 'Itinerary Histories',
+      //         keepAlive: true
+      //       }
+      //     }
+      //   ]
+      // },
       {
         path: '/tickets',
         name: 'Tickets',
