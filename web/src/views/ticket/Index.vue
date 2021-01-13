@@ -2,7 +2,7 @@
   <form-validate ref="observer" :form="form">
     <page-header-wrapper :content="'ID:' + $route.params.id">
       <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false">
-        <a-steps v-if="!form.is_cancel" direction="vertical" :current="current" progressDot>
+        <a-steps v-if="!form.is_cancel" direction="horizontal" :current="current" progressDot>
           <a-step>
             <template v-slot:title>
               <span>Create Ticket</span>

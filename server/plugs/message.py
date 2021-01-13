@@ -35,28 +35,30 @@ _jmessage = CJMessage(app_key, master_secret)
 def send_admin_message(content, target):
     modal = Model()
     modal.text(content)
+    modal.notification(title=content)
+    modal.notifiable(boo=True)
     modal.set_target(target, 'single')
-    modal.set_from('admin', 'admin')
-    print(modal.json())
+    modal.set_from('Saadiyat', 'admin')
     Message(_jmessage).send(modal)
 
 @app.task()
 def update_password(username, password):
     if username is None or password is None:
         return
-    print(username)
-    print(password)
+
     JUser(_jmessage).update_password(username, password)
 
 @app.task()
 def delete_user(username):
     if username is None:
         return 
+
     JUser(_jmessage).delete(username)
 
 @app.task()
 def create_user(username, password):
     if username is None or password is None:
         return 
+
     JUser(_jmessage).create(username, password)
     

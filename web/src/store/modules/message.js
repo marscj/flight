@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import md5 from 'js-md5'
 import { BASE_AUTH } from '@/store/mutation-types'
+import notification from 'ant-design-vue/es/notification'
 
 const message = {
   state: {
@@ -99,14 +100,20 @@ const message = {
     //离线消息
     listenSyncConversation({ state, commit }) {
       state.JIM.onSyncConversation(data => {
-        console.log(data)
+        console.log('onSyncConversation', data)
       })
     },
     //聊天消息实时监听
     listenMsgReceive({ state, commit }) {
       state.JIM.onMsgReceive(data => {
         console.log(JSON.stringify(data))
-        data.messages.forEach(x => commit('ADD_MESSAGE', x))
+        data.messages.forEach(message => {
+          commit('ADD_MESSAGE', message)
+          notification.success({
+            message: 'You have new message',
+            description: message.content.msg_body.text
+          })
+        })
       })
     },
     //断线监听
@@ -130,6 +137,7 @@ const message = {
         // data.gid 群 id
         // data.appkey 所属 appkey
         // data.username 会话 username
+        console.log('onMutiUnreadMsgUpdate', data)
       })
     }
   }
