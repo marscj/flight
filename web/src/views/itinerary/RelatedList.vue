@@ -27,7 +27,7 @@
       "
       >Related Itinerary</a-button
     >
-    <a-modal v-model="modal" title="Related Itinerary" width="90%">
+    <a-modal v-model="modal" title="Change Itinerary" width="90%">
       <template slot="footer">
         <a-button key="submit" type="primary" @click="handleOk">
           Select
@@ -36,11 +36,13 @@
       <itinerary-table-list
         @onData="onData"
         :rowSelection="{
+          hideDefaultSelections: true,
+          type: 'radio',
           selectedRowKeys: selectedRowKeys,
           onChange: onSelectChange,
           getCheckboxProps: record => ({
             props: {
-              disabled: record.ticket_id != null && !data.find(f => f.id == record.id)
+              disabled: record.ticket != null && !data.find(f => f.id == record.id)
             }
           })
         }"

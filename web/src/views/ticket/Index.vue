@@ -209,8 +209,7 @@ export default {
 
         return true
       },
-      form: {},
-      itineraries_id: []
+      form: {}
     }
   },
   mounted() {
@@ -259,7 +258,7 @@ export default {
         total: this.form.total,
         air_info: this.form.air_info,
         remark: this.form.remark,
-        itineraries_id: this.itineraries_id
+        itinerary_id: this.form.itinerary_id
       })
 
       if (this.post_type == 'edit') {
@@ -305,7 +304,9 @@ export default {
         })
     },
     onSelectItinerary(val) {
-      this.itineraries_id = Object.assign([], val)
+      if (val != null) {
+        this.form.itinerary_id = val[0]
+      }
     },
     beforeUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 2
