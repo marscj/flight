@@ -63,6 +63,7 @@ const message = {
     },
     loginJIM({ state, commit, dispatch }) {
       let user = Vue.ls.get(BASE_AUTH)
+      console.log(user)
       if (user != null && !state.isLogin) {
         state.JIM.login(user)
           .onSuccess(function(data) {

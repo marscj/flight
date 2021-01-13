@@ -15,6 +15,8 @@
 <script>
 import { changePassword } from '@/api/user'
 import { FormValidate, FormItemValidate } from '@/components'
+import { BASE_AUTH } from '@/store/mutation-types'
+
 export default {
   components: { FormValidate, FormItemValidate },
   data() {
@@ -27,9 +29,16 @@ export default {
   methods: {
     submit() {
       this.loading = true
+
       changePassword(this.form)
         .then(res => {
           this.setVisible(false)
+          console.log(this.$store.getters.userInfo.email, this.form.new_password1)
+          this.$ls.set(BASE_AUTH, {
+            username: this.$store.getters.userInfo.email,
+            password: this.form.new_password1,
+            is_md5: false
+          })
         })
         .catch(error => {
           if (error.response) {

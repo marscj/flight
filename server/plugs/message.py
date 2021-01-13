@@ -1,4 +1,3 @@
-from jmessage import JMessage
 from jmessage.message import Message, Model
 from jmessage.user import User as JUser
 from server.celery import app
@@ -8,11 +7,32 @@ import json
 import time
 import requests
 
-_jmessage = JMessage(app_key, master_secret)
+class CJMessage(object):
+
+    def __init__(self, app_key, master_secret):
+        session = requests.Session()
+        session.auth = (app_key, master_secret)
+        self._session = session
+
+    def get(self, uri, params=None):
+        return self._session.get(uri, params=params)
+
+    def post(self, uri, params=None, data=None, files=None):
+        return self._session.post(uri, params=params, json=data, files=files)
+
+    def put(self, uri, params=None, data=None):
+        headers = { 'content-type': 'application/json; charset=utf-8' }
+        return self._session.put(uri, params=params, json=data, headers=headers)
+
+    def delete(self, uri, params=None, data=None):
+        headers = { 'content-type': 'application/json; charset=utf-8' }
+        return self._session.delete(uri, params=params, json=data, headers=headers)
+
+_jmessage = CJMessage(app_key, master_secret)
 # _jpush.set_logging("DEBUG")
 
 @app.task()
-def send_message(content, target):
+def send_admin_message(content, target):
     modal = Model()
     modal.text(content)
     modal.set_target(target, 'single')
