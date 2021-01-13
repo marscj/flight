@@ -28,7 +28,7 @@ class BookingView(viewset.ExtraModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.messages.filter(user=self.request.user).update(read=True)
+        instance.messages.filter(user_id=self.request.user).update(read=True)
         return super().retrieve(request, *args, **kwargs)
 
 class BookingHistoryFilter(django_filters.FilterSet):
@@ -64,6 +64,11 @@ class ItineraryView(viewset.ExtraModelViewSet):
         else :
             return super().get_queryset().filter(user_id=self.request.user.id).distinct()
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.messages.filter(user=self.request.user).update(read=True)
+        return super().retrieve(request, *args, **kwargs)
+
 
 class ItineraryHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
@@ -97,6 +102,11 @@ class TicketView(viewset.ExtraModelViewSet):
             return models.Ticket.objects.all().order_by('-id')
         else :
             return super().get_queryset().filter(itineraries__user_id=self.request.user.id).distinct()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.messages.filter(user=self.request.user).update(read=True)
+        return super().retrieve(request, *args, **kwargs)
 
 class TicketHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')

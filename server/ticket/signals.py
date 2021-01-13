@@ -1,5 +1,7 @@
 from django.db.models import Q
 from django.dispatch import receiver
+from django.db.models.signals import pre_delete, post_save
+
 from simple_history.signals import (
     pre_create_historical_record,
     post_create_historical_record
@@ -17,6 +19,8 @@ from .serializers import BookingHistorySerializer, TicketHistorySerializer, Itin
 from .models import Message
 from plugs import push, message
 
+
+
 @receiver(post_create_historical_record)
 def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
     
@@ -27,7 +31,7 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         serializer['model'] = type(instance).__name__
         
         #admin推送
-        for user in User.objects.filter(is_staff=True):
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
             Message.objects.create(json=serializer, content_object=instance, user=user)
             message.send_admin_message.delay('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
 
@@ -44,14 +48,11 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         serializer = TicketHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
         
-        for user in User.objects.filter(is_staff=True):
-            print('------')
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
             Message.objects.create(json=serializer, content_object=instance, user=user)
             message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
         
-        print(instance)
         for itinerary in instance.itineraries.all():
-            print('++++++')
             message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=itinerary.user, action=ActionString.get(history_instance.history_type), id=history_instance.id), itinerary.user.email)
 
         # if(history_instance.history_user.is_staff):
@@ -63,8 +64,8 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         serializer = ItineraryHistorySerializer(instance=history_instance).data
         serializer['model'] = type(instance).__name__
         
-        for user in User.objects.filter(is_staff=True):
-            Message.objects.create(json=serializer, content_object=instance, user=user)
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
+            Message.objects.create(json=serializer, content_object=instance.booking, user=user)
             message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
 
         message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=instance.user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.user.email)
