@@ -67,7 +67,7 @@ services:
       build: ./server
       command: celery -A server worker -l info
       volumes:
-        - ./server
+        - .:/server
       links:
         - db
         - redis
