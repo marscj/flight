@@ -122,42 +122,43 @@ class TicketSerializer(serializers.ModelSerializer):
     remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     author = serializers.StringRelatedField(read_only=True)
-
-    itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=models.Itinerary.objects.all(), source='itineraries')
+    
+    itinerary = ItinerarySerializer(read_only=True, many=False)
+    itinerary_id = serializers.IntegerField(required=False, allow_null=True)
 
     messages = MessageSerializer(read_only=True, many=True)
     comments = CommentSerializer(read_only=True, many=True)
     uploads = UpLoadSerializer(read_only=True, many=True) 
-    itineraries = serializers.SerializerMethodField()
+    # itineraries = serializers.SerializerMethodField()
+    # itineraries_id = serializers.PrimaryKeyRelatedField(required=False, many=True, allow_null=True, queryset=models.Itinerary.objects.all(), source='itineraries')
 
     class Meta:
         model = models.Ticket
         fields = '__all__'
 
-    def get_itineraries(self, obj):
-        query = None
-        if self.context['request'].user.has_perm('ticket.view_itinerary'):
-            query = obj.itineraries.all()
-        else:
-            query = obj.itineraries.filter(user_id=self.context['request'].user.id)
+    # def get_itineraries(self, obj):
+    #     query = None
+    #     if self.context['request'].user.has_perm('ticket.view_itinerary'):
+    #         query = obj.itineraries.all()
+    #     else:
+    #         query = obj.itineraries.filter(user_id=self.context['request'].user.id)
 
-        serializer = ItinerarySerializer(instance=query, many=True)
+    #     serializer = ItinerarySerializer(instance=query, many=True)
 
-        return serializer.data
+    #     return serializer.data
 
-    def validate(self, validated_data):
-        itineraries = validated_data.get('itineraries', None)
+    # def validate(self, validated_data):
+    #     itineraries = validated_data.get('itineraries', None)
         
-        if itineraries is not None:
-            for itinerary in itineraries:
-                if itinerary.user is None:
-                    raise serializers.ValidationError('The itinerary id %s is missing user information' % itinerary.id)
+    #     if itineraries is not None:
+    #         for itinerary in itineraries:
+    #             if itinerary.user is None:
+    #                 raise serializers.ValidationError('The itinerary id %s is missing user information' % itinerary.id)
                 
-                if itinerary.ticket is not None and itinerary.ticket.id != self.instance.id:
-                        raise serializers.ValidationError('The itinerary id %s has ticket' % itinerary.id)
+    #             if itinerary.ticket is not None and itinerary.ticket.id != self.instance.id:
+    #                     raise serializers.ValidationError('The itinerary id %s has ticket' % itinerary.id)
 
-                    
-        return super().validate(validated_data)
+    #     return super().validate(validated_data)
 
 class TicketHistorySerializer(serializers.ModelSerializer):
 

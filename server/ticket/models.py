@@ -72,30 +72,6 @@ class Booking(models.Model):
     class Meta:
         db_table = 'booking'
 
-class Ticket(models.Model):
-    serial_no = models.CharField(blank=True, null=True, max_length=32)
-    air_line = models.CharField(blank=True, null=True, max_length=16)
-    air_info = models.CharField(blank=True, null=True, max_length=1024)
-    air_class = models.CharField(blank=True, null=True, max_length=64)
-    fare = models.FloatField(blank=True, null=True)
-    tax = models.FloatField(blank=True, null=True)
-    total = models.FloatField(blank=True, null=True)
-    remark = models.TextField(blank=True, null=True)
-    is_confirm = models.BooleanField(default=False, blank=True, null=True)
-    is_cancel = models.BooleanField(default=False, blank=True, null=True)
-    is_booking = models.BooleanField(default=True, blank=True, null=True)
-    is_complete = models.BooleanField(default=False, blank=True, null=True)
-    date = models.DateField(auto_now_add=True)
-    
-    messages = GenericRelation(Message, related_query_name='ticket')
-    comments = GenericRelation(Comment, related_query_name='ticket')
-    uploads = GenericRelation(UpLoad, related_query_name='ticket')
-    author = models.ForeignKey(User, related_name='ticket_authors', on_delete=models.SET_NULL, blank=True, null=True)
-    history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
-
-    class Meta:
-        db_table = 'ticket'
-
 class Itinerary(models.Model):
     serial_no = models.CharField(blank=True, null=True, max_length=32)
     email = models.CharField(blank=True, null=True, max_length=64)
@@ -116,7 +92,7 @@ class Itinerary(models.Model):
     user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
     booking = models.ForeignKey(Booking, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
-    ticket = models.ForeignKey(Ticket, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
+    # ticket = models.ForeignKey(Ticket, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
 
     history = HistoricalRecords(table_name='itinerary_history', custom_model_name='itinerary_history')
 
@@ -125,6 +101,32 @@ class Itinerary(models.Model):
         permissions = (
             ('lock_itinerary', 'Can lock itinerary'),
         )
+
+class Ticket(models.Model):
+    serial_no = models.CharField(blank=True, null=True, max_length=32)
+    air_line = models.CharField(blank=True, null=True, max_length=16)
+    air_info = models.CharField(blank=True, null=True, max_length=1024)
+    air_class = models.CharField(blank=True, null=True, max_length=64)
+    fare = models.FloatField(blank=True, null=True)
+    tax = models.FloatField(blank=True, null=True)
+    total = models.FloatField(blank=True, null=True)
+    remark = models.TextField(blank=True, null=True)
+    is_confirm = models.BooleanField(default=False, blank=True, null=True)
+    is_cancel = models.BooleanField(default=False, blank=True, null=True)
+    is_booking = models.BooleanField(default=True, blank=True, null=True)
+    is_complete = models.BooleanField(default=False, blank=True, null=True)
+    date = models.DateField(auto_now_add=True)
+    
+    itinerary = models.OneToOneField(Itinerary, on_delete=models.SET_NULL, blank=True, null=True)
+    messages = GenericRelation(Message, related_query_name='ticket')
+    comments = GenericRelation(Comment, related_query_name='ticket')
+    uploads = GenericRelation(UpLoad, related_query_name='ticket')
+
+    author = models.ForeignKey(User, related_name='ticket_authors', on_delete=models.SET_NULL, blank=True, null=True)
+    history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
+
+    class Meta:
+        db_table = 'ticket'
 
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
