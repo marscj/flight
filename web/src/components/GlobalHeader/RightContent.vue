@@ -1,5 +1,6 @@
 <template>
   <div :class="wrpCls">
+    <span> {{ messageStatus }}</span>
     <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
     <!-- <select-lang :class="prefixCls" /> -->
   </div>
@@ -49,6 +50,9 @@ export default {
         'ant-pro-global-header-index-right': true,
         [`ant-pro-global-header-index-${this.isMobile || !this.topMenu ? 'light' : this.theme}`]: true
       }
+    },
+    messageStatus() {
+      return this.$store.getters.message.status
     }
   },
   mounted() {}

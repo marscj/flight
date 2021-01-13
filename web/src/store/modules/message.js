@@ -5,12 +5,16 @@ import { BASE_AUTH } from '@/store/mutation-types'
 const message = {
   state: {
     JIM: null,
-    isLogin: false
+    isLogin: false,
+    status: 'Connecting'
   },
 
   mutations: {
     SET_JIM(state, JIM) {
       state.JIM = JIM
+    },
+    SET_STATUS(state, status) {
+      state.status = status
     },
     SET_ISLOGIN(state, login) {
       state.isLogin = login
@@ -23,6 +27,7 @@ const message = {
       const JIM = new JMessage()
       commit('SET_JIM', JIM)
       var timestamp = new Date().getTime()
+      commit('SET_STATUS', 'Connecting')
       JIM.init({
         appkey: '001486b3ce6d38e6c013530f',
         random_str: '022cd9fd995849b',
@@ -64,11 +69,13 @@ const message = {
     loginJIM({ state, commit, dispatch }) {
       let user = Vue.ls.get(BASE_AUTH)
       console.log(user)
+      commit('SET_STATUS', 'Logging')
       if (user != null && !state.isLogin) {
         state.JIM.login(user)
           .onSuccess(function(data) {
             console.log('success:' + JSON.stringify(data))
             commit('SET_ISLOGIN', true)
+            commit('SET_STATUS', 'Online')
             dispatch('listenSyncConversation')
             dispatch('listenMsgReceive')
             dispatch('listenDisconnect')
@@ -87,6 +94,7 @@ const message = {
     logoutJIM({ state, commit }) {
       state.JIM.loginOut()
       commit('SET_ISLOGIN', false)
+      commit('SET_STATUS', 'Offline')
     },
     //离线消息
     listenSyncConversation({ state, commit }) {
@@ -105,6 +113,7 @@ const message = {
     listenDisconnect({ state, commit }) {
       state.JIM.onDisconnect(() => {
         commit('SET_ISLOGIN', false)
+        commit('SET_STATUS', 'Offline')
       })
     },
     //业务事件监听
