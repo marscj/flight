@@ -222,6 +222,7 @@ export default {
       let target = this.data.find(item => item.id === id)
       if (target == null) return
       Object.assign(target, data)
+      console.log(this.data)
     },
     save(data) {
       const { id } = data
