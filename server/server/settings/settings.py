@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'user',
     'ticket',
 
-    'django_celery_results'
+    # 'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -223,7 +223,7 @@ CACHEOPS = {
 #celery
 BROKER_URL = "redis://redis:6379/0"
 # CELERY_RESULT_BACKEND = "redis://redis:6379/0"
-CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_RESULT_BACKEND = 'django-db'
 
 TIME_ZONE = 'Asia/Dubai'
 CELERY_ENABLE_UTC = False

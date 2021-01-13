@@ -45,10 +45,13 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         serializer['model'] = type(instance).__name__
         
         for user in User.objects.filter(is_staff=True):
+            print('------')
             Message.objects.create(json=serializer, content_object=instance, user=user)
             message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
         
+        print(instance)
         for itinerary in instance.itineraries.all():
+            print('++++++')
             message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=itinerary.user, action=ActionString.get(history_instance.history_type), id=history_instance.id), itinerary.user.email)
 
         # if(history_instance.history_user.is_staff):
