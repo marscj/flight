@@ -130,7 +130,7 @@
         </a-upload-dragger>
       </a-card>
 
-      <form-item-validate vid="user_id">
+      <form-item-validate vid="itinerary_id">
         <itinerary-related-list @select="onSelectItinerary" :disabled="disabled()" />
       </form-item-validate>
     </page-header-wrapper>
@@ -269,6 +269,7 @@ export default {
           })
           .catch(error => {
             if (error.response) {
+              console.log(error.response)
               this.$refs.observer.setErrors(error)
             }
           })

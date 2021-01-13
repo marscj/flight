@@ -120,7 +120,7 @@ class TicketSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     
     itinerary = ItinerarySerializer(read_only=True, many=False)
-    itinerary_id = serializers.IntegerField()
+    itinerary_id = serializers.IntegerField(required=True, validators=[UniqueValidator(queryset=models.Ticket.objects.all())])
     
     messages = MessageSerializer(read_only=True, many=True)
     comments = CommentSerializer(read_only=True, many=True)
