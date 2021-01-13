@@ -65,15 +65,13 @@ services:
 
   celery:
       build: ./server
-      command: celery -A server worker -l info
+      command: "celery --workdir /server/server -A server worker -l info"
       volumes:
         - .:/server
-      links:
-        - db
-        - redis
       depends_on:
         - db
         - redis
+        - server
 
 volumes:
   pgdata:
