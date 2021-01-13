@@ -120,9 +120,8 @@ class TicketSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     
     itinerary = ItinerarySerializer(read_only=True, many=False)
-    itinerary_id = serializers.IntegerField(required=False, allow_null=True)
+    itinerary_id = serializers.IntegerField(write_only=True, required=True)
     
-
     messages = MessageSerializer(read_only=True, many=True)
     comments = CommentSerializer(read_only=True, many=True)
     uploads = UpLoadSerializer(read_only=True, many=True) 
@@ -130,6 +129,10 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Ticket
         fields = '__all__'
+
+    def validate(self, validate_data):
+
+        return validate_data
 
 class TicketHistorySerializer(serializers.ModelSerializer):
 

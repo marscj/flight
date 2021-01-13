@@ -65,6 +65,7 @@ export default {
   },
   data() {
     return {
+      date: [],
       queryParam: {
         name: undefined
       },
@@ -160,7 +161,20 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getTicketHistories(Object.assign(parameter, Object.assign({}, this.queryParam, {}))).then(res => {
+        return getTicketHistories(
+          Object.assign(
+            parameter,
+            Object.assign(
+              {
+                date_before:
+                  this.date != null && this.date.length > 0 ? moment(this.date[1]).format('YYYY-MM-DD') : undefined,
+                date_after:
+                  this.date != null && this.date.length > 0 ? moment(this.date[0]).format('YYYY-MM-DD') : undefined
+              },
+              this.queryParam
+            )
+          )
+        ).then(res => {
           const { result } = res
           return result
         })
