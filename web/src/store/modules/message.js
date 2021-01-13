@@ -75,9 +75,9 @@ const message = {
             dispatch('listenMutiUnreadMsgUpdate')
           })
           .onFail(function(data) {
-            if (data != null && data.code == '880103') {
-              // dispatch('registJIM')
-            }
+            // if (data != null && data.code == '880103') {
+            //   dispatch('registJIM')
+            // }
             console.log('loginError' + JSON.stringify(data))
           })
           .onTimeout(function() {})

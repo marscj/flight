@@ -1,6 +1,6 @@
 from jmessage import JMessage
 from jmessage.message import Message, Model
-from jmessage.user import User
+from jmessage.user import User as JUser
 from server.celery import app
 
 from .conf import app_key, master_secret
@@ -17,17 +17,19 @@ def send_message(content, target):
     modal.text(content)
     modal.set_target(target, 'single')
     modal.set_from('admin', 'admin')
+    print(modal.json())
     Message(_jmessage).send(modal)
 
 @app.task()
 def update_password(username, password):
-    User(_jmessage).update_password(username, password)
+    print(username, password)
+    JUser(_jmessage).update_password(username, password)
 
 @app.task()
-def delete(username):
-    User(_jmessage).delete(username)
+def delete_user(username):
+    JUser(_jmessage).delete(username)
 
 @app.task()
-def create(username, password):
-    User(_jmessage).create(username, password)
+def create_user(username, password):
+    JUser(_jmessage).create(username, password)
     

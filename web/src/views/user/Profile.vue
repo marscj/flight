@@ -11,7 +11,13 @@
             :before-upload="beforeUpload"
             :custom-request="customRequest"
           >
-            <a-avatar :src="form.avatar.medium" :size="128" alt="avatar" icon="user" />
+            <a-avatar
+              v-if="form.avatar != null && form.avatar.medium != null"
+              :src="form.avatar.medium"
+              :size="128"
+              alt="avatar"
+              icon="user"
+            /><a-icon v-else type="user" :size="128"></a-icon>
           </a-upload>
         </form-item-validate>
 
@@ -58,7 +64,8 @@
 
           <a-col :lg="12" :md="12" :sm="24">
             <form-item-validate label="Role" vid="role_id">
-              <a-input :value="form.roles.map(f => f.name).join(' ')" disabled />
+              <a-input v-if="form.roles != null" :value="form.roles.map(f => f.name).join(' ')" disabled />
+              <a-input v-else value="" disabled />
             </form-item-validate>
           </a-col>
 

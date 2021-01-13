@@ -42,7 +42,7 @@ const user = {
             Vue.ls.set(BASE_AUTH, {
               username: userInfo.email,
               password: userInfo.password,
-              is_md5: true
+              is_md5: false
             })
             commit('SET_TOKEN', result.token)
 

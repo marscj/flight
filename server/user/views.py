@@ -55,6 +55,7 @@ class UserView(RegisterView, viewset.ExtraModelViewSet):
             user.set_password(serializer.data['password'])
             user.save()
             
+            print(user.email, serializer.data['password'])
             message.update_password.delay(user.email, serializer.data['password'])
 
             return Response({'status': 'password set'})
@@ -65,7 +66,7 @@ class UserView(RegisterView, viewset.ExtraModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
 
-        message.delete.delay(instance.email)
+        message.delete_user.delay(instance.email)
 
         return super().destroy(request, *args, **kwargs)
  
