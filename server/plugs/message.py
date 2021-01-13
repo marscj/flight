@@ -22,14 +22,21 @@ def send_message(content, target):
 
 @app.task()
 def update_password(username, password):
-    print(username, password)
+    if username is None or password is None:
+        return
+    print(username)
+    print(password)
     JUser(_jmessage).update_password(username, password)
 
 @app.task()
 def delete_user(username):
+    if username is None:
+        return 
     JUser(_jmessage).delete(username)
 
 @app.task()
 def create_user(username, password):
+    if username is None or password is None:
+        return 
     JUser(_jmessage).create(username, password)
     

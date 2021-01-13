@@ -17,7 +17,7 @@
               :size="128"
               alt="avatar"
               icon="user"
-            /><a-icon v-else type="user" :size="128"></a-icon>
+            /><a-icon v-else type="user" :style="{ fontSize: '128px' }"></a-icon>
           </a-upload>
         </form-item-validate>
 

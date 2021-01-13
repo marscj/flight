@@ -46,5 +46,5 @@ class PasswordChangeView(AuthPasswordChangeView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        message.update_password.delay(request.user.email, request.data.get('password1'))
+        message.update_password.delay(request.user.email, request.data.get('new_password2'))
         return Response({"detail": _("New password has been saved.")})
