@@ -449,18 +449,18 @@ export default {
           align: 'center',
           children: [
             {
-              title: 'Entry',
-              dataIndex: 'entry',
-              align: 'center',
-              ellipsis: true,
-              scopedSlots: { customRender: 'entry' }
-            },
-            {
               title: 'Exit',
               dataIndex: 'exit',
               align: 'center',
               ellipsis: true,
               scopedSlots: { customRender: 'exit' }
+            },
+            {
+              title: 'Entry',
+              dataIndex: 'entry',
+              align: 'center',
+              ellipsis: true,
+              scopedSlots: { customRender: 'entry' }
             }
           ]
         },

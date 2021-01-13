@@ -178,14 +178,14 @@ export default {
           align: 'center',
           children: [
             {
-              title: 'Ticket1',
-              dataIndex: 'ticket1',
+              title: 'Ticket2',
+              dataIndex: 'ticket2',
               align: 'center',
               ellipsis: true
             },
             {
-              title: 'Ticket2',
-              dataIndex: 'ticket2',
+              title: 'Ticket1',
+              dataIndex: 'ticket1',
               align: 'center',
               ellipsis: true
             }
