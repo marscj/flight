@@ -21,7 +21,7 @@ class CheckVersion(APIView):
                 return Response({'result': True})
             else:
                 if app.enable_redirect:
-                    return HttpResponseRedirect(redirect_to='http://baidu.com')
+                    return HttpResponseRedirect(redirect_to=app.redirect)
                 else:
                     return  Response({'result': True, 'url': app.file})
         

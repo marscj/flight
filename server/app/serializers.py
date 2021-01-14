@@ -14,8 +14,6 @@ class AppSerializer(serializers.ModelSerializer):
 
     redirect = serializers.URLField(required=False, allow_blank=True)
 
-    file = serializers.FileField()
-
     enable_redirect = serializers.BooleanField(default=False)
 
     class Meta:
