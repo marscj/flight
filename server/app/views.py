@@ -3,12 +3,14 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticated, DjangoModelPermissions, IsAuthenticatedOrReadOnly
 
 from . import serializers
 from . import models
 
-class CheckVersion(APIView):
+class CheckVersion(APIView):  
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
     def post(self, request, format=None):
         serializer = serializers.CheckVersionSerializer(data=request.data)
@@ -21,10 +23,10 @@ class CheckVersion(APIView):
                 return Response({'result': True})
             else:
                 if app.enable_redirect:
-                    return HttpResponseRedirect(redirect_to=app.redirect)
+                    return Response({'result': True, 'url': app.redirect})
                 else:
                     if app.file is not None:
-                        return  HttpResponseRedirect(app.file.url)
+                        return Response({'result': True, 'url': app.app.file.url}) 
                     else:
                         return Response({'result': True})
         
