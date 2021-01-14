@@ -1,3 +1,5 @@
+from django.http import HttpResponseRedirect
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -9,19 +11,19 @@ from . import models
 class CheckVersion(APIView):
 
     def post(self, request, format=None):
-        serializers = serializers.CheckVersionSerializer(data=request.data)
+        serializer = serializers.CheckVersionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        app = models.App.objects.filter(type=serializer.data.type).last
+        app = models.App.objects.filter(type=serializer.data['version']).last()
         
         if app is not None:
-            if serializers.data.version == app.version:
+            if serializer.data['version'] == app.version:
                 return Response({'result': True})
             else:
-                return Response({'result': False, 'url': app.file})
+                return HttpResponseRedirect(redirect_to='https://google.com')
+                # return Response({'result': False, 'url': app.file})
         
-
-        return Response({'result': True})
+        return Response({'result': False, 'url': app.file})
 
 class AppView(ModelViewSet):
     serializer_class = serializers.AppSerializer
