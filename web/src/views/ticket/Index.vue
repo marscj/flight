@@ -1,6 +1,6 @@
 <template>
   <form-validate ref="observer" :form="form">
-    <page-header-wrapper :content="'ID:' + $route.params.id">
+    <page-header-wrapper :content="post_type == 'edit' ? 'ID:' + $route.params.id : ''">
       <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false">
         <a-steps v-if="!form.is_cancel" direction="horizontal" :current="current" progressDot>
           <a-step>
@@ -131,7 +131,7 @@
       </a-card>
 
       <form-item-validate vid="itinerary_id">
-        <itinerary-related-list @select="onSelectItinerary" :disabled="disabled()" />
+        <itinerary-related-list @select="onSelectItinerary" :disabled="disabled() || post_type != 'add'" />
       </form-item-validate>
     </page-header-wrapper>
 
@@ -209,7 +209,10 @@ export default {
 
         return true
       },
-      form: {}
+      form: {
+        serial_no: ''
+      },
+      itinerary: {}
     }
   },
   mounted() {
@@ -258,7 +261,7 @@ export default {
         total: this.form.total,
         air_info: this.form.air_info,
         remark: this.form.remark,
-        itinerary_id: this.form.itinerary_id
+        itinerary_id: this.itinerary.id ?? this.form.itinerary_id
       })
 
       if (this.post_type == 'edit') {
@@ -269,7 +272,6 @@ export default {
           })
           .catch(error => {
             if (error.response) {
-              console.log(error.response)
               this.$refs.observer.setErrors(error)
             }
           })
@@ -305,8 +307,9 @@ export default {
         })
     },
     onSelectItinerary(val) {
-      if (val != null) {
-        this.form.itinerary_id = val[0]
+      if (val != null && val.length > 0) {
+        this.itinerary = val[0]
+        this.form.serial_no = val[0].serial_no
       }
     },
     beforeUpload(file) {

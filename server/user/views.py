@@ -55,7 +55,6 @@ class UserView(RegisterView, viewset.ExtraModelViewSet):
             user.set_password(serializer.data['password'])
             user.save()
             
-            print(user.email, serializer.data['password'])
             message.update_password.delay(user.email, serializer.data['password'])
 
             return Response({'status': 'password set'})

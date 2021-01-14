@@ -1,6 +1,6 @@
 <template>
   <form-validate ref="observer">
-    <page-header-wrapper :content="'ID:' + $route.params.id">
+    <page-header-wrapper :content="post_type == 'edit' ? 'ID:' + $route.params.id : ''">
       <a-card class="card" title="Base Information" :bordered="false">
         <form-item-validate label="Title" vid="title" required>
           <a-input v-model="form.title" :maxLength="64" :disabled="disabled()" />

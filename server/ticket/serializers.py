@@ -130,10 +130,6 @@ class TicketSerializer(serializers.ModelSerializer):
         model = models.Ticket
         fields = '__all__'
 
-    def validate(self, validate_data):
-        print(validate_data)
-        return validate_data
-
 class TicketHistorySerializer(serializers.ModelSerializer):
 
     history_user = serializers.StringRelatedField(read_only=True)

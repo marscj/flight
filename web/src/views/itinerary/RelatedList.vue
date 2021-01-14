@@ -67,10 +67,7 @@ export default {
   },
   watch: {
     data(val) {
-      this.$emit(
-        'select',
-        val.map(f => f.id)
-      )
+      this.$emit('select', val)
       this.selectedRowKeys = val.map(f => f.id)
     }
   },
