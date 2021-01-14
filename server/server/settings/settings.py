@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'authorization',
     'user',
     'ticket',
+    'app',
 
     # 'django_celery_results'
 ]
