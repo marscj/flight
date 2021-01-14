@@ -14,16 +14,18 @@ class CheckVersion(APIView):
         serializer = serializers.CheckVersionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        app = models.App.objects.filter(type=serializer.data['version']).last()
+        app = models.App.objects.filter(type=serializer.data['type']).last()
         
         if app is not None:
             if serializer.data['version'] == app.version:
                 return Response({'result': True})
             else:
-                return HttpResponseRedirect(redirect_to='https://google.com')
-                # return Response({'result': False, 'url': app.file})
+                if app.enable_redirect:
+                    return HttpResponseRedirect(redirect_to='http://baidu.com')
+                else:
+                    return  Response({'result': True, 'url': app.file})
         
-        return Response({'result': False, 'url': app.file})
+        return Response({'result': True})
 
 class AppView(ModelViewSet):
     serializer_class = serializers.AppSerializer

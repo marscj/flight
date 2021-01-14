@@ -6,24 +6,26 @@ class AppSerializer(serializers.ModelSerializer):
 
     type = serializers.CharField(max_length=16)
 
-    name = serializers.CharField(max_length=64, validators=[UniqueValidator(queryset=models.App.objects.all())])
+    name = serializers.CharField(max_length=64)
 
-    version = serializers.CharField(max_length=64, validators=[UniqueValidator(queryset=models.App.objects.all())])
+    version = serializers.CharField(max_length=64)
 
-    code = serializers.CharField(max_length=64, validators=[UniqueValidator(queryset=models.App.objects.all())])
+    code = serializers.CharField(max_length=64)
 
     redirect = serializers.URLField(required=False, allow_blank=True)
+
+    file = serializers.FileField()
 
     enable_redirect = serializers.BooleanField(default=False)
 
     class Meta:
-        mode = models.App
+        model = models.App
         fields = '__all__'
 
     def validate(self, validate_data):
-        enable_redirect = validate_data.get('validate_data', None)
+        enable_redirect = validate_data.get('enable_redirect', None)
         redirect = validate_data.get('redirect', None)
-
+        
         if enable_redirect and redirect is None:
             raise serializers.ValidationError({'redirect': 'This field may not to null!'})
             
