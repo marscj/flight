@@ -69,7 +69,6 @@ class ItineraryView(viewset.ExtraModelViewSet):
         instance.messages.filter(user=self.request.user).update(read=True)
         return super().retrieve(request, *args, **kwargs)
 
-
 class ItineraryHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
     history_id = django_filters.NumberFilter('history_id')

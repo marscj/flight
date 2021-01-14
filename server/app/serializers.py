@@ -17,3 +17,11 @@ class AppSerializer(serializers.ModelSerializer):
     class Meta:
         mode = models.App
         fields = '__all__'
+
+class CheckVersionSerializer(serializers.Serializer):
+
+    type = serializers.CharField(max_length=16)
+
+    version = serializers.CharField(max_length=64)
+
+    code = serializers.CharField(max_length=64)
