@@ -23,6 +23,7 @@ urlpatterns = [
     url('api/', include('authorization.urls')),
     url('api/', include('user.urls')),
     url('api/', include('ticket.urls')),
+    url('api/', include('app.urls')),
 ]
 
 if settings.DEBUG: # new
