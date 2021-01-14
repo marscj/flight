@@ -23,7 +23,10 @@ class CheckVersion(APIView):
                 if app.enable_redirect:
                     return HttpResponseRedirect(redirect_to=app.redirect)
                 else:
-                    return  Response({'result': True, 'url': app.file})
+                    if app.file is not None:
+                        return  HttpResponseRedirect(app.file.url)
+                    else:
+                        return Response({'result': True})
         
         return Response({'result': True})
 
