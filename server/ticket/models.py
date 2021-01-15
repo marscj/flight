@@ -110,7 +110,7 @@ class Ticket(models.Model):
     tax = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
     remark = models.TextField(blank=True, null=True)
-    is_confirm = models.BooleanField(default=False, blank=True, null=True)
+    is_confirm = models.BooleanField(default=None, blank=True, null=True)
     is_cancel = models.BooleanField(default=False, blank=True, null=True)
     is_booking = models.BooleanField(default=True, blank=True, null=True)
     is_complete = models.BooleanField(default=False, blank=True, null=True)
