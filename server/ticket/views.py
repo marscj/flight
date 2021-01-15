@@ -100,7 +100,7 @@ class TicketView(viewset.ExtraModelViewSet):
         if self.request.user.has_perm('ticket.view_ticket'):
             return models.Ticket.objects.all().order_by('-id')
         else :
-            return super().get_queryset().filter(itineraries__user_id=self.request.user.id).distinct()
+            return super().get_queryset().filter(itinerary__user_id=self.request.user.id).distinct()
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
