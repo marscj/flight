@@ -54,13 +54,13 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/home/log/all.log',  #这是将普通日志写入到日志文件中的方法，
+            'filename': '/home/server/all.log',  #这是将普通日志写入到日志文件中的方法，
             'formatter': 'standard'
         },
         'default': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': '/home/log/all.log',     #日志输出文件
+            'filename': '/home/server/all.log',     #日志输出文件
             'maxBytes': 1024*1024*5,                  #文件大小
             'backupCount': 5,                         #备份份数
             'formatter':'standard',                   #使用哪种formatters日志格式
