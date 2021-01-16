@@ -50,7 +50,7 @@ services:
   server:
       container_name: flight_server
       build: ./server
-      command: "gunicorn --chdir server --bind :8000 server.wsgi:application –access-logfile -" 
+      command: gunicorn --chdir server --bind :8000 server.wsgi:application –access-logfile '-'
       restart: always
       volumes:
         - .:/server
@@ -65,7 +65,7 @@ services:
 
   celery:
       build: ./server
-      command: "celery --workdir /server/server -A server worker -l info"
+      command: celery --workdir /server/server -A server worker -l info
       volumes:
         - .:/server
       depends_on:
