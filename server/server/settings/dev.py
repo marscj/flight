@@ -6,7 +6,7 @@ ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-CACHEOPS_REDIS = "redis://localhost:6379/0"
+CACHEOPS_REDIS = "redis://localhost:6379/1"
 
 BROKER_URL = "redis://localhost:6379/0"
 # CELERY_RESULT_BACKEND = 'django-db'
