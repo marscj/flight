@@ -54,21 +54,11 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/home/server/all.log',  #这是将普通日志写入到日志文件中的方法，
+            'filename': '/home/server/debug.log',  #这是将普通日志写入到日志文件中的方法，
             'formatter': 'standard'
-        },
-        'default': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
-            'filename': '/home/server/all.log',     #日志输出文件
-            'maxBytes': 1024*1024*5,                  #文件大小
-            'backupCount': 5,                         #备份份数
-            'formatter':'standard',                   #使用哪种formatters日志格式
-        },
-        # 上面两种写入日志的方法是有区别的，前者是将控制台下输出的内容全部写入到文件中，这样做的好处就是我们在views代码中的所有print也会写在对应的位置
-        # 第二种方法就是将系统内定的内容写入到文件，具体就是请求的地址、错误信息等，小伙伴也可以都使用一下然后查看两个文件的异同。
+        }
     },
-    'loggers': {  # log记录器，配置之后就会对应的输出日志
+    'loggers': {  
         # django 表示就是django本身默认的控制台输出，就是原本在控制台里面输出的内容，在这里的handlers里的file表示写入到上面配置的file-/home/aea/log/jwt_test.log文件里面
         # 在这里的handlers里的console表示写入到上面配置的console-/home/aea/log/test.log文件里面
         'django': {
