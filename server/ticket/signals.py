@@ -49,7 +49,8 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
             message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
         
         #客户推送
-        message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.itinerary.user.email)
+        if instance.itinerary is not None and instance.itinerary.user is not None:
+            message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.itinerary.user.email)
 
     if type(instance).__name__ == 'Itinerary':
         serializer = ItineraryHistorySerializer(instance=history_instance).data
@@ -61,4 +62,5 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
             message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
 
         #客户推送
-        message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.user.email)
+        if instance.user is not None:
+            message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.user.email)
