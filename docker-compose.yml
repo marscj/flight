@@ -50,7 +50,7 @@ services:
   server:
       container_name: flight_server
       build: ./server
-      command: "gunicorn --chdir server --bind :8000 server.wsgi:application" 
+      command: "gunicorn --chdir server --bind :8000 server.wsgi:application –access-logfile -" 
       restart: always
       volumes:
         - .:/server
