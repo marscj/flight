@@ -26,7 +26,7 @@ class CheckVersion(APIView):
                     return Response({'result': True, 'url': app.redirect})
                 else:
                     if app.file is not None:
-                        return Response({'result': True, 'url': app.app.file.url}) 
+                        return Response({'result': True, 'url': app.file.url}) 
                     else:
                         return Response({'result': True})
         
