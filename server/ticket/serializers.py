@@ -46,10 +46,12 @@ class UpLoadSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_name(self, obj):
-        return str(obj.file).split("/")[-1]
+        if obj.file is not None:
+            return str(obj.file).split("/")[-1]
 
     def get_url(self, obj):
-        return self.context['request'].build_absolute_uri(obj.file.url)
+        if obj.file is not None:
+            return self.context['request'].build_absolute_uri(obj.file.url)
 
 class MessageSerializer(serializers.ModelSerializer):
 
