@@ -14,7 +14,7 @@
           :multiple="true"
           :before-upload="beforeUpload"
           :remove="handleRemove"
-          action="http://ubangservice.com/api/uploads/"
+          action="http://thesaadiyat.com/api/uploads/"
           :withCredentials="true"
           :default-file-list="form.uploads"
           :data="{

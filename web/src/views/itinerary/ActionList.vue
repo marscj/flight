@@ -131,7 +131,7 @@
           class="w-full mt-4 h-12 mr-4 "
           type="primary"
           @click="ticket()"
-          :disabled="!$auth('change_booking') || !$auth('add_ticket') || selectedRowKeys.length == 0"
+          :disabled="!$auth('add_ticket') || selectedRowKeys.length == 0"
         >
           Ticketing
         </a-button></a-col

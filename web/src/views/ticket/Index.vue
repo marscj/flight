@@ -109,14 +109,14 @@
           :multiple="true"
           :before-upload="beforeUpload"
           :remove="handleRemove"
-          action="http://ubangservice.com/api/uploads/"
+          action="http://thesaadiyat.com/api/uploads/"
           :withCredentials="true"
           :default-file-list="form.uploads"
           :data="{
             content_type: 'ticket',
             object_id: $route.params.id
           }"
-          :disabled="disabled() || form.is_confirm"
+          :disabled="disabled() || !form.is_confirm"
         >
           <p class="ant-upload-drag-icon">
             <a-icon type="inbox" />
