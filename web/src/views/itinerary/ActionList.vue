@@ -130,6 +130,7 @@
         ><a-button
           class="w-full mt-4 h-12 mr-4 "
           type="primary"
+          icon="plus"
           @click="ticket()"
           :disabled="!$auth('add_ticket') || selectedRowKeys.length == 0"
         >
