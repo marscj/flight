@@ -89,7 +89,7 @@ class Itinerary(models.Model):
     user = models.ForeignKey(User, related_name='itinerary_users', on_delete=models.SET_NULL, blank=True, null=True)
     author = models.ForeignKey(User, related_name='itinerary_authors', on_delete=models.SET_NULL, blank=True, null=True)
     booking = models.ForeignKey(Booking, related_name='itineraries', on_delete=models.SET_NULL, blank=True, null=True)
-
+    
     history = HistoricalRecords(table_name='itinerary_history', custom_model_name='itinerary_history')
 
     class Meta:
@@ -116,7 +116,7 @@ class Ticket(models.Model):
     is_complete = models.BooleanField(default=False, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
     
-    itinerary = models.OneToOneField(Itinerary, on_delete=models.SET_NULL, blank=True, null=True)
+    itinerary = models.ForeignKey(Itinerary, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
     messages = GenericRelation(Message, related_query_name='ticket')
     comments = GenericRelation(Comment, related_query_name='ticket')
     uploads = GenericRelation(UpLoad, related_query_name='ticket')

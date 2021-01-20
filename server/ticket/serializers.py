@@ -75,6 +75,8 @@ class ItinerarySerializer(serializers.ModelSerializer):
     remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     booking_id = serializers.IntegerField(required=True)
+    ticket_id = serializers.IntegerField(required=True)
+    
     author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
@@ -121,7 +123,7 @@ class TicketSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     
     itinerary = ItinerarySerializer(read_only=True, many=False)
-    itinerary_id = serializers.IntegerField(required=True, validators=[UniqueValidator(queryset=models.Ticket.objects.all())])
+    itinerary_id = serializers.IntegerField(required=True)
     
     messages = MessageSerializer(read_only=True, many=True)
     comments = CommentSerializer(read_only=True, many=True)
@@ -135,7 +137,7 @@ class TicketSerializer(serializers.ModelSerializer):
 
     def get_fields(self):
         fields = super(TicketSerializer, self).get_fields()
-        fields['children'] = TicketSerializer(many=True)
+        fields['children'] = TicketSerializer(many=True, read_only=True)
         return fields
 
 class TicketHistorySerializer(serializers.ModelSerializer):
