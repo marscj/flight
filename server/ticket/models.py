@@ -123,6 +123,7 @@ class Ticket(models.Model):
 
     author = models.ForeignKey(User, related_name='ticket_authors', on_delete=models.SET_NULL, blank=True, null=True)
     history = HistoricalRecords(table_name='ticket_history', custom_model_name='ticket_history')
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'ticket'
