@@ -70,18 +70,11 @@ class CommentSerializer(serializers.ModelSerializer):
         model = models.Message
         fields = '__all__'
 
-class TicketSerializer1(serializers.ModelSerializer):
-    
-    class Meta:
-        model = models.Ticket
-        fields = '__all__'
-
 class ItinerarySerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
     remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     booking_id = serializers.IntegerField(required=True)
-    ticket = TicketSerializer1(read_only=True)
     author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
@@ -133,10 +126,17 @@ class TicketSerializer(serializers.ModelSerializer):
     messages = MessageSerializer(read_only=True, many=True)
     comments = CommentSerializer(read_only=True, many=True)
     uploads = UpLoadSerializer(read_only=True, many=True) 
-   
+    
+    parent_id = serializers.IntegerField(required=False, allow_null=True)
+
     class Meta:
         model = models.Ticket
         fields = '__all__'
+
+    def get_fields(self):
+        fields = super(TicketSerializer, self).get_fields()
+        fields['children'] = TicketSerializer(many=True)
+        return fields
 
 class TicketHistorySerializer(serializers.ModelSerializer):
 
