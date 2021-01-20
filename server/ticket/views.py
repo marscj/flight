@@ -94,9 +94,15 @@ class TicketView(viewset.ExtraModelViewSet):
 
     def get_queryset(self):
         if self.request.user.has_perm('ticket.view_ticket'):
-            return models.Ticket.objects.all().order_by('-id')
-        else :
-            return super().get_queryset().filter(itinerary__user_id=self.request.user.id).distinct()
+            if self.action == 'list':
+                return models.Ticket.objects.filter(parent__isnull=True).order_by('-id')
+            else:
+                return models.Ticket.objects.all().order_by('-id')
+        else:
+            if self.action == 'list':
+                return models.Ticket.objects.filter(Q(itinerary__user_id=self.request.user.id) & Q(parent__isnull=True)).order_by('-id').distinct()
+            else:
+                return models.Ticket.objects.filter(itinerary__user_id=self.request.user.id).order_by('-id').distinct()
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
