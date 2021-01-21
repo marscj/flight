@@ -23,44 +23,44 @@ from plugs import push, message
 
 @receiver(post_create_historical_record)
 def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
-    pass
-    # serializer = None
+
+    serializer = None
     
-    # if type(instance).__name__ == 'Booking':
-    #     serializer = BookingHistorySerializer(instance=history_instance).data
-    #     serializer['model'] = type(instance).__name__
+    if type(instance).__name__ == 'Booking':
+        serializer = BookingHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
         
-    #     #admin推送
-    #     for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
-    #         Message.objects.create(json=serializer, content_object=instance, user=user)
-    #         message.send_admin_message.delay('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
+        #admin推送
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
+            Message.objects.create(json=serializer, content_object=instance, user=user)
+            message.send_admin_message.delay('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
 
-    #     #客户推送
-    #     for itinerary in instance.itineraries.all():
-    #         message.send_admin_message.delay('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), itinerary.user.email)
+        #客户推送
+        for itinerary in instance.itineraries.all():
+            message.send_admin_message.delay('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), itinerary.user.email)
 
-    # if type(instance).__name__ == 'Ticket':
-    #     serializer = TicketHistorySerializer(instance=history_instance).data
-    #     serializer['model'] = type(instance).__name__
+    if type(instance).__name__ == 'Ticket':
+        serializer = TicketHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
         
-    #     #admin推送
-    #     for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
-    #         Message.objects.create(json=serializer, content_object=instance, user=user)
-    #         message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
+        #admin推送
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
+            Message.objects.create(json=serializer, content_object=instance, user=user)
+            message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
         
-    #     #客户推送
-    #     if instance.itinerary is not None and instance.itinerary.user is not None:
-    #         message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.itinerary.user.email)
+        #客户推送
+        if instance.itinerary is not None and instance.itinerary.user is not None:
+            message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.itinerary.user.email)
 
-    # if type(instance).__name__ == 'Itinerary':
-    #     serializer = ItineraryHistorySerializer(instance=history_instance).data
-    #     serializer['model'] = type(instance).__name__
+    if type(instance).__name__ == 'Itinerary':
+        serializer = ItineraryHistorySerializer(instance=history_instance).data
+        serializer['model'] = type(instance).__name__
         
-    #     #admin推送
-    #     for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
-    #         Message.objects.create(json=serializer, content_object=instance.booking, user=user)
-    #         message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
+        #admin推送
+        for user in User.objects.filter(Q(is_staff=True) & ~Q(id=history_instance.history_user.id)):
+            Message.objects.create(json=serializer, content_object=instance.booking, user=user)
+            message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
 
-    #     #客户推送
-    #     if instance.user is not None:
-    #         message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.user.email)
+        #客户推送
+        if instance.user is not None:
+            message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.user.email)
