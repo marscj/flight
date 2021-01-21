@@ -201,7 +201,7 @@ class BookingHistorySerializer(serializers.ModelSerializer):
         model = models.Booking.history.model
         fields = '__all__'
 
-class ConfirmSerializer(serializers.Serializer):
+class ConfirmTicketSerializer(serializers.Serializer):
 
     confirm = serializers.BooleanField()
 

@@ -116,7 +116,7 @@ class TicketView(viewset.ExtraModelViewSet):
     @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
     def confirm(self, request, pk=None):
         data = self.get_object()
-        serializer = serializers.ConfirmSerializer(data=request.data)
+        serializer = serializers.ConfirmTicketSerializer(data=request.data)
         if serializer.is_valid():
             data.is_confirm = serializer.data['confirm']
             data.save()
