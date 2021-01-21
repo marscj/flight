@@ -104,6 +104,8 @@ class UserListSerializer(serializers.ModelSerializer):
 
     department = DepartmentSerializer(read_only=True)
 
+    avatar = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size', read_only=False)
+
     class Meta:
         model = UserModel
         fields = (

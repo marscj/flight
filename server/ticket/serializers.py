@@ -57,6 +57,10 @@ class MessageSerializer(serializers.ModelSerializer):
 
     content_type = ContentTypeField()
 
+    user = UserListSerializer(read_only=True, many=False)
+
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+
     class Meta:
         model = models.Message
         fields = '__all__'
@@ -73,11 +77,11 @@ class CommentSerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()
 
     class Meta:
-        model = models.Message
+        model = models.Comment
         fields = '__all__'
 
     def get_children(self, obj):
-        queryset = Comment.objects.filter(object_id=obj.id, content_type__model='comment')
+        queryset = models.Comment.objects.filter(object_id=obj.id, content_type__model='comment')
         serializers = CommentSerializer(queryset, many=True, context=self.context)
         return serializers.data
 
