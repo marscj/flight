@@ -102,7 +102,7 @@ class UserListSerializer(serializers.ModelSerializer):
 
     roles = ListGroupSerializer(read_only=True, many=True, source='groups')
 
-    department = DepartmentSerializer(read_only=True)
+    department = serializers.StringRelatedField(read_only=True)
 
     avatar = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size', read_only=False)
 
