@@ -90,7 +90,7 @@ class ItinerarySerializer(serializers.ModelSerializer):
     remark = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=1024)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
     booking_id = serializers.IntegerField(required=True)
-    ticket_id = serializers.IntegerField(required=True)
+    ticket = serializers.StringRelatedField(read_only=True)
     
     author = serializers.StringRelatedField(read_only=True)
 
