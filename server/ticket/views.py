@@ -52,7 +52,7 @@ class BookingHistoryView(viewsets.ReadOnlyModelViewSet):
 class ItineraryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
     booking_id = django_filters.NumberFilter('booking__id')
-    ticket_id = django_filters.NumberFilter('ticket__id')
+    ticket_id = django_filters.NumberFilter('tickets__id')
     date = django_filters.DateFromToRangeFilter('date')
 
 class ItineraryView(viewset.ExtraModelViewSet):
@@ -74,7 +74,7 @@ class ItineraryHistoryFilter(django_filters.FilterSet):
     history_id = django_filters.NumberFilter('history_id')
     date = django_filters.DateFromToRangeFilter('history_date')
     booking_id = django_filters.NumberFilter('booking__id')
-    ticket_id = django_filters.NumberFilter('ticket__id')
+    ticket_id = django_filters.NumberFilter('tickets__id')
 
 class ItineraryHistoryView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ItineraryHistorySerializer
