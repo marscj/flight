@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.db.models import Q
+from django.contrib.contenttypes.models import ContentType
 
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, IsAuthenticatedOrReadOnly
 from rest_framework import viewsets, mixins
+from rest_framework.decorators import action
+from rest_framework import status
+from rest_framework.response import Response
 import django_filters
 
 from middleware import viewset, permissions
@@ -108,6 +112,22 @@ class TicketView(viewset.ExtraModelViewSet):
         instance = self.get_object()
         instance.messages.filter(user=self.request.user).update(read=True)
         return super().retrieve(request, *args, **kwargs)
+
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    def confirm(self, request, pk=None):
+        data = self.get_object()
+        serializer = serializers.ConfirmSerializer(data=request.data)
+        if serializer.is_valid():
+            data.is_confirm = serializer.data['confirm']
+            data.save()
+
+            if not data.is_confirm:
+                models.Comment.objects.create(content=serializer.data['reason'], object_id=data.id, content_type=ContentType.objects.get(model='ticket'), user=request.user)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({'data': serializers.TicketSerializer(instance=data).data})
 
 class TicketHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')

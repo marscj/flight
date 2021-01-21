@@ -201,3 +201,18 @@ class BookingHistorySerializer(serializers.ModelSerializer):
         model = models.Booking.history.model
         fields = '__all__'
 
+class ConfirmSerializer(serializers.Serializer):
+
+    confirm = serializers.BooleanField()
+
+    reason = serializers.CharField(max_length=255, required=False, allow_null=True)
+
+    def validate(self, validate_data):
+        reason = validate_data.get('reason', None)
+        confirm = validate_data.get('confirm', None)
+
+        if not confirm and reason is None:
+            raise serializers.ValidationError({'reason': 'This field is required!'})
+
+        return validate_data
+
