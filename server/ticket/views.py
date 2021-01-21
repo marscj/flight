@@ -124,7 +124,7 @@ class TicketHistoryView(viewsets.ReadOnlyModelViewSet):
 
 class UpLoadFilter(django_filters.FilterSet):
     object_id = django_filters.NumberFilter('object_id')
-    type = django_filters.CharFilter('content_type__model')
+    content_type = django_filters.CharFilter('content_type__model')
 
 class UpLoadView(viewset.ExtraModelViewSet):
     serializer_class = serializers.UpLoadSerializer
@@ -147,3 +147,15 @@ class MessageView(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return models.Message.objects.filter(user=self.request.user).order_by('-id')
+
+class CommentFilter(django_filters.FilterSet):
+    object_id = django_filters.NumberFilter('object_id')
+    content_type = django_filters.CharFilter('content_type__model')
+
+class CommentView(viewset.ExtraModelViewSet):
+    serializer_class = serializers.CommentSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = models.Comment.objects.all().order_by('-id')
+ 
+    filter_class = CommentFilter
+    search_fields = ['']        

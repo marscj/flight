@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from rest_framework.routers import DefaultRouter
 
-from .views import BookingView, BookingHistoryView, ItineraryView, ItineraryHistoryView, TicketView, TicketHistoryView, MessageView, UpLoadView
+from .views import BookingView, BookingHistoryView, ItineraryView, ItineraryHistoryView, TicketView, TicketHistoryView, MessageView, UpLoadView, CommentView
 
 router = DefaultRouter()
 router.register('bookings', BookingView, basename='bookings')
@@ -13,4 +13,5 @@ router.register('tickets', TicketView, basename='tickets')
 router.register('ticket/histories', TicketHistoryView, basename='ticket_history')
 router.register('messages', MessageView, basename='messages')
 router.register('uploads', UpLoadView, basename='uploads')
+router.register('comments', CommentView, basename='comments')
 urlpatterns = router.urls
