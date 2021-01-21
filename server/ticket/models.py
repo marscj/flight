@@ -131,14 +131,6 @@ class Ticket(models.Model):
     def __str__(self):
         return self.serial_no
 
-    @property
-    def is_parent(self):
-        return self.parent == null
-
-    @property
-    def is_last_child(slef):
-        return slef.children.all().count == 0
-
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
     

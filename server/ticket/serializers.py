@@ -65,10 +65,21 @@ class MessageSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
 
     content_type = ContentTypeField()
-    
+
+    user = UserListSerializer(read_only=True, many=False)
+
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+
+    children = serializers.SerializerMethodField()
+
     class Meta:
         model = models.Message
         fields = '__all__'
+
+    def get_children(self, obj):
+        queryset = Comment.objects.filter(object_id=obj.id, content_type__model='comment')
+        serializers = CommentSerializer(queryset, many=True, context=self.context)
+        return serializers.data
 
 class ItinerarySerializer(serializers.ModelSerializer):
     serial_no = serializers.CharField(max_length=32)
@@ -138,7 +149,8 @@ class TicketSerializer(serializers.ModelSerializer):
     def get_fields(self):
         fields = super(TicketSerializer, self).get_fields()
         fields['children'] = TicketSerializer(many=True, read_only=True)
-        return fields
+        return fields 
+            
 
 class TicketHistorySerializer(serializers.ModelSerializer):
 
