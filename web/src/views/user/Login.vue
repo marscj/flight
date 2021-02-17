@@ -48,8 +48,8 @@ export default {
         loading: false
       },
       form: {
-        email: 'admin@admin.com',
-        password: 'admin123',
+        email: '',
+        password: '',
         backend: true
       },
       error: undefined

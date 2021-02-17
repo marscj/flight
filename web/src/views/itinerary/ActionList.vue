@@ -46,42 +46,32 @@
       </template>
 
       <template slot="entry" slot-scope="text, record, index">
-        <a-textarea v-if="record.editable" v-model="data[index].entry" :rows="5" :disabled="record.loading" />
+        <a-input v-if="record.editable" v-model="data[index].entry" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="exit" slot-scope="text, record, index">
-        <a-textarea v-if="record.editable" v-model="data[index].exit" :rows="5" :disabled="record.loading" />
+        <a-input v-if="record.editable" v-model="data[index].exit" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="ticket1" slot-scope="text, record, index">
-        <a-textarea v-if="record.editable" v-model="data[index].ticket1" :rows="5" :disabled="record.loading" />
+        <a-input v-if="record.editable" v-model="data[index].ticket1" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="ticket2" slot-scope="text, record, index">
-        <a-textarea v-if="record.editable" v-model="data[index].ticket2" :rows="5" :disabled="record.loading" />
+        <a-input v-if="record.editable" v-model="data[index].ticket2" :disabled="record.loading" />
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="hotel" slot-scope="text, record, index">
-        <a-textarea
-          v-if="record.editable"
-          v-model="data[index].hotel"
-          :rows="5"
-          :disabled="record.loading"
-        ></a-textarea>
+        <a-input v-if="record.editable" v-model="data[index].hotel" :disabled="record.loading"></a-input>
         <template v-else>{{ text }}</template>
       </template>
 
       <template slot="remark" slot-scope="text, record, index">
-        <a-textarea
-          v-if="record.editable"
-          v-model="data[index].remark"
-          :rows="5"
-          :disabled="record.loading"
-        ></a-textarea>
+        <a-input v-if="record.editable" v-model="data[index].remark" :disabled="record.loading"></a-input>
         <template v-else>{{ text }}</template>
       </template>
 
@@ -453,6 +443,7 @@ export default {
               title: 'Exit',
               dataIndex: 'exit',
               align: 'center',
+              width: '160px',
               ellipsis: true,
               scopedSlots: { customRender: 'exit' }
             },
@@ -460,6 +451,7 @@ export default {
               title: 'Entry',
               dataIndex: 'entry',
               align: 'center',
+              width: '160px',
               ellipsis: true,
               scopedSlots: { customRender: 'entry' }
             }
@@ -473,6 +465,7 @@ export default {
               title: 'Ticket1',
               dataIndex: 'ticket1',
               align: 'center',
+              width: '160px',
               ellipsis: true,
               scopedSlots: { customRender: 'ticket1' }
             },
@@ -480,6 +473,7 @@ export default {
               title: 'Ticket2',
               dataIndex: 'ticket2',
               align: 'center',
+              width: '160px',
               ellipsis: true,
               scopedSlots: { customRender: 'ticket2' }
             }
@@ -490,6 +484,7 @@ export default {
           dataIndex: 'hotel',
           align: 'center',
           ellipsis: true,
+          width: '160px',
           scopedSlots: { customRender: 'hotel' }
         },
         {
@@ -497,6 +492,7 @@ export default {
           dataIndex: 'remark',
           align: 'center',
           ellipsis: true,
+          width: '160px',
           scopedSlots: { customRender: 'remark' }
         },
         {
