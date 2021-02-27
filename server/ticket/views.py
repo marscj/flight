@@ -157,6 +157,7 @@ class UpLoadView(viewset.ExtraModelViewSet):
 class MessageFilter(django_filters.FilterSet):
     date = django_filters.DateFilter('date')
     week = django_filters.DateFromToRangeFilter('date')
+    read = django_filters.BooleanFilter('read')
 
 class MessageView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.MessageSerializer
