@@ -122,51 +122,58 @@ export default {
           title: 'ID',
           dataIndex: 'id',
           align: 'center',
-          width: '80px',
-          sorter: true
+          width: '80px'
         },
         {
           title: 'Serial No',
           dataIndex: 'serial_no',
           align: 'center',
-          width: '160px'
+          width: '160px',
+          scopedSlots: { customRender: 'serial_no' }
         },
         {
           title: 'Email',
           dataIndex: 'email',
           align: 'center',
           width: '180px',
-          ellipsis: true
+          ellipsis: true,
+          scopedSlots: { customRender: 'email' }
         },
         {
           title: 'Name',
           dataIndex: 'name',
           align: 'center',
           width: '160px',
-          ellipsis: true
+          ellipsis: true,
+          scopedSlots: { customRender: 'name' }
         },
         {
           title: 'Passport No',
           dataIndex: 'passport_no',
           align: 'center',
           width: '160px',
-          ellipsis: true
+          ellipsis: true,
+          scopedSlots: { customRender: 'passport_no' }
         },
         {
           title: 'Travel Plan',
           align: 'center',
           children: [
             {
-              title: 'Entry',
-              dataIndex: 'entry',
-              align: 'center',
-              ellipsis: true
-            },
-            {
               title: 'Exit',
               dataIndex: 'exit',
               align: 'center',
-              ellipsis: true
+              width: '160px',
+              ellipsis: true,
+              scopedSlots: { customRender: 'exit' }
+            },
+            {
+              title: 'Entry',
+              dataIndex: 'entry',
+              align: 'center',
+              width: '160px',
+              ellipsis: true,
+              scopedSlots: { customRender: 'entry' }
             }
           ]
         },
@@ -175,16 +182,20 @@ export default {
           align: 'center',
           children: [
             {
-              title: 'Ticket2',
-              dataIndex: 'ticket2',
-              align: 'center',
-              ellipsis: true
-            },
-            {
               title: 'Ticket1',
               dataIndex: 'ticket1',
               align: 'center',
-              ellipsis: true
+              width: '160px',
+              ellipsis: true,
+              scopedSlots: { customRender: 'ticket1' }
+            },
+            {
+              title: 'Ticket2',
+              dataIndex: 'ticket2',
+              align: 'center',
+              width: '160px',
+              ellipsis: true,
+              scopedSlots: { customRender: 'ticket2' }
             }
           ]
         },
@@ -192,13 +203,17 @@ export default {
           title: 'Hotel',
           dataIndex: 'hotel',
           align: 'center',
-          ellipsis: true
+          ellipsis: true,
+          width: '160px',
+          scopedSlots: { customRender: 'hotel' }
         },
         {
           title: 'Remark',
           dataIndex: 'remark',
           align: 'center',
-          ellipsis: true
+          ellipsis: true,
+          width: '160px',
+          scopedSlots: { customRender: 'remark' }
         },
         {
           title: 'Lock',
@@ -213,6 +228,12 @@ export default {
           dataIndex: 'author',
           align: 'center',
           ellipsis: true
+        },
+        {
+          title: 'Action',
+          width: '120px',
+          scopedSlots: { customRender: 'action' },
+          align: 'center'
         }
       ]
     }
