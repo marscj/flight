@@ -1,5 +1,5 @@
 <template>
-  <a-card class="card" title="Related Itineraries" :bordered="false">
+  <a-card class="card" title="Related Itineraries">
     <a-table
       ref="table"
       size="default"

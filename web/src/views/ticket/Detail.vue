@@ -15,160 +15,131 @@
         <a-button type="primary" @click="cancel()">Cancel</a-button>
       </template>
 
-      <a-card
-        :bordered="false"
-        :tabList="[
-          {
-            key: 'tickets',
-            scopedSlots: { tab: 'tab_ticket' }
-          },
-          {
-            key: 'messages',
-            scopedSlots: { tab: 'tab_message' }
-          }
-        ]"
-        :activeTabKey="$route.query.tab"
-        @tabChange="tabChange"
-      >
-        <template slot="tab_ticket">
-          <span class="text-lg">Tickets</span>
-        </template>
-
-        <template slot="tab_message">
-          <a-badge :count="form.comments == null ? 0 : form.comments.length" :offset="[12]">
-            <span class="text-lg">Messages</span>
-          </a-badge>
-        </template>
-
-        <div v-if="tab === 'tickets'">
-          <a-card v-if="post_type == 'edit'" class="card" title="Progress">
-            <a-steps direction="horizontal" :current="status" progressDot>
-              <a-step :title="text_status[0]" />
-              <a-step :title="text_status[1]" />
-              <a-step :title="text_status[2]" />
-              <a-step v-if="status == 4" :title="text_status[4]" status="error" />
-              <a-step v-else :title="text_status[3]" />
-              <a-step v-if="status != 4" :title="text_status[5]" />
-            </a-steps>
-          </a-card>
-          <a-card class="card" title="Ticket Info">
-            <a-row class="form-row" :gutter="16">
-              <a-col :sm="24" :md="8">
-                <form-item-validate label="Serial No." vid="serial_no">
-                  <a-input v-model="form.serial_no" :disabled="disabled()"></a-input>
-                </form-item-validate>
-              </a-col>
-              <a-col :sm="24" :md="8">
-                <form-item-validate label="Line" vid="air_line">
-                  <a-input v-model="form.air_line" :disabled="disabled()"></a-input>
-                </form-item-validate>
-              </a-col>
-
-              <a-col :sm="24" :md="8">
-                <form-item-validate label="Class" vid="air_class">
-                  <a-input v-model="form.air_class" :disabled="disabled()"></a-input>
-                </form-item-validate>
-              </a-col>
-
-              <a-col :sm="24" :md="8">
-                <form-item-validate label="Fare" vid="fare">
-                  <a-input-number
-                    v-model="form.fare"
-                    :disabled="disabled()"
-                    :min="0"
-                    :precision="2"
-                    decimalSeparator="."
-                    class="w-full"
-                  />
-                </form-item-validate>
-              </a-col>
-
-              <a-col :sm="24" :md="8">
-                <form-item-validate label="Tax" vid="tax">
-                  <a-input-number
-                    v-model="form.tax"
-                    :disabled="disabled()"
-                    :min="0"
-                    :precision="2"
-                    decimalSeparator="."
-                    class="w-full"
-                  />
-                </form-item-validate>
-              </a-col>
-
-              <a-col :sm="24" :md="8">
-                <form-item-validate label="Total" vid="total">
-                  <a-input-number
-                    v-model="form.total"
-                    :disabled="disabled()"
-                    :min="0"
-                    :precision="2"
-                    decimalSeparator="."
-                    class="w-full"
-                  />
-                </form-item-validate>
-              </a-col>
-
-              <a-col :sm="24" :md="12">
-                <form-item-validate label="Info" vid="air_info">
-                  <a-textarea v-model="form.air_info" :disabled="disabled()" :rows="5"></a-textarea>
-                </form-item-validate>
-              </a-col>
-
-              <a-col :sm="24" :md="12">
-                <form-item-validate label="remark" vid="remark">
-                  <a-textarea v-model="form.remark" :disabled="disabled()" :rows="5"></a-textarea>
-                </form-item-validate>
-              </a-col>
-            </a-row>
-
-            <a-upload-dragger
-              v-if="post_type == 'edit' && form.uploads"
-              :multiple="true"
-              :before-upload="beforeUpload"
-              :remove="handleRemove"
-              action="http://thesaadiyat.com/api/uploads/"
-              :withCredentials="true"
-              :default-file-list="form.uploads"
-              :data="{
-                content_type: 'ticket',
-                object_id: $route.params.id
-              }"
-              :disabled="disabled() || !form.is_confirm"
-            >
-              <p class="ant-upload-drag-icon">
-                <a-icon type="inbox" />
-              </p>
-              <p class="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-              <p class="ant-upload-hint">
-                Support for a single or bulk upload
-              </p>
-            </a-upload-dragger>
-          </a-card>
-
-          <form-item-validate vid="itinerary_id">
-            <itinerary-related-list @select="onSelectItinerary" :disabled="disabled() || post_type != 'add'" />
-          </form-item-validate>
-
-          <a-row v-if="post_type == 'edit'">
-            <a-col :span="12">
-              <a-popconfirm
-                title="Are you sure delete?"
-                @confirm="onDelete"
-                okText="Yes"
-                cancelText="No"
-                v-if="$auth('delete_ticket')"
-              >
-                <a-button href="javascript:;" type="danger">Delete</a-button>
-              </a-popconfirm>
-            </a-col>
-          </a-row>
-        </div>
-        <message v-else-if="tab === 'messages'"></message>
+      <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false">
+        <a-steps direction="horizontal" :current="status" progressDot>
+          <a-step :title="text_status[0]" />
+          <a-step :title="text_status[1]" />
+          <a-step :title="text_status[2]" />
+          <a-step v-if="status == 4" :title="text_status[4]" status="error" />
+          <a-step v-else :title="text_status[3]" />
+          <a-step v-if="status != 4" :title="text_status[5]" />
+        </a-steps>
       </a-card>
+      <a-card class="card" title="Ticket Info" :bordered="false">
+        <a-row class="form-row" :gutter="16">
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Serial No." vid="serial_no">
+              <a-input v-model="form.serial_no" :disabled="disabled()"></a-input>
+            </form-item-validate>
+          </a-col>
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Line" vid="air_line">
+              <a-input v-model="form.air_line" :disabled="disabled()"></a-input>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Class" vid="air_class">
+              <a-input v-model="form.air_class" :disabled="disabled()"></a-input>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Fare" vid="fare">
+              <a-input-number
+                v-model="form.fare"
+                :disabled="disabled()"
+                :min="0"
+                :precision="2"
+                decimalSeparator="."
+                class="w-full"
+              />
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Tax" vid="tax">
+              <a-input-number
+                v-model="form.tax"
+                :disabled="disabled()"
+                :min="0"
+                :precision="2"
+                decimalSeparator="."
+                class="w-full"
+              />
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="8">
+            <form-item-validate label="Total" vid="total">
+              <a-input-number
+                v-model="form.total"
+                :disabled="disabled()"
+                :min="0"
+                :precision="2"
+                decimalSeparator="."
+                class="w-full"
+              />
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="12">
+            <form-item-validate label="Info" vid="air_info">
+              <a-textarea v-model="form.air_info" :disabled="disabled()" :rows="5"></a-textarea>
+            </form-item-validate>
+          </a-col>
+
+          <a-col :sm="24" :md="12">
+            <form-item-validate label="remark" vid="remark">
+              <a-textarea v-model="form.remark" :disabled="disabled()" :rows="5"></a-textarea>
+            </form-item-validate>
+          </a-col>
+        </a-row>
+
+        <a-upload-dragger
+          v-if="post_type == 'edit' && form.uploads"
+          :multiple="true"
+          :before-upload="beforeUpload"
+          :remove="handleRemove"
+          action="http://thesaadiyat.com/api/uploads/"
+          :withCredentials="true"
+          :default-file-list="form.uploads"
+          :data="{
+            content_type: 'ticket',
+            object_id: $route.params.id
+          }"
+          :disabled="disabled() || !form.is_confirm"
+        >
+          <p class="ant-upload-drag-icon">
+            <a-icon type="inbox" />
+          </p>
+          <p class="ant-upload-text">
+            Click or drag file to this area to upload
+          </p>
+          <p class="ant-upload-hint">
+            Support for a single or bulk upload
+          </p>
+        </a-upload-dragger>
+      </a-card>
+
+      <form-item-validate vid="itinerary_id">
+        <itinerary-related-list @select="onSelectItinerary" :disabled="disabled() || post_type != 'add'" />
+      </form-item-validate>
     </page-header-wrapper>
+
+    <a-row v-if="post_type == 'edit'">
+      <a-col :span="12">
+        <a-popconfirm
+          title="Are you sure delete?"
+          @confirm="onDelete"
+          okText="Yes"
+          cancelText="No"
+          v-if="$auth('delete_ticket')"
+        >
+          <a-button href="javascript:;" type="danger">Delete</a-button>
+        </a-popconfirm>
+      </a-col>
+    </a-row>
   </form-validate>
 </template>
 
@@ -177,7 +148,6 @@ import { FormValidate, FormItemValidate } from '@/components'
 import { getTicket, updateTicket, createTicket, deleteTicket } from '@/api/ticket'
 import { uploadFile, deleteFile } from '@/api/upload'
 import ItineraryRelatedList from '@/views/itinerary/RelatedList'
-import Message from './Message'
 
 import moment from 'moment'
 
@@ -188,7 +158,7 @@ const StatusTexts = [
 ]
 
 export default {
-  components: { FormValidate, FormItemValidate, ItineraryRelatedList, Message },
+  components: { FormValidate, FormItemValidate, ItineraryRelatedList },
   props: {
     post_type: {
       type: String,
@@ -227,9 +197,6 @@ export default {
     }
   },
   computed: {
-    tab() {
-      return this.$route.query.tab ? this.$route.query.tab : 'tickets'
-    },
     status() {
       if (
         this.form != null &&
@@ -259,15 +226,6 @@ export default {
     }
   },
   methods: {
-    tabChange(val) {
-      this.$router.push({
-        ...this.$route,
-        name: this.$route.name,
-        query: Object.assign({}, this.$route.query, {
-          tab: val
-        })
-      })
-    },
     getTicketData() {
       this.loading = true
       getTicket(this.$route.params.id)
