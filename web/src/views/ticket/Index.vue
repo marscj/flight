@@ -2,35 +2,13 @@
   <form-validate ref="observer" :form="form">
     <page-header-wrapper :content="post_type == 'edit' ? 'ID:' + $route.params.id : ''">
       <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false">
-        <a-steps v-if="!form.is_cancel" direction="horizontal" :current="current" progressDot>
-          <a-step>
-            <template v-slot:title>
-              <span>Create Ticket</span>
-            </template>
-            <template v-slot:description>
-              <div class="antd-pro-pages-profile-advanced-style-stepDescription">
-                {{ form.author }}
-                <div>{{ form.date }}</div>
-              </div>
-            </template>
-          </a-step>
-          <a-step title="Booked" />
-          <a-step title="Confirmed" />
-          <a-step title="Completed" />
-        </a-steps>
-        <a-steps v-else :direction="(isMobile && 'vertical') || 'horizontal'" :current="1" progressDot>
-          <a-step>
-            <template v-slot:title>
-              <span>Create Ticket</span>
-            </template>
-            <template v-slot:description>
-              <div class="antd-pro-pages-profile-advanced-style-stepDescription">
-                {{ form.author }}
-                <div>{{ form.date }}</div>
-              </div>
-            </template>
-          </a-step>
-          <a-step title="Cancelled" />
+        <a-steps direction="horizontal" :current="status" progressDot>
+          <a-step :title="text_status[0]" />
+          <a-step :title="text_status[1]" />
+          <a-step :title="text_status[2]" />
+          <a-step :title="text_status[3]" />
+          <a-step v-if="status == 4" :title="text_status[4]" />
+          <a-step v-else :title="text_status[5]" />
         </a-steps>
       </a-card>
       <a-card class="card" title="Ticket Info" :bordered="false">
@@ -186,6 +164,12 @@ import ItineraryRelatedList from '@/views/itinerary/RelatedList'
 
 import moment from 'moment'
 
+const StatusTexts = [
+  ['New', 'Booked', 'Watting Confirm', 'Confirmed', 'Refused', 'Completed'],
+  ['New', 'Changed', 'Watting Confirm', 'Confirmed', 'Refused', 'Completed'],
+  ['New', 'Canceled', 'Watting Confirm', 'Confirmed', 'Refused', 'Completed']
+]
+
 export default {
   components: { FormValidate, FormItemValidate, ItineraryRelatedList },
   props: {
@@ -196,6 +180,7 @@ export default {
   },
   data() {
     return {
+      StatusTexts,
       loading: false,
       updateing: false,
       disabled: () => {
@@ -221,21 +206,21 @@ export default {
     }
   },
   computed: {
-    current() {
-      var _step = 0
-      if (this.form.is_booking) {
-        _step = 1
+    status() {
+      if (this.form != null) {
+        return this.form.type_status == 0
+          ? this.form.normal_status
+          : this.form.type_status == 1
+          ? this.form.change_status
+          : this.form.cancel_status ?? 0
       }
-
-      if (this.form.is_confirm) {
-        _step = 2
+      return 0
+    },
+    text_status() {
+      if (this.form != null) {
+        return StatusTexts[this.form.type_status]
       }
-
-      if (this.form.is_complete) {
-        _step = 3
-      }
-
-      return _step
+      return ''
     }
   },
   methods: {

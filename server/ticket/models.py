@@ -119,7 +119,7 @@ class Ticket(models.Model):
     class NormalStatus(models.IntegerChoices):
         New = 0,
         Booked = 1,
-        Watting = 2
+        Watting = 2,
         Confirmed = 3,
         Refused = 4,
         Completed = 5
@@ -127,7 +127,7 @@ class Ticket(models.Model):
     class ChangeStatus(models.IntegerChoices):
         New = 0,
         Changed = 1,
-        Watting = 2
+        Watting = 2,
         Confirmed = 3,
         Refused = 4,
         Completed = 5
@@ -135,7 +135,7 @@ class Ticket(models.Model):
     class CancelStatus(models.IntegerChoices):
         New = 0,
         Canceled = 1,
-        Watting = 2
+        Watting = 2,
         Confirmed = 3,
         Refused = 4,
         Completed = 5
