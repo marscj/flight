@@ -116,6 +116,34 @@ class Ticket(models.Model):
     is_complete = models.BooleanField(default=False, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
     
+    class NormalStatus(models.IntegerChoices):
+        New = 0,
+        Booked = 1,
+        Watting = 2
+        Confirmed = 3,
+        Refused = 4,
+        Completed = 5
+    
+    class ChangeStatus(models.IntegerChoices):
+        New = 0,
+        Changed = 1,
+        Watting = 2
+        Confirmed = 3,
+        Refused = 4,
+        Completed = 5
+
+    class CancelStatus(models.IntegerChoices):
+        New = 0,
+        Canceled = 1,
+        Watting = 2
+        Confirmed = 3,
+        Refused = 4,
+    
+    normal_status = models.IntegerField(choices=NormalStatus.choices, default=NormalStatus.New, blank=True, null=True)
+    change_status = models.IntegerField(choices=ChangeStatus.choices, default=NormalStatus.New, blank=True, null=True)
+    cancel_status = models.IntegerField(choices=CancelStatus.choices, default=NormalStatus.New, blank=True, null=True)
+    type_status = models.IntegerField(default=0, blank=True, null=True)
+    
     itinerary = models.ForeignKey(Itinerary, related_name='tickets', on_delete=models.SET_NULL, blank=True, null=True)
     messages = GenericRelation(Message, related_query_name='ticket')
     comments = GenericRelation(Comment, related_query_name='ticket')
