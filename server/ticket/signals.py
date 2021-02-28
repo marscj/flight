@@ -51,7 +51,7 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
         
         #客户推送
         if instance.itinerary is not None and instance.itinerary.user is not None:
-            Message.objects.create(json=serializer, content_object=instance, user=itinerary.user)
+            Message.objects.create(json=serializer, content_object=instance, user=instance.itinerary.user)
             message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.itinerary.user.email)
 
     if type(instance).__name__ == 'Itinerary':
