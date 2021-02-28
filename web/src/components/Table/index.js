@@ -221,6 +221,9 @@ export default {
             } catch (e) {
               this.localPagination = false
             }
+
+            removeChildren(r.data)
+
             this.localDataSource = r.data // 返回结果中的数组数据
           })
           .finally(() => {
@@ -376,4 +379,14 @@ export default {
       </div>
     )
   }
+}
+
+function removeChildren(data) {
+  data.forEach(f => {
+    if (f.children != null && f.children.length == 0) {
+      f.children = undefined
+    } else {
+      removeChildren(f.children)
+    }
+  })
 }

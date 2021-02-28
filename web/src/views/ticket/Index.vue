@@ -1,14 +1,28 @@
 <template>
   <form-validate ref="observer" :form="form">
-    <page-header-wrapper :content="post_type == 'edit' ? 'ID:' + $route.params.id : ''">
+    <page-header-wrapper>
+      <template v-if="post_type == 'add'" slot="extra">
+        <a-button type="primary" v-action:add_ticket :loading="updateing" html-type="submit" @click="book()"
+          >Book</a-button
+        >
+      </template>
+      <template v-else slot="extra">
+        <a-button v-action:change_ticket type="primary" :loading="updateing" html-type="submit" @click="book()"
+          >Update</a-button
+        >
+        <a-button v-if="status == 4" type="primary" @click="rebook()">Rebook</a-button>
+        <a-button type="primary" @click="change()">Change</a-button>
+        <a-button type="primary" @click="cancel()">Cancel</a-button>
+      </template>
+
       <a-card v-if="post_type == 'edit'" class="card" title="Progress" :bordered="false">
         <a-steps direction="horizontal" :current="status" progressDot>
           <a-step :title="text_status[0]" />
           <a-step :title="text_status[1]" />
           <a-step :title="text_status[2]" />
-          <a-step :title="text_status[3]" />
-          <a-step v-if="status == 4" :title="text_status[4]" />
-          <a-step v-else :title="text_status[5]" />
+          <a-step v-if="status == 4" :title="text_status[4]" status="error" />
+          <a-step v-else :title="text_status[3]" />
+          <a-step v-if="status != 4" :title="text_status[5]" />
         </a-steps>
       </a-card>
       <a-card class="card" title="Ticket Info" :bordered="false">
@@ -125,33 +139,6 @@
           <a-button href="javascript:;" type="danger">Delete</a-button>
         </a-popconfirm>
       </a-col>
-
-      <a-col :span="12" class="text-right">
-        <a-button
-          v-if="post_type == 'edit'"
-          v-action:change_ticket
-          type="primary"
-          @click="submit"
-          :loading="updateing"
-          html-type="submit"
-        >
-          Submit
-        </a-button>
-      </a-col>
-    </a-row>
-    <a-row>
-      <a-col :span="24" class="text-right">
-        <a-button
-          v-if="post_type == 'add'"
-          v-action:add_ticket
-          type="primary"
-          @click="submit"
-          :loading="updateing"
-          html-type="submit"
-        >
-          Submit
-        </a-button>
-      </a-col>
     </a-row>
   </form-validate>
 </template>
@@ -176,6 +163,10 @@ export default {
     post_type: {
       type: String,
       default: 'edit'
+    },
+    type_status: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -207,20 +198,31 @@ export default {
   },
   computed: {
     status() {
-      if (this.form != null) {
-        return this.form.type_status == 0
-          ? this.form.normal_status
-          : this.form.type_status == 1
-          ? this.form.change_status
-          : this.form.cancel_status ?? 0
+      if (
+        this.form != null &&
+        this.form.type_status != null &&
+        this.form.normal_status != null &&
+        this.form.change_status != null &&
+        this.form.cancel_status != null
+      ) {
+        switch (this.form.type_status) {
+          case 0:
+            return this.form.normal_status ?? 0
+          case 1:
+            return this.form.change_status ?? 0
+          case 2:
+            return this.form.cancel_status ?? 0
+        }
+        return 0
+      } else {
+        return this.type_status ?? 0
       }
-      return 0
     },
     text_status() {
-      if (this.form != null) {
-        return StatusTexts[this.form.type_status]
+      if (this.form != null && this.form.type_status != null) {
+        return StatusTexts[this.form.type_status ?? 0]
       }
-      return ''
+      return StatusTexts[0]
     }
   },
   methods: {
@@ -246,7 +248,12 @@ export default {
         total: this.form.total,
         air_info: this.form.air_info,
         remark: this.form.remark,
-        itinerary_id: this.itinerary.id ?? this.form.itinerary_id
+        itinerary_id: this.itinerary.id ?? this.form.itinerary_id,
+        type_status: this.$route.params.type_status ?? 0,
+        normal_status: 2,
+        change_status: 2,
+        cancel_status: 2,
+        parent: this.$route.params.parent_id
       })
 
       if (this.post_type == 'edit') {
@@ -308,6 +315,36 @@ export default {
       if (file != null && file.id != null) {
         deleteFile(file.id)
       }
+    },
+    book() {
+      this.submit()
+    },
+    rebook() {
+      this.$router.push({
+        name: 'AddTicket',
+        params: Object.assign({}, this.$route.params, {
+          type_status: 0,
+          parent_id: this.form.parent_id ?? this.form.id
+        })
+      })
+    },
+    change() {
+      this.$router.push({
+        name: 'AddTicket',
+        params: Object.assign({}, this.$route.params, {
+          type_status: 1,
+          parent_id: this.form.parent_id ?? this.form.id
+        })
+      })
+    },
+    cancel() {
+      this.$router.push({
+        name: 'AddTicket',
+        params: Object.assign({}, this.$route.params, {
+          type_status: 2,
+          parent_id: this.form.parent_id ?? this.form.id
+        })
+      })
     }
   }
 }
