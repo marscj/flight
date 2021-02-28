@@ -138,6 +138,7 @@ class Ticket(models.Model):
         Watting = 2
         Confirmed = 3,
         Refused = 4,
+        Completed = 5
     
     normal_status = models.IntegerField(choices=NormalStatus.choices, default=NormalStatus.New, blank=True, null=True)
     change_status = models.IntegerField(choices=ChangeStatus.choices, default=NormalStatus.New, blank=True, null=True)
