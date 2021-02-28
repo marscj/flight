@@ -382,6 +382,7 @@ export default {
 }
 
 function removeChildren(data) {
+  if (data == null) return
   data.forEach(f => {
     if (f.children != null && f.children.length == 0) {
       f.children = undefined
