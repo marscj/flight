@@ -117,15 +117,22 @@ class TicketView(viewset.ExtraModelViewSet):
     def confirm(self, request, pk=None):
         data = self.get_object()
         serializer = serializers.ConfirmTicketSerializer(data=request.data)
+        status = None
+
         if serializer.is_valid():
+            if serializer.data['confirm']:
+                status = 3
+            else:
+                status = 4
+                
             if data.type_status == 0:
-                data.normal_status = serializer.data['confirm']
+                data.normal_status = status
 
             if data.type_status == 1:
-                data.change_status = serializer.data['confirm']
+                data.change_status = status
 
             if data.type_status == 2:
-                data.cancel_status = serializer.data['confirm']
+                data.cancel_status = status
 
             data.save()
 

@@ -371,7 +371,7 @@ export default {
       this.$router.push({
         name: 'AddTicket',
         params: Object.assign({}, this.$route.params, {
-          type_status: 0,
+          type_status: this.type_status,
           parent_id: this.form.parent_id ?? this.form.id
         })
       })
