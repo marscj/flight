@@ -18,6 +18,7 @@ export const API = {
   Ticket: '/tickets/',
   TicketHistory: '/ticket/histories/',
   Message: '/messages/',
+  Comment: '/comments/',
   Upload: '/uploads/'
 }
 

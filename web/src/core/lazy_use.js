@@ -44,7 +44,8 @@ import {
   Statistic,
   Descriptions,
   message,
-  notification
+  notification,
+  Comment
 } from 'ant-design-vue'
 import Viser from 'viser-vue'
 
@@ -119,5 +120,6 @@ Vue.use(FormValidate)
 Vue.use(FormItemValidate)
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
+Vue.use(Comment)
 
 process.env.NODE_ENV !== 'production'
