@@ -118,10 +118,18 @@ class TicketView(viewset.ExtraModelViewSet):
         data = self.get_object()
         serializer = serializers.ConfirmTicketSerializer(data=request.data)
         if serializer.is_valid():
-            data.is_confirm = serializer.data['confirm']
+            if data.type_status == 0:
+                data.normal_status = serializer.data['confirm']
+
+            if data.type_status == 1:
+                data.change_status = serializer.data['confirm']
+
+            if data.type_status == 2:
+                data.cancel_status = serializer.data['confirm']
+
             data.save()
 
-            if not data.is_confirm:
+            if not serializer.data['confirm']:
                 models.Comment.objects.create(content=serializer.data['reason'], object_id=data.id, content_type=ContentType.objects.get(model='ticket'), user=request.user)
         else:
             return Response(serializer.errors,
