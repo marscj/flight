@@ -1,12 +1,12 @@
 <template>
-  <detail post_type="add"> </detail>
+  <index post_type="add"> </index>
 </template>
 
 <script>
-import Detail from './Detail'
+import Index from './Index'
 export default {
   components: {
-    Detail
+    Index
   }
 }
 </script>

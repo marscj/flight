@@ -181,7 +181,7 @@ def upload_post_save(sender, instance, **kwargs):
                 object.change_status = 5
 
         if object.type_status == 2:
-            if object.cancel_status = 4:
+            if object.cancel_status != 4:
                 object.cancel_status = 5
         
         object.save()

@@ -237,19 +237,18 @@ export default {
       return this.itinerary.is_lock ?? true
     },
     type_status() {
+      if (this.$route.params.type_status != null) {
+        return this.$route.params.type_status
+      }
+
       if (this.form != null && this.form.type_status != null) {
         return this.form.type_status
       }
-      return this.$route.params.type_status ?? 0
+
+      return 0
     },
     status() {
-      if (
-        this.form != null &&
-        this.form.type_status != null &&
-        this.form.normal_status != null &&
-        this.form.change_status != null &&
-        this.form.cancel_status != null
-      ) {
+      if (this.form.normal_status != null && this.form.change_status != null && this.form.cancel_status != null) {
         switch (this.type_status) {
           case 0:
             return this.form.normal_status ?? 0
@@ -262,10 +261,7 @@ export default {
       return 0
     },
     text_status() {
-      if (this.form != null && this.form.type_status != null) {
-        return StatusTexts[this.form.type_status ?? 0]
-      }
-      return StatusTexts[0]
+      return StatusTexts[this.type_status ?? 0]
     }
   },
   methods: {
@@ -302,12 +298,12 @@ export default {
         remark: this.form.remark,
         itinerary_id: this.itinerary.id ?? this.form.itinerary_id,
         type_status: this.type_status,
-        normal_status: 2,
-        change_status: 2,
-        cancel_status: 2,
+        normal_status: this.type_status == 0 ? (this.post_type == 'edit' ? this.form.normal_status : 2) : 0,
+        change_status: this.type_status == 1 ? (this.post_type == 'edit' ? this.form.change_status : 2) : 0,
+        cancel_status: this.type_status == 2 ? (this.post_type == 'edit' ? this.form.cancel_status : 2) : 0,
         parent: this.$route.params.parent_id
       })
-
+      console.log(form)
       if (this.post_type == 'edit') {
         updateTicket(this.$route.params.id, form)
           .then(res => {
