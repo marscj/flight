@@ -134,7 +134,7 @@
                 content_type: 'ticket',
                 object_id: $route.params.id
               }"
-              :disabled="disabled() || !form.is_confirm"
+              :disabled="disabled() || check_status || check_lock"
             >
               <p class="ant-upload-drag-icon">
                 <a-icon type="inbox" />
@@ -193,10 +193,6 @@ export default {
     post_type: {
       type: String,
       default: 'edit'
-    },
-    type_status: {
-      type: Number,
-      default: 0
     }
   },
   data() {
@@ -230,6 +226,22 @@ export default {
     tab() {
       return this.$route.query.tab ? this.$route.query.tab : 'tickets'
     },
+    check_status() {
+      if (this.status == 3 || this.status == 5) {
+        return false
+      }
+
+      return true
+    },
+    check_lock() {
+      return this.itinerary.is_lock ?? true
+    },
+    type_status() {
+      if (this.form != null && this.form.type_status != null) {
+        return this.form.type_status
+      }
+      return this.$route.params.type_status ?? 0
+    },
     status() {
       if (
         this.form != null &&
@@ -238,7 +250,7 @@ export default {
         this.form.change_status != null &&
         this.form.cancel_status != null
       ) {
-        switch (this.form.type_status) {
+        switch (this.type_status) {
           case 0:
             return this.form.normal_status ?? 0
           case 1:
@@ -246,10 +258,8 @@ export default {
           case 2:
             return this.form.cancel_status ?? 0
         }
-        return 0
-      } else {
-        return this.type_status ?? 0
       }
+      return 0
     },
     text_status() {
       if (this.form != null && this.form.type_status != null) {
@@ -291,7 +301,7 @@ export default {
         air_info: this.form.air_info,
         remark: this.form.remark,
         itinerary_id: this.itinerary.id ?? this.form.itinerary_id,
-        type_status: this.$route.params.type_status ?? 0,
+        type_status: this.type_status,
         normal_status: 2,
         change_status: 2,
         cancel_status: 2,

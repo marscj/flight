@@ -4,7 +4,7 @@ from django.db.models import Value
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from django.db.models.signals import pre_delete, post_save
+from django.db.models.signals import pre_delete, post_save, post_save
 from django.dispatch import receiver
 from simple_history.models import HistoricalRecords
 
@@ -165,3 +165,23 @@ def upload_pre_delete(sender, instance, **kwargs):
     
     if instance.file is not None: 
         instance.file.delete()
+
+@receiver(post_save, sender=UpLoad)
+def upload_post_save(sender, instance, **kwargs):
+    
+    object = instance.content_object
+    
+    if type(object) is Ticket:
+        if object.type_status == 0:
+            if object.normal_status != 4:
+                object.normal_status = 5
+
+        if object.type_status == 1:
+            if object.change_status != 4:
+                object.change_status = 5
+
+        if object.type_status == 2:
+            if object.cancel_status = 4:
+                object.cancel_status = 5
+        
+        object.save()
