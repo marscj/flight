@@ -178,7 +178,8 @@ class BookingSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     author_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
-    messages = MessageSerializer(read_only=True, many=True)
+    # messages = MessageSerializer(read_only=True, many=True)
+    messages = serializers.SerializerMethodField()
     comments = CommentSerializer(read_only=True, many=True)
     uploads = UpLoadSerializer(read_only=True, many=True)
     itineraries = serializers.SerializerMethodField()
@@ -196,6 +197,11 @@ class BookingSerializer(serializers.ModelSerializer):
 
         serializer = ItinerarySerializer(instance=query, many=True)
 
+        return serializer.data
+
+    def get_messages(self, obj):
+        query = obj.messages.filter(user_id=self.context['request'].user.id)
+        serializer = MessageSerializer(instance=query, many=True)
         return serializer.data
 
 class BookingHistorySerializer(serializers.ModelSerializer):
