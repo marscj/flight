@@ -116,7 +116,16 @@ class TicketView(viewset.ExtraModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.messages.filter(user=self.request.user).update(read=True)
+             
+        if instance.parent is not None:
+            instance.parent.messages.filter(user=self.request.user).update(read=True)
+            for obj in instance.parent.children:
+                obj.messages.filter(user=self.request.user).update(read=True)
+        else:
+            instance.messages.filter(user=self.request.user).update(read=True)
+            for obj in instance.children:
+                obj.messages.filter(user=self.request.user).update(read=True)
+
         return super().retrieve(request, *args, **kwargs)
 
     @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
