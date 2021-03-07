@@ -59,8 +59,7 @@ class Comment(models.Model):
         db_table = 'comment'
 
     def delete(self):
-        Comment.objects().filter(object_id=self.id, content_type__model='comment').delete()
-    
+        Comment.objects.filter(object_id=self.id, content_type__model='comment').delete()
         super().delete()
 
 class Booking(models.Model):
