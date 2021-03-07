@@ -25,6 +25,9 @@ from plugs import push, message
 def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
 
     serializer = None
+
+    if history_instance.history_type == '-':
+        return 
     
     if type(instance).__name__ == 'Booking':
         serializer = BookingHistorySerializer(instance=history_instance).data
