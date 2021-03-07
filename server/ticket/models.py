@@ -58,6 +58,11 @@ class Comment(models.Model):
     class Meta:
         db_table = 'comment'
 
+    def delete(self):
+        self.content_object.filter(object_id=self.id, content_type=self.content_type).delete()
+    
+        super().delete()
+
 class Booking(models.Model):
     title = models.CharField(blank=True, null=True, max_length=64)
     remark = models.TextField(blank=True, null=True)
