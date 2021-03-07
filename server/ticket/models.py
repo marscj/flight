@@ -73,8 +73,8 @@ class Booking(models.Model):
         db_table = 'booking'
     
     def delete(self):
-        self.messages.delete()
-        self.comments.delete()
+        self.messages.all().delete()
+        self.comments.all().delete()
         self.itineraries.delete()
         
         super(Widget, self).delete()
@@ -168,10 +168,10 @@ class Ticket(models.Model):
         return self.serial_no
 
     def delete(self):
-        self.messages.delete()
-        self.comments.delete()
+        self.messages.all().delete()
+        self.comments.all().delete()
 
-        super(Widget, self).delete()
+        super().delete()
 
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
