@@ -91,6 +91,10 @@
                       </router-link>
                       <a-icon type="inbox" v-if="!data.read"> </a-icon>
                     </template>
+                    <template v-if="data.json['model'] == 'Comment'">
+                      <span>{{ data.json['message'] }} </span>
+                      <a-icon type="inbox" v-if="!data.read"> </a-icon>
+                    </template>
                   </div>
                   <div slot="description">{{ data.date | moment }}</div>
                 </a-list-item-meta>
