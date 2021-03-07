@@ -58,10 +58,6 @@ class Comment(models.Model):
     class Meta:
         db_table = 'comment'
 
-    def delete(self):
-        Comment.objects.filter(object_id=self.id, content_type__model='comment').delete()
-        super().delete()
-
 class Booking(models.Model):
     title = models.CharField(blank=True, null=True, max_length=64)
     remark = models.TextField(blank=True, null=True)
@@ -202,3 +198,7 @@ def upload_post_save(sender, instance, **kwargs):
                 object.cancel_status = 5
         
         object.save()
+
+@receiver(pre_delete, sender=Comment)
+def comment_pre_delete(sender, instance, **kwargs):
+    Comment.objects.filter(object_id=instance.id, content_type__model='comment').delete()
