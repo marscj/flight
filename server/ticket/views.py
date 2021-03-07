@@ -38,9 +38,7 @@ class BookingView(viewset.ExtraModelViewSet):
     
     def get_extra_data(self):
         queryset = models.Message.objects.filter(Q(user=self.request.user) & Q(read=False)).order_by('-id')
-        return {
-            'messages': serializers.MessageSerializer(queryset, many=True).data,
-        }
+        return serializers.MessageSerializer(queryset, many=True).data
 
 class BookingHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
@@ -161,9 +159,7 @@ class TicketView(viewset.ExtraModelViewSet):
 
     def get_extra_data(self):
         queryset = models.Message.objects.filter(Q(user=self.request.user) & Q(read=False)).order_by('-id')
-        return {
-            'messages': serializers.MessageSerializer(queryset, many=True).data,
-        }
+        return serializers.MessageSerializer(queryset, many=True).data
 
 class TicketHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
