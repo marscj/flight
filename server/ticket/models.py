@@ -59,7 +59,7 @@ class Comment(models.Model):
         db_table = 'comment'
 
     def delete(self):
-        Comment.filter(object_id=self.id, content_type=self.content_type).delete()
+        Comment.objects().filter(object_id=self.id, content_type=self.content_type).delete()
     
         super().delete()
 
