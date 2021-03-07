@@ -145,7 +145,10 @@ class TicketView(viewset.ExtraModelViewSet):
                 data.change_status = status
 
             if data.type_status == 2:
-                data.cancel_status = status
+                if status == 3:
+                    data.cancel_status = 5
+                else:
+                    data.cancel_status = 4
 
             data.save()
 

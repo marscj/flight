@@ -12,7 +12,7 @@
         >
         <a-button v-if="status == 4" type="primary" @click="rebook()">Rebook</a-button>
         <a-button type="primary" @click="change()">Change</a-button>
-        <a-button type="primary" @click="cancel()">Cancel</a-button>
+        <a-button type="primary" @click="cancel()">Refused</a-button>
       </template>
 
       <a-card
@@ -59,7 +59,7 @@
                 </form-item-validate>
               </a-col>
               <a-col :sm="24" :md="8">
-                <form-item-validate label="Line" vid="air_line">
+                <form-item-validate label="Air Line" vid="air_line">
                   <a-input v-model="form.air_line" :disabled="disabled()"></a-input>
                 </form-item-validate>
               </a-col>
@@ -75,7 +75,6 @@
                   <a-input-number
                     v-model="form.fare"
                     :disabled="disabled()"
-                    :min="0"
                     :precision="2"
                     decimalSeparator="."
                     class="w-full"
@@ -88,7 +87,6 @@
                   <a-input-number
                     v-model="form.tax"
                     :disabled="disabled()"
-                    :min="0"
                     :precision="2"
                     decimalSeparator="."
                     class="w-full"
@@ -101,7 +99,6 @@
                   <a-input-number
                     v-model="form.total"
                     :disabled="disabled()"
-                    :min="0"
                     :precision="2"
                     decimalSeparator="."
                     class="w-full"
@@ -182,9 +179,9 @@ import Message from './Message'
 import moment from 'moment'
 
 const StatusTexts = [
-  ['New', 'Booked', 'Watting Confirm', 'Confirmed', 'Refused', 'Completed'],
-  ['New', 'Changed', 'Watting Confirm', 'Confirmed', 'Refused', 'Completed'],
-  ['New', 'Canceled', 'Watting Confirm', 'Confirmed', 'Refused', 'Completed']
+  ['New', 'Booked', 'Waitting Confirm', 'Confirmed', 'Refused', 'Completed'],
+  ['New', 'Changed', 'Waitting Confirm', 'Confirmed', 'Refused', 'Completed'],
+  ['New', 'Canceled', 'Waitting Confirm', 'Confirmed', 'Refused', 'Completed']
 ]
 
 export default {

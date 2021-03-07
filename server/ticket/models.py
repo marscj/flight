@@ -4,7 +4,7 @@ from django.db.models import Value
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from django.db.models.signals import pre_delete, post_save, post_save
+from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
 from simple_history.models import HistoricalRecords
 
@@ -202,3 +202,16 @@ def upload_post_save(sender, instance, **kwargs):
 @receiver(pre_delete, sender=Comment)
 def comment_pre_delete(sender, instance, **kwargs):
     Comment.objects.filter(object_id=instance.id, content_type__model='comment').delete()
+
+@receiver(post_save, sender=Comment)
+def comment_post_save(sender, instance, **kwargs):
+    
+    #admin推送
+    for user in User.objects.filter(Q(is_staff=True) & ~Q(id=instance.user.id)):
+        Message.objects.create(json={'message': instance.content}, content_object=instance, user=user)
+        message.send_admin_message.delay('{message}'.format(message=instance.content), user.email)
+    
+    # #客户推送
+    # if instance.itinerary is not None and instance.itinerary.user is not None:
+    #     Message.objects.create(json=serializer, content_object=instance, user=instance.itinerary.user)
+    #     message.send_admin_message.delay('{user} {action} Ticket for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.itinerary.user.email)
