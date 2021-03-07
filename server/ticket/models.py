@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.db.models import Q
 from django.db.models import Value
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
