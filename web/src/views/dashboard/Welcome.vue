@@ -92,9 +92,8 @@
                       <a-icon type="inbox" v-if="!data.read"> </a-icon>
                     </template>
                     <template v-if="data.json['model'] == 'Comment'">
-                      <span>{{ data.json['message'] }} </span>
                       <router-link :to="{ name: 'TicketDetail', params: { id: data.json['id'] } }">
-                        Ticket for ID:{{ data.json['id'] }}
+                        <span>{{ data.json['message'] }} </span>
                       </router-link>
                       <a-icon type="inbox" v-if="!data.read"> </a-icon>
                     </template>
