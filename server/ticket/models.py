@@ -75,7 +75,7 @@ class Booking(models.Model):
     def delete(self):
         self.messages.all().delete()
         self.comments.all().delete()
-        self.itineraries.delete()
+        self.itineraries.all().delete()
         
         super(Widget, self).delete()
 
