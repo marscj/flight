@@ -210,7 +210,7 @@ def comment_post_save(sender, instance, **kwargs):
     
     #admin推送
     for user in User.objects.filter(Q(is_staff=True) & ~Q(id=instance.user.id)):
-        if instance.content_type__model == 'ticket':
+        if instance.content_type == ContentType.objects.get_for_model(Ticket):
             Message.objects.create(json={'message': instance.content, 'model': 'Comment', 'id': instance.object_id}, content_object=instance.content_object, user=user)
         else:
             Message.objects.create(json={'message': instance.content, 'model': 'Comment', 'id': instance.content_object.object_id}, content_object=instance.content_object.content_object, user=user)
