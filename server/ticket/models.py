@@ -210,7 +210,7 @@ def comment_post_save(sender, instance, **kwargs):
     #admin推送
     for user in User.objects.filter(Q(is_staff=True) & ~Q(id=instance.user.id)):
         Message.objects.create(json={'message': instance.content}, content_object=instance, user=user)
-        message.send_admin_message.delay('{message}'.format(message=instance.content), user.email)
+        message.send_admin_message.delay(instance.content, user.email)
     
     # #客户推送
     # if instance.itinerary is not None and instance.itinerary.user is not None:
