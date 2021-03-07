@@ -16,7 +16,7 @@ ActionString = {
 }
 
 from .serializers import BookingHistorySerializer, TicketHistorySerializer, ItineraryHistorySerializer
-from .models import Message
+from .models import Message, Itinerary
 from plugs import push, message
 
 
@@ -29,7 +29,7 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
     if history_instance.history_type == '-':
             
         if type(instance).__name__ == 'Booking':
-            instance.itineraries.all().delete()
+            Itinerary.objects.filter(booking=instance).delete()
             instance.messages.all().delete()
             instance.comments.all().delete()
 
