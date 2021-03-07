@@ -33,7 +33,7 @@ class BookingView(viewset.ExtraModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.messages.filter(user_id=self.request.user).update(read=True)
+        instance.messages.filter(user=self.request.user).update(read=True)
         return super().retrieve(request, *args, **kwargs)
     
     def get_extra_data(self):
