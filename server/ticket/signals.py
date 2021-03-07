@@ -32,6 +32,9 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
             
         if type(instance).__name__ == 'Booking':
             instance.itineraries.all().delete()
+
+        if type(instance).__name__ == 'Ticket':
+            instance.children.all().delete()
         
         return 
     
