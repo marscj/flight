@@ -77,7 +77,7 @@ class Booking(models.Model):
         self.comments.all().delete()
         self.itineraries.all().delete()
         
-        super(Widget, self).delete()
+        super().delete()
 
 class Itinerary(models.Model):
     serial_no = models.CharField(blank=True, null=True, max_length=32)
