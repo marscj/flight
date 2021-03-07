@@ -27,16 +27,6 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
     serializer = None
 
     if history_instance.history_type == '-':
-            
-        if type(instance).__name__ == 'Booking':
-            instance.messages.all().delete()
-            instance.comments.all().delete()
-
-        if type(instance).__name__ == 'Ticket':
-            instance.children.all().delete()
-            instance.messages.all().delete()
-            instance.comments.all().delete()
-        
         return 
     
     if type(instance).__name__ == 'Booking':
