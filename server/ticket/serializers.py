@@ -140,7 +140,8 @@ class TicketSerializer(serializers.ModelSerializer):
     itinerary = ItinerarySerializer(read_only=True, many=False)
     itinerary_id = serializers.IntegerField(required=True)
     
-    messages = MessageSerializer(read_only=True, many=True)
+    # messages = MessageSerializer(read_only=True, many=True)
+    messages = serializers.SerializerMethodField()
     comments = CommentSerializer(read_only=True, many=True)
     uploads = UpLoadSerializer(read_only=True, many=True) 
     
@@ -154,6 +155,11 @@ class TicketSerializer(serializers.ModelSerializer):
         fields = super(TicketSerializer, self).get_fields()
         fields['children'] = TicketSerializer(many=True, read_only=True)
         return fields 
+
+    def get_messages(self, obj):
+        query = obj.messages.filter(user_id=self.context['request'].user.id)
+        serializer = MessageSerializer(instance=query, many=True)
+        return serializer.data
             
 
 class TicketHistorySerializer(serializers.ModelSerializer):
