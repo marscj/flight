@@ -19,8 +19,6 @@ from .serializers import BookingHistorySerializer, TicketHistorySerializer, Itin
 from .models import Message, Itinerary
 from plugs import push, message
 
-
-
 @receiver(post_create_historical_record)
 def post_create_historical_record_callback(sender, instance, history_instance, history_user, **kwargs):
 
