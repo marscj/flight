@@ -71,6 +71,13 @@ class Booking(models.Model):
 
     class Meta:
         db_table = 'booking'
+    
+    def delete(self):
+        self.messages.delete()
+        self.comments.delete()
+        self.itineraries.delete()
+        
+        super(Widget, self).delete()
 
 class Itinerary(models.Model):
     serial_no = models.CharField(blank=True, null=True, max_length=32)
@@ -159,6 +166,12 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.serial_no
+
+    def delete(self):
+        self.messages.delete()
+        self.comments.delete()
+
+        super(Widget, self).delete()
 
 @receiver(pre_delete, sender=UpLoad)
 def upload_pre_delete(sender, instance, **kwargs):
