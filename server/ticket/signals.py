@@ -39,9 +39,9 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
             message.send_admin_message.delay('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
 
         #客户推送
-        for itinerary in instance.itineraries.all():
+        #for itinerary in instance.itineraries.all():
             # Message.objects.create(json=serializer, content_object=instance, user=itinerary.user)
-            message.send_admin_message.delay('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), itinerary.user.email)
+            #message.send_admin_message.delay('{user} {action} Booking for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), itinerary.user.email)
 
     if type(instance).__name__ == 'Ticket':
         serializer = TicketHistorySerializer(instance=history_instance).data
@@ -67,6 +67,6 @@ def post_create_historical_record_callback(sender, instance, history_instance, h
             message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), user.email)
 
         #客户推送
-        if instance.user is not None:
+        #if instance.user is not None:
             # Message.objects.create(js on=serializer, content_object=instance, user=itinerary.user)
-            message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.user.email)
+            #message.send_admin_message.delay('{user} {action} Itinerary for ID: {id}'.format(user=history_instance.history_user, action=ActionString.get(history_instance.history_type), id=history_instance.id), instance.user.email)
