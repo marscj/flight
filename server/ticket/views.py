@@ -119,11 +119,11 @@ class TicketView(viewset.ExtraModelViewSet):
              
         if instance.parent is not None:
             instance.parent.messages.filter(user=self.request.user).update(read=True)
-            for obj in instance.parent.children:
+            for obj in instance.parent.children.all():
                 obj.messages.filter(user=self.request.user).update(read=True)
         else:
             instance.messages.filter(user=self.request.user).update(read=True)
-            for obj in instance.children:
+            for obj in instance.children.all():
                 obj.messages.filter(user=self.request.user).update(read=True)
 
         return super().retrieve(request, *args, **kwargs)
