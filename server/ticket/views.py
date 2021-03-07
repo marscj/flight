@@ -38,7 +38,7 @@ class BookingView(viewset.ExtraModelViewSet):
     
     def get_extra_data(self):
         queryset = models.Message.objects.filter(Q(user=self.request.user) & Q(read=False)).order_by('-id')
-        return serializers.MessageSerializer(queryset, many=True).data
+        return serializers.MessageSerializer(queryset, many=True, context={'request': request}).data
 
 class BookingHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
@@ -129,7 +129,7 @@ class TicketView(viewset.ExtraModelViewSet):
     @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
     def confirm(self, request, pk=None):
         data = self.get_object()
-        serializer = serializers.ConfirmTicketSerializer(data=request.data)
+        serializer = serializers.ConfirmTicketSerializer(data=request.data, context={'request': request})
         status = None
 
         if serializer.is_valid():
@@ -155,11 +155,11 @@ class TicketView(viewset.ExtraModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
         
-        return Response({'data': serializers.TicketSerializer(instance=data).data})
+        return Response({'data': serializers.TicketSerializer(instance=data, context={'request': request}).data})
 
     def get_extra_data(self):
         queryset = models.Message.objects.filter(Q(user=self.request.user) & Q(read=False)).order_by('-id')
-        return serializers.MessageSerializer(queryset, many=True).data
+        return serializers.MessageSerializer(queryset, many=True, context={'request': request}).data
 
 class TicketHistoryFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter('id')
