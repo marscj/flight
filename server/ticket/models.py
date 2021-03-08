@@ -207,16 +207,22 @@ def comment_pre_delete(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Comment)
 def comment_post_save(sender, instance, **kwargs):
-    
+
     #admin推送
     for user in User.objects.filter(Q(is_staff=True) & ~Q(id=instance.user.id)):
-        if instance.content_type == ContentType.objects.get_for_model(Ticket):
+        if instance.content_type.model == 'ticket':
             Message.objects.create(json={'message': instance.content, 'model': 'Comment', 'id': instance.object_id}, content_object=instance.content_object, user=user)
         else:
             Message.objects.create(json={'message': instance.content, 'model': 'Comment', 'id': instance.content_object.object_id}, content_object=instance.content_object.content_object, user=user)
+            
+    message.send_admin_message.delay(instance.content, user.email)
 
-        message.send_admin_message.delay(instance.content, user.email)
-    
+    # for user in User.objects.filter(Q(is_staff=True) & ~Q(id=instance.user.id)):
+    #     if instance.content_type == ContentType.objects.get_for_model(Ticket):
+    #         Message.objects.create(json={'message': instance.content, 'model': 'Comment', 'id': instance.object_id}, content_object=instance.content_object, user=user)
+    #     else:
+    #         Message.objects.create(json={'message': instance.content, 'model': 'Comment', 'id': instance.content_object.object_id}, content_object=instance.content_object.content_object, user=user)
+
     # #客户推送
     # if instance.itinerary is not None and instance.itinerary.user is not None:
     #     Message.objects.create(json=serializer, content_object=instance, user=instance.itinerary.user)
