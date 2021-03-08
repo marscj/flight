@@ -28,11 +28,3 @@ class AppSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'redirect': 'This field may not to null!'})
             
         return validate_data
-
-class CheckVersionSerializer(serializers.Serializer):
-
-    type = serializers.CharField(max_length=16)
-
-    version = serializers.CharField(max_length=64)
-
-    code = serializers.CharField(max_length=64)
