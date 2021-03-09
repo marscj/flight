@@ -26,4 +26,4 @@ class AppView(ModelViewSet):
                 serializer = serializers.AppSerializer(instance=data, context={'request': request})
                 return Response(serializer.data)
         
-        return Response({'code': 0})
+        return Response({'code': '0'})
